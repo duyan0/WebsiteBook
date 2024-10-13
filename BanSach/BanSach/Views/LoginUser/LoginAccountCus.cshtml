@@ -1,0 +1,101 @@
+﻿@model BanSach.Models.KhachHang
+
+@{
+    ViewBag.Title = "Đăng nhập";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+
+</head>
+
+<style>
+    .field-validation-error {
+        color: red;
+        font-size: 16px;
+    }
+
+    .login-page {
+        width: 360px;
+        margin: 25px auto;
+         
+    }
+
+    .form {
+        position: relative;
+        z-index: 1;
+        background: #d9d9d9;
+        max-width: 360px;
+        margin: 0 auto 50px;
+        padding: 45px;
+        text-align: center;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+        border-radius: 10px;
+    }
+
+        .form input {
+            font-family: "Roboto", sans-serif;
+            outline: 0;
+            background: #ffffff;
+            width: 100%;
+            border: 0;
+            margin: 0 0 15px;
+            padding: 15px;
+            box-sizing: border-box;
+            font-size: 16px;
+            border-radius: 10px;
+        }
+
+        .form button {
+            font-family: "Roboto", sans-serif;
+            text-transform: uppercase;
+            outline: 0;
+            background: black;
+            width: 100%;
+            border: 0;
+            padding: 15px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+            
+
+        .form .message {
+            margin: 15px 0 0;
+            color: black;
+            font-size: 14px;
+        }
+
+            .form .message a {
+                color: black;
+                font-weight:bolder;
+                text-decoration: none;
+            }
+
+        .form .register-form {
+            display: none;
+        }
+
+    
+</style>
+
+
+<div class="login-page">
+    <div class="form">
+        <h3 style="color: black; font-weight: bold; ">ĐĂNG NHẬP</h3>
+        <form action="/LoginUser/LoginAccountCus" class="login-form" method="post">
+            <p class="field-validation-error">@ViewBag.ErrorInfo</p>
+            <p><input type="text" placeholder="Tài khoản" name="TKhoan" /></p>
+
+            <p><input type="password" placeholder="Mật khẩu" name="MKhau" /></p>
+            <button type="submit">Đăng nhập</button>
+            <p class="message">Chưa có tài khoản? <a href="@Url.Action("RegisterCus","LoginUser")">Đăng kí ngay</a></p>
+        </form>
+    </div>
+</div>
+
+

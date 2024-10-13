@@ -1,0 +1,41 @@
+﻿@model BanSach.Models.DanhMuc
+
+@{
+    ViewBag.Title = "Xoá danh mục";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Xoá</h2>
+
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Danh mục
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DanhMuc1)
+        </dd>
+
+        <dt>
+            Thể loại
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TheLoai)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+<div class="form-actions no-color">
+    @Html.ActionLink("Quay về quản lý danh mục", "Index")|
+    <input type="submit" value="Xoá" class="btn btn-danger" style="border-radius:15px; padding:15px;" /> 
+
+</div>
+    }
+</div>

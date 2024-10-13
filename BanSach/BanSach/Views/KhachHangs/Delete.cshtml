@@ -1,0 +1,50 @@
+﻿@model BanSach.Models.KhachHang
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<h2>Bạn có chắc là xoá khách hàng này ?</h2>
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dd>
+            <b>Tên </b>
+            @Html.DisplayFor(model => model.TenKH)
+        </dd>
+
+        <dd>
+            <b>Số điện thoại </b>
+            @Html.DisplayFor(model => model.SoDT)
+        </dd>
+
+        <dd>
+            <b>Email </b>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dd>
+            <b>Tài khoản</b>
+            @Html.DisplayFor(model => model.TKhoan)
+        </dd>
+
+        <dd>
+            <b>Mật khẩu </b>
+            @Html.DisplayFor(model => model.MKhau)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xoá" class="btn btn-danger" /> |
+            @Html.ActionLink("Quay về danh sách khách hàng", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,141 @@
+﻿@model BanSach.Models.DonHangCT
+
+@{
+    ViewBag.Title = "Chi tiết";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<style>
+
+
+    table, h2 {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    h2 {
+       text-align:center;
+        color: black;
+        font-weight:bold;
+    }
+
+    tr {
+        border: 1px solid black;
+        color: black;
+        width: 100%;
+    }
+
+    .thongtin {
+        color: black;
+    }
+
+    table {
+        font-size: large;
+        width: 70%;
+    }
+
+    .tieude {
+        padding: 10px;
+    }
+</style>
+<h2>Thông tin đơn hàng</h2>
+
+<table class="bang">
+    <tr>
+        <td class="tieude"> <b>Đơn hàng  </b></td>
+        <td class="thongtin">
+            @Html.DisplayFor(model => model.IDdh)
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="tieude"><b>ID khách hàng  </b></td>
+        <td class="thongtin">
+            @Html.DisplayFor(model => model.DonHang.IDkh)
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="tieude">
+            <b>Tên khách hàng  </b>
+
+        </td>
+        <td class="thongtin">
+            @Html.DisplayFor(model => model.DonHang.KhachHang.TenKH)
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="tieude">
+            <b>Số điện thoại  </b>
+        </td>
+        <td class="thongtin">
+            @Html.DisplayFor(model => model.DonHang.KhachHang.SoDT)
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="tieude">
+            <b>Địa chỉ  </b>
+        </td>
+        <td class="thongtin">
+            @Html.DisplayFor(model => model.DonHang.DiaChi)
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="tieude">
+            <b>Ngày đặt hàng  </b>
+        <td class="thongtin">
+            @Html.DisplayFor(model => model.DonHang.NgayDatHang)
+        </td>
+    </tr>
+
+</table>
+<br />
+<h2>Chi tiết đơn</h2>
+
+<table class="bang">
+    <tr>
+        <td class="tieude">
+            <b>Sản phẩm  </b>
+        <td class="thongtin">
+            @Html.DisplayFor(model => model.SanPham.TenSP)
+        </td>
+    </tr>
+    <tr>
+        <td class="tieude">
+            <b>Số lượng  </b>
+        <td class="thongtin">
+            @Html.DisplayFor(model => model.SoLuong)
+        </td>
+    </tr>
+    <tr>
+        <td class="tieude">
+            <b>Giá  </b>
+        <td class="thongtin">
+            @Html.DisplayFor(model => model.Gia) 000 đ
+        </td>
+      
+    </tr>
+</table>
+    <p>
+        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.IDdh }) |
+        @Html.ActionLink("Quay về", "Index")
+    </p>

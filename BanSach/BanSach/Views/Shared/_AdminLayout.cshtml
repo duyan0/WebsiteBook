@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>@ViewBag.Title</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="~/Content/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/Content/css/duyan.css" rel="stylesheet">
+    <script src="~/Scripts/changeimg.js"></script>
+    <link href="~/Content/css/style.min.css" rel="stylesheet" />
+
+</head>
+
+<body style="width: 100%; background-color: black; ">
+    <div class="container-fluid" id="navbar">
+        <div class="row border-top px-xl-5" style="background-color: #1f1f20;">
+            <div class="col-lg-3 d-none d-lg-block" style="margin-top: 15px;">
+                <a href="~/Admins/Index" class="text-decoration-none">
+                    <h2 class="m-0 display-5 font-weight-semi-bold" style="background-color: #1f1f20; color: white; border: none;">
+                        <img src="~/Content/img/logosach.png" style="width:40px;">Admin
+                    </h2>
+                </a>
+            </div>
+            <div class="col-lg-9">
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+
+                    <a href="#" class="text-decoration-none d-block d-lg-none d-flex ">
+                        Danh mục
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse" style="background-color: #1f1f20;">
+                        <div class="navbar-nav ml-auto py-0" id="admin">
+                            @if (Session["IDkh"] != null)
+                            {
+                                <a href="@Url.Action("InfoCustomer", "LoginUser")" class="nav-item nav-link">Xin chào @Session["TenKH"]  </a>
+                                <a href="@Url.Action("Logout", "LoginUser")" class="nav-item nav-link">Đăng xuất  </a>
+
+                            }
+                            else if (Session["IdQly"] != null)
+                            {
+                                <a href="@Url.Action("QuanTri", "LoginUser")" class="nav-item nav-link" style="color: #ffffff;">Trang ADMIN</a>
+
+                                <a href="@Url.Action("Logout", "LoginUser")" class="nav-item nav-link" style="color: #ffffff;">Đăng xuất  </a>
+
+                            }
+                            else
+                            {
+                                <a href="~/LoginUser/LoginAccountCus" class="nav-item nav-link" style="color:white;">Đăng nhập</a>
+                                <a href="~/LoginUser/RegisterCus" class="nav-item nav-link"style="color:white;">Đăng ký</a>
+                            }
+
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar End -->
+    <!-- Main Star -->
+    <div class="container-fluid pt-5" style="max-width:100%;width:100%;margin-top:2%;background-color:#eeeeee;padding-bottom:10px; justify-content:center;">
+        <div class="row"style="background-color: #eeeeee;">
+            <div class="col-lg-2 col-md-12 bg-light border"style="background-color: #eeeeee;">
+                <div class="mb-4 pb-4 "style="background-color: #eeeeee;">
+                    <h2 class="font-weight-semi-bold text-center"style="background-color: #eeeeee;">ADMIN</h2>
+                    @{
+
+                        var vaitro = Session["Vaitro"] as string;
+                        if (!string.IsNullOrEmpty(vaitro))
+                        {
+                            if (vaitro.Contains("admin") || vaitro.Contains("Quản lý chính"))
+                            {
+
+                            }
+                            <a href="~/SanPhams/Index" class="nav-item nav-link"style="color:black;">Quản lý sách</a>
+                            <a href="~/KhachHangs/Index" class="nav-item nav-link"style="color:black;">Quản lý Khách hàng</a>
+                            <a href="~/DanhMucs/Index" class="nav-item nav-link"style="color:black;">Quản lý thể loại sách</a>
+                            <a href="~/DonHangs/Index" class="nav-item nav-link"style="color:black;">Quản lý đơn hàng</a>
+                            <a href="~/DonHangCTs/Index" class="nav-item nav-link"style="color:black;">Chi tiết đơn hàng</a>
+                            <a href="~/Admins/Index" class="nav-item nav-link"style="color:black;">Quản lí Admin</a>
+                        }
+
+                    }
+
+                </div>
+            </div>
+            <div class="col-lg-10 col-md-12 "style="background-color: #eeeeee;">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <!-- Main END -->
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/Content/lib/easing/easing.min.js"></script>
+    <script src="~/Content/lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="~/Scripts/main.js"></script>
+</body>
+
+</html>

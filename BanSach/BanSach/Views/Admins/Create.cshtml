@@ -1,0 +1,171 @@
+﻿@model BanSach.Models.Admin
+
+@{
+    ViewBag.Title = "Thêm nhân sự";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    body {
+        color: #999;
+        background: #f3f3f3;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .form-control {
+        border-color: #eee;
+        min-height: 41px;
+        box-shadow: none !important;
+        border-radius: 10px;
+    }
+
+        .form-control:focus {
+            border: 3px solid #5cd3b4;
+        }
+
+
+        .form-horizontal h2 {
+            color: #333;
+            padding: 0 30px 10px 30px;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 30px;
+            width: 70%;
+        }
+        .form-horizontal .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-horizontal label {
+            font-weight: normal;
+            font-size: 15px;
+            color: black;
+        }
+
+
+
+        .form-horizontal .btn:hover, .form-horizontal .btn:focus {
+            background: #41cba9;
+            outline: none !important;
+        }
+
+        .form-horizontal a {
+            color: #5cd3b4;
+            text-decoration: underline;
+        }
+
+            .form-horizontal a:hover {
+                text-decoration: none;
+            }
+
+        .form-horizontal form a {
+            color: #5cd3b4;
+            text-decoration: none;
+        }
+
+            .form-horizontal form a:hover {
+                text-decoration: underline;
+            }
+
+    .control-label {
+        color: black;
+    }
+
+    #dangky input {
+        background-color: #5cd3b4;
+        border-radius: 10px;
+        color: snow;
+    }
+
+    #dangky {
+        text-align: center;
+    }
+</style>
+
+
+@using (Html.BeginForm()) 
+{
+   
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h2> Thêm quản lí</h2>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+
+        <div class="control-label col-md-2">ID Quản lí </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">Họ tên </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2"> Email </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2"> Địa chỉ</div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2"> Số điện thoại </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.SoDT, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.SoDT, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2"> Vai trò </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.VaiTro, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.VaiTro, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">  Tài khoản</div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TKhoan, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TKhoan, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2"> Mật khẩu </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.MKhau, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.MKhau, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10" id="dangky">
+            <input type="submit" value="Thêm" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

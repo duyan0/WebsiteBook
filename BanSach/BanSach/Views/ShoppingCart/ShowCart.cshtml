@@ -1,0 +1,205 @@
+﻿
+
+@model BanSach.Models.Cart
+
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .showcart {
+        text-align: center;
+        padding: 5px;
+        
+    }
+
+        .showcart h5 {
+            padding: 20px 0 0 10px;
+        }
+
+    #carQuantity {
+        width: 50px;
+        padding-left: 10px;
+    }
+
+    .thanhtien {
+        bottom: 0;
+        border: solid 1px double;
+        border-radius: 10px;
+        padding: 15px;
+        -moz-box-shadow: 0 4px 8px 0 grey;
+        -webkit-box-shadow: 0 4px 8px 0 grey;
+    }
+
+    .nutthanhtoan {
+        border-radius: 10px;
+        color: white;
+        background-color: crimson;
+        border: none;
+        padding: 5px;
+        float: right;
+    }
+
+    .tb tr td {
+        padding-top: 20px;
+        color:white;
+    }
+
+    .xoa {
+        color:white;
+    }
+
+        .xoa :hover {
+            color: red;
+            text-decoration: none;
+        }
+
+    .thongtinkh input {
+        border-radius: 10px;
+        padding-left: 15px;
+        height:50px;
+        outline:none;
+    }
+
+    .btn, .capnhat {
+        border-radius: 8px;
+    }
+    .showcart a{
+        background-color:crimson;
+        border-radius:10px;      
+        padding:10px;
+        color:white;
+    }
+    .showcart a:hover{
+        text-decoration:none;
+    }
+</style>
+
+<div class="text-center ">
+    <h3 class="m-0 display-5 font-weight-semi-bold text-white">GIỎ HÀNG</h3>
+
+</div>
+
+@if (Model == null || Model.Total_quantity() == 0)
+{
+    <div class="showcart">
+        
+        <h5 class="text-white">
+            Chưa có sản phẩm trong giỏ hàng của bạn.
+        </h5><br />
+
+        @Html.ActionLink("Tiếp tục mua hàng", "ProductList", "SanPhams")
+        
+    </div>
+   
+
+}
+else
+{
+    <table class="table-bordered table-hover w-100">
+        <thead>
+            <tr class="text-center font-weight-semi-bold display-5 text-white">
+                <th>Thông tin</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+                <th>Lựa chọn</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                decimal total = item._quantity * (decimal)item._product.GiaBan.Value;
+                decimal giaban = (decimal)item._product.GiaBan.Value;
+                <tr class="text-center text-white">
+                    <td width="40%">
+                        <img src="~/Content/img/@item._product.HinhAnh" width="140" height="160" style="float:left;" />
+                        <p style="padding-top:40px;">
+                            @Html.DisplayFor(model => item._product.TenSP)
+                        </p>
+                        <p>
+                            <b style="color:red">@giaban.ToString("#,##0").Replace(',', '.').000 đ</b>
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        @using (Html.BeginForm("Update_Cart_Quantity", "ShoppingCart"))
+                        {
+                            <input type="hidden" value="@item._product.IDsp" name="idPro" />
+                            <input type="number" min="1" max="@item._product.SoLuong" @item._product . value="@item._quantity" name="carQuantity" style="width: 50px; text-align: center; border-radius:10px;" />
+                            <input type="submit" value="Cập nhật" class="capnhat bg-white" />
+                        }
+                    </td>
+                    <td style="color: #c92127;"><b>@total.ToString("#,##0").Replace(',', '.').000 đ</b></td>
+
+                    <td class="xoa"><a href="/ShoppingCart/RemoveCart/@item._product.IDsp" class="xoa ">Xóa</a></td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6" style="text-align: right; font-size: x-large; color: white;">
+                    Tổng tiền : <b style="color: #c92127;"> @Model.Total_money().ToString("#,##0").Replace(',', '.').000 đ </b>
+                </td>
+            </tr>
+
+        </tfoot>
+    </table>
+
+    <div class="container-fluid">
+        <form class="col-7 m-auto" action="/ShoppingCart/CheckOut" method="post">
+            <input type="hidden" name="CodeCustomer" value="@Session["IDkh"]" required />
+            <table class="tb m-auto table border-0">
+                <tr>
+                    <td colspan="2"><h4 class="text-center text-white">THÔNG TIN</h4></td>
+                </tr>
+                <tr>
+                    <td>
+                        Tên :
+                    </td>
+                    <td class="thongtinkh">
+                        <input style="width:100%" type="text" name="NameCustomer" value="@Session["TenKH"]" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Số điện thoại :
+                    </td>
+                    <td class="thongtinkh">
+                        <input style="width:100%" type="text" name="PhoneCustomer" value="@Session["SoDT"]" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="thongtinkh">
+                        Địa chỉ giao hàng :
+                    </td>
+                    <td class="thongtinkh">
+                        <input style="width:100%" type="text" name="AddressDeliverry" required />
+                    </td>
+                </tr>
+              
+                @if (Session["IDkh"] != null || Session["IDQly"] != null)
+                {
+                    <tr class="py-2">
+                        <td></td>
+                        <td style="float:inline-end">
+                            <input type="submit" value="Thanh toán" class="btn btn-danger" />
+                        </td>
+                    </tr>
+
+                }
+                else
+                {
+                    <tr class="py-2">
+                        <td>(Hãy đăng nhập trước)</td>
+                        <td>
+                            <a style="width:120px" href="@Url.Action("LoginAccountCus", "LoginUser")" class="btn btn-primary">Đăng nhập</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </form>
+    </div>
+
+
+}
+

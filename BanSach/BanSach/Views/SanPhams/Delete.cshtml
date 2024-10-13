@@ -1,0 +1,24 @@
+﻿@model BanSach.Models.SanPham
+
+@{
+    ViewBag.Title = "Xoá";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<h2 style="text-align:center;padding-bottom:20px;">Bạn có chắc là muốn xoá ?</h2>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+<div class="form-actions no-color">
+    <center>
+        @Html.ActionLink("Xem sản phẩm", "Details", new { id = Model.IDsp }) |
+        <input type="submit" value="Xoá" class="btn btn-danger" style="border-radius:10px; padding:10px;margin:0 10px 0 10px;" /> |
+
+        @Html.ActionLink("Quay về danh sách", "Index")
+    </center>
+    
+</div>
+    }

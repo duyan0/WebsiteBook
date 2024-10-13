@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Đăng ký thành công";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    .mmm a {
+        margin: 15px;
+        background-color: cadetblue;
+        padding: 10px;
+        color: white;
+        border-radius: 15px;
+    }
+
+        .mmm a:hover {
+            text-decoration: none;
+            background-color: #395e60;
+        }
+
+    .mmm {
+        padding: 20px 0 20px 0;
+    }
+</style>
+<center>
+    <h2 class="text-success">Đăng ký tài khoản thành công</h2>
+    <div class="mmm">
+        @Html.ActionLink("Tiếp tục mua hàng", "ProductList", "SanPhams")
+        @Html.ActionLink("Đi đến giỏ hàng", "ShowCart", "ShoppingCart")
+    </div>
+</center>
+
+
+

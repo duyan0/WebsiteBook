@@ -1,0 +1,57 @@
+﻿@model BanSach.Models.SanPham
+
+@{
+    ViewBag.Title = "Chi tiết";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div>
+    <h3>Chi tiết thông tin sách</h3>
+    <hr />
+    <dl class="dl-horizontal">
+        <dd>
+            <b>Tên sách </b> @Html.DisplayFor(model => model.TenSP)
+        </dd>
+
+        <dd>
+            <b> Mô tả</b>  @Html.DisplayFor(model => model.MoTa)
+        </dd>
+
+        <dd>
+            <b> Giá bán</b> @Html.DisplayFor(model => model.GiaBan)0 đ
+        </dd>
+
+        <dd>
+            <b> Hình ảnh</b>  @Html.DisplayFor(model => model.HinhAnh)
+            <img src="~/Content/img/@Model.HinhAnh" width="200">
+        </dd>           
+        <dd>
+            <b> Tác giả</b>
+            @Html.DisplayFor(model => model.TacGia)
+        </dd>
+        <dd>
+            <b> Nhà xuất bản</b>
+            @Html.DisplayFor(model => model.NhaXB)
+        </dd>
+        <dd>
+            <b>Năm xuất bản</b>
+            @Html.DisplayFor(model => model.NamXB)            
+        </dd>
+        <dd>
+            <b>Danh mục</b>
+            @Html.DisplayFor(model => model.DanhMuc.DanhMuc1)
+        </dd>
+        <dd>
+            <b>Thể loại</b>
+            @Html.DisplayFor(model => model.DanhMuc.TheLoai)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.IDsp }) |
+    @Html.ActionLink("Quay về danh sách", "Index") |
+    @Html.ActionLink("Xoá", "Delete", new { id = Model.IDsp })
+</p>

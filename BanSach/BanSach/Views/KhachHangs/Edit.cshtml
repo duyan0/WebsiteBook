@@ -1,0 +1,215 @@
+﻿@model BanSach.Models.KhachHang
+
+@{
+    ViewBag.Title = "Cập nhật thông tin cá nhân";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    body {
+        color: #999;
+        background: #999;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .form-control {
+        border-color: #eee;
+        min-height: 41px;
+        margin-left: 3%;
+        width: 100%;
+        padding: 5px;
+    }
+
+        .form-control:focus {
+            border: 3px solid #5cd3b4;
+        }
+
+    .form-control, .btn, #MKhau, #ConfirmPass {
+        border-radius: 7px;
+    }
+
+    .form-horizontal {
+        width: 500px;
+        margin: 5% auto;
+        padding: 30px 0;
+        background-color:#999;
+    }
+
+        .form-horizontal h2 {
+            color: #333;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 30px 10px 30px;
+            border-bottom: 3px solid #5cd3b4;
+        }
+
+    #dangky {
+        margin-left: 30%;
+    }
+
+    .form-horizontal {
+        color: #333;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        background: #fff;
+        box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+    }
+
+        .form-horizontal .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-horizontal label {
+            font-weight: normal;
+            font-size: 15px;
+            color: black;
+        }
+
+        .form-horizontal input[type="checkbox"] {
+            margin-top: 2px;
+        }
+
+        .form-horizontal .btn {
+            font-size: 16px;
+            font-weight: bold;
+            background: none;
+            border: none;
+            margin-top: 20px;
+            min-width: 140px;
+        }
+
+            .form-horizontal .btn:hover, .form-horizontal .btn:focus {
+                background: #41cba9;
+              
+            }
+
+        .form-horizontal a {
+            color: #5cd3b4;
+            text-decoration: underline;
+        }
+
+            .form-horizontal a:hover {
+                text-decoration: none;
+            }
+
+        .form-horizontal form a {
+            color: #5cd3b4;
+            text-decoration: none;
+        }
+
+            .form-horizontal form a:hover {
+                text-decoration: underline;
+            }
+
+    .control-label {
+        color: black;
+    }
+
+    #MKhau, #ConfirmPass {
+        width: 100%;
+        border-color: #eee;
+        min-height: 41px;
+        box-shadow: none;
+        margin-left: 3%;
+    }
+
+        #MKhau:focus, #ConfirmPass:focus {
+            border: 3px solid #5cd3b4;
+        }
+
+    #save {
+        color: white;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+        #save input {
+            color: white;
+        }
+
+    .form-horizontal h3 {
+        text-align: center;
+        color: black;
+    }
+</style>
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal"style="background: #d9d9d9;">
+        <h3>Cập nhật thông tin</h3>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IDkh)
+
+        <div class="form-group">
+            <div class="control-label">Tên </div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TenKH, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TenKH, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label"> Số điện thoại </div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SoDT, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SoDT, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label ">Email </div>
+            <div class="col-sm-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label">Tài khoản </div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TKhoan, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TKhoan, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label">Mật khẩu mới</div>
+            <div class="col-md-10">
+                <input type="password" id="MKhau" name="MKhau" class="form-control" value="@Model.MKhau.Trim()" />
+                @Html.ValidationMessageFor(model => model.MKhau, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="control-label">Nhập lại mật khẩu mới</div>
+            <div class="col-md-10">
+                <input type="password" id="ConfirmPass" name="ConfirmPass" class="form-control" value="@Model.MKhau.Trim()" />
+
+                @if (ViewBag.Error != null)
+                {
+                    <center><font color="red"><p>@ViewBag.Error</p></font></center>
+                }
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10" id="save">
+                <input type="submit" value="Lưu thay đổi" class="btn bg-dark" />
+            </div>
+           
+        </div>
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

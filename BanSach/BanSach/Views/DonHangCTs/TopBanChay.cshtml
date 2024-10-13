@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BanSach.Models.ViewModel>
+
+<style>
+    .card a:hover {
+        text-decoration: none;
+    }
+</style>
+<div class="container-fluid py-5 ">
+    <div class="text-center mb-4">
+        <h2 class="px-5">
+            <span class="px-2" style="font-weight:bold;color:white;">Sản phẩm bán chạy</span>
+        </h2>
+    </div>
+    <div class="row px-xl-5 ">
+        <div class="col">
+            <div class="owl-carousel related-carousel ">
+                @foreach (var i in Model)
+                {
+                    <div class="card product-item" style="border-radius:20px;outline:0;">
+                        <a href="~/SanPhams/TrangSP/@i.IdPro">
+                            <div class="card-header product-img position-relative overflow-hidden bg-transparent rounded-circle ">
+                                <img class="img-fluid w-100 " src="~/Content/img/@i.ImgPro" alt="">
+                            </div>
+                            <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                <h6 class="text-truncate mb-3">@Html.DisplayFor(model => i.NamePro)</h6>
+                                <div class="d-flex justify-content-center">
+                                    <p style="color:red;">
+                                        @String.Format("{0:C0}", i.price)
+                                    </p>
+                                    <h6 class="text-muted ml-2"></h6>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

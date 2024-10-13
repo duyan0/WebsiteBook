@@ -1,0 +1,99 @@
+﻿@model BanSach.Models.SanPham
+
+@{
+    ViewBag.Title ="Sách "+Model.TenSP;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .left {
+        min-height: 450px;
+        margin-top: 10px;
+        min-width: 20%;
+        max-width: 40%;
+        float: left;
+    }
+
+    .right {
+        margin-top: 10px;
+        min-height: 450px;
+        float: inline-start;
+        margin-left: 5%;
+        margin-right: 5%;
+        max-width: 50%;
+    }
+
+    #productdetails {
+       min-height:420px;
+    }
+
+    #nut1, #nut2 {
+        border: 2px solid #c92127;
+        border-radius: 8px;
+        margin: 5px;
+        text-align: center;
+        display:inline-block;
+    }
+
+    #nut2 {
+        background-color: #c92127;
+        color: white;
+        padding: 5px 10%;
+    }
+        #nut2:hover {
+            text-decoration: none;
+        }
+
+    #nut1{
+        color: #c92127;
+        padding: 5px 2%;
+    }
+    #nut1:hover{
+        text-decoration:none;
+    }
+
+    .anh {
+        text-align: center;
+        padding-bottom: 10px;
+    }
+
+    .price {
+        color: #c92127;
+        letter-spacing: 2px;
+        font-size: x-large;
+    }
+
+    .nut {
+        text-align: center;
+    }
+
+</style>
+
+<div class="container-fluid" id="productdetails">
+    <div class="row">
+        <div class="left">
+            <div class="anh">
+                <img src="~/Content/img/@Model.HinhAnh" style="width:70%;" />
+            </div>
+            <div class="nut">
+                <a href="/ShoppingCart/AddToCart/@Model.IDsp" id="nut1" onclick="return themthanhcong()">Thêm vào giỏ hàng</a>
+                <a href="/ShoppingCart/MuaNgay/@Model.IDsp" id="nut2">Mua ngay</a>
+            </div>
+        </div>
+        <div class="right" style="color:white;">
+            <h3 style="color:white;">@Model.TenSP</h3>
+            <p>Tác giả : <b>@Model.TacGia</b></p>
+            <p>Nhà xuất bản : <b>@Model.NhaXB</b></p>
+            <p style="color:red;">
+                @String.Format("{0:C0}", @Model.GiaBan)
+            </p>
+            <p>Mô tả : <b>@Model.MoTa</b></p>
+            
+        </div>
+    </div>
+</div>
+
+<script>
+    function themthanhcong() {
+        return alert("Thêm vào giỏ hàng thành công");
+    }
+</script>

@@ -1,0 +1,104 @@
+﻿@model BanSach.Models.KhachHang
+
+@{
+    ViewBag.Title = "Thông tin cá nhân";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+
+    table, h2 {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    h2 {
+        text-align: center;
+        color: white;
+        border-radius: 10px;
+    }
+
+    tr {
+        border: 2px solid white;
+        color: steelblue;
+        width: 100%;
+    }
+
+    .thongtin {
+        color: white;
+    }
+
+    table {
+        font-size: large;
+        width: 70%;
+       
+    }
+
+    .tieude {
+        padding: 10px;
+        color:white
+    }
+    p{
+        margin-top:20px;        
+    }
+        p a {
+            background-color: #00a693;
+            color: white;
+            border-radius: 15px;
+            padding: 15px
+        }
+            p a:hover {
+                text-decoration: none;
+                background-color: #00827f;
+                color:white;
+            }
+
+</style>
+
+<h2>Thông tin tài khoản</h2>
+
+<table class="bang">
+    <tr>
+        <td class="tieude"> <b> Tên  </b></td>
+        <td class="thongtin">
+            @Html.DisplayFor(model => model.TenKH)
+        </td>
+    </tr>
+    <tr>
+        <td class="tieude">
+            <b>Số điện thoại  </b>
+
+        </td>
+        <td class="thongtin">
+            @Html.DisplayFor(model => model.SoDT)
+        </td>
+    </tr>
+    <tr>
+        <td class="tieude">
+            <b>Email  </b>
+        </td>
+        <td class="thongtin">
+            @Html.DisplayFor(model => model.Email)
+        </td>
+    </tr>
+    <tr>
+        <td class="tieude">
+            <b>Tài khoản  </b>
+        </td>
+        <td class="thongtin">
+            @Html.DisplayFor(model => model.TKhoan)
+        </td>
+    </tr>
+    <tr>
+        <td class="tieude">
+            <b>Mật khẩu  </b>
+        <td class="thongtin">
+            <p>@Html.DisplayFor(model => model.MKhau)</p>           
+        </td>
+    </tr>
+</table>
+<div>
+    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.IDkh })
+</div>
+
