@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Trang quản lý";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .quanly{
+        width:100%;
+    }
+    .quanly h2{
+        background-color:darkslategrey;
+        color:snow;
+        text-align:center;
+        text-transform:uppercase;
+        padding:10px;
+        border-radius:15px;
+    }
+    .quanly a{
+        font-size:20px;
+        text-align:center;
+        margin:10px auto 10px auto;
+        font-weight:bold;
+        background-color:cadetblue;
+        width:50%;
+        border-radius:15px;
+        color:aliceblue;
+    }
+    .quanly a:hover{
+        color:darkorange;
+    }
+</style>
+<center>
+    <h1 style="font-family:Roboto,sans-serif;color:#af2f2fe2"><b>Xin chào @Session["TenQly"]</b></h1>
+    <h3>Chúc bạn 1 ngày vui vẻ nhóoooo</h3>
+</center>
+
+

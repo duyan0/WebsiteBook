@@ -1,0 +1,149 @@
+﻿@model BanSach.Models.SanPham
+
+@{
+    ViewBag.Title ="Sách "+Model.TenSP;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .left {
+        min-height: 450px;
+        margin-top: 10px;
+        min-width: 20%;
+        max-width: 40%;
+        float: left;
+    }
+
+    .right {
+        margin-top: 10px;
+        min-height: 450px;
+        float: inline-start;
+        margin-left: 5%;
+        margin-right: 5%;
+        max-width: 50%;
+    }
+
+    #productdetails {
+       min-height:420px;
+    }
+
+    #nut1, #nut2 {
+        border: 2px solid #c92127;
+        border-radius: 8px;
+        margin: 5px;
+        text-align: center;
+        display:inline-block;
+    }
+
+    #nut2 {
+        background-color: #c92127;
+        color: white;
+        padding: 5px 10%;
+    }
+        #nut2:hover {
+            text-decoration: none;
+        }
+
+    #nut1{
+        color: #c92127;
+        padding: 5px 2%;
+    }
+    #nut1:hover{
+        text-decoration:none;
+    }
+
+    .anh {
+        text-align: center;
+        padding-bottom: 10px;
+    }
+
+    .price {
+        color: #c92127;
+        letter-spacing: 2px;
+        font-size: x-large;
+    }
+
+    .nut {
+        text-align: center;
+    }
+    /* CSS cho thông báo tùy chỉnh */
+    #notification {
+        display: none;
+        position: fixed;
+        top: 5rem;
+        right: 20px;
+        background-color: #4caf50; /* Màu nền xanh lá */
+        color: white; /* Màu chữ trắng */
+        padding: 15px;
+        border-radius: 5px;
+        font-size: 16px;
+        z-index: 1000;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        transition: opacity 1s ease-in-out; /* Tạo hiệu ứng mờ dần */
+    }
+
+        /* Hiện thông báo */
+        #notification.show {
+            display: block;
+            opacity: 1; /* Đặt opacity về 1 để hiển thị */
+        }
+
+        /* Ẩn thông báo */
+        #notification.hide {
+            opacity: 0; /* Mờ dần */
+        }
+
+
+</style>
+
+<div class="container-fluid" id="productdetails">
+    <div class="row">
+        <div class="left">
+            <div class="anh">
+                <img src="~/Content/img/@Model.HinhAnh" style="width:70%;" />
+            </div>
+            <div class="nut">
+                <a href="/ShoppingCart/AddToCart/@Model.IDsp" id="nut1" onclick="themthanhcong(event, '@Model.IDsp')">Thêm vào giỏ hàng</a>
+                <a href="/ShoppingCart/MuaNgay/@Model.IDsp" id="nut2">Mua ngay</a>
+            </div>
+        </div>
+        <div class="right" style="color:white;">
+            <h3 style="color:white;">@Model.TenSP</h3>
+            <p>Tác giả : <b>@Model.TacGia</b></p>
+            <p>Nhà xuất bản : <b>@Model.NhaXB</b></p>
+            <p style="color:red;">
+                @String.Format("{0:C0}", @Model.GiaBan)
+            </p>
+            <p>Mô tả : <b>@Model.MoTa</b></p>
+            <div id="notification">Thêm vào giỏ hàng thành công!</div>
+        </div>
+    </div>
+</div>
+
+<script >
+    function themthanhcong(event, productId) {
+        // Ngăn chặn điều hướng ngay lập tức
+        event.preventDefault();
+
+        var notification = document.getElementById("notification");
+
+        // Hiển thị thông báo
+        notification.classList.add("show");
+        notification.classList.remove("hide");  // Bỏ lớp 'hide' nếu có
+
+        // Ẩn thông báo sau 5 giây
+        setTimeout(function () {
+            notification.classList.add("hide");
+            // Sau khi ẩn thông báo, thực hiện điều hướng
+            setTimeout(function () {
+                notification.classList.remove("show", "hide");
+
+                // Điều hướng tới URL sau khi thông báo ẩn
+                window.location.href = "/ShoppingCart/AddToCart/" + productId;
+            }, 1000); // 1 giây để hoàn tất hiệu ứng mờ dần
+        }, 2000); // Hiển thị thông báo trong 5 giây
+    }
+
+
+
+</script>

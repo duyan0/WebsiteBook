@@ -1,0 +1,98 @@
+﻿@model IEnumerable<BanSach.Models.DonHang>
+
+@{
+    ViewBag.Title = "Quản lý đơn hàng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .tieude {
+        text-align: center;
+        font-weight: bold;
+        color: black;
+    }
+
+    .them a {
+        border-radius: 10px;
+        background-color: #212121;
+        color: white;
+        font-size: large;
+        padding: 5px;
+        margin: 50px 10px 0 10px;
+    }
+
+        .them a:hover {
+            text-decoration: none;
+            color: white;
+            background-color: #027171;
+        }
+
+    .table-striped {
+        width: 100%;
+    }
+</style>
+
+<h2 class="tieude">Quản lý đơn hàng</h2>
+
+<p class="them">
+    @Html.ActionLink("Thêm đơn hàng", "Create")
+</p>
+<table class="table table-striped">
+    <tr style="color: black; text-align: left;">
+        <th >
+            Mã đơn h
+        </th>
+        <th>
+            ID KH
+        </th>
+        <th>
+            Tên khách hàng
+        </th>
+        <th>
+            Địa chỉ
+        </th><th>
+            Ngày đặt hàng
+        </th><th>
+            Ngày nhận hàng
+        </th>
+
+        <th>Chỉnh sửa</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDdh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDkh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KhachHang.TenKH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiaChi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayDatHang)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayNhanHang)
+            </td>
+            <td>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.IDdh }, new { @class = "delete-link" }) |
+               
+                @Html.ActionLink("Xoá", "Delete", new { id = item.IDdh }, new { @class = "delete-link" })
+            </td>
+        </tr>
+    }
+</table>
+<style>
+    .delete-link {
+        color: red; /* Sửa màu trong đây nhaa*/
+    }
+
+        .delete-link:hover {
+            color: darkred; /* Sửa màu trong đây nhaa*/
+        }
+</style>
