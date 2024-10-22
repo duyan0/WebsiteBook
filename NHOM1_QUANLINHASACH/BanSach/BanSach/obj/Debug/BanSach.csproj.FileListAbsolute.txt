@@ -520,3 +520,8 @@ D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Debug\BanSach.csproj.CoreComp
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Debug\BanSach.csproj.Up2Date
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Debug\BanSach.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Debug\BanSach.pdb
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.Managed.Core.CurrentVersions.targets
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Buffers.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Memory.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Numerics.Vectors.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Runtime.CompilerServices.Unsafe.dll

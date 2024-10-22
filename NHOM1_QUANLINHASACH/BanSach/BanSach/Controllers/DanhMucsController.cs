@@ -58,6 +58,16 @@ namespace BanSach.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Kiểm tra xem danh mục và thể loại đã tồn tại chưa
+                var existingCategory = db.DanhMuc
+                    .FirstOrDefault(d => d.DanhMuc1 == danhMuc.DanhMuc1 && d.TheLoai == danhMuc.TheLoai);
+
+                if (existingCategory != null)
+                {
+                    ModelState.AddModelError("", "Danh mục và thể loại đã tồn tại. Vui lòng nhập danh mục khác.");
+                    return View(danhMuc);
+                }
+
                 db.DanhMuc.Add(danhMuc);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -65,6 +75,8 @@ namespace BanSach.Controllers
 
             return View(danhMuc);
         }
+
+
 
         // GET: DanhMucs/Edit/5
         public ActionResult Edit(int? id)

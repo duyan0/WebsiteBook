@@ -72,12 +72,13 @@
                 @Html.DisplayFor(modelItem => item.TKhoan)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MKhau)
+                @Html.DisplayFor(modelItem => item.MKhau).ToString().Replace(@item.MKhau, "********")
             </td>
+
             <td>
-                @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.IDkh }, new { @class = "delete-link" }) |
-                @Html.ActionLink("Thông tin", "Details", new { id = item.IDkh }, new { @class = "delete-link" }) |
-                @Html.ActionLink("Xoá", "Delete", new { id = item.IDkh }, new { @class = "delete-link" })
+                @Html.ActionLink("Sửa", "Edit", new { id = item.IDkh }, new { @class = "btn btn-warning btn-sm rounded-sm" })
+                @Html.ActionLink("Xoá", "Delete", new { id = item.IDkh }, new { @class = "btn btn-danger btn-sm rounded-sm" })
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.IDkh }, new { @class = "btn btn-info btn-sm rounded-sm" })
             </td>
         </tr>
     }

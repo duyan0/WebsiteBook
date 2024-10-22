@@ -81,9 +81,15 @@
                         <div class="navbar-nav ml-auto py-0" id="user">
                             @if (Session["IDkh"] != null)
                             {
-                                <a href="@Url.Action("InfoCustomer", "LoginUser")" class="nav-item nav-link" style="color:white;">@Session["TenKH"] </a>
-                                <a href="@Url.Action("Logout", "LoginUser")" class="nav-item nav-link" style="color: white;">Đăng xuất  </a>
-                                <a href="@Url.Action("#", "#")" class="nav-item nav-link" style="color: white;">Thoâng tin ñôn haøng  </a>
+                                <div class="dropdown">
+                                    <a href="#" class="nav-item nav-link" style="color:white;">@Session["TenKH"]</a>
+                                    <div class="dropdown-content">
+                                        <a href="@Url.Action("InfoCustomer", "LoginUser")">Thông tin cá nhân</a>
+                                        <a href="@Url.Action("Logout", "LoginUser")">Đăng xuất</a>
+                                        <a href="@Url.Action("#", "#")">Thông tin đơn hàng</a>
+                                    </div>
+                                </div>
+
 
                             }
                             else if (Session["IdQly"] != null)
@@ -127,8 +133,9 @@
             @RenderBody()
         </div>
     </div>
+
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/bootstrap.bundle.js"></script>
     @RenderSection("scripts", required: false)
     <!-- Main END -->
     <!-- Footer Start -->
@@ -165,20 +172,23 @@
         .pk-1 {
             font-size: 18px;
             font-weight: bold;
-             margin-bottom: 10px;
+            margin-bottom: 10px;
         }
 
         .pk-2 a {
             text-decoration: none;
             color: white;
         }
+
             .pk-2 a:hover {
                 color: red;
                 text-decoration: underline;
             }
+
         .pk-2 i {
             width: 20px;
         }
+
         .pk-3 a {
             padding-bottom: 10px;
             display: flex;
@@ -212,7 +222,38 @@
             margin-left: 15rem;
             margin-right: 15rem;
         }
-        
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            border-radius: 1rem;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 2;
+            border-radius: 1rem;
+        }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #ff0000;
+                    border-radius: 1rem;
+                }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
     </style>
     <!-- Footer End -->
     <!-- JavaScript Libraries -->

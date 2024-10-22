@@ -23,11 +23,12 @@
         .them a:hover {
             text-decoration: none;
             color: white;
-            background-color:#027171;
+            background-color: #027171;
         }
-        .table-striped{
-        width:100%;
-        }
+
+    .table-striped {
+        width: 100%;
+    }
 </style>
 
 <h2 class="tieude">Thông tin sách</h2>
@@ -36,44 +37,101 @@
     @Html.ActionLink("Thêm sách", "Create")
 </p>
 
-<table class="table table-condensed">
-    <tr style=" color: black; text-align: left;">
-        <th style="border-top-left-radius: 25px;width:20%"> Tên Sách </th>       
-        <th>Thể loại</th>
-        <th> Giá</th>
-        <th> Số lượng</th>
-        <th>Hình</th>
-        <th style="width:15%;">Tác giả</th>
-        <th>Nhà xuất bản</th>
-        <th>Chỉnh sửa</th>
-    </tr>
-    @foreach (var item in Model)
-    {
-        <tr style="color: #212121">
-            <td > @Html.DisplayFor(modelItem => item.TenSP)</td>
-            <td> @Html.DisplayFor(modelItem => item.DanhMuc.TheLoai)</td>
-            <td>
-                @String.Format("{0:C0}", item.GiaBan)
-            </td>
-            <td>@Html.DisplayFor(modelItem => item.SoLuong)</td>
-            <td><img src="~/Content/img/@item.HinhAnh" width="60" /></td>
-            <td> @Html.DisplayFor(modelItem => item.TacGia)</td>
-            <td> @Html.DisplayFor(modelItem => item.NhaXB) </td>
-            <td style="color:red;">
-                @Html.ActionLink("Sửa", "Edit", new { id = item.IDsp }, new { @class = "delete-link" }) |
-                @Html.ActionLink("Xem", "Details", new { id = item.IDsp }, new { @class = "delete-link" }) |
-                @Html.ActionLink("Xoá", "Delete", new { id = item.IDsp }, new { @class = "delete-link" })
-            </td>
+<table class="table table-condensed table-bordered table-hover">
+    <thead style="background-color: black; color: white; text-align: left;">
+        <tr>
+            <th style="border-top-left-radius: 25px; width: 20%;">Tên Sách</th>
+            <th>Thể loại</th>
+            <th>Giá tiền</th>
+            <th>Số lượng</th>
+            <th>Ảnh sách</th>
+            <th style="width: 15%;">Tác giả</th>
+            <th>Nhà xuất bản</th>
+            <th style="border-top-right-radius: 25px;">Chỉnh sửa</th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr style="color: #212121">
+                <td>@Html.DisplayFor(modelItem => item.TenSP)</td>
+                <td>@Html.DisplayFor(modelItem => item.DanhMuc.TheLoai)</td>
+                <td>@string.Format("{0:N0} VND", item.GiaBan)</td>
+                <td>@Html.DisplayFor(modelItem => item.SoLuong)</td>
+                <td><img src="~/Content/img/@item.HinhAnh" width="60" alt="Ảnh khổng hiển thị" /></td>
+                <td>@Html.DisplayFor(modelItem => item.TacGia)</td>
+                <td>@Html.DisplayFor(modelItem => item.NhaXB)</td>
+                <td>
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.IDsp }, new { @class = "btn btn-warning btn-sm rounded-sm" })
+                    @Html.ActionLink("Xoá", "Delete", new { id = item.IDsp }, new { @class = "btn btn-danger btn-sm rounded-sm" })
+                    @Html.ActionLink("Chi tiết", "Details", new { id = item.IDsp }, new { @class = "btn btn-info btn-sm rounded-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+
 <style>
-    .delete-link {
-        color: red; /* Sửa màu trong đây nhaa*/
+    .table {
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        margin-top: 20px;
+        width: 100%;
     }
-        .delete-link:hover {
-            color: darkred; /* Sửa màu trong đây nhaa*/
-            
+
+    thead {
+        background-color: black;
+        color: white;
+        font-weight: bold;
+    }
+
+    tbody tr {
+        transition: background-color 0.2s ease;
+    }
+
+        tbody tr:hover {
+            background-color: #f5f5f5;
         }
 
+    th, td {
+        padding: 12px;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    .edit-link {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+        .edit-link:hover {
+            color: #0056b3;
+        }
+
+    .details-link {
+        color: #28a745;
+        text-decoration: none;
+    }
+
+        .details-link:hover {
+            color: #218838;
+        }
+
+    .delete-link {
+        color: #dc3545;
+        text-decoration: none;
+    }
+
+        .delete-link:hover {
+            color: #c82333;
+        }
+
+    img {
+        border-radius: 8px;
+    }
+
+    .table-hover tbody tr:hover td {
+        background-color: #f1f1f1;
+    }
 </style>
+

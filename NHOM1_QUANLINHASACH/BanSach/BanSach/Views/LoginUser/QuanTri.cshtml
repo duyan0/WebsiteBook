@@ -4,34 +4,63 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <style>
-    .quanly{
-        width:100%;
+    .quanly {
+        width: 100%;
+        max-width: 800px; /* Giới hạn chiều rộng cho đẹp mắt */
+        margin: 0 auto; /* Canh giữa */
+        padding: 20px; /* Thêm padding cho không gian */
+        border-radius: 15px;
+        background-color: #f9f9f9; /* Nền sáng hơn */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Thêm bóng cho khối */
+        margin-top:4rem;
     }
-    .quanly h2{
-        background-color:darkslategrey;
-        color:snow;
-        text-align:center;
-        text-transform:uppercase;
-        padding:10px;
-        border-radius:15px;
-    }
-    .quanly a{
-        font-size:20px;
-        text-align:center;
-        margin:10px auto 10px auto;
-        font-weight:bold;
-        background-color:cadetblue;
-        width:50%;
-        border-radius:15px;
-        color:aliceblue;
-    }
-    .quanly a:hover{
-        color:darkorange;
+
+        .quanly h2 {
+            background-color: darkslategrey;
+            color: snow;
+            text-align: center;
+            text-transform: uppercase;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px; /* Khoảng cách dưới */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Thêm bóng cho tiêu đề */
+        }
+
+        .quanly a {
+            display: inline-block; /* Để căn giữa */
+            font-size: 20px;
+            text-align: center;
+            margin: 10px auto;
+            font-weight: bold;
+            background-color: cadetblue;
+            width: 60%; /* Để nút rộng hơn */
+            border-radius: 10px;
+            color: aliceblue;
+            padding: 15px; /* Thêm padding cho nút */
+            text-decoration: none; /* Bỏ gạch chân */
+            transition: background-color 0.3s, transform 0.2s; /* Hiệu ứng chuyển đổi */
+        }
+
+            .quanly a:hover {
+                color: darkorange;
+                background-color: #5f9ea0; /* Màu nền khác khi hover */
+                transform: scale(1.05); /* Tăng kích thước khi hover */
+            }
+
+    .welcome-message {
+        text-align: center;
+        margin-bottom: 30px; /* Khoảng cách dưới cho thông điệp */
     }
 </style>
+
 <center>
-    <h1 style="font-family:Roboto,sans-serif;color:#af2f2fe2"><b>Xin chào @Session["TenQly"]</b></h1>
-    <h3>Chúc bạn 1 ngày vui vẻ nhóoooo</h3>
+    <div class="quanly">
+        <h1 style="font-family: 'Roboto', sans-serif; color: #af2f2fe2; margin-bottom: 20px;"><b>Xin chào @Session["TenQly"]</b></h1>
+        <h3 class="welcome-message">Chúc bạn một ngày vui vẻ nhóoooo!</h3>
+        <a href="#">Đi đến trang quản lý</a> <!-- Thêm một ví dụ cho nút -->
+        <a href="#">Xem báo cáo</a> <!-- Thêm một ví dụ cho nút -->
+    </div>
 </center>
+
 
 

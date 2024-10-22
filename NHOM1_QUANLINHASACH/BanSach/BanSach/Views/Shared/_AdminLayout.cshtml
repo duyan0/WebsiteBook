@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="utf-8">
@@ -41,9 +41,7 @@
             <div class="col-lg-9">
                 <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
 
-                    <a href="#" class="text-decoration-none d-block d-lg-none d-flex ">
-                        Danh mục
-                    </a>
+
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -65,7 +63,7 @@
                             else
                             {
                                 <a href="~/LoginUser/LoginAccountCus" class="nav-item nav-link" style="color:white;">Đăng nhập</a>
-                                <a href="~/LoginUser/RegisterCus" class="nav-item nav-link"style="color:white;">Đăng ký</a>
+                                <a href="~/LoginUser/RegisterCus" class="nav-item nav-link" style="color:white;">Đăng ký</a>
                             }
 
                         </div>
@@ -77,10 +75,10 @@
     <!-- Navbar End -->
     <!-- Main Star -->
     <div class="container-fluid pt-5" style="max-width:100%;width:100%;margin-top:2%;background-color:#eeeeee;padding-bottom:10px; justify-content:center;">
-        <div class="row"style="background-color: #eeeeee;">
-            <div class="col-lg-2 col-md-12 bg-light border"style="background-color: #eeeeee;">
-                <div class="mb-4 pb-4 "style="background-color: #eeeeee;">
-                    <h2 class="font-weight-semi-bold text-center"style="background-color: #eeeeee;">ADMIN</h2>
+        <div class="row" style="background-color: #eeeeee;">
+            <div class="col-lg-2 col-md-12 bg-light border" style="background-color: #eeeeee;">
+                <div class="mb-4 pb-4 " style="background-color: #eeeeee;">
+                    <h2 class="font-weight-semi-bold text-center" style="background-color: #eeeeee;">ADMIN</h2>
                     @{
 
                         var vaitro = Session["Vaitro"] as string;
@@ -90,25 +88,30 @@
                             {
 
                             }
-                            <a href="~/SanPhams/Index" class="nav-item nav-link"style="color:black;">Quản lý sách</a>
-                            <a href="~/KhachHangs/Index" class="nav-item nav-link"style="color:black;">Quản lý Khách hàng</a>
-                            <a href="~/DanhMucs/Index" class="nav-item nav-link"style="color:black;">Quản lý thể loại sách</a>
-                            <a href="~/DonHangs/Index" class="nav-item nav-link"style="color:black;">Quản lý đơn hàng</a>
-                            <a href="~/DonHangCTs/Index" class="nav-item nav-link"style="color:black;">Chi tiết đơn hàng</a>
-                            <a href="~/Admins/Index" class="nav-item nav-link"style="color:black;">Quản lí Admin</a>
+                            <nav id="concard">
+                                <a href="~/SanPhams/Index" class="nav-item nav-link">Quản lý sách</a>
+                                <a href="~/KhachHangs/Index" class="nav-item nav-link">Quản lý Khách hàng</a>
+                                <a href="~/DanhMucs/Index" class="nav-item nav-link">Quản lý thể loại sách</a>
+                                <a href="~/DonHangs/Index" class="nav-item nav-link">Quản lý đơn hàng</a>
+                                <a href="~/DonHangCTs/Index" class="nav-item nav-link">Chi tiết đơn hàng</a>
+                                <a href="~/Admins/Index" class="nav-item nav-link">Quản lý nhân sự</a>
+                                <a href="#" class="nav-item nav-link">Quản lý Tác giả</a>
+                                <a href="#" class="nav-item nav-link">Quản lý Nhà xuất bản</a>
+                            </nav>
+
                         }
 
                     }
 
                 </div>
             </div>
-            <div class="col-lg-10 col-md-12 "style="background-color: #eeeeee;">
+            <div class="col-lg-10 col-md-12 " style="background-color: #eeeeee;">
                 @RenderBody()
             </div>
         </div>
     </div>
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/bootstrap.bundle.js"></script>
     @RenderSection("scripts", required: false)
     <!-- Main END -->
     <!-- JavaScript Libraries -->
@@ -120,6 +123,59 @@
 
     <!-- Template Javascript -->
     <script src="~/Scripts/main.js"></script>
+    <style>
+        #concard {
+            display: flex;
+            flex-direction: column;
+            background-color: #f8f9fa;
+            padding: 10px;
+        }
+
+            #concard a {
+                text-decoration: none; /* Bỏ gạch chân mặc định */
+                color: black; /* Màu chữ */
+                padding: 10px 15px;
+                margin-bottom: 5px;
+                border-radius: 4px;
+                transition: background-color 0.3s ease;
+            }
+
+                #concard a:hover {
+                    background-color: #acaf79dd; /* Màu nền khi hover */
+                    color: black; /* Màu chữ khi hover */
+                    transition: 0.1s ease-in-out;
+                }
+
+                #concard a.nav-item.active {
+                    background-color: #007bff; /* Màu nền cho mục đang hoạt động */
+                    color: white; /* Màu chữ cho mục đang hoạt động */
+                }
+
+                #concard a.nav-item {
+                    font-weight: bold; /* Tô đậm chữ */
+                    display: block; /* Đặt các link thành dạng block */
+                    border: 1px solid #ddd; /* Đường viền nhẹ */
+                }
+    </style>
 </body>
+<footer class="bg-dark text-white text-center py-4 mt-5">
+    <div class="container">
+        <p class="mb-0">© 2024 Công ty CHI SÁO SẬU. Bản quyền thuộc về Công ty CHI SÁO SẬU  . Tất cả quyền được bảo lưu.</p>
+        <ul class="list-inline mt-2">
+            <li class="list-inline-item">
+                <a href="#" class="text-white">Trang chủ</a>
+            </li>
+            <li class="list-inline-item">
+                <a href="#" class="text-white">Giới thiệu</a>
+            </li>
+            <li class="list-inline-item">
+                <a href="#" class="text-white">Liên hệ</a>
+            </li>
+            <li class="list-inline-item">
+                <a href="#" class="text-white">Chính sách bảo mật</a>
+            </li>
+        </ul>
+    </div>
+</footer>
 
 </html>

@@ -100,7 +100,7 @@
     <div class="row">
         <div class="left">
             <div class="anh">
-                <img src="~/Content/img/@Model.HinhAnh" style="width:70%;" />
+                <img src="~/Content/img/@Model.HinhAnh" style="width:70%;"class="rounded-sm" />
             </div>
             <div class="nut">
                 <a href="/ShoppingCart/AddToCart/@Model.IDsp" id="nut1" onclick="themthanhcong(event, '@Model.IDsp')">Thêm vào giỏ hàng</a>
@@ -108,11 +108,11 @@
             </div>
         </div>
         <div class="right" style="color:white;">
-            <h3 style="color:white;">@Model.TenSP</h3>
+            <p>Tên sách: <b>@Model.TenSP</b></p>
             <p>Tác giả : <b>@Model.TacGia</b></p>
             <p>Nhà xuất bản : <b>@Model.NhaXB</b></p>
-            <p style="color:red;">
-                @String.Format("{0:C0}", @Model.GiaBan)
+            <p style="color:red;">Giá tiền:
+                <b>@String.Format("{0:C0}", @Model.GiaBan)</b>
             </p>
             <p>Mô tả : <b>@Model.MoTa</b></p>
             <div id="notification">Thêm vào giỏ hàng thành công!</div>

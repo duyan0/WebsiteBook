@@ -5,71 +5,69 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Details</h2>
+<h2 class="text-center mb-5 font-weight-bold text-black">Chi tiết tài khoản Admin</h2>
 
-<div>
-    <h4>Admin</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.HoTen)
-        </dt>
+<div class="container">
+    <div class="card shadow-lg border-0">
+        <div class="card-body p-4">
+            <dl class="row">
+                <dt class="col-sm-3 font-weight-bold text-dark">
+                    Họ và tên
+                </dt>
+                <dd class="col-sm-9 text-muted">
+                    @Html.DisplayFor(model => model.HoTen)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.HoTen)
-        </dd>
+                <dt class="col-sm-3 font-weight-bold text-dark">
+                   Email
+                </dt>
+                <dd class="col-sm-9 text-muted">
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+                <dt class="col-sm-3 font-weight-bold text-dark">
+                    Địa chỉ
+                </dt>
+                <dd class="col-sm-9 text-muted">
+                    @Html.DisplayFor(model => model.DiaChi)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+                <dt class="col-sm-3 font-weight-bold text-dark">
+                    Số điện thoại
+                </dt>
+                <dd class="col-sm-9 text-muted">
+                    @Html.DisplayFor(model => model.SoDT)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DiaChi)
-        </dt>
+                <dt class="col-sm-3 font-weight-bold text-dark">
+                    Vai trò
+                </dt>
+                <dd class="col-sm-9 text-muted">
+                    @Html.DisplayFor(model => model.VaiTro)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.DiaChi)
-        </dd>
+                <dt class="col-sm-3 font-weight-bold text-dark">
+                    Tài khoản
+                </dt>
+                <dd class="col-sm-9 text-muted">
+                    @Html.DisplayFor(model => model.TKhoan)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.SoDT)
-        </dt>
+                <dt class="col-sm-3 font-weight-bold text-dark">
+                    Mật khẩu
+                </dt>
+                <dd class="col-sm-9 text-muted">
+                    @Html.DisplayFor(model => model.MKhau)
+                </dd>
+            </dl>
+        </div>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.SoDT)
-        </dd>
+    <div class="mt-4 text-center">
+        @Html.ActionLink("Sửa", "Edit", new { id = Model.ID }, new { @class = "btn btn-warning btn-lg shadow-sm rounded-sm" })
+        @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-light btn-lg ml-3 shadow-sm rounded-sm" })
 
-        <dt>
-            @Html.DisplayNameFor(model => model.VaiTro)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.VaiTro)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TKhoan)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TKhoan)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MKhau)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MKhau)
-        </dd>
-
-    </dl>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+

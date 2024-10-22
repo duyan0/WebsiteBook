@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<BanSach.Models.DonHang>
-
+@using System
 @{
     ViewBag.Title = "Quản lý đơn hàng";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -38,21 +38,22 @@
 </p>
 <table class="table table-striped">
     <tr style="color: black; text-align: left;">
-        <th >
-            Mã đơn h
+        <th>
+            Mã ĐH
         </th>
         <th>
-            ID KH
-        </th>
-        <th>
-            Tên khách hàng
+            ID Khách hàng
         </th>
         <th>
             Địa chỉ
-        </th><th>
+        </th>
+        <th>
             Ngày đặt hàng
-        </th><th>
+        </th>
+        <th>
             Ngày nhận hàng
+        </th><th>
+            Trạng thái ĐH
         </th>
 
         <th>Chỉnh sửa</th>
@@ -68,20 +69,21 @@
                 @Html.DisplayFor(modelItem => item.IDkh)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.KhachHang.TenKH)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.DiaChi)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NgayDatHang)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NgayNhanHang)
+                @DateTime.Now.ToString("dd/MM/yyyy")
             </td>
             <td>
+                Chức năng chưa có
+            </td>
+
+            <td>
                 @Html.ActionLink("Sửa", "Edit", new { id = item.IDdh }, new { @class = "delete-link" }) |
-               
+
                 @Html.ActionLink("Xoá", "Delete", new { id = item.IDdh }, new { @class = "delete-link" })
             </td>
         </tr>

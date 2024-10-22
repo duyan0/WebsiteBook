@@ -5,16 +5,15 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Xoá</h2>
+<h2 class="text-center">Xoá nhân sự</h2>
 
 <div>
-    <h4>Admin</h4>
+    
     <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.HoTen)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.HoTen)
         </dd>
@@ -22,7 +21,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.Email)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Email)
         </dd>
@@ -30,7 +28,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.DiaChi)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.DiaChi)
         </dd>
@@ -38,7 +35,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.SoDT)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.SoDT)
         </dd>
@@ -46,7 +42,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.VaiTro)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.VaiTro)
         </dd>
@@ -54,7 +49,6 @@
         <dt>
             @Html.DisplayNameFor(model => model.TKhoan)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.TKhoan)
         </dd>
@@ -62,19 +56,56 @@
         <dt>
             @Html.DisplayNameFor(model => model.MKhau)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.MKhau)
         </dd>
-
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <!-- Nút "Delete" hiện modal -->
+            <button type="button" class="btn btn-danger  rounded-sm" data-toggle="modal" data-target="#confirmDeleteModal">Delete</button> |
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success rounded-sm " })
         </div>
     }
 </div>
+
+<!-- Modal xác nhận xóa -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xóa nhân sự này?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <!-- Nút "Delete" bên trong modal, liên kết với form bên ngoài -->
+                <button type="button" id="confirmDelete" class="btn btn-danger">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <!-- Script để xử lý submit form khi nhấn nút "Delete" trong modal -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Khi nút "Xóa" trong modal được nhấn
+            $('#confirmDelete').click(function () {
+                // Submit form xóa bên ngoài modal
+                $('form').submit();
+            });
+        });
+    </script>
+}

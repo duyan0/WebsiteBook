@@ -1,7 +1,7 @@
 ﻿@model BanSach.Models.DonHangCT
 
 @{
-    ViewBag.Title = "Chi tiết";
+    ViewBag.Title = "Chi tiết đơn hàng - "+Model.IDDonHang;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -43,7 +43,7 @@
 
 <table class="bang">
     <tr>
-        <td class="tieude"> <b>Đơn hàng  </b></td>
+        <td class="tieude"> <b>Mã đơn hàng</b></td>
         <td class="thongtin">
             @Html.DisplayFor(model => model.IDdh)
         </td>
@@ -109,7 +109,7 @@
 
 </table>
 <br />
-<h2>Chi tiết đơn</h2>
+<h2>Chi tiết đơn hàng</h2>
 
 <table class="bang">
     <tr>
@@ -130,12 +130,16 @@
         <td class="tieude">
             <b>Giá  </b>
         <td class="thongtin">
-            @Html.DisplayFor(model => model.Gia) 000 đ
+            @string.Format("{0:N0} VND", Model.Gia)
         </td>
       
     </tr>
 </table>
-    <p>
-        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.IDdh }) |
-        @Html.ActionLink("Quay về", "Index")
-    </p>
+<p>
+    <div class="form-actions">
+        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.IDdh }, new { @class = "btn btn-warning btn-lg shadow-sm rounded-sm" })
+        <span class="mx-1"></span>
+        @Html.ActionLink("Quay về", "Index", null, new { @class = "btn btn-secondary btn-lg shadow-sm rounded-sm" })
+    </div>
+
+</p>
