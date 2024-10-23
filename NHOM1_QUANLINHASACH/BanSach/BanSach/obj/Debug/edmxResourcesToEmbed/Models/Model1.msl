@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="SachModelStoreContainer" CdmEntityContainer="SachEntities">
+  <EntityContainerMapping StorageEntityContainer="SachModelStoreContainer" CdmEntityContainer="SachEntities1">
     <EntitySetMapping Name="Admin">
       <EntityTypeMapping TypeName="SachModel.Admin">
         <MappingFragment StoreEntitySet="Admin">
@@ -19,7 +19,7 @@
       <EntityTypeMapping TypeName="SachModel.DanhMuc">
         <MappingFragment StoreEntitySet="DanhMuc">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="DanhMuc1" ColumnName="DanhMuc1" />
+          <ScalarProperty Name="DanhMuc1" ColumnName="DanhMuc" />
           <ScalarProperty Name="TheLoai" ColumnName="TheLoai" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -32,6 +32,7 @@
           <ScalarProperty Name="IDkh" ColumnName="IDkh" />
           <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
           <ScalarProperty Name="NgayNhanHang" ColumnName="NgayNhanHang" />
+          <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -59,6 +60,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="NhaXuatBan">
+      <EntityTypeMapping TypeName="SachModel.NhaXuatBan">
+        <MappingFragment StoreEntitySet="NhaXuatBan">
+          <ScalarProperty Name="IDnxb" ColumnName="IDnxb" />
+          <ScalarProperty Name="Tennxb" ColumnName="Tennxb" />
+          <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+          <ScalarProperty Name="SoDienThoai" ColumnName="SoDienThoai" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="SanPham">
       <EntityTypeMapping TypeName="SachModel.SanPham">
         <MappingFragment StoreEntitySet="SanPham">
@@ -68,10 +80,22 @@
           <ScalarProperty Name="TheLoai" ColumnName="TheLoai" />
           <ScalarProperty Name="GiaBan" ColumnName="GiaBan" />
           <ScalarProperty Name="HinhAnh" ColumnName="HinhAnh" />
-          <ScalarProperty Name="TacGia" ColumnName="TacGia" />
-          <ScalarProperty Name="NhaXB" ColumnName="NhaXB" />
+          <ScalarProperty Name="IDtg" ColumnName="IDtg" />
+          <ScalarProperty Name="IDnxb" ColumnName="IDnxb" />
           <ScalarProperty Name="NamXB" ColumnName="NamXB" />
           <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+          <ScalarProperty Name="TrangThaiSach" ColumnName="TrangThaiSach" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TacGia">
+      <EntityTypeMapping TypeName="SachModel.TacGia">
+        <MappingFragment StoreEntitySet="TacGia">
+          <ScalarProperty Name="IDtg" ColumnName="IDtg" />
+          <ScalarProperty Name="TenTacGia" ColumnName="TenTacGia" />
+          <ScalarProperty Name="NgaySinh" ColumnName="NgaySinh" />
+          <ScalarProperty Name="QuocGia" ColumnName="QuocGia" />
+          <ScalarProperty Name="TieuSu" ColumnName="TieuSu" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

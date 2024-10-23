@@ -1,0 +1,76 @@
+﻿@model IEnumerable<BanSach.Models.NhaXuatBan>
+
+@{
+    ViewBag.Title = "Danh Sách Nhà Xuất Bản"; // Cập nhật tiêu đề cho hợp lý
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="text-center font-weight-bold ">Danh Sách Nhà Xuất Bản</h2> <!-- Tiêu đề chính -->
+
+<p>
+    @Html.ActionLink("Thêm Nhà Xuất Bản Mới", "Create", null, new { @class = "btn btn-primary rounded" }) <!-- Nút tạo mới -->
+</p>
+
+<div class="table-responsive">
+    <!-- Thêm lớp để làm cho bảng cuộn -->
+    <table class="table table-bordered table-striped rounded">
+        <!-- Thêm lớp rounded cho bảng -->
+        <thead class="thead-dark rounded">
+            <!-- Thêm lớp cho đầu bảng -->
+            <tr>
+                <th>
+                    ID NXB
+                </th>
+                <th>
+                    Tên nhà xuất bản
+                </th>
+                <th>
+                    Địa chỉ
+                </th>
+                <th>
+                    Số điện thoại
+                </th>
+                <th>
+                    Email
+                </th>
+                <th class="text-center">
+                    <!-- Căn giữa cho cột hành động -->
+                    Thao Tác
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IDnxb)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tennxb)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiaChi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoDienThoai)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td class="text-center">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.IDnxb }, new { @class = "btn btn-warning btn-sm rounded" }) <!-- Nút sửa với bo góc -->
+                        @Html.ActionLink("Details", "Details", new { id = item.IDnxb }, new { @class = "btn btn-info btn-sm rounded" }) <!-- Nút chi tiết với bo góc -->
+                        @Html.ActionLink("Delete", "Delete", new { id = item.IDnxb }, new { @class = "btn btn-danger btn-sm rounded" }) <!-- Nút xóa với bo góc -->
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .rounded {
+        border-radius: 0.25rem; /* Tùy chỉnh độ bo góc */
+    }
+</style>

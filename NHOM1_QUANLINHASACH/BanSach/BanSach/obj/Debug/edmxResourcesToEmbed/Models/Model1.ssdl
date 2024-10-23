@@ -4,22 +4,22 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
-    <Property Name="HoTen" Type="nvarchar(max)" />
-    <Property Name="Email" Type="nchar" MaxLength="50" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HoTen" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nchar" MaxLength="50" Nullable="false" />
     <Property Name="DiaChi" Type="nvarchar(max)" />
-    <Property Name="SoDT" Type="nchar" MaxLength="50" />
-    <Property Name="VaiTro" Type="nchar" MaxLength="50" />
-    <Property Name="TKhoan" Type="nchar" MaxLength="50" />
-    <Property Name="MKhau" Type="nchar" MaxLength="50" />
+    <Property Name="SoDT" Type="nchar" MaxLength="15" Nullable="false" />
+    <Property Name="VaiTro" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="TKhoan" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="MKhau" Type="nchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="DanhMuc">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="DanhMuc1" Type="nchar" MaxLength="50" Nullable="false" />
-    <Property Name="TheLoai" Type="nvarchar(max)" />
+    <Property Name="DanhMuc" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="TheLoai" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="DonHang">
     <Key>
@@ -28,8 +28,9 @@
     <Property Name="IDdh" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="NgayDatHang" Type="date" />
     <Property Name="IDkh" Type="int" />
-    <Property Name="DiaChi" Type="nvarchar(max)" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="255" />
     <Property Name="NgayNhanHang" Type="date" />
+    <Property Name="TrangThai" Type="nvarchar" MaxLength="30" />
   </EntityType>
   <EntityType Name="DonHangCT">
     <Key>
@@ -47,28 +48,49 @@
       <PropertyRef Name="IDkh" />
     </Key>
     <Property Name="IDkh" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="TenKH" Type="nvarchar(max)" />
+    <Property Name="TenKH" Type="nvarchar" MaxLength="255" />
     <Property Name="SoDT" Type="nvarchar" MaxLength="15" />
-    <Property Name="Email" Type="nvarchar(max)" />
+    <Property Name="Email" Type="nvarchar" MaxLength="255" />
     <Property Name="TKhoan" Type="nchar" MaxLength="50" />
     <Property Name="MKhau" Type="nchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="NhaXuatBan">
+    <Key>
+      <PropertyRef Name="IDnxb" />
+    </Key>
+    <Property Name="IDnxb" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Tennxb" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="255" />
+    <Property Name="SoDienThoai" Type="nvarchar" MaxLength="20" />
+    <Property Name="Email" Type="nvarchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="SanPham">
     <Key>
       <PropertyRef Name="IDsp" />
     </Key>
     <Property Name="IDsp" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="TenSP" Type="nvarchar(max)" />
+    <Property Name="TenSP" Type="nvarchar" MaxLength="255" Nullable="false" />
     <Property Name="MoTa" Type="nvarchar(max)" />
-    <Property Name="TheLoai" Type="int" />
-    <Property Name="GiaBan" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="HinhAnh" Type="nvarchar(max)" />
-    <Property Name="TacGia" Type="nvarchar(max)" />
-    <Property Name="NhaXB" Type="nvarchar(max)" />
-    <Property Name="NamXB" Type="date" />
-    <Property Name="SoLuong" Type="int" />
+    <Property Name="TheLoai" Type="int" Nullable="false" />
+    <Property Name="GiaBan" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="HinhAnh" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IDtg" Type="int" Nullable="false" />
+    <Property Name="IDnxb" Type="int" Nullable="false" />
+    <Property Name="NamXB" Type="date" Nullable="false" />
+    <Property Name="SoLuong" Type="int" Nullable="false" />
+    <Property Name="TrangThaiSach" Type="nvarchar" MaxLength="50" />
   </EntityType>
-  <Association Name="FK__DonHang__IDkh__403A8C7D">
+  <EntityType Name="TacGia">
+    <Key>
+      <PropertyRef Name="IDtg" />
+    </Key>
+    <Property Name="IDtg" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenTacGia" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="NgaySinh" Type="date" />
+    <Property Name="QuocGia" Type="nvarchar" MaxLength="100" />
+    <Property Name="TieuSu" Type="nvarchar(max)" />
+  </EntityType>
+  <Association Name="FK__DonHang__IDkh__45F365D3">
     <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="0..1" />
     <End Role="DonHang" Type="Self.DonHang" Multiplicity="*" />
     <ReferentialConstraint>
@@ -80,7 +102,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DonHangCT__IDDon__440B1D61">
+  <Association Name="FK__DonHangCT__IDDon__49C3F6B7">
     <End Role="DonHang" Type="Self.DonHang" Multiplicity="0..1" />
     <End Role="DonHangCT" Type="Self.DonHangCT" Multiplicity="*" />
     <ReferentialConstraint>
@@ -92,7 +114,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DonHangCT__IDSan__4316F928">
+  <Association Name="FK__DonHangCT__IDSan__48CFD27E">
     <End Role="SanPham" Type="Self.SanPham" Multiplicity="0..1" />
     <End Role="DonHangCT" Type="Self.DonHangCT" Multiplicity="*" />
     <ReferentialConstraint>
@@ -105,7 +127,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_SanPham_DanhMuc">
-    <End Role="DanhMuc" Type="Self.DanhMuc" Multiplicity="0..1" />
+    <End Role="DanhMuc" Type="Self.DanhMuc" Multiplicity="1" />
     <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="DanhMuc">
@@ -116,27 +138,61 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_SanPham_NhaXuatBan">
+    <End Role="NhaXuatBan" Type="Self.NhaXuatBan" Multiplicity="1" />
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NhaXuatBan">
+        <PropertyRef Name="IDnxb" />
+      </Principal>
+      <Dependent Role="SanPham">
+        <PropertyRef Name="IDnxb" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SanPham_TacGia">
+    <End Role="TacGia" Type="Self.TacGia" Multiplicity="1" />
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TacGia">
+        <PropertyRef Name="IDtg" />
+      </Principal>
+      <Dependent Role="SanPham">
+        <PropertyRef Name="IDtg" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="SachModelStoreContainer">
     <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DanhMuc" EntityType="Self.DanhMuc" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DonHang" EntityType="Self.DonHang" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DonHangCT" EntityType="Self.DonHangCT" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="KhachHang" EntityType="Self.KhachHang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NhaXuatBan" EntityType="Self.NhaXuatBan" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__DonHang__IDkh__403A8C7D" Association="Self.FK__DonHang__IDkh__403A8C7D">
+    <EntitySet Name="TacGia" EntityType="Self.TacGia" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__DonHang__IDkh__45F365D3" Association="Self.FK__DonHang__IDkh__45F365D3">
       <End Role="KhachHang" EntitySet="KhachHang" />
       <End Role="DonHang" EntitySet="DonHang" />
     </AssociationSet>
-    <AssociationSet Name="FK__DonHangCT__IDDon__440B1D61" Association="Self.FK__DonHangCT__IDDon__440B1D61">
+    <AssociationSet Name="FK__DonHangCT__IDDon__49C3F6B7" Association="Self.FK__DonHangCT__IDDon__49C3F6B7">
       <End Role="DonHang" EntitySet="DonHang" />
       <End Role="DonHangCT" EntitySet="DonHangCT" />
     </AssociationSet>
-    <AssociationSet Name="FK__DonHangCT__IDSan__4316F928" Association="Self.FK__DonHangCT__IDSan__4316F928">
+    <AssociationSet Name="FK__DonHangCT__IDSan__48CFD27E" Association="Self.FK__DonHangCT__IDSan__48CFD27E">
       <End Role="SanPham" EntitySet="SanPham" />
       <End Role="DonHangCT" EntitySet="DonHangCT" />
     </AssociationSet>
     <AssociationSet Name="FK_SanPham_DanhMuc" Association="Self.FK_SanPham_DanhMuc">
       <End Role="DanhMuc" EntitySet="DanhMuc" />
+      <End Role="SanPham" EntitySet="SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SanPham_NhaXuatBan" Association="Self.FK_SanPham_NhaXuatBan">
+      <End Role="NhaXuatBan" EntitySet="NhaXuatBan" />
+      <End Role="SanPham" EntitySet="SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SanPham_TacGia" Association="Self.FK_SanPham_TacGia">
+      <End Role="TacGia" EntitySet="TacGia" />
       <End Role="SanPham" EntitySet="SanPham" />
     </AssociationSet>
   </EntityContainer>

@@ -12,7 +12,7 @@ namespace BanSach.Controllers
 {
     public class KhachHangsController : Controller
     {
-        private SachEntities db = new SachEntities();
+        private SachEntities1 db = new SachEntities1();
         public ActionResult LoginCus()
         {
             return View();
@@ -44,10 +44,6 @@ namespace BanSach.Controllers
         {
             return View();
         }
-
-        // POST: KhachHangs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IDkh,TenKH,SoDT,Email,TKhoan,MKhau")] KhachHang khachHang)

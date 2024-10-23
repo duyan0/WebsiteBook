@@ -13,7 +13,7 @@ namespace BanSach.Controllers
 {
     public class DonHangCTsController : Controller
     {
-        private SachEntities db = new SachEntities();
+        private SachEntities1 db = new SachEntities1();
 
         // GET: DonHangCTs
         public ActionResult Index()

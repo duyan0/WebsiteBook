@@ -25,6 +25,7 @@ namespace BanSach.Models
         public Nullable<int> IDkh { get; set; }
         public string DiaChi { get; set; }
         public Nullable<System.DateTime> NgayNhanHang { get; set; }
+        public string TrangThai { get; set; }
     
         public virtual KhachHang KhachHang { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

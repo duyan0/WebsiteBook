@@ -9,7 +9,7 @@ namespace BanSach.Controllers
 {
     public class LoginUserController : Controller
     {
-        SachEntities db = new SachEntities();
+        SachEntities1 db = new SachEntities1();
         // GET: LoginUser
         public ActionResult Index()
         {
