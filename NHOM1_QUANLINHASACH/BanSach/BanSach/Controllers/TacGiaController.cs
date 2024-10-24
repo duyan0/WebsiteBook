@@ -48,12 +48,12 @@ namespace BanSach.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(SanPham model) // Đổi lại đúng tên model của bảng sản phẩm (SanPham)
+        public ActionResult Create(TacGia model) // Đổi lại đúng tên model của bảng sản phẩm (SanPham)
         {
             if (ModelState.IsValid)
             {
                 // Lưu model vào cơ sở dữ liệu
-                db.SanPham.Add(model);
+                db.TacGia.Add(model);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -68,7 +68,7 @@ namespace BanSach.Controllers
                 new SelectListItem { Value = "US", Text = "Mỹ" },
                 new SelectListItem { Value = "JP", Text = "Nhật Bản" },
                 new SelectListItem { Value = "FR", Text = "Pháp" },
-            }, "Value", "Text", model.TacGia); // Giữ giá trị QuocGia hiện tại
+            }, "Value", "Text", model.TenTacGia); // Giữ giá trị QuocGia hiện tại
 
             return View(model);
         }

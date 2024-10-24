@@ -42,52 +42,55 @@
             Mã ĐH
         </th>
         <th>
-            ID Khách hàng
+            ID và Tên KH
         </th>
         <th>
-            Địa chỉ
+            Ngày ĐH
         </th>
         <th>
-            Ngày đặt hàng
+            Tổng số tiền
         </th>
         <th>
-            Ngày nhận hàng
-        </th><th>
+            Phương thức thanh toán
+        </th>
+        <th>
             Trạng thái ĐH
         </th>
 
-        <th>Chỉnh sửa</th>
+        <th>Thao tác</th>
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
+            <td>@item.IDdh</td>
             <td>
-                @Html.DisplayFor(modelItem => item.IDdh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IDkh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiaChi)
+                @Html.DisplayFor(modelItem => item.KhachHang.IDkh) -
+                @Html.DisplayFor(modelItem => item.KhachHang.TenKH)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NgayDatHang)
             </td>
             <td>
-                @DateTime.Now.ToString("dd/MM/yyyy")
+                @item.GetTongSoTien().ToString("N0") VND
             </td>
             <td>
-                Chức năng chưa có
+                Thanh toán khi nhận hàng
             </td>
-
             <td>
-                @Html.ActionLink("Sửa", "Edit", new { id = item.IDdh }, new { @class = "delete-link" }) |
-
-                @Html.ActionLink("Xoá", "Delete", new { id = item.IDdh }, new { @class = "delete-link" })
+                <span class="@(item.TrangThai == "Đã xác nhận" ? "text-success" : item.TrangThai == "Đã huỷ" ? "text-danger" : "")">
+                    @(string.IsNullOrEmpty(item.TrangThai) ? "Chờ xử lý" : item.TrangThai)
+                </span>
             </td>
+            <td>
+                @Html.ActionLink("Xác nhận", "Confirm", new { id = item.IDdh }, new { @class = "btn btn-success rounded", onclick = "return confirm('Bạn có chắc chắn xác nhận đơn hàng này?');" }) |
+                @Html.ActionLink("Huỷ", "Cancel", new { id = item.IDdh }, new { @class = "btn btn-danger rounded", onclick = "return confirm('Bạn có chắc chắn huỷ đơn hàng này?');" }) |
+                @Html.ActionLink("Xoá", "Delete", new { id = item.IDdh }, new { @class = "btn btn-warning rounded", onclick = "return confirm('Bạn có chắc chắn xoá đơn hàng này?');" })
+            </td>
+
         </tr>
     }
+
 </table>
 <style>
     .delete-link {

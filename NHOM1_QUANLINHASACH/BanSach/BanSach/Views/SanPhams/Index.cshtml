@@ -40,13 +40,15 @@
 <table class="table table-condensed table-bordered table-hover">
     <thead style="background-color: black; color: white; text-align: left;">
         <tr>
-            <th style="border-top-left-radius: 25px; width: 20%;">Tên Sách</th>
+            <th style="border-top-left-radius: 25px; ">Mã sách</th>
+            <th>Tên Sách</th>
             <th>Thể loại</th>
             <th>Giá tiền</th>
             <th>Số lượng</th>
             <th>Ảnh sách</th>
-            <th style="width: 15%;">Tác giả</th>
+            <th >Tác giả</th>
             <th>Nhà xuất bản</th>
+            <th>Trạng thái</th>
             <th style="border-top-right-radius: 25px;">Chỉnh sửa</th>
         </tr>
     </thead>
@@ -54,13 +56,24 @@
         @foreach (var item in Model)
         {
             <tr style="color: #212121">
+                <td>@Html.DisplayFor(modelItem => item.IDsp)</td>
                 <td>@Html.DisplayFor(modelItem => item.TenSP)</td>
                 <td>@Html.DisplayFor(modelItem => item.DanhMuc.TheLoai)</td>
-                <td>@string.Format("{0:N0} VND", item.GiaBan)</td>
+                <td style="color:red;">@string.Format("{0:N0} VND", item.GiaBan)</td>
                 <td>@Html.DisplayFor(modelItem => item.SoLuong)</td>
                 <td><img src="~/Content/img/@item.HinhAnh" width="60" alt="Ảnh khổng hiển thị" /></td>
                 <td>@Html.DisplayFor(modelItem => item.TacGia.TenTacGia)</td>
                 <td>@Html.DisplayFor(modelItem => item.NhaXuatBan.Tennxb)</td>
+                <td>
+                    @{
+                        string className = item.TrangThaiSach == "Còn hàng" ? "text-success" :
+                                           item.TrangThaiSach == "Hết hàng" ? "text-danger" : "";
+                    }
+                    <span class="@className">
+                        @Html.DisplayFor(modelItem => item.TrangThaiSach)
+                    </span>
+                </td>
+
                 <td>
                     @Html.ActionLink("Sửa", "Edit", new { id = item.IDsp }, new { @class = "btn btn-warning btn-sm rounded-sm" })
                     @Html.ActionLink("Xoá", "Delete", new { id = item.IDsp }, new { @class = "btn btn-danger btn-sm rounded-sm" })

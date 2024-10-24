@@ -11,42 +11,42 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="container">
+    <div class="container">
 
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-        <p class="font-weight-bold ">Tên tác giả</p>
-        @Html.EditorFor(model => model.TenTacGia, new { htmlAttributes = new { @class = "form-control rounded" } })
-        @Html.ValidationMessageFor(model => model.TenTacGia, "", new { @class = "text-danger" })
-    </div>
+        <div class="form-group">
+            <p class="font-weight-bold ">Tên tác giả</p>
+            @Html.EditorFor(model => model.TenTacGia, new { htmlAttributes = new { @class = "form-control rounded" } })
+            @Html.ValidationMessageFor(model => model.TenTacGia, "", new { @class = "text-danger" })
+        </div>
 
-    <div class="form-group">
-        <p class="font-weight-bold ">Ngày sinh</p>
-        @Html.EditorFor(model => model.NgaySinh, new { htmlAttributes = new { @class = "form-control rounded", type = "date" } })
-        @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
-    </div>
+        <div class="form-group">
+            <p class="font-weight-bold ">Ngày sinh</p>
+            @Html.EditorFor(model => model.NgaySinh, new { htmlAttributes = new { @class = "form-control rounded", type = "date" } })
+            @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
+        </div>
 
-    <div class="form-group">
-        <p class="font-weight-bold">Quốc gia</p>
-        @Html.DropDownListFor(model => model.QuocGia, (IEnumerable<SelectListItem>)ViewBag.QuocGia, "Chọn quốc gia", new { @class = "form-control rounded" })
-        @Html.ValidationMessageFor(model => model.QuocGia, "", new { @class = "text-danger" })
-    </div>
+        <div class="form-group">
+            <p class="font-weight-bold">Quốc gia</p>
+            @Html.DropDownListFor(model => model.QuocGia, (IEnumerable<SelectListItem>)ViewBag.QuocGia, "Chọn quốc gia", new { @class = "form-control rounded" })
+            @Html.ValidationMessageFor(model => model.QuocGia, "", new { @class = "text-danger" })
+        </div>
 
 
-    <div class="form-group">
-        <p class="font-weight-bold ">Tiểu sử</p>
-        @Html.EditorFor(model => model.TieuSu, new { htmlAttributes = new { @class = "form-control rounded" } })
-        @Html.ValidationMessageFor(model => model.TieuSu, "", new { @class = "text-danger" })
-    </div>
+        <div class="form-group">
+            <p class="font-weight-bold ">Tiểu sử</p>
+            @Html.EditorFor(model => model.TieuSu, new { htmlAttributes = new { @class = "form-control rounded" } })
+            @Html.ValidationMessageFor(model => model.TieuSu, "", new { @class = "text-danger" })
+        </div>
 
-    <div class="form-group">
-        <div>
-            <input type="submit" value="Tạo Mới" class="btn btn-dark rounded" /> <!-- Nút với nền đen và chữ trắng -->
+        <div class="form-group">
+            <div>
+                <input type="submit" value="Tạo Mới" class="btn btn-dark rounded" /> <!-- Nút với nền đen và chữ trắng -->
+            </div>
         </div>
     </div>
-</div>
 }
 
 <div>

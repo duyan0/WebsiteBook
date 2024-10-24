@@ -428,20 +428,20 @@
     <Content Include="Views\Admins\Index.cshtml" />
     <Content Include="Views\KhachHangs\UpdateSuccesss.cshtml" />
     <Content Include="Views\SanPhams\TrangChu.cshtml" />
-    <Content Include="Views\DonHangCTs\TopBanChay.cshtml" />
+    <Content Include="Views\DonHangs\TopBanChay.cshtml" />
     <Content Include="Views\ShoppingCart\CheckOut_Success.cshtml" />
     <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.1.min.map" />
-    <Content Include="Views\TacGia\Index.cshtml" />
     <Content Include="Views\NhaXuatBan\Index.cshtml" />
-    <Content Include="Views\TacGia\Create.cshtml" />
-    <Content Include="Views\TacGia\Edit.cshtml" />
-    <Content Include="Views\TacGia\Details.cshtml" />
-    <Content Include="Views\TacGia\Delete.cshtml" />
     <Content Include="Views\NhaXuatBan\Create.cshtml" />
     <Content Include="Views\NhaXuatBan\Edit.cshtml" />
     <Content Include="Views\NhaXuatBan\Details.cshtml" />
     <Content Include="Views\NhaXuatBan\Delete.cshtml" />
+    <Content Include="Views\TacGia\Index.cshtml" />
+    <Content Include="Views\TacGia\Create.cshtml" />
+    <Content Include="Views\TacGia\Edit.cshtml" />
+    <Content Include="Views\TacGia\Details.cshtml" />
+    <Content Include="Views\TacGia\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

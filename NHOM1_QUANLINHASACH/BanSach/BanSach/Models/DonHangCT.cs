@@ -23,5 +23,6 @@ namespace BanSach.Models
     
         public virtual DonHang DonHang { get; set; }
         public virtual SanPham SanPham { get; set; }
+        
     }
 }
