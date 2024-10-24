@@ -1,7 +1,7 @@
 ﻿@model BanSach.Models.SanPham
 
 @{
-    ViewBag.Title ="Sách "+Model.TenSP;
+    ViewBag.Title ="Sách - " + Model.TenSP;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
@@ -109,8 +109,9 @@
         </div>
         <div class="right" style="color:white;">
             <p>Tên sách: <b>@Model.TenSP</b></p>
-            <p>Tác giả : <b>@Model.TacGia</b></p>
-            <p>Nhà xuất bản : <b>@Model.NhaXB</b></p>
+            <p>Tác giả : <b>@Model.TacGia.TenTacGia</b></p>
+            <p>Nhà xuất bản : <b>@Model.NhaXuatBan.Tennxb</b></p>
+            <p>Thể loại : <b>@Model.DanhMuc.TheLoai</b></p>
             <p style="color:red;">Giá tiền:
                 <b>@String.Format("{0:C0}", @Model.GiaBan)</b>
             </p>

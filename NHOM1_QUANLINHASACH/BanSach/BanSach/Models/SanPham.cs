@@ -11,7 +11,8 @@ namespace BanSach.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class SanPham
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -28,6 +29,7 @@ namespace BanSach.Models
         public string HinhAnh { get; set; }
         public int IDtg { get; set; }
         public int IDnxb { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime NamXB { get; set; }
         public int SoLuong { get; set; }
         public string TrangThaiSach { get; set; }

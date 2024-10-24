@@ -5,50 +5,43 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<center>
-    <h2>Chỉnh sửa thể loại - danh mục</h2>
-</center>
+<div class="container mt-4">
+    <h2 class="text-center">Chỉnh sửa thể loại - danh mục</h2>
 
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">       
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)
 
-        <div class="form-group">
-            <div class = "control-label col-md-2">
-              Danh mục
-            </div>  
+        <div class="form-group row">
+            <label class="control-label col-md-2">Danh mục</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DanhMuc1, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.DanhMuc1, new { htmlAttributes = new { @class = "form-control rounded-sm" } })
                 @Html.ValidationMessageFor(model => model.DanhMuc1, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="control-label col-md-2">
-                Thể loại
-            </div>
+        <div class="form-group row">
+            <label class="control-label col-md-2">Thể loại</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TheLoai, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.TheLoai, new { htmlAttributes = new { @class = "form-control rounded-sm" } })
                 @Html.ValidationMessageFor(model => model.TheLoai, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Lưu" class="btn btn-success" style="border-radius:15px; padding:10px;" />
+        <div class="form-group row">
+            <div class="col-md-offset-2 col-md-10 ">
+                <input type="submit" value="Lưu" class="btn btn-success rounded-sm" style=" padding:10px;" />
             </div>
         </div>
-    </div>
-}
+    }
 
-<div>
-    @Html.ActionLink("Quay về quản lý danh mục", "Index")
+    <div class="mt-3">
+        @Html.ActionLink("Quay về quản lý danh mục", "Index", null, new { @class = "btn btn-secondary rounded-sm" })
+    </div>
 </div>
 
 @section Scripts {

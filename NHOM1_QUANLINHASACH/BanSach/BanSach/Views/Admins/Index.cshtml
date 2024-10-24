@@ -44,7 +44,8 @@
             <th>Số điện thoại</th>
             <th>Vai trò</th>
             <th>Tài khoản</th>
-            <th>Chỉnh sửa</th>
+            <th>Mật khẩu</th>
+            <th>Thao tác</th>
         </tr>
     </thead>
     <tbody>
@@ -56,6 +57,9 @@
                 <td>@Html.DisplayFor(modelItem => item.SoDT)</td>
                 <td>@Html.DisplayFor(modelItem => item.VaiTro)</td>
                 <td>@Html.DisplayFor(modelItem => item.TKhoan)</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MKhau).ToString().Replace(@item.MKhau, "******")
+                </td>
                 <td>
                     @Html.ActionLink("Sửa", "Edit", new { id = item.ID }, new { @class = "btn btn-warning btn-sm rounded-sm" })
                     @Html.ActionLink("Xoá", "Delete", new { id = item.ID }, new { @class = "btn btn-danger btn-sm rounded-sm" })

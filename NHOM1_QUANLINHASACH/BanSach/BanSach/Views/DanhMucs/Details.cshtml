@@ -4,33 +4,22 @@
     ViewBag.Title = "Chi tiết danh mục";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<center>
-    <h2>Chi tiết</h2>
-</center>
-<div>
-   
+
+<div class="container mt-4">
+    <h2 class="text-center ">Chi tiết</h2>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-           Danh mục
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DanhMuc1)
-        </dd>
+    <dl class="row">
+        <dt class="col-sm-3"><b>Danh mục:</b></dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.DanhMuc1)</dd>
 
-        <dt>
-           Thể loại
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TheLoai)
-        </dd>
-
+        <dt class="col-sm-3"><b>Thể loại:</b></dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.TheLoai)</dd>
     </dl>
+
+    <div class="text-center mt-4">
+        @Html.ActionLink("Sửa", "Edit", new { id = Model.ID }, new { @class = "btn btn-warning me-2 rounded-sm " }) |
+        @Html.ActionLink("Quay về quản lý danh mục", "Index", null, new { @class = "btn btn-secondary me-2 rounded-sm " }) |
+        @Html.ActionLink("Xoá", "Delete", new { id = Model.ID }, new { @class = "btn btn-danger  rounded-sm" })
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Sửa", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Quay về quản lý danh mục", "Index") |
-    @Html.ActionLink("Xoá", "Delete", new { id = Model.ID })
-</p>

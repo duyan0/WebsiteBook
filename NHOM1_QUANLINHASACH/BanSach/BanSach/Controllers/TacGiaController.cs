@@ -22,13 +22,13 @@ namespace BanSach.Controllers
         public ActionResult Create()
         {
             // Tạo danh sách quốc gia
-                ViewBag.QuocGia = new SelectList(new List<SelectListItem>
-        {
-            new SelectListItem { Value = "VN", Text = "Việt Nam" },
-            new SelectListItem { Value = "US", Text = "Mỹ" },
-            new SelectListItem { Value = "JP", Text = "Nhật Bản" },
-            new SelectListItem { Value = "FR", Text = "Pháp" },
-        }, "Value", "Text");
+            ViewBag.QuocGia = new SelectList(new List<SelectListItem>
+    {
+        new SelectListItem { Value = "VN", Text = "Việt Nam" },
+        new SelectListItem { Value = "US", Text = "Mỹ" },
+        new SelectListItem { Value = "JP", Text = "Nhật Bản" },
+        new SelectListItem { Value = "FR", Text = "Pháp" },
+    }, "Value", "Text");
 
             // Lấy danh sách tác giả từ cơ sở dữ liệu
             var tacGias = db.TacGia.ToList();
@@ -48,21 +48,31 @@ namespace BanSach.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(TacGia model) // Đổi ModelType với tên model bạn đang sử dụng
+        public ActionResult Create(SanPham model) // Đổi lại đúng tên model của bảng sản phẩm (SanPham)
         {
             if (ModelState.IsValid)
             {
                 // Lưu model vào cơ sở dữ liệu
-                db.TacGia.Add(model);
+                db.SanPham.Add(model);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            // Nếu có lỗi, hãy gọi lại danh sách tác giả
+            // Nếu có lỗi, hãy gọi lại danh sách tác giả và quốc gia
             var tacGias = db.TacGia.ToList();
             ViewBag.TacGia = new SelectList(tacGias, "IDtg", "TenTacGia", model.IDtg); // Ghi lại chọn IDtg hiện tại
+
+            ViewBag.QuocGia = new SelectList(new List<SelectListItem>
+            {
+                new SelectListItem { Value = "VN", Text = "Việt Nam" },
+                new SelectListItem { Value = "US", Text = "Mỹ" },
+                new SelectListItem { Value = "JP", Text = "Nhật Bản" },
+                new SelectListItem { Value = "FR", Text = "Pháp" },
+            }, "Value", "Text", model.TacGia); // Giữ giá trị QuocGia hiện tại
+
             return View(model);
         }
+
 
 
         public ActionResult Edit(int? id)

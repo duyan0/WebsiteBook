@@ -4,73 +4,39 @@
     ViewBag.Title = "Quản lý danh mục";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<style>
-    .tieude {
-        text-align: center;
-        font-weight: bold;
-        color: black;
-    }
 
-    .them a {
-        border-radius: 10px;
-        background-color: #212121;
-        color: white;
-        font-size: large;
-        padding: 5px;
-        margin: 50px 10px 0 10px;
-    }
+<h2 class="text-center font-weight-bold text-dark">Danh mục sách</h2>
 
-        .them a:hover {
-            text-decoration: none;
-            color: white;
-            background-color: #027171;
-        }
+<div class=" mb-4">
+    @Html.ActionLink("Thêm thể loại sách", "Create", null, new { @class = "btn btn-dark btn-lg rounded-sm" })
+</div>
 
-    .table-striped {
-        width: 100%;
-    }
-</style>
-
-<h2 class="tieude">Danh mục sách</h2>
-
-<p class="them">
-    @Html.ActionLink("Thêm thể loại sách", "Create")
-</p>
-<table class="table table-condensed">
-    <tr style=" color: black; text-align: left;">
-        <th style="border-top-left-radius: 25px;">
-            Thể loại
-        </th>
-        <th>
-            Danh mục
-        </th>
-        <th style="border-top-right-radius: 25px;">Chỉnh sửa</th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<table class="table table-striped table-condensed">
+    <thead class="thead-dark">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TheLoai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DanhMuc1)
-            </td>
-
-            <td>
-                @Html.ActionLink("Sửa", "Edit", new { id = item.ID }, new { @class = "delete-link" }) |
-                @Html.ActionLink("Xem", "Details", new { id = item.ID }, new { @class = "delete-link" }) |
-                @Html.ActionLink("Xoá", "Delete", new { id = item.ID }, new { @class = "delete-link" })
-            </td>
+            <th style="border-top-left-radius: 25px;">Danh mục</th>
+            <th >Thể loại</th>
+            <th style="border-top-right-radius: 25px;">Chỉnh sửa</th>
         </tr>
-    }
-</table>
-<style>
-    .delete-link {
-        color: red; /* Sửa màu trong đây nhaa*/
-    }
-
-        .delete-link:hover {
-            color: darkred; /* Sửa màu trong đây nhaa*/
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DanhMuc1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TheLoai)
+                </td>
+                <td>
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.ID }, new { @class = "btn btn-warning btn-sm me-1 rounded-sm" }) |
+                    @Html.ActionLink("Xem", "Details", new { id = item.ID }, new { @class = "btn btn-info btn-sm me-1 rounded-sm" }) |
+                    @Html.ActionLink("Xoá", "Delete", new { id = item.ID }, new { @class = "btn btn-danger btn-sm delete-link rounded-sm" })
+                </td>
+            </tr>
         }
-</style>
+    </tbody>
+</table>
+
+

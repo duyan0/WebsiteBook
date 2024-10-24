@@ -11,7 +11,6 @@
     .showcart {
         text-align: center;
         padding: 5px;
-        
     }
 
         .showcart h5 {
@@ -43,11 +42,11 @@
 
     .tb tr td {
         padding-top: 20px;
-        color:white;
+        color: white;
     }
 
     .xoa {
-        color:white;
+        color: white;
     }
 
         .xoa :hover {
@@ -58,22 +57,24 @@
     .thongtinkh input {
         border-radius: 10px;
         padding-left: 15px;
-        height:50px;
-        outline:none;
+        height: 50px;
+        outline: none;
     }
 
     .btn, .capnhat {
         border-radius: 8px;
     }
-    .showcart a{
-        background-color:crimson;
-        border-radius:10px;      
-        padding:10px;
-        color:white;
+
+    .showcart a {
+        background-color: crimson;
+        border-radius: 10px;
+        padding: 10px;
+        color: white;
     }
-    .showcart a:hover{
-        text-decoration:none;
-    }
+
+        .showcart a:hover {
+            text-decoration: none;
+        }
 </style>
 
 <div class="text-center ">
@@ -84,15 +85,15 @@
 @if (Model == null || Model.Total_quantity() == 0)
 {
     <div class="showcart">
-        
+
         <h5 class="text-white">
             Chưa có sản phẩm trong giỏ hàng của bạn.
         </h5><br />
 
         @Html.ActionLink("Tiếp tục mua hàng", "ProductList", "SanPhams")
-        
+
     </div>
-   
+
 
 }
 else
@@ -109,8 +110,10 @@ else
         <tbody>
             @foreach (var item in Model.Items)
             {
-                decimal total = item._quantity * (decimal)item._product.GiaBan.Value;
-                decimal giaban = (decimal)item._product.GiaBan.Value;
+                // Sử dụng toán tử ?? để gán giá trị mặc định là 0 nếu GiaBan là null
+                decimal giaBan = item._product.GiaBan ;
+                decimal total = item._quantity * giaBan;
+
                 <tr class="text-center text-white">
                     <td width="40%">
                         <img src="~/Content/img/@item._product.HinhAnh" width="140" height="160" style="float:left;" />
@@ -118,7 +121,7 @@ else
                             @Html.DisplayFor(model => item._product.TenSP)
                         </p>
                         <p>
-                            <b style="color:red">@giaban.ToString("#,##0").Replace(',', '.').000 đ</b>
+                            <b style="color:red">@giaBan.ToString("#,##0").Replace(',', '.') Đ</b>
                         </p>
                     </td>
                     <td class="text-center">
@@ -129,7 +132,7 @@ else
                             <input type="submit" value="Cập nhật" class="capnhat bg-white" />
                         }
                     </td>
-                    <td style="color: #c92127;"><b>@total.ToString("#,##0").Replace(',', '.').000 đ</b></td>
+                    <td style="color: #c92127;"><b>@total.ToString("#,##0").Replace(',', '.') đ</b></td>
 
                     <td class="xoa"><a href="/ShoppingCart/RemoveCart/@item._product.IDsp" class="xoa ">Xóa</a></td>
                 </tr>
@@ -138,7 +141,7 @@ else
         <tfoot>
             <tr>
                 <td colspan="6" style="text-align: right; font-size: x-large; color: white;">
-                    Tổng tiền : <b style="color: #c92127;"> @Model.Total_money().ToString("#,##0").Replace(',', '.').000 đ </b>
+                    Tổng tiền : <b style="color: #c92127;"> @Model.Total_money().ToString("#,##0").Replace(',', '.') Đ </b>
                 </td>
             </tr>
 
@@ -176,7 +179,7 @@ else
                         <input style="width:100%" type="text" name="AddressDeliverry" required />
                     </td>
                 </tr>
-              
+
                 @if (Session["IDkh"] != null || Session["IDQly"] != null)
                 {
                     <tr class="py-2">
@@ -202,4 +205,3 @@ else
 
 
 }
-

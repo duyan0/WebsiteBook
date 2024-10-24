@@ -40,6 +40,7 @@
         <th>  Sản phẩm </th>
         <th> Số lượng  </th>
         <th> Giá  </th>
+        <th> Trạng thái  </th>
         <th>Chỉnh sửa</th>
     </tr>
     @foreach (var item in Model)
@@ -49,9 +50,8 @@
             <td>  @Html.DisplayFor(modelItem => item.DonHang.KhachHang.TenKH) </td>
             <td>  @Html.DisplayFor(modelItem => item.SanPham.TenSP)   </td>
             <td>  @Html.DisplayFor(modelItem => item.SoLuong) </td>
-
             <td>@string.Format("{0:N0} VND", item.Gia)</td>
-
+            <td>Chưa có chức năng</td>
             <td>
                 @Html.ActionLink("Xem", "Details", new { id = item.IDdh }, new { @class = "btn btn-warning btn-sm rounded-sm" })
                 @Html.ActionLink("Xoá", "Delete", new { id = item.IDdh }, new { @class = "btn btn-danger btn-sm rounded-sm" })

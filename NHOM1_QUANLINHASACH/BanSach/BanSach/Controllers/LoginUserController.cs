@@ -25,7 +25,7 @@ namespace BanSach.Controllers
                 Session["IDkh"] = null;
                 Session["TenKH"] = null;
                 Session["SoDT"] = null;
-                return RedirectToAction("ProductList", "SanPhams");
+                return RedirectToAction("LoginAccountCus", "LoginUser");
             }
             if(Session["IdQly"] != null)
             {

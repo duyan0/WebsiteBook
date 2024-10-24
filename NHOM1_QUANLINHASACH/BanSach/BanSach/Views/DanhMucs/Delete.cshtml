@@ -5,37 +5,49 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Xoá</h2>
+<style>
+    .table-bordered {
+        border: 2px solid black; /* Viền đen cho bảng */
+    }
 
-<div>
-    
+        .table-bordered th,
+        .table-bordered td {
+            border: 1px solid black; /* Viền đen cho các ô trong bảng */
+        }
+</style>
+
+<div class="container mt-4">
+    <h2 class="text-danger">Xoá danh mục</h2>
+
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Danh mục
-        </dt>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Thông tin</th>
+                <th>Nội dung</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>Danh mục:</b></td>
+                <td>@Html.DisplayFor(model => model.DanhMuc1)</td>
+            </tr>
+            <tr>
+                <td><b>Thể loại:</b></td>
+                <td>@Html.DisplayFor(model => model.TheLoai)</td>
+            </tr>
+        </tbody>
+    </table>
 
-        <dd>
-            @Html.DisplayFor(model => model.DanhMuc1)
-        </dd>
+    <p class="text-danger">Bạn có chắc chắn muốn xóa danh mục này không?</p>
 
-        <dt>
-            Thể loại
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TheLoai)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
-<div class="form-actions no-color">
-    @Html.ActionLink("Quay về quản lý danh mục", "Index")|
-    <input type="submit" value="Xoá" class="btn btn-danger" style="border-radius:15px; padding:15px;" /> 
-
-</div>
+        <div class="form-actions">
+            @Html.ActionLink("Quay về quản lý danh mục", "Index", null, new { @class = "btn btn-secondary me-2" })
+            <input type="submit" value="Xoá" class="btn btn-danger" />
+        </div>
     }
 </div>

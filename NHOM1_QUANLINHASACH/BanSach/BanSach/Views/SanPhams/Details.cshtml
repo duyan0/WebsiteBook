@@ -5,53 +5,43 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-
-
-<div>
-    <h3>Chi tiết thông tin sách</h3>
+<div class="container mt-4" >
+    <h3 class="text-center">Chi tiết thông tin sách</h3>
     <hr />
-    <dl class="dl-horizontal">
-        <dd>
-            <b>Tên sách </b> @Html.DisplayFor(model => model.TenSP)
+    <dl class="row">
+        <dt class="col-sm-3"><b>Tên sách:</b></dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.TenSP)</dd>
+
+        <dt class="col-sm-3"><b>Mô tả:</b></dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.MoTa)</dd>
+
+        <dt class="col-sm-3"><b>Giá bán:</b></dt>
+        <dd class="col-sm-9">@string.Format("{0:N0} VND", Model.GiaBan)</dd>
+
+        <dt class="col-sm-3"><b>Hình ảnh:</b></dt>
+        <dd class="col-sm-9">
+            <img src="~/Content/img/@Model.HinhAnh" class="img-fluid rounded-sm" width="200"  alt="Hình ảnh sách">
         </dd>
 
-        <dd>
-            <b> Mô tả</b>  @Html.DisplayFor(model => model.MoTa)
-        </dd>
+        <dt class="col-sm-3"><b>Tác giả:</b></dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.TacGia.TenTacGia)</dd>
 
-        <dd>
-            <b> Giá bán</b> @Html.DisplayFor(model => model.GiaBan)0 đ
-        </dd>
+        <dt class="col-sm-3"><b>Nhà xuất bản:</b></dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.NhaXuatBan.Tennxb)</dd>
 
-        <dd>
-            <b> Hình ảnh</b>  @Html.DisplayFor(model => model.HinhAnh)
-            <img src="~/Content/img/@Model.HinhAnh" width="200">
-        </dd>           
-        <dd>
-            <b> Tác giả</b>
-            @Html.DisplayFor(model => model.TacGia)
-        </dd>
-        <dd>
-            <b> Nhà xuất bản</b>
-            @Html.DisplayFor(model => model.NhaXuatBan.Tennxb)
-        </dd>
-        <dd>
-            <b>Năm xuất bản</b>
-            @Html.DisplayFor(model => model.NamXB)            
-        </dd>
-        <dd>
-            <b>Danh mục</b>
-            @Html.DisplayFor(model => model.DanhMuc.DanhMuc1)
-        </dd>
-        <dd>
-            <b>Thể loại</b>
-            @Html.DisplayFor(model => model.DanhMuc.TheLoai)
-        </dd>
+        <dt class="col-sm-3"><b>Năm xuất bản:</b></dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.NamXB)</dd>
 
+        <dt class="col-sm-3"><b>Danh mục:</b></dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.DanhMuc.DanhMuc1)</dd>
+
+        <dt class="col-sm-3"><b>Thể loại:</b></dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.DanhMuc.TheLoai)</dd>
     </dl>
+
+    <div class="text-center mt-4 ">
+        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.IDsp }, new { @class = "btn btn-primary me-2 rounded-sm" }) |
+        @Html.ActionLink("Quay về danh sách", "Index", null, new { @class = "btn btn-secondary me-2 rounded-sm" }) |
+        @Html.ActionLink("Xoá", "Delete", new { id = Model.IDsp }, new { @class = "btn btn-danger rounded-sm" })
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.IDsp }) |
-    @Html.ActionLink("Quay về danh sách", "Index") |
-    @Html.ActionLink("Xoá", "Delete", new { id = Model.IDsp })
-</p>

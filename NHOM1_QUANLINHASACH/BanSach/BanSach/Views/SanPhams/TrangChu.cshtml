@@ -1,19 +1,25 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Sách";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <style>
-    .carousel-inner, .carousel-inner a, .col-lg-3 .d-flex,#prv,#nxt {
+    .carousel-inner, .carousel-inner a, .col-lg-3 .d-flex, #prv, #nxt {
         border-radius: 8px;
     }
-    .btn-light:hover {
-        color: white;
-        background-color: green;
-        border-color: #e6e6e6;
+
+    .btn-light {
+        transition: background-color 0.3s, color 0.3s; /* Thêm hiệu ứng chuyển tiếp */
     }
+
+        .btn-light:hover {
+            color: white;
+            background-color: green;
+            border-color: #e6e6e6;
+        }
 </style>
-<div id="header-carousel" class="carousel slide " data-ride="carousel">
+
+<div id="header-carousel" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
         <!-- Poster 1 start -->
         <div class="carousel-item active" style="height: 480px;">
@@ -27,7 +33,8 @@
             </div>
         </div>
         <!-- Poster 1 end -->
-        <div class="carousel-item" style="height: 480px; ">
+        <!-- Poster 2 start -->
+        <div class="carousel-item" style="height: 480px;">
             <img class="img-fluid" src="~/Content/img/slide.jpg" alt="Image">
             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                 <div class="p-3" style="max-width: 700px;">
@@ -39,19 +46,17 @@
         </div>
         <!-- Poster 2 end -->
     </div>
+
     <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
-        <div class="btn btn-dark" style="width: 45px; height: 45px;" id="prv">
+        <div class="btn btn-dark" id="prv" style="width: 45px; height: 45px;">
             <span class="carousel-control-prev-icon mb-n2"></span>
         </div>
     </a>
     <a class="carousel-control-next" href="#header-carousel" data-slide="next">
-        <div class="btn btn-dark" style="width: 45px; height: 45px;" id="nxt">
+        <div class="btn btn-dark" id="nxt" style="width: 45px; height: 45px;">
             <span class="carousel-control-next-icon mb-n2"></span>
         </div>
     </a>
 </div>
 
-    @Html.Action("TopBanChay", "DonHangCTs")
-
-
-
+@Html.Action("TopBanChay", "DonHangCTs")

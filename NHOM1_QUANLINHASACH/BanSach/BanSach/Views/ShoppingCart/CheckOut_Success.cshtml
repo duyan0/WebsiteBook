@@ -1,20 +1,17 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "CheckOut_Success";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="container text-center mt-5">
+    <img src="~/Content/img/icon_thanhcong.png" alt="Icon thành công" class="img-fluid" style="max-width: 150px;" />
+    <h2 class="text-success mt-3">Thanh toán thành công</h2>
+    <p class="text-muted">Cảm ơn bạn đã mua hàng! Đơn hàng của bạn đang được xử lý.</p>
+    <a href="@Url.Action("TrangChu", "SanPhams")" class="btn btn-primary mt-4">Quay về trang chủ</a>
+</div>
 
-<center>
-    
-    <img src="~/Content/img/icon_thanhcong.png"alt="Icon thành công" />
-    <h2 class="text-white">Thanh toán thành công</h2>
-</center>
 <style>
-    img{
-        max-width:5%;
-    }
-    h2{
-        margin-top:10px;
+    h2 {
+        font-weight: bold;
     }
 </style>
