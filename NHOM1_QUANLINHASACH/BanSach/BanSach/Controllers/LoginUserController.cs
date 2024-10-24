@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net;
+using System.Net.Mail;
+
 
 namespace BanSach.Controllers
 {
@@ -27,7 +30,7 @@ namespace BanSach.Controllers
                 Session["SoDT"] = null;
                 return RedirectToAction("LoginAccountCus", "LoginUser");
             }
-            if(Session["IdQly"] != null)
+            if (Session["IdQly"] != null)
             {
                 Session.Clear();
             }
@@ -131,15 +134,15 @@ namespace BanSach.Controllers
             {
                 ViewBag.ErrorInfo = "Sai tài khoản hoặc mật khẩu";
                 return View();
-            }              
-                db.Configuration.ValidateOnSaveEnabled = false;
-                Session["IDkh"] = check.IDkh;
-                Session["MKhau"] = check.MKhau;
-                Session["TenKH"] = check.TenKH;
-                Session["SoDT"] = check.SoDT;
-                
-                return RedirectToAction("SignInSuccess");
-            
+            }
+            db.Configuration.ValidateOnSaveEnabled = false;
+            Session["IDkh"] = check.IDkh;
+            Session["MKhau"] = check.MKhau;
+            Session["TenKH"] = check.TenKH;
+            Session["SoDT"] = check.SoDT;
+
+            return RedirectToAction("SignInSuccess");
+
         }
         [HttpGet]
         public ActionResult SignInSuccess()
@@ -152,7 +155,93 @@ namespace BanSach.Controllers
         {
             return RedirectToAction("Details", "KhachHangs", new { id = Session["IDkh"] });
         }
+        [HttpGet]
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ForgotPassword(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                ViewBag.ErrorMessage = "Vui lòng nhập tài khoản hoặc email!";
+                return View();
+            }
+
+            // Tìm kiếm khách hàng theo tài khoản hoặc email
+            var khachHang = db.KhachHang.FirstOrDefault(kh => kh.TKhoan == email || kh.Email == email);
+
+            if (khachHang == null)
+            {
+                ViewBag.ErrorMessage = "Tài khoản hoặc email không tồn tại!";
+                return View();
+            }
+
+            // Tạo mật khẩu mới ngẫu nhiên
+            string newPassword = GenerateRandomPassword(8);
+
+            // Cập nhật mật khẩu mới cho khách hàng
+            khachHang.MKhau = newPassword;
+            db.SaveChanges();
+
+            // Gửi email cho người dùng
+            string emailBody = $"Xin chào {khachHang.TenKH},\n\nMật khẩu mới của bạn là: {newPassword}\nHãy đăng nhập và thay đổi mật khẩu ngay lập tức.";
+            SendEmail(khachHang.Email, "Khôi phục mật khẩu", emailBody);
+
+            ViewBag.SuccessMessage = "Mật khẩu mới đã được gửi vào email của bạn!";
+            return View();
+        }
+
+        private string GenerateRandomPassword(int length)
+        {
+            const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            Random random = new Random();
+            return new string(Enumerable.Repeat(validChars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+        private void SendEmail(string toEmail, string subject, string body)
+        {
+            try
+            {
+                var fromAddress = new MailAddress("crandi21112004@gmail.com", "Tên hiển thị của bạn");
+                var toAddress = new MailAddress(toEmail);
+                string fromPassword = "your-app-password"; // Sử dụng App Password
+
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                };
+
+                using (var message = new MailMessage(fromAddress, toAddress)
+                {
+                    Subject = subject,
+                    Body = body
+                })
+                {
+                    smtp.Send(message);
+                }
+            }
+            catch (SmtpException smtpEx)
+            {
+                // Ghi lại lỗi SMTP
+                System.Diagnostics.Debug.WriteLine("SMTP Error: " + smtpEx.Message);
+            }
+            catch (Exception ex)
+            {
+                // Ghi lại các lỗi khác
+                System.Diagnostics.Debug.WriteLine("Error: " + ex.Message);
+            }
+        }
+        public ActionResult TestEmail()
+        {
+            SendEmail("crandi21112004@gmail.com", "Test Email", "This is a test email.");
+            return Content("Email sent!");
+        }
     }
-
-
 }

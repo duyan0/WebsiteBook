@@ -442,6 +442,8 @@
     <Content Include="Views\TacGia\Edit.cshtml" />
     <Content Include="Views\TacGia\Details.cshtml" />
     <Content Include="Views\TacGia\Delete.cshtml" />
+    <Content Include="Views\LoginUser\ForgotPassword.cshtml" />
+    <Content Include="Views\DonHangCTs\TopBanChay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
