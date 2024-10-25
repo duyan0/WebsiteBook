@@ -29,7 +29,7 @@
             <th>
                 Tiểu sử
             </th>
-            <th class="text-center">Hành động</th>
+            <th class="text-center">Thao tác</th>
         </tr>
     </thead>
     <tbody>
@@ -52,9 +52,9 @@
                     @Html.DisplayFor(modelItem => item.TieuSu)
                 </td>
                 <td class="text-center">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.IDtg }, new { @class = "btn btn-warning btn-sm rounded" })
-                    @Html.ActionLink("Details", "Details", new { id = item.IDtg }, new { @class = "btn btn-info btn-sm rounded" })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.IDtg }, new { @class = "btn btn-danger btn-sm rounded" })
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.IDtg }, new { @class = "btn btn-warning btn-sm rounded" })
+                    @Html.ActionLink("ChiTiết", "Details", new { id = item.IDtg }, new { @class = "btn btn-info btn-sm rounded" })
+                    @Html.ActionLink("Xoá", "Delete", new { id = item.IDtg }, new { @class = "btn btn-danger btn-sm rounded" })
                 </td>
             </tr>
         }

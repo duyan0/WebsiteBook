@@ -25,7 +25,7 @@ namespace BanSach.Models
         public string TenSP { get; set; }
         public string MoTa { get; set; }
         public int TheLoai { get; set; }
-        public decimal? GiaBan { get; set; }
+        public decimal GiaBan { get; set; }
         public decimal? GiaTuTuyChinh { get; set; } // Để lưu giá tùy chỉnh
         public string HinhAnh { get; set; }
         public int IDtg { get; set; }
