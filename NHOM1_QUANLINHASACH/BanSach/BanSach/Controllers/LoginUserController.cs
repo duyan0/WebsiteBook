@@ -181,9 +181,17 @@ namespace BanSach.Controllers
             // Tạo mật khẩu mới ngẫu nhiên
             string newPassword = GenerateRandomPassword(8);
 
-            // Cập nhật mật khẩu mới cho khách hàng
-            khachHang.MKhau = newPassword;
-            db.SaveChanges();
+            try
+            {
+                // Cập nhật mật khẩu mới cho khách hàng
+                khachHang.MKhau = newPassword;
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = "Đã xảy ra lỗi khi cập nhật mật khẩu: " + ex.Message;
+                return View();
+            }
 
             // Gửi email cho người dùng
             string emailBody = $"Xin chào {khachHang.TenKH},\n\nMật khẩu mới của bạn là: {newPassword}\nHãy đăng nhập và thay đổi mật khẩu ngay lập tức.";
@@ -192,6 +200,7 @@ namespace BanSach.Controllers
             ViewBag.SuccessMessage = "Mật khẩu mới đã được gửi vào email của bạn!";
             return View();
         }
+
 
         private string GenerateRandomPassword(int length)
         {

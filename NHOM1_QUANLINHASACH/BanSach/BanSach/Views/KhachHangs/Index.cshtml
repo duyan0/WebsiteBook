@@ -72,7 +72,7 @@
                 @Html.DisplayFor(modelItem => item.TKhoan)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MKhau).ToString().Replace(@item.MKhau, "********")
+                @Html.Raw("********")
             </td>
 
             <td>

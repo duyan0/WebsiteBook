@@ -31,7 +31,7 @@ namespace BanSach.Controllers
             var products = db.SanPham.Include(p => p.DanhMuc);
            
           
-            int pageSize = 4;           
+            int pageSize = 8;           
             int pageNumber = (page ?? 1);
             if (page == null) page = 1;
 

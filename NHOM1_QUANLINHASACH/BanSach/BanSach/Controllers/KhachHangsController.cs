@@ -44,12 +44,32 @@ namespace BanSach.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IDkh,TenKH,SoDT,Email,TKhoan,MKhau")] KhachHang khachHang)
         {
             if (ModelState.IsValid)
             {
+                // Kiểm tra xem email đã tồn tại chưa
+                var existingEmail = db.KhachHang.FirstOrDefault(kh => kh.Email == khachHang.Email);
+                if (existingEmail != null)
+                {
+                    // Nếu email đã tồn tại, thêm lỗi vào ModelState
+                    ModelState.AddModelError("Email", "Email này đã tồn tại. Vui lòng sử dụng email khác.");
+                    return View(khachHang);
+                }
+
+                // Kiểm tra xem số điện thoại đã tồn tại chưa
+                var existingPhoneNumber = db.KhachHang.FirstOrDefault(kh => kh.SoDT == khachHang.SoDT);
+                if (existingPhoneNumber != null)
+                {
+                    // Nếu số điện thoại đã tồn tại, thêm lỗi vào ModelState
+                    ModelState.AddModelError("SoDT", "Số điện thoại này đã tồn tại. Vui lòng sử dụng số điện thoại khác.");
+                    return View(khachHang);
+                }
+
+                // Nếu cả email và số điện thoại không tồn tại, thêm đối tượng mới vào cơ sở dữ liệu
                 db.KhachHang.Add(khachHang);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -59,6 +79,8 @@ namespace BanSach.Controllers
         }
 
 
+
+
         // GET: KhachHangs/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -66,6 +88,7 @@ namespace BanSach.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             KhachHang khachHang = db.KhachHang.Find(id);
             if (khachHang == null)
             {
@@ -75,26 +98,45 @@ namespace BanSach.Controllers
         }
 
         // POST: KhachHangs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "IDkh,TenKH,SoDT,Email,TKhoan,MKhau,ConfirmPass")] KhachHang khachHang)
         {
-            if(khachHang.MKhau != khachHang.MKhau)
+            // Kiểm tra mật khẩu nhập lại
+            if (khachHang.MKhau != khachHang.ConfirmPass)
             {
                 ViewBag.Error = "Mật khẩu nhập lại không đúng";
-                return View();
+                return View(khachHang); // Trả về view cùng với mô hình
             }
+
             if (ModelState.IsValid)
             {
+                // Kiểm tra xem email đã tồn tại chưa (trừ khách hàng hiện tại)
+                var existingEmail = db.KhachHang.FirstOrDefault(kh => kh.Email == khachHang.Email && kh.IDkh != khachHang.IDkh);
+                if (existingEmail != null)
+                {
+                    ModelState.AddModelError("Email", "Email này đã tồn tại. Vui lòng sử dụng email khác.");
+                    return View(khachHang); // Trả về view cùng với mô hình
+                }
+
+                // Kiểm tra xem số điện thoại đã tồn tại chưa (trừ khách hàng hiện tại)
+                var existingPhoneNumber = db.KhachHang.FirstOrDefault(kh => kh.SoDT == khachHang.SoDT && kh.IDkh != khachHang.IDkh);
+                if (existingPhoneNumber != null)
+                {
+                    ModelState.AddModelError("SoDT", "Số điện thoại này đã tồn tại. Vui lòng sử dụng số điện thoại khác.");
+                    return View(khachHang); // Trả về view cùng với mô hình
+                }
+
+                // Nếu mọi điều kiện đều hợp lệ, cập nhật thông tin khách hàng
                 db.Entry(khachHang).State = EntityState.Modified;
-                db.Configuration.ValidateOnSaveEnabled = false;
                 db.SaveChanges();
                 return RedirectToAction("UpdateSuccesss");
             }
-            return RedirectToAction("Index");
+
+            return View(khachHang); // Trả về view cùng với mô hình nếu không hợp lệ
         }
+
+
         [HttpGet]
         public ActionResult UpdateSuccesss()
         {
