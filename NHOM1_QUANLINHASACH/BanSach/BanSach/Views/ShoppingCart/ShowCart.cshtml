@@ -91,7 +91,9 @@
         </h5><br />
 
         @Html.ActionLink("Tiếp tục mua hàng", "ProductList", "SanPhams")
-
+        <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light" id="navbar-vertical" style="min-width: 50px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; z-index: 1; background-color: azure;box-shadow:2px 2px;">
+            @Html.Action("PhanDanhMuc", "DanhMucs")
+        </nav>
     </div>
 
 
@@ -111,7 +113,7 @@ else
             @foreach (var item in Model.Items)
             {
                 // Sử dụng toán tử ?? để gán giá trị mặc định là 0 nếu GiaBan là null
-                decimal giaBan = item._product.GiaBan ;
+                decimal giaBan = item._product.GiaBan;
                 decimal total = item._quantity * giaBan;
 
                 <tr class="text-center text-white">
@@ -203,5 +205,5 @@ else
         </form>
     </div>
 
-
+    
 }

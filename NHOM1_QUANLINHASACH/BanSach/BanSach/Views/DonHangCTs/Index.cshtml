@@ -35,7 +35,7 @@
 
 <table class="table table-striped embed-responsive-16by9">
     <tr style="color: black; text-align: match-parent;">
-        <th class="text-center">  Mã CTĐH  </th> 
+        <th class="text-center">  Mã CTĐH  </th>
         <th class="text-center">  Mã sách </th>
         <th> Tên sách </th>
         <th> Số lượng  </th>
@@ -50,17 +50,20 @@
             <td class="font-weight-bold text-center">  @Html.DisplayFor(modelItem => item.SanPham.IDsp) </td>
             <td>  @Html.DisplayFor(modelItem => item.SanPham.TenSP) </td>
             <td>  @Html.DisplayFor(modelItem => item.SoLuong) </td>
-            <td>@string.Format("{0:N0} VND", item.Gia)</td>
-            <td>
-                Chưa có
+            <td style="color: red;">
+                @string.Format("{0:N0} VND", item.Gia)
             </td>
+            <td style="color: red;">
+                @item.TongTien.ToString("N0") VND
+            </td>
+
             <td>
                 @Html.ActionLink("Xem", "Details", new { id = item.IDdh }, new { @class = "btn btn-warning btn-sm rounded-sm" })
                 @Html.ActionLink("Xoá", "Delete", new { id = item.IDdh }, new { @class = "btn btn-danger btn-sm rounded-sm" })
             </td>
         </tr>
     }
-</table> 
+</table>
 <style>
     .delete-link {
         color: red; /* Sửa màu trong đây nhaa*/

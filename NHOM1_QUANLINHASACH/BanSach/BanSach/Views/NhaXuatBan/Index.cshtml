@@ -1,67 +1,41 @@
 ﻿@model IEnumerable<BanSach.Models.NhaXuatBan>
 
 @{
-    ViewBag.Title = "Danh Sách Nhà Xuất Bản"; // Cập nhật tiêu đề cho hợp lý
+    ViewBag.Title = "Danh Sách Nhà Xuất Bản";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2 class="text-center font-weight-bold ">Danh Sách Nhà Xuất Bản</h2> <!-- Tiêu đề chính -->
+<h2 class="text-center font-weight-bold mt-3">Danh Sách Nhà Xuất Bản</h2> <!-- Tiêu đề chính -->
 
-<p>
-    @Html.ActionLink("Thêm Nhà Xuất Bản Mới", "Create", null, new { @class = "btn btn-primary rounded" }) <!-- Nút tạo mới -->
-</p>
-
+<p class="text-left  text-white p-2">
+    @Html.ActionLink("Thêm Nhà Xuất Bản Mới", "Create", null, new { @class = "btn btn-dark rounded my-2" })
 <div class="table-responsive">
-    <!-- Thêm lớp để làm cho bảng cuộn -->
-    <table class="table table-bordered table-striped rounded">
-        <!-- Thêm lớp rounded cho bảng -->
-        <thead class="thead-dark rounded">
-            <!-- Thêm lớp cho đầu bảng -->
+    <table class="table table-bordered table-hover table-striped rounded">
+        <thead class="thead-dark">
             <tr>
-                <th>
-                    ID NXB
-                </th>
-                <th>
-                    Tên nhà xuất bản
-                </th>
-                <th>
-                    Địa chỉ
-                </th>
-                <th>
-                    Số điện thoại
-                </th>
-                <th>
-                    Email
-                </th>
-                <th class="text-center">
-                    <!-- Căn giữa cho cột hành động -->
-                    Thao Tác
-                </th>
+                <th>ID NXB</th>
+                <th>Tên nhà xuất bản</th>
+                <th>Địa chỉ</th>
+                <th>Số điện thoại</th>
+                <th>Email</th>
+                <th class="text-center">Thao Tác</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IDnxb)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Tennxb)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DiaChi)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SoDienThoai)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.IDnxb)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Tennxb)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DiaChi)</td>
+                    <td>@Html.DisplayFor(modelItem => item.SoDienThoai)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
                     <td class="text-center">
-                        @Html.ActionLink("Edit", "Edit", new { id = item.IDnxb }, new { @class = "btn btn-warning btn-sm rounded" }) <!-- Nút sửa với bo góc -->
-                        @Html.ActionLink("Details", "Details", new { id = item.IDnxb }, new { @class = "btn btn-info btn-sm rounded" }) <!-- Nút chi tiết với bo góc -->
-                        @Html.ActionLink("Delete", "Delete", new { id = item.IDnxb }, new { @class = "btn btn-danger btn-sm rounded" }) <!-- Nút xóa với bo góc -->
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.IDnxb }, new { @class = "btn btn-warning btn-sm rounded" })
+                            @Html.ActionLink("Details", "Details", new { id = item.IDnxb }, new { @class = "btn btn-info btn-sm rounded" })
+                            @Html.ActionLink("Delete", "Delete", new { id = item.IDnxb }, new { @class = "btn btn-danger btn-sm rounded" })
+                        </div>
                     </td>
                 </tr>
             }
@@ -70,7 +44,44 @@
 </div>
 
 <style>
+    /* Bo góc cho bảng và các nút */
     .rounded {
-        border-radius: 0.25rem; /* Tùy chỉnh độ bo góc */
+        border-radius: 0.25rem;
+    }
+
+    /* Bảng hiển thị */
+    .table {
+        margin-top: 1rem;
+        font-size: 0.95rem;
+    }
+
+    /* Tiêu đề bảng */
+    .thead-dark th {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    /* Ô dữ liệu */
+    td, th {
+        padding: 0.5rem;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    /* Căn giữa và khoảng cách cho các nút thao tác */
+    .btn {
+        min-width: 80px;
+    }
+
+    /* Padding cho nút thêm mới */
+    .text-right .btn {
+        margin-bottom: 1rem;
+    }
+
+    /* Nhóm nút nằm ngang */
+    .btn-group {
+        display: flex;
+        justify-content: center; /* Căn giữa nhóm nút */
+        gap: 5px; /* Khoảng cách giữa các nút */
     }
 </style>

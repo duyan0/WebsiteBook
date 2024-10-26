@@ -46,7 +46,7 @@
             <th>Giá tiền</th>
             <th>Số lượng</th>
             <th>Ảnh sách</th>
-            <th >Tác giả</th>
+            <th>Tác giả</th>
             <th>Nhà xuất bản</th>
             <th>Trạng thái</th>
             <th style="border-top-right-radius: 25px;">Thao tác</th>
@@ -74,7 +74,7 @@
                     </span>
                 </td>
 
-                <td>
+                <td style="display: flex; gap: 5px;">
                     @Html.ActionLink("Sửa", "Edit", new { id = item.IDsp }, new { @class = "btn btn-warning btn-sm rounded-sm" })
                     @Html.ActionLink("Xoá", "Delete", new { id = item.IDsp }, new { @class = "btn btn-danger btn-sm rounded-sm" })
                     @Html.ActionLink("Chi tiết", "Details", new { id = item.IDsp }, new { @class = "btn btn-info btn-sm rounded-sm" })

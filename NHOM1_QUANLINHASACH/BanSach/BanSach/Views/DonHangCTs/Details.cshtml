@@ -1,7 +1,7 @@
 ﻿@model BanSach.Models.DonHangCT
 
 @{
-    ViewBag.Title = "Chi tiết đơn hàng - "+Model.IDDonHang;
+    ViewBag.Title = "Chi tiết đơn hàng - " + Model.IDDonHang;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -15,9 +15,9 @@
     }
 
     h2 {
-       text-align:center;
+        text-align: center;
         color: black;
-        font-weight:bold;
+        font-weight: bold;
     }
 
     tr {
@@ -129,17 +129,27 @@
     <tr>
         <td class="tieude">
             <b>Giá  </b>
-        <td class="thongtin">
+        <td class="thongtin"style="color:red;">
             @string.Format("{0:N0} VND", Model.Gia)
         </td>
     </tr>
     <tr>
         <td class="tieude">
-            <b>Trạng thái  </b>
-        <td class="thongtin">
+            <b>Tổng tiền  </b>
+        <td class="thongtin" style="color:red;">
+            @Model.TongTien.ToString("N0") VND
+        </td>
+    </tr>
+    <tr>
+        <td class="tieude">
+            <b>Trạng thái</b>
+        </td>
+        <td class="thongtin" style="font-weight:bold; color:@(Model.DonHang.TrangThai == "Đã xác nhận" ? "green" : Model.DonHang.TrangThai == "Đã hủy" ? "red" : "black");">
             @Html.DisplayFor(model => model.DonHang.TrangThai)
         </td>
     </tr>
+
+
 </table>
 <p>
     <div class="form-actions">
