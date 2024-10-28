@@ -1,4 +1,6 @@
-﻿@model IEnumerable<BanSach.Models.SanPham>
+﻿@model IPagedList<BanSach.Models.SanPham>
+@using PagedList.Mvc;
+@using PagedList;
 
 @{
     ViewBag.Title = "Kho sách";
@@ -40,7 +42,7 @@
 <table class="table table-condensed table-bordered table-hover">
     <thead style="background-color: black; color: white; text-align: left;">
         <tr>
-            <th style="border-top-left-radius: 25px; ">Mã sách</th>
+            <th style="border-top-left-radius: 25px;">Mã sách</th>
             <th>Tên Sách</th>
             <th>Thể loại</th>
             <th>Giá tiền</th>
@@ -84,67 +86,55 @@
     </tbody>
 </table>
 
+<div class="pagination-container">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+        new PagedListRenderOptions
+        {
+            DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+            DisplayLinkToLastPage = PagedListDisplayMode.Always,
+            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+            DisplayLinkToNextPage = PagedListDisplayMode.Always,
+            DisplayLinkToIndividualPages = true,
+            DisplayPageCountAndCurrentLocation = false,
+            MaximumPageNumbersToDisplay = 5
+        })
+</div>
+
 <style>
-    .table {
-        border-radius: 10px;
-        border: 1px solid #ccc;
+    .pagination-container {
         margin-top: 20px;
-        width: 100%;
+        text-align: center;
     }
 
-    thead {
-        background-color: black;
-        color: white;
-        font-weight: bold;
+    .pagination {
+        display: inline-block;
+        padding-left: 0;
+        margin: 0;
+        border-radius: 10px;
     }
 
-    tbody tr {
-        transition: background-color 0.2s ease;
-    }
-
-        tbody tr:hover {
-            background-color: #f5f5f5;
+        .pagination li {
+            display: inline;
+            margin: 0 2px;
         }
 
-    th, td {
-        padding: 12px;
-        text-align: left;
-        vertical-align: middle;
-    }
-
-    .edit-link {
-        color: #007bff;
-        text-decoration: none;
-    }
-
-        .edit-link:hover {
-            color: #0056b3;
+        .pagination a,
+        .pagination span {
+            color: #007bff;
+            text-decoration: none;
+            padding: 5px 12px;
+            border: 1px solid #ddd;
         }
 
-    .details-link {
-        color: #28a745;
-        text-decoration: none;
-    }
-
-        .details-link:hover {
-            color: #218838;
+        .pagination .active a,
+        .pagination .active span {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
         }
 
-    .delete-link {
-        color: #dc3545;
-        text-decoration: none;
-    }
-
-        .delete-link:hover {
-            color: #c82333;
+        .pagination a:hover {
+            background-color: #ddd;
         }
-
-    img {
-        border-radius: 8px;
-    }
-
-    .table-hover tbody tr:hover td {
-        background-color: #f1f1f1;
-    }
 </style>
 

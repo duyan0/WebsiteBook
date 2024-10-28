@@ -11,126 +11,135 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TenSP, "Tên sản phẩm", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Nhập tên sản phẩm" } })
-                @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MoTa, "Mô tả", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Nhập mô tả sản phẩm" } })
-                @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TheLoai, "Thể loại", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("TheLoai", null, htmlAttributes: new { @class = "form-control rounded" })
-                @Html.ValidationMessageFor(model => model.TheLoai, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2">Giá</label>
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.GiaBan, new SelectList(new[]
-                {
-                    new { Value = "", Text = "Chọn giá" },
-                    new { Value = "1000", Text = "1.000 VND" },
-                    new { Value = "5000", Text = "5.000 VND" },
-                    new { Value = "10000", Text = "10.000 VND" },
-                    new { Value = "20000", Text = "20.000 VND" },
-                    new { Value = "50000", Text = "50.000 VND" },
-                    new { Value = "100000", Text = "100.000 VND" },
-                    new { Value = "200000", Text = "200.000 VND" },
-                    new { Value = "500000", Text = "500.000 VND" },
-                    new { Value = "1000000", Text = "1.000.000 VND" },
-                    new { Value = "Tùy chỉnh", Text = "Tùy chỉnh" }
-                }, "Value", "Text"), new { @class = "form-control rounded", @id = "GiaBanDropdown" })
-
-                <div id="GiaTuTuyChinhDiv" style="margin-top: 10px; display: none;">
-                    @Html.TextBox("GiaTuTuyChinh", null, new { @class = "form-control rounded", placeholder = "Nhập giá tùy chỉnh", type = "text", @id = "GiaTuTuyChinh" })
-                    @Html.ValidationMessageFor(model => model.GiaTuTuyChinh, "", new { @class = "text-danger" })
-                </div>
-
-                @Html.ValidationMessageFor(model => model.GiaBan, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-
-
-
-        <div class="form-group">
-            <div class="control-label col-md-2">Hình</div>
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.HinhAnh, null, new { type = "file", @class = "form-control rounded" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IDtg, "Tác giả", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.IDtg, (SelectList)ViewBag.TacGia, "Chọn tác giả", new { @class = "form-control rounded" })
-                @Html.ValidationMessageFor(model => model.IDtg, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IDnxb, "Nhà xuất bản", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IDnxb", (SelectList)ViewBag.NXB, "Chọn nhà xuất bản", new { @class = "form-control rounded" })
-                @Html.ValidationMessageFor(model => model.IDnxb, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NamXB, "Năm xuất bản", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NamXB, new { htmlAttributes = new { @class = "form-control rounded ", type = "date" } })
-                @Html.ValidationMessageFor(model => model.NamXB, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SoLuong, "Số lượng", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SoLuong, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Nhập số lượng", min = 0 } })
-                @Html.ValidationMessageFor(model => model.SoLuong, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <div class="control-label col-md-2 font-weight-bold">Trạng thái sách</div>
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.TrangThaiSach,
-                    new SelectList(new List<SelectListItem>
-                    {
-                        new SelectListItem { Value = "Còn hàng", Text = "Còn hàng" },
-                        new SelectListItem { Value = "Hết hàng", Text = "Hết hàng" }
-                    }, "Value", "Text"),
-                    "Chọn trạng thái",
-                    new { @class = "form-control rounded" })
-                @Html.ValidationMessageFor(model => model.TrangThaiSach, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Tạo" class="btn btn-primary rounded-sm" />
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.TenSP, "Tên sản phẩm", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Nhập tên sản phẩm" } })
+            @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MoTa, "Mô tả", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Nhập mô tả sản phẩm" } })
+            @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TheLoai, "Thể loại", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("TheLoai", null, htmlAttributes: new { @class = "form-control rounded" })
+            @Html.ValidationMessageFor(model => model.TheLoai, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Giá</label>
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.GiaBan, new SelectList(new[]
+            {
+                new { Value = "", Text = "Chọn giá" },
+                new { Value = "1000", Text = "1.000 VND" },
+                new { Value = "5000", Text = "5.000 VND" },
+                new { Value = "10000", Text = "10.000 VND" },
+                new { Value = "20000", Text = "20.000 VND" },
+                new { Value = "50000", Text = "50.000 VND" },
+                new { Value = "100000", Text = "100.000 VND" },
+                new { Value = "200000", Text = "200.000 VND" },
+                new { Value = "500000", Text = "500.000 VND" },
+                new { Value = "1000000", Text = "1.000.000 VND" },
+                new { Value = "Tùy chỉnh", Text = "Tùy chỉnh" }
+            }, "Value", "Text"), new { @class = "form-control rounded", @id = "GiaBanDropdown" })
+
+            <div id="GiaTuTuyChinhDiv" style="margin-top: 10px; display: none;">
+                @Html.TextBox("GiaTuTuyChinh", null, new { @class = "form-control rounded", placeholder = "Nhập giá tùy chỉnh", type = "text", @id = "GiaTuTuyChinh" })
+                @Html.ValidationMessageFor(model => model.GiaTuTuyChinh, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.ValidationMessageFor(model => model.GiaBan, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+
+
+    <div class="form-group">
+        <div class="control-label col-md-2">Hình</div>
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.HinhAnh, null, new { type = "file", @class = "form-control rounded", @id = "fileInput" })
+            <br />
+            <img id="previewImage" src="#" alt="Hình xem trước" style="display: none; max-width: 200px; max-height: 200px;" />
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        document.getElementById('fileInput').addEventListener('change', function (event) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var img = document.getElementById('previewImage');
+                img.src = reader.result;
+                img.style.display = 'block';
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        });
+    </script>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IDtg, "Tác giả", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.IDtg, (SelectList)ViewBag.TacGia, "Chọn tác giả", new { @class = "form-control rounded" })
+            @Html.ValidationMessageFor(model => model.IDtg, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IDnxb, "Nhà xuất bản", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("IDnxb", (SelectList)ViewBag.NXB, "Chọn nhà xuất bản", new { @class = "form-control rounded" })
+            @Html.ValidationMessageFor(model => model.IDnxb, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NamXB, "Năm xuất bản", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NamXB, new { htmlAttributes = new { @class = "form-control rounded ", type = "date" } })
+            @Html.ValidationMessageFor(model => model.NamXB, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SoLuong, "Số lượng", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.SoLuong, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Nhập số lượng", min = 0 , max = 2111 } })
+            @Html.ValidationMessageFor(model => model.SoLuong, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="control-label col-md-2 font-weight-bold">Trạng thái sách</div>
+        <div class="col-md-10">
+            @Html.HiddenFor(model => model.TrangThaiSach, new { @Value = "Còn hàng" })
+            <p class="form-control rounded" style="border: none; background: transparent;">Còn hàng</p>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Tạo" class="btn btn-primary rounded-sm" />
+        </div>
+    </div>
+</div>
 }
 
 <div>

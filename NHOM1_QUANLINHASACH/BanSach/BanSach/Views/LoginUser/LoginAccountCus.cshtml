@@ -112,10 +112,10 @@
         <h3 style="color: #333; font-weight: bold;">ĐĂNG NHẬP</h3>
         <form action="/LoginUser/LoginAccountCus" class="login-form" method="post">
             <p class="field-validation-error">@ViewBag.ErrorInfo</p>
-            <p><input type="text" placeholder="Tài khoản" name="TKhoan" /></p>
+            <p><input type="text" placeholder="Tài khoản*" name="TKhoan" /></p>
 
             <div class="password-field">
-                <p><input type="password" id="password" placeholder="Mật khẩu" name="MKhau" /></p>
+                <p><input type="password" id="password" placeholder="Mật khẩu*" name="MKhau" /></p>
                 <span id="togglePassword" class="toggle-password" onclick="togglePasswordVisibility()">Hiện</span>
             </div>
 

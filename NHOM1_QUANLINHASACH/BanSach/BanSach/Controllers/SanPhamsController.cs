@@ -17,11 +17,19 @@ namespace BanSach.Controllers
         private SachEntities1 db = new SachEntities1();
 
         // GET: SanPhams
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var sanPhams = db.SanPham.Include(s => s.DanhMuc);
-            return View(sanPhams.ToList());
+            int pageSize = 10; 
+            int pageNumber = (page ?? 1); 
+
+            var sanPhams = db.SanPham
+                .Include(s => s.DanhMuc) 
+                .OrderBy(sp => sp.IDsp)  
+                .ToPagedList(pageNumber, pageSize); 
+
+            return View(sanPhams);
         }
+
         public ActionResult TrangChu()
         {
             return View();
