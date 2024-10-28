@@ -79,7 +79,7 @@
         z-index: 1000;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         opacity: 0;
-        transition: opacity 1s ease-in-out; /* Tạo hiệu ứng mờ dần */
+        transition: opacity 5s ease-in-out; /* Tạo hiệu ứng mờ dần */
     }
 
         /* Hiện thông báo */
@@ -141,8 +141,8 @@
 
                 // Điều hướng tới URL sau khi thông báo ẩn
                 window.location.href = "/ShoppingCart/AddToCart/" + productId;
-            }, 1000); // 1 giây để hoàn tất hiệu ứng mờ dần
-        }, 2000); // Hiển thị thông báo trong 5 giây
+            }, 0); // 1 giây để hoàn tất hiệu ứng mờ dần
+        }, 1000); // Hiển thị thông báo trong 5 giây
     }
 
 

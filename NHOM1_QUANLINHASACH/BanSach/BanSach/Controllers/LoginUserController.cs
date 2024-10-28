@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Net;
 using System.Net.Mail;
+using System.Data.Entity.Validation;
 
 
 namespace BanSach.Controllers
@@ -185,7 +186,27 @@ namespace BanSach.Controllers
             {
                 // Cập nhật mật khẩu mới cho khách hàng
                 khachHang.MKhau = newPassword;
+
+                // Kiểm tra lỗi validation trước khi lưu thay đổi
+                var validationErrors = db.GetValidationErrors();
+                if (validationErrors.Any())
+                {
+                    throw new DbEntityValidationException("Validation failed for one or more entities.", validationErrors);
+                }
+
                 db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var validationError in ex.EntityValidationErrors)
+                {
+                    foreach (var error in validationError.ValidationErrors)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Property: {error.PropertyName} Error: {error.ErrorMessage}");
+                    }
+                }
+                ViewBag.ErrorMessage = "Đã xảy ra lỗi khi cập nhật mật khẩu. Vui lòng kiểm tra lại thông tin.";
+                return View();
             }
             catch (Exception ex)
             {
@@ -201,7 +222,6 @@ namespace BanSach.Controllers
             return View();
         }
 
-
         private string GenerateRandomPassword(int length)
         {
             const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -209,13 +229,14 @@ namespace BanSach.Controllers
             return new string(Enumerable.Repeat(validChars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
+
         private void SendEmail(string toEmail, string subject, string body)
         {
             try
             {
                 var fromAddress = new MailAddress("crandi21112004@gmail.com", "Tên hiển thị của bạn");
                 var toAddress = new MailAddress(toEmail);
-                string fromPassword = "your-app-password"; // Sử dụng App Password
+                string fromPassword = "uisz jzid byry jtqw"; // Sử dụng App Password
 
                 var smtp = new SmtpClient
                 {
@@ -247,10 +268,12 @@ namespace BanSach.Controllers
                 System.Diagnostics.Debug.WriteLine("Error: " + ex.Message);
             }
         }
+
         public ActionResult TestEmail()
         {
             SendEmail("crandi21112004@gmail.com", "Test Email", "This is a test email.");
             return Content("Email sent!");
         }
+
     }
 }

@@ -35,6 +35,29 @@
   --font-family-sans-serif: "Poppins", sans-serif;
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+        border-top-color: #3498db;
+    }
+
+    25% {
+        border-top-color: #e74c3c; /* Chuyển sang màu đỏ */
+    }
+
+    50% {
+        border-top-color: #f1c40f; /* Chuyển sang màu vàng */
+    }
+
+    75% {
+        border-top-color: #2ecc71; /* Chuyển sang màu xanh lá */
+    }
+
+    100% {
+        transform: rotate(360deg);
+        border-top-color: #3498db; /* Trở về màu xanh dương */
+    }
+}
 
 *,
 *::before,

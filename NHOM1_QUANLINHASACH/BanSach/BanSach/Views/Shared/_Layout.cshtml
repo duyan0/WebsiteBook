@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -13,7 +12,6 @@
     <link href="~/Content/img/logosach.png" rel="icon">
 
     <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
@@ -28,23 +26,25 @@
 </head>
 
 <body>
-    <!-- Topbar Start -->
+    <div id="loading">
+        <div class="spinner"></div>
+    </div>
 
+    <!-- Topbar Start -->
     <div class="row align-items-center py-3 px-xl-5" id="topbar" style="background-color: #1f1f20;">
         <div class="col-lg-3 d-none d-lg-block">
-
             <a href="~/SanPhams/TrangChu" class="text-decoration-none">
-                <h2 class="m-0 display-5 font-weight-semi-bold" style="background-color: #1f1f20; color: white; border: none;">
+                <h2 class="m-0 display-5 font-weight-semi-bold" style="color: white;">
                     <img src="~/Content/img/logosach.png" style="width:40px;">
                     Võ Duy Ân
                 </h2>
             </a>
         </div>
-        <div class="col-lg-6 col-6 text-left">
+        <div class="col-lg-6 col-6 text-right">
             @using (Html.BeginForm("ProductList", "SanPhams", FormMethod.Get))
             {
                 <div class="input-group" style="margin-left:10px;">
-                    <input type="text" class="form-control" placeholder=" Nhập tên sách bạn muốn tìm" name="SearchString" style="border-radius:10px;">
+                    <input type="text" class="form-control" placeholder="Nhập tên sách bạn muốn tìm" name="SearchString" style="border-radius:10px;">
                 </div>
             }
         </div>
@@ -56,23 +56,23 @@
         </div>
     </div>
     <!-- Topbar End -->
-    <!-- Navbar Start-->
+    <!-- Navbar Start -->
     <div class="container-fluid" id="navbar" style="background-color:#1f1f20;">
         <div class="row border-top px-xl-5">
-            <div class="col-lg-3 d-none d-lg-block" style="z-index:10;">
-                <a class="btn shadow-none d-flex align-items-center justify-content-between  text-white w-50" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 20px; border-radius:10px;background-color:white;">
+            <div class="col-lg-3 d-none d-lg-block">
+                <a class="btn shadow-none d-flex align-items-center justify-content-between text-white w-50" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 20px; border-radius:10px; background-color:white;">
                     <h6 class="m-0">Danh mục</h6>
                     <i class="fa fa-angle-down text-dark"></i>
                 </a>
-                <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light" id="navbar-vertical" style="min-width: 50px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; z-index: 1; background-color: azure;box-shadow:2px 2px;">
+                <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 bg-light" id="navbar-vertical" style="min-width: 50px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
                     @Html.Action("PhanDanhMuc", "DanhMucs")
                 </nav>
             </div>
             <div class="col-lg-9">
-                <nav class="navbar navbar-expand-lg bg-black navbar-light py-3 py-lg-0 px-0">
-                    <a href="~/SanPhams/ProductList" class="text-decoration-none d-block d-lg-none d-flex ">
-                        <img src="~/Content/img/logosach.png" style="width:40px ; height: 40px; margin-right: 10px; float:left">
-                        <h1 class="m-0 display-5 font-weight-semi-bold text-white"> Võ Duy Ân</h1>
+                <nav class="navbar navbar-expand-lg navbar-light py-3 py-lg-0 px-0">
+                    <a href="~/SanPhams/ProductList" class="text-decoration-none d-block d-lg-none">
+                        <img src="~/Content/img/logosach.png" style="width:40px; height: 40px; margin-right: 10px;">
+                        <h1 class="m-0 display-5 font-weight-semi-bold text-white">Võ Duy Ân</h1>
                     </a>
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
@@ -82,55 +82,35 @@
                             @if (Session["IDkh"] != null)
                             {
                                 <div class="dropdown">
-                                    <a href="#" class="nav-item nav-link" style="color:white;">@Session["TenKH"]</a>
+                                    <a href="#" class="nav-item nav-link text-black">@Session["TenKH"]</a>
                                     <div class="dropdown-content">
                                         <a href="@Url.Action("InfoCustomer", "LoginUser")">Thông tin cá nhân</a>
                                         <a href="@Url.Action("Logout", "LoginUser")">Đăng xuất</a>
-                                        <a href="@Url.Action("#", "#")">Thông tin đơn hàng</a>
+                                        <a href="#">Thông tin đơn hàng</a>
                                     </div>
                                 </div>
-
-
                             }
                             else if (Session["IdQly"] != null)
                             {
                                 <a href="@Url.Action("QuanTri", "LoginUser")" class="nav-item nav-link">Trang ADMIN</a>
-                                <a href="#" class="nav-item nav-link">@Session["HoTen"]</a>
-                                <a href="@Url.Action("Logout", "LoginUser")" class="nav-item nav-link">Đăng xuất  </a>
 
+                                <a href="@Url.Action("Logout", "LoginUser")" class="nav-item nav-link">Đăng xuất</a>
                             }
                             else
                             {
-                                <a href="~/LoginUser/LoginAccountCus" class="nav-item nav-link" style="margin-right:10px;">Đăng nhập</a>
+                                <a href="~/LoginUser/LoginAccountCus" class="nav-item nav-link">Đăng nhập</a>
                                 <a href="~/LoginUser/RegisterCus" class="nav-item nav-link">Đăng ký</a>
-
                             }
-                            <style>
-                                .navbar-light .navbar-nav .nav-link {
-                                    padding: 20px 10px;
-                                    color: white;
-                                    outline: none;
-                                    text-align: center;
-                                    font-weight: bold;
-                                }
-
-                                    .navbar-light .navbar-nav .nav-link:hover,
-                                    .navbar-light .navbar-nav .nav-link.active {
-                                        /*color: black;
-                                    background-color:white;*/
-                                    }
-                            </style>
                         </div>
                     </div>
                 </nav>
             </div>
         </div>
     </div>
-
     <!-- Navbar End -->
-    <!-- Main Star -->
+    <!-- Main Start -->
     <div class="container-fluid pt-4" style="width: 100%; background-color: black;">
-        <div class="container-fluid" style="background-color: #1f1f20; border-radius: 15px; padding: 10px; margin: 0 7% 0 7%; width: 86%">
+        <div class="container-fluid" style="background-color: #1f1f20; border-radius: 15px; padding: 10px; margin: 0 7%; width: 86%;">
             @RenderBody()
         </div>
     </div>
@@ -138,36 +118,36 @@
     @Scripts.Render("~/bundles/jquery")
     <script src="~/Scripts/bootstrap.bundle.js"></script>
     @RenderSection("scripts", required: false)
-    <!-- Main END -->
+    <!-- Main End -->
     <!-- Footer Start -->
     <footer class="card-body" style="background-color: black;">
-        <div class="kt p">
-            <div class="pk">
+        <div class="kt p" style="display:flex; text-align:center;">
+            <div class="pk" style="flex: 1;">
                 <div class="pk-1">Võ Duy Ân</div>
                 <div class="pk-2"><a href="#">Giới thiệu</a></div>
                 <div class="pk-2"><a href="#">Chính sách hoàn tiền</a></div>
                 <div class="pk-2"><a href="#">Chính sách bảo mật</a></div>
             </div>
-            <div class="pk">
+            <div class="pk" style="flex: 1;">
                 <div class="pk-1">Hướng dẫn</div>
                 <div class="pk-2"><a href="#">Hướng dẫn mua sách</a></div>
             </div>
-            <div class="pk">
+            <div class="pk" style="flex: 1;">
                 <div class="pk-1">Hỗ trợ</div>
-                <div class="pk-2"><a href="#"><i></i> Zalo</a></div>
+                <div class="pk-2"><a href="#">Zalo</a></div>
             </div>
-            <div class="pk">
+            <div class="pk" style="flex: 1;">
                 <div class="pk-1">Tin tức</div>
-                <div class="pk-2"><a href="#"><i></i> Facebook</a></div>
-                <div class="pk-2"><a href="#"><i></i> Google</a></div>
-                <div class="pk-2"><a href="#"><i></i> Telegram</a></div>
+                <div class="pk-2"><a href="#">Facebook</a></div>
+                <div class="pk-2"><a href="#">Google</a></div>
+                <div class="pk-2"><a href="#">Telegram</a></div>
             </div>
         </div>
     </footer>
     <style>
         .pk-2 {
             font-size: 15px;
-            margin: 10px 0px;
+            margin: 10px 0;
         }
 
         .pk-1 {
@@ -183,46 +163,8 @@
 
             .pk-2 a:hover {
                 color: red;
-                text-decoration: underline;
+                text-decoration: none;
             }
-
-        .pk-2 i {
-            width: 20px;
-        }
-
-        .pk-3 a {
-            padding-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: var(--web-color);
-            font-size: 15px;
-        }
-
-        .pk-3 i {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 20px;
-            color: white;
-        }
-
-        .ft {
-            margin-top: auto;
-            border-top: 1px solid var(--web-border);
-            color: var(--web-color);
-            background: var(--web-hd);
-        }
-
-        .p {
-            display: flex;
-            justify-content: space-around;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            margin-left: 15rem;
-            margin-right: 15rem;
-        }
 
         .dropdown {
             position: relative;
@@ -248,21 +190,65 @@
             }
 
                 .dropdown-content a:hover {
-                    background-color: #ff0000;
+                    background-color: #252222;
                     border-radius: 1rem;
+                    color: white;
                 }
 
         .dropdown:hover .dropdown-content {
             display: block;
         }
+
+        .navbar-light .navbar-nav .nav-link {
+            padding: 20px 10px;
+            color: #1C1C1C;
+            outline: none;
+            color: white;
+            border-radius: 5px;
+        }
+
+            .navbar-light .navbar-nav .nav-link:hover,
+            .navbar-light .navbar-nav .nav-link.active {
+                color: #000000;
+                background-color: white;
+            }
+
+        #loading {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 6px solid red;
+            border-top: 6px solid red;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
     </style>
+    <script>
+        window.addEventListener("load", function () {
+            const loadingElement = document.getElementById("loading");
+            loadingElement.style.display = "none";
+        });
+
+    </script>
     <!-- Footer End -->
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="~/Content/lib/easing/easing.min.js"></script>
     <script src="~/Content/lib/owlcarousel/owl.carousel.min.js"></script>
-    <!-- Template Javascript -->
     <script src="~/Scripts/main.js"></script>
 </body>
+
 </html>

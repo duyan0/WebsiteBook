@@ -1,6 +1,4 @@
-﻿
-
-@model BanSach.Models.Cart
+﻿@model BanSach.Models.Cart
 
 @{
     ViewBag.Title = "Giỏ hàng";
@@ -11,6 +9,7 @@
     .showcart {
         text-align: center;
         padding: 5px;
+        border-radius: 15px;
     }
 
         .showcart h5 {
@@ -20,19 +19,20 @@
     #carQuantity {
         width: 50px;
         padding-left: 10px;
+        border-radius: 10px;
     }
 
     .thanhtien {
         bottom: 0;
         border: solid 1px double;
-        border-radius: 10px;
+        border-radius: 15px;
         padding: 15px;
         -moz-box-shadow: 0 4px 8px 0 grey;
         -webkit-box-shadow: 0 4px 8px 0 grey;
     }
 
     .nutthanhtoan {
-        border-radius: 10px;
+        border-radius: 15px;
         color: white;
         background-color: crimson;
         border: none;
@@ -47,27 +47,28 @@
 
     .xoa {
         color: white;
+        border-radius: 5px;
     }
 
-        .xoa :hover {
-            color: red;
+        .xoa:hover {
+            color: black;
             text-decoration: none;
         }
 
     .thongtinkh input {
-        border-radius: 10px;
+        border-radius: 15px;
         padding-left: 15px;
         height: 50px;
         outline: none;
     }
 
     .btn, .capnhat {
-        border-radius: 8px;
+        border-radius: 10px;
     }
 
     .showcart a {
         background-color: crimson;
-        border-radius: 10px;
+        border-radius: 15px;
         padding: 10px;
         color: white;
     }
@@ -100,7 +101,7 @@
 }
 else
 {
-    <table class="table-bordered table-hover w-100">
+    <table class="table-bordered table-hover w-100" style="border-radius: 15px;">
         <thead>
             <tr class="text-center font-weight-semi-bold display-5 text-white">
                 <th>Thông tin</th>
@@ -118,13 +119,14 @@ else
 
                 <tr class="text-center text-white">
                     <td width="40%">
-                        <img src="~/Content/img/@item._product.HinhAnh" width="140" height="160" style="float:left;" />
+                        <img src="~/Content/img/@item._product.HinhAnh" width="140" height="160" style="float:left; border-radius: 15px;" />
                         <p style="padding-top:40px;">
                             @Html.DisplayFor(model => item._product.TenSP)
                         </p>
                         <p>
-                            <b style="color:red">@giaBan.ToString("#,##0").Replace(',', '.') Đ</b>
+                            <b style="color:red">@giaBan.ToString("#,##0").Replace(',', '.') VND</b>
                         </p>
+
                     </td>
                     <td class="text-center">
                         @using (Html.BeginForm("Update_Cart_Quantity", "ShoppingCart"))
@@ -134,16 +136,22 @@ else
                             <input type="submit" value="Cập nhật" class="capnhat bg-white" />
                         }
                     </td>
-                    <td style="color: #c92127;"><b>@total.ToString("#,##0").Replace(',', '.') đ</b></td>
+                    <td style="color: #c92127;"><b>@total.ToString("#,##0").Replace(',', '.') VND</b></td>
 
-                    <td class="xoa"><a href="/ShoppingCart/RemoveCart/@item._product.IDsp" class="xoa ">Xóa</a></td>
+                    <td class="xoa">
+                        <form action="/ShoppingCart/RemoveCart/@item._product.IDsp" method="get">
+                            <button type="submit" class="xoa" style="background-color: red; color: white; border: none; outline: none;">Xóa</button>
+                        </form>
+                    </td>
+
+
                 </tr>
             }
         </tbody>
         <tfoot>
             <tr>
                 <td colspan="6" style="text-align: right; font-size: x-large; color: white;">
-                    Tổng tiền : <b style="color: #c92127;"> @Model.Total_money().ToString("#,##0").Replace(',', '.') Đ </b>
+                    Tổng tiền: <b style="color: #c92127;">@Model.Total_money().ToString("#,##0").Replace(',', '.') VND</b>
                 </td>
             </tr>
 
@@ -151,18 +159,18 @@ else
     </table>
 
     <div class="container-fluid">
-        <form class="col-7 m-auto" action="/ShoppingCart/CheckOut" method="post">
+        <form class="col-7 m-auto" action="/ShoppingCart/CheckOut" method="post" style="border-radius: 15px; padding: 20px;">
             <input type="hidden" name="CodeCustomer" value="@Session["IDkh"]" required />
             <table class="tb m-auto table border-0">
                 <tr>
-                    <td colspan="2"><h4 class="text-center text-white">THÔNG TIN</h4></td>
+                    <td colspan="2"><h4 class="text-center text-white font-weight-bold" >THÔNG TIN</h4></td>
                 </tr>
                 <tr>
                     <td>
                         Tên :
                     </td>
                     <td class="thongtinkh">
-                        <input style="width:100%" type="text" name="NameCustomer" value="@Session["TenKH"]" required />
+                        <input style="width:100%" type="text" name="NameCustomer" placeholder="Điền họ và tên" value="@Session["TenKH"]" required />
                     </td>
                 </tr>
                 <tr>
@@ -170,7 +178,7 @@ else
                         Số điện thoại :
                     </td>
                     <td class="thongtinkh">
-                        <input style="width:100%" type="text" name="PhoneCustomer" value="@Session["SoDT"]" required />
+                        <input style="width:100%" type="text" name="PhoneCustomer"placeholder="Điền số điện thoại" value="@Session["SoDT"]" required />
                     </td>
                 </tr>
                 <tr>
@@ -178,7 +186,7 @@ else
                         Địa chỉ giao hàng :
                     </td>
                     <td class="thongtinkh">
-                        <input style="width:100%" type="text" name="AddressDeliverry" required />
+                        <input style="width:100%" type="text" name="AddressDeliverry"placeholder="Điền địa chỉ giao hàng" required />
                     </td>
                 </tr>
 
@@ -197,7 +205,7 @@ else
                     <tr class="py-2">
                         <td>(Hãy đăng nhập trước)</td>
                         <td>
-                            <a style="width:120px" href="@Url.Action("LoginAccountCus", "LoginUser")" class="btn btn-primary">Đăng nhập</a>
+                            <a style="width:120px" href="@Url.Action("LoginAccountCus", "LoginUser")" class="btn btn-danger">Đăng nhập</a>
                         </td>
                     </tr>
                 }
@@ -205,5 +213,5 @@ else
         </form>
     </div>
 
-    
+
 }

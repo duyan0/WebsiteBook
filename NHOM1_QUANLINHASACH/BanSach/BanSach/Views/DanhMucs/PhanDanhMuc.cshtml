@@ -3,13 +3,16 @@
 <style>
     .danhmuctong li a, .theloai li a {
         color: black;
+        text-decoration: none;
+        position: relative;
+        z-index: 10;
     }
 
-    .danhmuctong li :hover, .theloai li :hover {
-        text-decoration: none;
+    .danhmuctong li:hover > a, .theloai li:hover > a {
         color: chocolate;
-        transition-timing-function: ease-in-out;
-        transition-duration: 0.25s;
+        transition: color 0.25s ease-in-out;
+        position: relative;
+        z-index: 10;
     }
 
     .danhmuctong {
@@ -18,32 +21,39 @@
 
     .danhmuc {
         display: block;
-        height: 30px;
+        height: auto;
         margin-top: 20px;
         padding-right: 20px;
+        cursor: pointer;
     }
 
     .theloai {
         display: none;
-        margin-left: 250px;
-        margin-top: -25px;
-        background-color: white;
-        border-radius: 10px;
-        padding-right: 5px;
+        position: relative; /* Định vị tuyệt đối so với container-danhmuc */
+        left: 20%; /* Đảm bảo nó nằm bên trái của .container-danhmuc */
+        padding: 5px;
+        z-index: 1500; /* Giá trị cao để đảm bảo hiển thị trên các phần tử khác */
+    }
+
+    .danhmuc:hover .theloai {
+        display: block;
+        /* Hiển thị khi hover vào .danhmuc */
     }
 
     .tentheloai {
         list-style-type: none;
         padding: 5px;
-        margin: 0 25px 0 20px;
-        padding-right: 20px;
+        margin: 5px 0;
         width: max-content;
     }
 
     .container-danhmuc {
         border-left: 1px solid black;
         border-radius: 10px;
-        z-index: auto;
+        position: relative; /* Đặt vị trí tương đối để .theloai định vị theo container */
+        z-index: 1500; /* Giá trị z-index cao để hiển thị đè lên */
+        background-color: white; /* Đặt màu nền để dễ nhìn */
+        padding: 10px; /* Khoảng cách bên trong cho đẹp */
     }
 
     .banchay {
@@ -65,32 +75,30 @@
                     if (Session[item.DanhMuc1] == null)
                     {
                         <li class="danhmuc">
-                            <a><strong style="color:black;"> @item.DanhMuc1</strong></a>
+                            <a><strong>@item.DanhMuc1</strong></a>
 
-
-                            @foreach (var item2 in Model)
-                            {
-                                if (item2.TheLoai == item.TheLoai)
+                            <ul class="theloai">
+                                @foreach (var item2 in Model)
                                 {
-                                <li class="tentheloai">@Html.ActionLink(item2.TheLoai, "ProductList", "SanPhams", new { category = item2.ID }, "")</li>
-                            }
-                        }
-
-
-                            </li>
-                        }
+                                    if (item2.DanhMuc1 == item.DanhMuc1 && !string.IsNullOrEmpty(item2.TheLoai))
+                                    {
+                                        <li class="tentheloai">
+                                            @Html.ActionLink(item2.TheLoai, "ProductList", "SanPhams", new { category = item2.ID }, new { @class = "tentheloai-link" })
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </li>
                     }
-
                     Session[item.DanhMuc1] = "co";
                     temp = item;
                 }
-                foreach (var item in Model)
-                {
-                    Session[item.DanhMuc1] = null;
-                }
+            }
+
+            foreach (var item in Model)
+            {
+                Session[item.DanhMuc1] = null;
+            }
         }
-
     </ul>
-
 </div>
-
