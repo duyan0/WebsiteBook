@@ -9,83 +9,119 @@
 <style>
     .card-pro {
         text-decoration: none;
-        border-radius: 10px;
-        padding: 5px;
+        border-radius: 15px;
+        padding: 10px;
         text-align: center;
         margin-top: 20px;
-        transition: transform 0.2s, box-shadow 0.2s; /* Thêm hiệu ứng cho card */
-        z-index:0;
+        transition: transform 0.3s, box-shadow 0.3s;
+        background-color: #f8f9fa;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
         .card-pro:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Thêm hiệu ứng shadow */
+            transform: scale(1.08);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
-        /* Bỏ gạch chân cho tất cả các liên kết trong card */
         .card-pro a {
-            text-decoration: none; /* Không có gạch chân */
-            color: inherit; /* Kế thừa màu sắc từ phần tử cha */
+            text-decoration: none;
+            color: inherit;
+            width: 100%;
         }
+
+        .card-pro img {
+            border-radius: 15px;
+            max-height: 300px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+    .availability {
+        margin: 10px 0;
+        font-weight: bold;
+        color: #28a745;
+    }
+
+    .product-name {
+        font-weight: bold;
+        font-size: 1.2em;
+        margin-top: 10px;
+        color: #333;
+    }
+
+    .price {
+        font-weight: bold;
+        color: #dc3545;
+        font-size: 1.1em;
+    }
 
     .sotrang {
         text-align: center;
-        margin: 15px 0 5px 0;
+        margin: 20px 0;
     }
 
         .sotrang a {
-            padding: 5px;
+            padding: 8px;
             border-radius: 5px;
+            transition: background-color 0.2s;
         }
 
             .sotrang a:hover {
-                background-color: blanchedalmond;
+                background-color: #e8e8e8;
             }
 
     .dieuhuongtrang {
         width: fit-content;
         text-align: center;
-        margin: 30px auto;
+        margin: 40px auto;
     }
 
         .dieuhuongtrang li a {
-            color: white;
-            padding: 10px;
-            margin: 2px;
+            color: #fff;
+            padding: 12px;
+            margin: 3px;
+            background-color: #007bff;
+            border-radius: 10px;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .dieuhuongtrang .active a, .dieuhuongtrang .active a:hover {
             background-color: #C92127;
-            color: white;
-            border-radius: 10px;
+            color: #fff;
+            border-radius: 12px;
         }
 
         .dieuhuongtrang li a:hover {
-            background-color: white;
-            color: black;
-            border-radius: 10px;
+            background-color: #0056b3;
+            color: #fff;
+            border-radius: 12px;
         }
 
-    h5 {
-        color: white;
-        margin: 20px auto;
+    h3.page-title {
+        color: #343a40;
+        margin: 30px auto;
+        font-weight: bold;
+        text-align: center;
     }
 </style>
 
-<h3 class="text-center text-white font-weight-bold">Danh sách sản phẩm</h3>
+<h3 class="page-title">Danh sách sản phẩm</h3>
 <div class="container">
     <div class="row">
         @if (Model != null && Model.Any())
         {
             foreach (var item in Model)
             {
-                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
-                    <div class="card-pro bg-light">
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex align-items-stretch">
+                    <div class="card-pro">
                         <a href="~/SanPhams/TrangSP/@item.IDsp">
-                            <img src="~/Content/img/@item.HinhAnh" class="img-fluid" alt="@item.TenSP" style="max-height: 250px;" />
-                            <p class="text-success font-weight-bold">Còn hàng</p>
-                            <p class="font-weight-bold">@Html.DisplayFor(model => item.TenSP)</p>
-                            <p class="text-danger font-weight-bold">
+                            <img src="~/Content/img/@item.HinhAnh" class="img-fluid" alt="@item.TenSP" />
+                            <p class="availability" style="color: @(item.TrangThaiSach == "Hết hàng" ? "red" : "#28a745")">@item.TrangThaiSach</p>
+                            <p class="product-name">@Html.DisplayFor(model => item.TenSP)</p>
+                            <p class="price">
                                 @string.Format("{0:N0} VND", item.GiaBan)
                             </p>
                         </a>
@@ -95,10 +131,17 @@
         }
         else
         {
-            <h5>Chưa có thông tin sản phẩm</h5>
+            <h5 class="text-center text-muted">Chưa có thông tin sản phẩm</h5>
         }
     </div>
     <div class="dieuhuongtrang">
-        @Html.PagedListPager(Model, page => Url.Action("ProductList", new { page }))
+        @Html.PagedListPager(Model, page => Url.Action("ProductList", new { page }), new PagedListRenderOptions()
+        {
+            DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+            DisplayLinkToLastPage = PagedListDisplayMode.Always,
+            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+            DisplayLinkToNextPage = PagedListDisplayMode.Always,
+            LinkToIndividualPageFormat = "{0}"
+        })
     </div>
 </div>

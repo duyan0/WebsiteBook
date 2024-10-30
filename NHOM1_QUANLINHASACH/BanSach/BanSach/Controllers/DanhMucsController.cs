@@ -46,6 +46,9 @@ namespace BanSach.Controllers
         // GET: DanhMucs/Create
         public ActionResult Create()
         {
+            var danhMucList = db.DanhMuc.Select(d => d.DanhMuc1).ToList();
+            ViewBag.DanhMucList = danhMucList;
+
             return View();
         }
 

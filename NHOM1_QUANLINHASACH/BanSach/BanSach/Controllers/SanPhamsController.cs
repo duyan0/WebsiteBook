@@ -17,33 +17,43 @@ namespace BanSach.Controllers
         private SachEntities1 db = new SachEntities1();
 
         // GET: SanPhams
-        public ActionResult Index(int? page)
+        public ActionResult Index(string searchString, int? page)
         {
-            int pageSize = 10; 
-            int pageNumber = (page ?? 1); 
+            ViewBag.CurrentFilter = searchString;
 
-            var sanPhams = db.SanPham
-                .Include(s => s.DanhMuc) 
-                .OrderBy(sp => sp.IDsp)  
-                .ToPagedList(pageNumber, pageSize); 
+            // Lấy danh sách tất cả sản phẩm từ cơ sở dữ liệu
+            var sanPhams = db.SanPham.Include(s => s.DanhMuc).Include(s => s.TacGia).Include(s => s.NhaXuatBan);
 
-            return View(sanPhams);
+            // Nếu có từ khóa tìm kiếm, lọc sản phẩm theo tên
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                sanPhams = sanPhams.Where(s => s.TenSP.Contains(searchString)
+                                             || s.TacGia.TenTacGia.Contains(searchString)
+                                             || s.DanhMuc.TheLoai.Contains(searchString)
+                                             || s.NhaXuatBan.Tennxb.Contains(searchString));
+            }
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
+            // Trả về kết quả đã được phân trang
+            return View(sanPhams.OrderBy(s => s.IDsp).ToPagedList(pageNumber, pageSize));
         }
+
 
         public ActionResult TrangChu()
         {
             return View();
         }
-        public ActionResult ProductList(int? category, int? page, string SearchString)
+        public ActionResult ProductList(int? category, int? page, string SearchString )
         {
             var products = db.SanPham.Include(p => p.DanhMuc);
-           
-          
+            
             int pageSize = 8;           
             int pageNumber = (page ?? 1);
             if (page == null) page = 1;
 
-
+            
             // Tìm kiếm chuỗi truy vấn theo category
             if (category == null)
             {

@@ -49,10 +49,7 @@
         [Required(ErrorMessage = "Nhà xuất bản là bắt buộc.")]
         public int IDnxb { get; set; }
 
-        [Display(Name = "Năm xuất bản")]
-        [DataType(DataType.Date)]
-        [Required(ErrorMessage = "Năm xuất bản là bắt buộc.")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        
         public System.DateTime NamXB { get; set; }
 
         [Display(Name = "Số lượng")]

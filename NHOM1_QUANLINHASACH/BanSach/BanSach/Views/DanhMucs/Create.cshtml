@@ -12,41 +12,59 @@
         box-shadow: none !important;
         margin-left: 3%;
     }
+
         .form-group .form-control:focus {
             border: 3px solid #5cd3b4;
-            border-radius:5px;
+            border-radius: 5px;
         }
+
     .form-horizontal h2 {
         color: #5cd3b4;
     }
-    .form-horizontal .btn{
-        margin-left:25%;
+
+    .form-horizontal .btn {
+        margin-left: 25%;
     }
+
     .nutback {
         padding-bottom: 15px;
         font-size: large;
     }
-    .nutback :hover{
-        text-decoration:none;
-        font-size:large;
-        color:darkblue;
-    }
+
+        .nutback:hover {
+            text-decoration: none;
+            font-size: large;
+            color: darkblue;
+        }
+
     #add {
         border-radius: 10px;
         width: max-content;
     }
 </style>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <center><h2 style="color:black;">Thêm danh mục</h2></center>
-        
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
         <div class="form-group">
-            <div class = "control-label col-md-2"><b>Danh mục</b></div>
+            <div class="control-label col-md-2"><b>Danh mục có sẵn</b></div>
+            <div class="col-md-6">
+                @{
+                    var danhMucList = ViewBag.DanhMucList as List<string> ?? new List<string>();
+                    danhMucList.Insert(0, "Nhập danh mục mới"); // Thêm một tùy chọn nhập mới vào đầu danh sách
+                }
+                @Html.DropDownList("DanhMucList", new SelectList(danhMucList), new { @class = "form-control", id = "dropdownDanhMuc" })
+            </div>
+        </div>
+
+        <div class="form-group" id="danhMucMoiDiv" style="display: none;">
+            <div class="control-label col-md-2"><b>Danh mục mới</b></div>
             <div class="col-md-6">
                 @Html.EditorFor(model => model.DanhMuc1, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.DanhMuc1, "", new { @class = "text-danger" })
@@ -63,16 +81,33 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Thêm" class="btn btn-success" id="add"/>
+                <input type="submit" value="Thêm" class="btn btn-success" id="add" />
             </div>
         </div>
     </div>
 }
 
-<div class="nutback"> 
+<div class="nutback">
     @Html.ActionLink("Quay về", "Index")
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            $('#dropdownDanhMuc').change(function () {
+                if ($(this).val() === "Nhập danh mục mới") {
+                    $('#danhMucMoiDiv').show();
+                } else {
+                    $('#danhMucMoiDiv').hide();
+                }
+            });
+
+            // Hiển thị trường nhập mới nếu tùy chọn "Nhập danh mục mới" được chọn khi load trang
+            if ($('#dropdownDanhMuc').val() === "Nhập danh mục mới") {
+                $('#danhMucMoiDiv').show();
+            }
+        });
+    </script>
 }
