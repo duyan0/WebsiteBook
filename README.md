@@ -1,1 +1,1 @@
-# Đang update
+# Chuẩn bị update
