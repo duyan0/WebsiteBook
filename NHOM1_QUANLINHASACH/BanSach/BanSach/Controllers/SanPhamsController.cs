@@ -74,7 +74,6 @@ namespace BanSach.Controllers
             return View(products.ToPagedList(pageNumber, pageSize));
 
         }
-
         // Xem SP
         public ActionResult TrangSP(int? id)
         {

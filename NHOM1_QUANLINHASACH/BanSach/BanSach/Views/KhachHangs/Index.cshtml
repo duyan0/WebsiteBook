@@ -39,7 +39,10 @@
 <table class="table table-condensed bg-black" width="100%">
     <tr style=" color: white; text-align: left; background-color:#3b3636;">
         <th style="border-top-left-radius: 25px;">
-            Tên
+            ID
+        </th>
+        <th >
+            Tên KH
         </th>
         <th>
             Số điện thoại
@@ -60,6 +63,8 @@
     {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.IDkh)
+            </td><td>
                 @Html.DisplayFor(modelItem => item.TenKH)
             </td>
             <td>

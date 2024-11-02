@@ -151,9 +151,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\KhachHangsApiController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminsController.cs" />
     <Compile Include="Controllers\DanhMucsController.cs" />
     <Compile Include="Controllers\DonHangCTsController.cs" />
@@ -475,6 +477,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\KhachHangsApi\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
