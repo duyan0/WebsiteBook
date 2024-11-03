@@ -14,7 +14,7 @@ namespace BanSach.Controllers
 {
     public class SanPhamsController : Controller
     {
-        private SachEntities1 db = new SachEntities1();
+        private dbSach db = new dbSach();
 
         // GET: SanPhams
         public ActionResult Index(string searchString, int? page)
@@ -109,6 +109,7 @@ namespace BanSach.Controllers
             ViewBag.TheLoai = new SelectList(db.DanhMuc, "ID", "TheLoai");
             ViewBag.TacGia = new SelectList(db.TacGia, "IDtg", "TenTacGia");
             ViewBag.NXB = new SelectList(db.NhaXuatBan, "IDnxb", "Tennxb");
+            ViewBag.KM = new SelectList(db.KhuyenMai, "IDkm", "MucGiamGia");
             return View();
         }
 
@@ -117,7 +118,7 @@ namespace BanSach.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IDsp,TenSP,MoTa,TheLoai,GiaBan,HinhAnh,IDtg,IDnxb,NamXB,SoLuong,TrangThaiSach")] SanPham sanPham)
+        public ActionResult Create([Bind(Include = "IDsp,TenSP,MoTa,TheLoai,GiaBan,HinhAnh,IDtg,IDnxb,IDkm,SoLuong,TrangThaiSach")] SanPham sanPham)
         {           
             if (ModelState.IsValid)
             {
@@ -129,6 +130,8 @@ namespace BanSach.Controllers
             ViewBag.TheLoai = new SelectList(db.DanhMuc, "ID", "TheLoai", sanPham.TheLoai);
             ViewBag.TacGia = new SelectList(db.TacGia, "IDtg", "TenTacGia", sanPham.TacGia);
             ViewBag.NXB = new SelectList(db.NhaXuatBan, "IDnxb", "Tennxb",sanPham.NhaXuatBan);
+            ViewBag.KM = new SelectList(db.KhuyenMai, "IDkm", "MucGiamGia", sanPham.KhuyenMai);
+
             return View(sanPham);
         }
 
@@ -147,6 +150,7 @@ namespace BanSach.Controllers
             ViewBag.TheLoai = new SelectList(db.DanhMuc, "ID", "TheLoai", product.TheLoai);
             ViewBag.TacGia = new SelectList(db.TacGia, "IDtg", "TenTacGia", product.TacGia);
             ViewBag.NXB = new SelectList(db.NhaXuatBan, "IDnxb", "Tennxb", product.NhaXuatBan);
+            ViewBag.KM = new SelectList(db.KhuyenMai, "IDkm", "MucGiamGia", product.KhuyenMai);
             return View(product);
         }
 
@@ -155,7 +159,7 @@ namespace BanSach.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IDsp,TenSP,MoTa,TheLoai,GiaBan,HinhAnh,IDtg,IDnxb,NamXB,SoLuong,TrangThaiSach")] SanPham sanPham)
+        public ActionResult Edit([Bind(Include = "IDsp,TenSP,MoTa,TheLoai,GiaBan,HinhAnh,IDtg,IDnxb,IDkm,SoLuong,TrangThaiSach")] SanPham sanPham)
         {
             if (ModelState.IsValid)
             {                
@@ -166,6 +170,7 @@ namespace BanSach.Controllers
             ViewBag.TheLoai = new SelectList(db.DanhMuc, "ID", "TheLoai", sanPham.TheLoai);
             ViewBag.TacGia = new SelectList(db.TacGia, "IDtg", "TenTacGia", sanPham.TacGia);
             ViewBag.NXB = new SelectList(db.NhaXuatBan, "IDnxb", "Tennxb", sanPham.NhaXuatBan);
+            ViewBag.KM = new SelectList(db.NhaXuatBan, "IDkm", "MucGiamGia", sanPham.KhuyenMai);
             return View(sanPham);
 
         }

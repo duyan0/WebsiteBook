@@ -12,7 +12,7 @@ namespace BanSach.Controllers
 {
     public class DanhMucsController : Controller
     {
-        private SachEntities1 db = new SachEntities1();
+        private dbSach db = new dbSach();
 
         // Action PartialViewResult
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]

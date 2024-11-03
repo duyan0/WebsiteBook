@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2 class="text-center mb-5 font-weight-bold text-black">Chi tiết tài khoản Admin</h2>
+<h2 class="text-center mb-5 font-weight-bold ">Chi tiết tài khoản Admin</h2>
 
 <div class="container">
-    <div class="card shadow-lg border-0">
+    <div class="card shadow-lg border-0 rounded-lg">
         <div class="card-body p-4">
             <dl class="row">
                 <dt class="col-sm-3 font-weight-bold text-dark">
@@ -19,7 +19,7 @@
                 </dd>
 
                 <dt class="col-sm-3 font-weight-bold text-dark">
-                   Email
+                    Email
                 </dt>
                 <dd class="col-sm-9 text-muted">
                     @Html.DisplayFor(model => model.Email)
@@ -64,10 +64,7 @@
     </div>
 
     <div class="mt-4 text-center">
-        @Html.ActionLink("Sửa", "Edit", new { id = Model.ID }, new { @class = "btn btn-warning btn-lg shadow-sm rounded-sm" })
-        @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-light btn-lg ml-3 shadow-sm rounded-sm" })
-
+        @Html.ActionLink("Sửa", "Edit", new { id = Model.ID }, new { @class = "btn btn-warning  shadow-sm rounded" })
+        @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-secondary  ml-3 shadow-sm rounded" })
     </div>
 </div>
-
-

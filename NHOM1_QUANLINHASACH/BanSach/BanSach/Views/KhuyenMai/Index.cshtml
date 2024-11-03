@@ -1,0 +1,86 @@
+﻿@model IEnumerable<BanSach.Models.KhuyenMai>
+
+@{
+    ViewBag.Title = "Danh sách khuyến mãi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="text-center font-weight-bold">Danh sách khuyến mãi</h2>
+
+<p>
+    @Html.ActionLink("Tạo mới", "Create", null, new { @class = "btn btn-success rounded-sm" })
+</p>
+<table class="table table-bordered table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Tên KM
+            </th>
+            <th>
+                Ngày bắt đầu
+            </th>
+            <th>
+                Ngày kết thúc
+            </th>
+            <th>
+                Giá giảm
+            </th>
+            <th>
+                Mô tả
+            </th>
+
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IDkm)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenKhuyenMai)
+                </td>
+                <td class="@(item.NgayBatDau.HasValue && item.NgayKetThuc.HasValue && item.NgayBatDau > item.NgayKetThuc ? "text-danger" : "")">
+                    @(item.NgayBatDau.HasValue ? item.NgayBatDau.Value.ToString("dd/MM/yyyy") : "")
+                </td>
+                <td class="@(item.NgayBatDau.HasValue && item.NgayKetThuc.HasValue && item.NgayBatDau > item.NgayKetThuc ? "text-danger" : "")">
+                    @(item.NgayKetThuc.HasValue ? item.NgayKetThuc.Value.ToString("dd/MM/yyyy") : "")
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.MucGiamGia)%
+                </td>
+                <td>
+                    @{
+                        string motangan = item.MoTa != null && item.MoTa.Length > 20
+                            ? item.MoTa.Substring(0, 20) + "..."
+                            : (item.MoTa ?? string.Empty);
+                    }
+                    @motangan
+                </td>
+                
+                <td>
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.IDkm }, new { @class = "btn btn-warning btn-sm" })
+                    @Html.ActionLink("Chi tiết", "Details", new { id = item.IDkm }, new { @class = "btn btn-info btn-sm" })
+                    @Html.ActionLink("Xóa", "Delete", new { id = item.IDkm }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<style>
+    .table {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .btn {
+        border-radius: 5px;
+    }
+</style>

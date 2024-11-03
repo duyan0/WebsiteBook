@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="SachModelStoreContainer" CdmEntityContainer="SachEntities1">
+  <EntityContainerMapping StorageEntityContainer="SachModelStoreContainer" CdmEntityContainer="dbSach">
     <EntitySetMapping Name="Admin">
       <EntityTypeMapping TypeName="SachModel.Admin">
         <MappingFragment StoreEntitySet="Admin">
@@ -60,6 +60,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="KhuyenMai">
+      <EntityTypeMapping TypeName="SachModel.KhuyenMai">
+        <MappingFragment StoreEntitySet="KhuyenMai">
+          <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+          <ScalarProperty Name="IDkm" ColumnName="IDkm" />
+          <ScalarProperty Name="TenKhuyenMai" ColumnName="TenKhuyenMai" />
+          <ScalarProperty Name="NgayBatDau" ColumnName="NgayBatDau" />
+          <ScalarProperty Name="NgayKetThuc" ColumnName="NgayKetThuc" />
+          <ScalarProperty Name="MucGiamGia" ColumnName="MucGiamGia" />
+          <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="NhaXuatBan">
       <EntityTypeMapping TypeName="SachModel.NhaXuatBan">
         <MappingFragment StoreEntitySet="NhaXuatBan">
@@ -82,7 +95,7 @@
           <ScalarProperty Name="HinhAnh" ColumnName="HinhAnh" />
           <ScalarProperty Name="IDtg" ColumnName="IDtg" />
           <ScalarProperty Name="IDnxb" ColumnName="IDnxb" />
-          <ScalarProperty Name="NamXB" ColumnName="NamXB" />
+          <ScalarProperty Name="IDkm" ColumnName="IDkm" />
           <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
           <ScalarProperty Name="TrangThaiSach" ColumnName="TrangThaiSach" />
         </MappingFragment>

@@ -13,7 +13,7 @@ namespace BanSach.Controllers
     public class DonHangsController : Controller
     {
         private readonly DonHang _donHangService; // Dịch vụ đơn hàng
-        private readonly SachEntities1 db = new SachEntities1(); // DbContext
+        private readonly dbSach db = new dbSach(); // DbContext
         public DonHangsController()
         {
             _donHangService = new DonHang(); // Hoặc khởi tạo một dịch vụ mặc định
@@ -156,7 +156,22 @@ namespace BanSach.Controllers
 
             return RedirectToAction("Index"); // Chuyển hướng về trang danh sách đơn hàng
         }
+        [HttpGet]
+        [Route("DonHang/DaNhanHang/{id:int}")]
+        public ActionResult DaNhanHang(int id)
+        {
+            var donHang = db.DonHang.Find(id);
+            if (donHang == null)
+            {
+                return HttpNotFound();
+            }
 
+            donHang.NgayNhanHang = DateTime.Now;
+            donHang.TrangThai = "Đã nhận hàng";
+            db.SaveChanges();
+
+            return RedirectToAction("LichSuDonHang", "KhachHangs");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

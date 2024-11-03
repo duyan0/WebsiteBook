@@ -7,7 +7,7 @@ namespace BanSach.API
     [RoutePrefix("api/KhachHangs")]
     public class KhachHangsApiController : ApiController
     {
-        private SachEntities1 db = new SachEntities1();
+        private dbSach db = new dbSach();
 
         public KhachHangsApiController()
         {

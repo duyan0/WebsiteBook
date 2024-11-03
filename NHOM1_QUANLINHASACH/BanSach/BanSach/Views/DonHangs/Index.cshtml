@@ -78,9 +78,10 @@
                 Thanh toán khi nhận hàng
             </td>
             <td>
-                <span class="@(item.TrangThai == "Đã xác nhận" ? "text-success" : item.TrangThai == "Đã huỷ" ? "text-danger" : "")">
+                <span class="@(item.TrangThai == "Đã xác nhận" ? "text-success" : item.TrangThai == "Đã huỷ" ? "text-danger" : item.TrangThai == "Đã nhận hàng" ? "text-warning" : "")">
                     @(string.IsNullOrEmpty(item.TrangThai) ? "Chờ xử lý" : item.TrangThai)
                 </span>
+
             </td>
             <td>
                 @Html.ActionLink("Xác nhận", "Confirm", new { id = item.IDdh }, new { @class = "btn btn-success rounded", onclick = "return confirm('Bạn có chắc chắn xác nhận đơn hàng này?');" }) 

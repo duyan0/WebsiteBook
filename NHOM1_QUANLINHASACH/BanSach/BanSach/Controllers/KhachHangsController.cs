@@ -12,7 +12,7 @@ namespace BanSach.Controllers
 {
     public class KhachHangsController : Controller
     {
-        private SachEntities1 db = new SachEntities1();
+        private dbSach db = new dbSach();
         public ActionResult LoginCus()
         {
             return View();
@@ -166,6 +166,25 @@ namespace BanSach.Controllers
             db.KhachHang.Remove(khachHang);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public ActionResult LichSuDonHang()
+        {
+            int? currentCustomerId = Session["IDkh"] as int?;
+
+            if (currentCustomerId == null)
+            {
+                // Nếu khách hàng chưa đăng nhập, chuyển hướng họ tới trang đăng nhập
+                return RedirectToAction("LoginAccountCus", "LoginUser");
+            }
+
+            // Lấy danh sách đơn hàng của khách hàng hiện tại
+            var orders = db.DonHang
+                .Where(dh => dh.IDkh == currentCustomerId)
+                .Include(dh => dh.DonHangCT)  // Bao gồm chi tiết đơn hàng
+                .ToList();
+
+            return View(orders);
         }
 
         protected override void Dispose(bool disposing)

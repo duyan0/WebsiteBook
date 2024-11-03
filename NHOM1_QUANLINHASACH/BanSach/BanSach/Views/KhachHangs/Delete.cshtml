@@ -5,46 +5,49 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-
-<h2>Bạn có chắc là xoá khách hàng này ?</h2>
-<div>
-    
-    <hr />
-    <dl class="dl-horizontal">
-
-        <dd>
-            <b>Tên </b>
-            @Html.DisplayFor(model => model.TenKH)
-        </dd>
-
-        <dd>
-            <b>Số điện thoại </b>
-            @Html.DisplayFor(model => model.SoDT)
-        </dd>
-
-        <dd>
-            <b>Email </b>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dd>
-            <b>Tài khoản</b>
-            @Html.DisplayFor(model => model.TKhoan)
-        </dd>
-
-        <dd>
-            <b>Mật khẩu </b>
-            @Html.DisplayFor(model => model.MKhau)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Xoá" class="btn btn-danger" /> |
-            @Html.ActionLink("Quay về danh sách khách hàng", "Index")
-        </div>
+<style>
+    .card-rounded {
+        border-radius: 10px; /* Bo góc nhẹ cho thẻ card */
     }
+
+    .btn-rounded {
+        border-radius: 5px; /* Bo góc nhẹ cho nút */
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 card-rounded">
+        <div class="card-body">
+            <h2 class="text-center text-danger">Bạn có chắc là muốn xoá khách hàng này?</h2>
+            <hr />
+            <dl class="row">
+
+                <dt class="col-sm-3"><b>Tên</b></dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.TenKH)</dd>
+
+                <dt class="col-sm-3"><b>Số điện thoại</b></dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.SoDT)</dd>
+
+                <dt class="col-sm-3"><b>Email</b></dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Email)</dd>
+
+                <dt class="col-sm-3"><b>Tài khoản</b></dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.TKhoan)</dd>
+
+                <dt class="col-sm-3"><b>Mật khẩu</b></dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.MKhau)</dd>
+
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="text-center mt-4">
+                    <input type="submit" value="Xoá" class="btn btn-danger btn-rounded px-4" />
+                    @Html.ActionLink("Quay về danh sách khách hàng", "Index", null, new { @class = "btn btn-secondary btn-rounded ms-2" })
+                </div>
+            }
+        </div>
+    </div>
 </div>

@@ -37,8 +37,8 @@
     @Html.ActionLink("Thêm khách hàng", "Create")
 </p>
 <table class="table table-condensed bg-black" width="100%">
-    <tr style=" color: white; text-align: left; background-color:#3b3636;">
-        <th style="border-top-left-radius: 25px;">
+    <tr class="text-center" style=" color: white; text-align: left; background-color:#3b3636;">
+        <th  style="border-top-left-radius: 25px;" >
             ID
         </th>
         <th >
@@ -61,17 +61,18 @@
 
     @foreach (var item in Model)
     {
-        <tr>
+        <tr class="text-center">
             <td>
                 @Html.DisplayFor(modelItem => item.IDkh)
-            </td><td>
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.TenKH)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SoDT)
+                @(item.SoDT != null && item.SoDT.Length >= 3 ? item.SoDT.Substring(0, 3) + new string('*', item.SoDT.Length - 3) : "")
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
+            <td class="text-danger">
+                ĐÃ ẨN GMAIL
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TKhoan)

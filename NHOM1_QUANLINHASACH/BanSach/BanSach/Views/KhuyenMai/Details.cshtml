@@ -1,0 +1,72 @@
+﻿@model BanSach.Models.KhuyenMai
+
+@{
+    ViewBag.Title = "Chi tiết KM - "+Model.IDkm;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="card" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px;">
+    <h4 class="card-title text-center">Chi tiết khuyến mãi </h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            Tên khuyếm mãi
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.TenKhuyenMai)
+        </dd>
+
+        <dt class="col-sm-3">
+            Ngày bắt đầu
+        </dt>
+        <dd class="col-sm-9">
+            @(Model.NgayBatDau.HasValue ? Model.NgayBatDau.Value.ToString("dd/MM/yyyy") : "")
+        </dd>
+
+        <dt class="col-sm-3">
+            Ngày kết thúc
+        </dt>
+        <dd class="col-sm-9">
+            @(Model.NgayKetThuc.HasValue ? Model.NgayKetThuc.Value.ToString("dd/MM/yyyy") : "")
+        </dd>
+
+        <dt class="col-sm-3">
+            Mức giảm giá
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.MucGiamGia)%
+        </dd>
+
+        <dt class="col-sm-3">
+            Mô tả
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.MoTa)
+        </dd>
+    </dl>
+</div>
+
+<p class="mt-4">
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.IDkm }, new { @class = "btn btn-warning", @style = "border-radius: 8px;" })
+    @Html.ActionLink("Trở về danh sách", "Index", null, new { @class = "btn btn-secondary", @style = "border-radius: 8px;" })
+</p>
+
+<style>
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn {
+        border-radius: 8px;
+    }
+
+    dt {
+        font-weight: bold;
+    }
+
+    dd {
+        margin-bottom: 10px;
+    }
+</style>

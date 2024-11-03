@@ -1,0 +1,59 @@
+﻿@model IEnumerable<BanSach.Models.DonHang>
+
+@{
+    ViewBag.Title = "LichSuDonHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid mt-5">
+    <h2 class="text-white text-center">Lịch sử Đơn Hàng</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center mt-5 rounded-sm" role="alert">
+            <i class="fa fa-info-circle" style="font-size: 24px;"></i>
+            <p class="mt-3 mb-0">Chưa có đơn hàng nào. Bạn có thể khám phá và đặt mua sản phẩm ngay hôm nay!</p>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive mt-4">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr class=" text-white text-center">
+                        <th>Mã đơn hàng</th>
+                        <th>Ngày đặt hàng</th>
+                        <th>Ngày nhận hàng</th>
+                        <th>Tổng số tiền</th>
+                        <th>Trạng thái</th>
+                        <th>Chi tiết</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr class="text-center ">
+                            <td class="font-weight-bold text-white">@order.IDdh</td>
+                            <td class="text-white">@(order.NgayDatHang?.ToString("dd/MM/yyyy HH:mm") ?? DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"))</td>
+                            <td class="text-white">@(order.NgayNhanHang?.ToString("dd/MM/yyyy HH:mm") ?? "Chưa nhận hàng")</td>
+                            <td class="text-danger">@order.GetTongSoTien().ToString("C")</td>
+                            <td class="@(order.TrangThai == "Chờ xử lý" ? "text-white" : order.TrangThai == "Đã xác nhận" ? "text-success" : order.TrangThai == "Đã hủy" ? "text-danger" : "text-white")">
+                                @order.TrangThai
+                            </td>
+
+                            <td>
+                                <a href="@Url.Action("DetailsKH", "DonHangCTs", new { id = order.IDdh })" class="btn btn-success rounded-sm">Xem chi tiết</a>
+                                @if (order.TrangThai == "Đã xác nhận")
+                                {
+                                    <a href="@Url.Action("DaNhanHang", "DonHangs", new { id = order.IDdh })" class="btn btn-primary rounded-sm ml-2">Đã nhận hàng</a>
+                                }
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+

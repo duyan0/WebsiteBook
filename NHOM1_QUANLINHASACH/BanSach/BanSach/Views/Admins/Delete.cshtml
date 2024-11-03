@@ -5,70 +5,74 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2 class="text-center">Xoá nhân sự</h2>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Xoá nhân sự</h2>
 
-<div>
-    
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.HoTen)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.HoTen)
-        </dd>
+    <div class="card shadow-sm rounded-sm">
+        <div class="card-body rounded-sm">
+            <dl class="row">
+                <dt class="col-sm-3">
+                    Họ tên
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.HoTen)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+                <dt class="col-sm-3">
+                    Email
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DiaChi)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DiaChi)
-        </dd>
+                <dt class="col-sm-3">
+                    Địa chỉ
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.DiaChi)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.SoDT)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.SoDT)
-        </dd>
+                <dt class="col-sm-3">
+                    Số điện thoại
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.SoDT)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.VaiTro)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.VaiTro)
-        </dd>
+                <dt class="col-sm-3">
+                    Vai trò
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.VaiTro)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TKhoan)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TKhoan)
-        </dd>
+                <dt class="col-sm-3">
+                    Tài khoản
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.TKhoan)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MKhau)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MKhau)
-        </dd>
-    </dl>
+                <dt class="col-sm-3">
+                    Mật khẩu
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.MKhau)
+                </dd>
+            </dl>
+        </div>
+    </div>
 
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
+        <div class="form-actions mt-4 text-center">
             <!-- Nút "Delete" hiện modal -->
-            <button type="button" class="btn btn-danger  rounded-sm" data-toggle="modal" data-target="#confirmDeleteModal">Delete</button> |
-            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-success rounded-sm " })
+            <button type="button" class="btn btn-danger rounded-pill px-4" data-toggle="modal" data-target="#confirmDeleteModal">
+                <i class="fas fa-trash-alt"></i> Xóa
+            </button>
+            @Html.ActionLink("Trở lại danh sách", "Index", null, new { @class = "btn btn-secondary rounded-pill px-4 ml-2" })
         </div>
     }
 </div>
@@ -77,9 +81,11 @@
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">
+                    <i class="fas fa-exclamation-triangle"></i> Xác nhận xóa
+                </h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -87,9 +93,11 @@
                 Bạn có chắc chắn muốn xóa nhân sự này?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal">Hủy</button>
                 <!-- Nút "Delete" bên trong modal, liên kết với form bên ngoài -->
-                <button type="button" id="confirmDelete" class="btn btn-danger">Xóa</button>
+                <button type="button" id="confirmDelete" class="btn btn-danger rounded-pill">
+                    <i class="fas fa-trash-alt"></i> Xóa
+                </button>
             </div>
         </div>
     </div>
@@ -97,6 +105,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
     <!-- Script để xử lý submit form khi nhấn nút "Delete" trong modal -->
     <script type="text/javascript">

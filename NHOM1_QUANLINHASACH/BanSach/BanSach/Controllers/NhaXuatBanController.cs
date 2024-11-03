@@ -12,7 +12,7 @@ namespace BanSach.Controllers
     public class NhaXuatBanController : Controller
     {
         // GET: NhaXuatBan
-        SachEntities1 db = new SachEntities1();
+        dbSach db = new dbSach();
         public ActionResult Index()
         {
             return View(db.NhaXuatBan.ToList());

@@ -13,10 +13,10 @@ namespace BanSach.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class SachEntities1 : DbContext
+    public partial class dbSach : DbContext
     {
-        public SachEntities1()
-            : base("name=SachEntities1")
+        public dbSach()
+            : base("name=dbSach")
         {
         }
     
@@ -30,6 +30,7 @@ namespace BanSach.Models
         public virtual DbSet<DonHang> DonHang { get; set; }
         public virtual DbSet<DonHangCT> DonHangCT { get; set; }
         public virtual DbSet<KhachHang> KhachHang { get; set; }
+        public virtual DbSet<KhuyenMai> KhuyenMai { get; set; }
         public virtual DbSet<NhaXuatBan> NhaXuatBan { get; set; }
         public virtual DbSet<SanPham> SanPham { get; set; }
         public virtual DbSet<TacGia> TacGia { get; set; }

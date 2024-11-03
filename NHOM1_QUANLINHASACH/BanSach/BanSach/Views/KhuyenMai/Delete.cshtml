@@ -1,0 +1,63 @@
+﻿@model BanSach.Models.KhuyenMai
+
+@{
+    ViewBag.Title = "Xoá ID - " + Model.IDkm;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card rounded">
+        <div class="card-header text-center  text-white rounded-top">
+            <h2>Xoá thông tin khuyến mãi</h2>
+        </div>
+        <div class="card-body">
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-3">
+                    Tên khuyến mãi
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.TenKhuyenMai)
+                </dd>
+
+                <dt class="col-sm-3">
+                    Ngày bắt đầu
+                </dt>
+                <dd class="col-sm-9">
+                    @(Model.NgayBatDau.HasValue ? Model.NgayBatDau.Value.ToString("dd/MM/yyyy") : "")
+                </dd>
+
+                <dt class="col-sm-3">
+                    Ngày kết thúc
+                </dt>
+                <dd class="col-sm-9">
+                    @(Model.NgayKetThuc.HasValue ? Model.NgayKetThuc.Value.ToString("dd/MM/yyyy") : "")
+                </dd>
+
+                <dt class="col-sm-3">
+                    Mức giảm giá
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.MucGiamGia)
+                </dd>
+
+                <dt class="col-sm-3">
+                    Mô tả
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.MoTa)
+                </dd>
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-danger rounded">Xoá</button>
+                    @Html.ActionLink("Quay về", "Index", null, new { @class = "btn btn-secondary ml-2 rounded" })
+                </div>
+            }
+        </div>
+    </div>
+</div>

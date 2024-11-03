@@ -12,7 +12,7 @@ namespace BanSach.Controllers
     public class TacGiaController : Controller
     {
         // GET: TacGia
-        SachEntities1 db = new SachEntities1();
+        dbSach db = new dbSach();
 
 
         public ActionResult Index()

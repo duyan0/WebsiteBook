@@ -1,36 +1,62 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Đăng nhập thành công";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<div class="tong">
-    <style>
-        .mmm a {
-            margin: 15px;
-            background-color: white;
-            padding: 10px;
-            color: black;
-            border-radius: 15px;
-        }
-
-            .mmm a:hover {
-                text-decoration: none;
-                background-color: green;
-                color: white;
-            }
-
-        .mmm {
-            padding: 20px 0 20px 0;
-        }
-    </style>
-    <center>
-        <h2 class="text-success">Chào mừng, @Session["TenKH"]! Bạn đã đăng nhập thành công!</h2> 
-        <div class="mmm">
-            @Html.ActionLink("Tiếp tục mua hàng", "ProductList", "SanPhams")
-            @Html.ActionLink("Đi đến giỏ hàng", "ShowCart", "ShoppingCart")
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-success text-white text-center">
+                    <h3 class="text-white">Chào mừng, @Session["TenKH"]!</h3>
+                </div>
+                <div class="card-body text-center">
+                    <p class="lead mb-4">Bạn đã đăng nhập thành công! Hãy tiếp tục mua sắm với chúng tôi.</p>
+                    <div class="d-grid gap-5 d-sm-flex justify-content-sm-center">
+                        <a href="@Url.Action("ProductList", "SanPhams")" class="btn btn-success btn-lg px-4 me-sm-3 fw-bold shadow-sm">
+                            Tiếp tục mua hàng
+                        </a>
+                        <a href="@Url.Action("ShowCart", "ShoppingCart")" class="btn btn-outline-success btn-lg px-4 fw-bold shadow-sm">
+                            Đi đến giỏ hàng
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </center>
+    </div>
 </div>
 
+<style>
+    .card {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .card-header {
+        padding: 20px;
+        border-bottom: none;
+    }
+
+    .card-body {
+        padding: 40px 20px;
+    }
+
+    .btn {
+        border-radius: 30px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        color: #fff;
+    }
+
+    .btn-outline-success:hover {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .lead {
+        font-size: 1.25rem;
+    }
+</style>

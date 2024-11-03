@@ -1,0 +1,111 @@
+﻿@media (max-width: 768px) {
+    .footer p, .footer .list-inline-item {
+        font-size: 13px;
+    }
+
+    .footer {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+}
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+/*ROOT*/
+:root {
+    --web-body: white;
+    /*body user */
+    --web-body2: #f5f5f5;
+    /*Body*/
+    --web-body3: white;
+    /*bt */
+
+    --web-i1: black;
+    --web-color: black;
+    --web-button: #f3f6fc;
+    --web-hd: white;
+    /*HD vs FT */
+
+    --web-hd-singup: linear-gradient(120deg, #ff0a27 0%, #0fd3ff 51%, #FC354C 100%);
+    --web-border: #ebebeb;
+    --web-border-khung: #dad9da;
+    --web-buttom-mini: #ededed;
+    --web-shadow: 0 1px 2px 0 rgba(60, 64, 67, .1), 0 2px 6px 2px rgba(60, 64, 67, .15);
+    --web-shadow2: 0 1px 2px 0 rgba(60, 64, 67, .1), 0 2px 6px 2px rgba(60, 64, 67, .15);
+    --web-30: black;
+    --web-bt-user: linear-gradient(90deg, rgb(143 255 251) 0%, rgb(197 196 255) 100%);
+    --web-bg-bt: #74d1ff;
+    /*Login*/
+    --web-login-bt: #f5f5f5;
+    --web-fg: #0087ff;
+    --web-login-bg: linear-gradient(90deg, rgb(61 154 255) 0%, rgb(255 192 192) 100%);
+    --web-login-border: white;
+    --web-login-shadow: 0 1px 2px 0 rgba(60, 64, 67, .1), 0 2px 6px 2px rgba(60, 64, 67, .15);
+    /*Button*/
+    --web-button-ql: linear-gradient(90deg, rgb(143 255 251) 0%, rgb(197 196 255) 100%);
+    --web-button-edit: blue;
+    --web-input-border: #d1d1d1;
+    --web-button-xl: #313131;
+    --web-button-color: white;
+    /*Border V*/
+    --web-border-v: #dad9da;
+    --web-text: #676767;
+    /*products */
+    --web-pd-bg: #2d96d3;
+    --web-pd-cl: white;
+    --web-pd-bg2: #eaf0ff;
+    --web-bl: #5313bb;
+    --web-bl-kit: linear-gradient(180deg, #00DBDE 0%, #FC00FF 100%);
+    ;
+    --web-sc: #ececec;
+}
+
+:root.dark {
+    /*BODY */
+    --web-body: #18191a;
+    /*body user */
+    --web-body2: #080808;
+    --web-body3: #212121;
+    --web-i1: #20f5bc;
+    --web-color: white;
+    --web-hd: #18191a;
+    --web-hd-singup: linear-gradient(120deg, #ff2424 0%, #300aff 51%, #ff0000 100%);
+    --web-border: #2b2b2b;
+    --web-border-khung: #d1d1d1;
+    --web-buttom-mini: #ededed;
+    --web-shadow: 0 1px 2px 0 rgb(147 147 147 / 10%), 0 2px 6px 2px rgb(0 0 0 / 15%);
+    --web-shadow2: 0;
+    --web-bt-user: linear-gradient(90deg, rgb(67 67 67) 0%, rgb(43 43 43) 100%);
+    --web-bg-bt: #3e9de3;
+    /*Login*/
+    --web-login-bt: black;
+    --web-fg: white;
+    --web-login-bg: linear-gradient(90deg, rgb(255 255 255) 0%, rgb(181 222 251) 100%);
+    --web-login-border: white;
+    --web-login-shadow: 0 1px 2px 0 rgba(60, 64, 67, .1), 0 2px 6px 2px rgba(60, 64, 67, .15);
+    /*Button*/
+    --web-button-ql: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    --web-button-edit: #00ffec;
+    --web-input-border: #d1d1d1;
+    --web-button-xl: white;
+    --web-button-color: black;
+    /*Border V*/
+    --web-border-v: #8a63ff;
+    --web-text: #d1d1d1;
+    /*products */
+    --web-pd-bg: #2d96d3;
+    --web-pd-cl: white;
+    --web-pd-bg2: #232323;
+    --web-bl: #fb8416;
+    --web-bl-kit: linear-gradient(180deg, #ffffff 0%, #18191a 100%);
+    --web-sc: black;
+}
+

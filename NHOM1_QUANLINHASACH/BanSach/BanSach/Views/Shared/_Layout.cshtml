@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <title>Quản lý nhà sách - Võ Duy Ân</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Free HTML Templates">
+    <meta name="description" content="Free HTML Templates">
 
     <!-- Favicon -->
     <link href="~/Content/img/logosach.png" rel="icon">
@@ -22,6 +22,7 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/Content/css/duyan.css" rel="stylesheet">
+    <link href="~/Content/css/admin.css" rel="stylesheet">
     <script src="~/Scripts/changeimg.js"></script>
 </head>
 
@@ -44,11 +45,19 @@
             @using (Html.BeginForm("ProductList", "SanPhams", FormMethod.Get))
             {
                 <div class="input-group" style="margin-left:10px;">
-                    <input type="text" class="form-control" placeholder="Nhập tên sách bạn muốn tìm" name="SearchString" style="border-radius:10px;">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="border-radius:10px 0 0 10px;">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Nhập tên sách bạn muốn tìm" name="SearchString" style="border-radius:0 10px 10px 0;">
                 </div>
             }
         </div>
         <div class="col-lg-3 col-6 text-right">
+            <div class="text-white" id="current-time" style="font-size: 1rem; margin-bottom: 10px;">
+                @DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")
+            </div>
             <a href="~/ShoppingCart/ShowCart" class="btn border" style="border-radius:10px;">
                 <i class="fas fa-shopping-cart" style="color:white;">Giỏ hàng</i>
                 @Html.Action("BagCart", "ShoppingCart")
@@ -82,18 +91,18 @@
                             @if (Session["IDkh"] != null)
                             {
                                 <div class="dropdown">
-                                    <a href="#" class="nav-item nav-link text-black">@Session["TenKH"]</a>
+                                    <a href="#" class="nav-item nav-link text-white">@Session["TenKH"]</a>
                                     <div class="dropdown-content">
                                         <a href="@Url.Action("InfoCustomer", "LoginUser")">Thông tin cá nhân</a>
+                                      
+                                        <a href="~/KhachHangs/LichSuDonHang">Lịch sử đơn hàng</a>
                                         <a href="@Url.Action("Logout", "LoginUser")">Đăng xuất</a>
-                                        <a href="#">Thông tin đơn hàng</a>
                                     </div>
                                 </div>
                             }
                             else if (Session["IdQly"] != null)
                             {
                                 <a href="@Url.Action("QuanTri", "LoginUser")" class="nav-item nav-link">Trang ADMIN</a>
-
                                 <a href="@Url.Action("Logout", "LoginUser")" class="nav-item nav-link">Đăng xuất</a>
                             }
                             else
@@ -110,61 +119,70 @@
     <!-- Navbar End -->
     <!-- Main Start -->
     <div class="container-fluid pt-4" style="width: 100%; background-color: black;">
-        <div class="container-fluid" style="background-color: #1f1f20; border-radius: 15px; padding: 10px; margin: 0 7%; width: 86%;">
+        <div class="container-fluid" style="background-color: #1f1f20; border-radius: 15px; padding: 10px; margin: 0 7%; width: 86%; height: 100%;">
             @RenderBody()
         </div>
     </div>
+    <!-- Main End -->
+    <!-- Footer Start -->
+    <footer class="card-body" style="background-color: black; padding: 40px 60px; color: white;">
+        <div class="ft">
+            <div class="kt p text-center ">
+                <div class="pk">
+                    <div class="pk-1">NHÀ SÁCH ABC</div>
+                    <div class="pk-2"><a href="gioi-thieu">Giới thiệu</a></div>
+                    <div class="pk-2"><a href="chinh-sach-doi-tra">Chính sách đổi trả</a></div>
+                    <div class="pk-2"><a href="chinh-sach-bao-mat">Chính sách bảo mật</a></div>
+                </div>
+                <div class="pk">
+                    <div class="pk-1">Hướng dẫn</div>
+                    <div class="pk-2"><a href="huong-dan-mua-sach">Hướng dẫn mua sách</a></div>
+                    <div class="pk-2"><a href="huong-dan-doi-tra">Hướng dẫn đổi trả</a></div>
+                </div>
+                <div class="pk">
+                    <div class="pk-1">Hỗ trợ</div>
+                    <div class="pk-2"><a href="https://www.facebook.com/nhasachabc"><i class="fa-brands fa-facebook-f"></i> Facebook ( 9:00 - 18:00 )</a></div>
+                </div>
+                <div class="pk">
+                    <div class="pk-1">Follow US</div>
+                    <div class="pk-2 "><a href="https://www.facebook.com/nhasachabc"><i class="fa-brands fa-square-facebook" style="color: #046ee5;"></i> Facebook</a></div>
+                    <div class="pk-2"><a href="https://discord.gg/example"><i class="fa-brands fa-discord"></i> Discord</a></div>
+                    <div class="pk-2"><a href="#"><i class="fa-brands fa-youtube" style="color: red;"></i> YouTube</a></div>
+                    <div class="pk-2"><a href="#"><i class="fa-brands fa-twitter"></i> Twitter</a></div>
+                </div>
+            </div>
+        </div>
 
+        <div class="copyright text-center text-success font-weight-bold " style="margin-top: 20px; color: #777;">
+            &copy; 2024 Võ Duy Ân. All rights reserved. Thời gian hiện tại: <span id="time" class="text-danger"></span>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                function updateTime() {
+                    var currentTime = new Date().toLocaleString();
+                    document.getElementById('time').textContent = currentTime;
+                }
+                updateTime();
+                setInterval(updateTime, 1000);
+            });
+        </script>
+
+    </footer>
+    <!-- Footer End -->
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/lib/easing/easing.min.js"></script>
+    <script src="~/Content/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/Scripts/main.js"></script>
     @Scripts.Render("~/bundles/jquery")
     <script src="~/Scripts/bootstrap.bundle.js"></script>
     @RenderSection("scripts", required: false)
-    <!-- Main End -->
-    <!-- Footer Start -->
-    <footer class="card-body" style="background-color: black;">
-        <div class="kt p" style="display:flex; text-align:center;">
-            <div class="pk" style="flex: 1;">
-                <div class="pk-1">Võ Duy Ân</div>
-                <div class="pk-2"><a href="#">Giới thiệu</a></div>
-                <div class="pk-2"><a href="#">Chính sách hoàn tiền</a></div>
-                <div class="pk-2"><a href="#">Chính sách bảo mật</a></div>
-            </div>
-            <div class="pk" style="flex: 1;">
-                <div class="pk-1">Hướng dẫn</div>
-                <div class="pk-2"><a href="#">Hướng dẫn mua sách</a></div>
-            </div>
-            <div class="pk" style="flex: 1;">
-                <div class="pk-1">Hỗ trợ</div>
-                <div class="pk-2"><a href="#">Zalo</a></div>
-            </div>
-            <div class="pk" style="flex: 1;">
-                <div class="pk-1">Tin tức</div>
-                <div class="pk-2"><a href="#">Facebook</a></div>
-                <div class="pk-2"><a href="#">Google</a></div>
-                <div class="pk-2"><a href="#">Telegram</a></div>
-            </div>
-        </div>
-    </footer>
+
+    <!-- Custom CSS -->
     <style>
-        .pk-2 {
-            font-size: 15px;
-            margin: 10px 0;
-        }
 
-        .pk-1 {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .pk-2 a {
-            text-decoration: none;
-            color: white;
-        }
-
-            .pk-2 a:hover {
-                color: red;
-                text-decoration: none;
-            }
 
         .dropdown {
             position: relative;
@@ -177,7 +195,7 @@
             position: absolute;
             background-color: #f9f9f9;
             min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
             z-index: 2;
             border-radius: 1rem;
         }
@@ -201,7 +219,6 @@
 
         .navbar-light .navbar-nav .nav-link {
             padding: 20px 10px;
-            color: #1C1C1C;
             outline: none;
             color: white;
             border-radius: 5px;
@@ -209,8 +226,8 @@
 
             .navbar-light .navbar-nav .nav-link:hover,
             .navbar-light .navbar-nav .nav-link.active {
-                color: #000000;
-                background-color: white;
+                color: white;
+                background-color: #313030;
             }
 
         #loading {
@@ -235,20 +252,91 @@
             animation: spin 1s linear infinite;
         }
     </style>
+    <!-- FT nè -->
+    <style>
+        .pk-2 {
+            font-size: 15px;
+            margin: 10px 0px;
+        }
+
+        .pk-1 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+
+        .pk-2 a {
+            text-decoration: none;
+            color: var(--web-color);
+        }
+
+            .pk-2 a:hover {
+                color: red;
+            }
+
+        .pk-2 i {
+            width: 20px;
+        }
+
+        .pk-3 a {
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--web-color);
+            font-size: 15px;
+        }
+
+        .pk-3 i {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+        }
+
+        .ft {
+            margin-top: auto;
+            border-top: 1px solid var(--web-border);
+            color: var(--web-color);
+            background: var(--web-hd);
+        }
+
+        .p {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+    </style>
+
+    <!-- Custom JavaScript -->
     <script>
         window.addEventListener("load", function () {
             const loadingElement = document.getElementById("loading");
             loadingElement.style.display = "none";
         });
 
+        function updateCurrentTime() {
+            const now = new Date();
+            const formattedTime = now.toLocaleString('vi-VN', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById("current-time").textContent = formattedTime;
+        }
+
+        // Cập nhật thời gian mỗi giây
+        setInterval(updateCurrentTime, 1000);
+
+        // Cập nhật khi trang được tải lần đầu
+        window.addEventListener("load", updateCurrentTime);
     </script>
-    <!-- Footer End -->
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="~/Content/lib/easing/easing.min.js"></script>
-    <script src="~/Content/lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="~/Scripts/main.js"></script>
 </body>
 
 </html>

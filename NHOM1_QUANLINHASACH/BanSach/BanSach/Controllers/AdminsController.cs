@@ -13,7 +13,7 @@ namespace BanSach.Controllers
 {
     public class AdminsController : Controller
     {
-        private SachEntities1 db = new SachEntities1();
+        private dbSach db = new dbSach();
 
         // GET: Admins
         public ActionResult Index()

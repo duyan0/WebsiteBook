@@ -10,7 +10,7 @@ namespace BanSach.Controllers
 {
     public class ShoppingCartController : Controller
     {
-        private SachEntities1 db = new SachEntities1();
+        private dbSach db = new dbSach();
         // Tính tổng tiền đơn hàng
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public PartialViewResult BagCart()

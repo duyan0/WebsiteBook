@@ -10,9 +10,9 @@
     @Html.AntiForgeryToken()
 
     <div class="container mt-5">
-        <div class="card shadow-lg">
-            <div class="card-body p-4">
-                <h2 class="text-center font-weight-bold mb-4">Thay đổi thông tin</h2>
+        <div class="card shadow-lg rounded-lg border-0">
+            <div class="card-body p-5">
+                <h2 class="text-center font-weight-bold mb-4 text-primary">Thay đổi thông tin</h2>
 
                 @if (Session["Error"] != null)
                 {
@@ -23,97 +23,104 @@
 
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-
-
+                <!-- Form Group: Họ tên -->
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label font-weight-bold">Họ tên</label>
                     <div class="col-sm-10">
-                        @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control rounded-lg" } })
                         @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
+                <!-- Form Group: Email -->
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label font-weight-bold">Email</label>
                     <div class="col-sm-10">
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control rounded-lg" } })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
+                <!-- Form Group: Địa chỉ -->
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label font-weight-bold">Địa chỉ</label>
                     <div class="col-sm-10">
-                        @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control rounded-lg" } })
                         @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
+                <!-- Form Group: Số điện thoại -->
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label font-weight-bold">Số điện thoại</label>
                     <div class="col-sm-10">
-                        @Html.EditorFor(model => model.SoDT, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.SoDT, new { htmlAttributes = new { @class = "form-control rounded-lg" } })
                         @Html.ValidationMessageFor(model => model.SoDT, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
+                <!-- Form Group: Vai trò -->
                 @{
                     var roles = new List<SelectListItem>
-            {
-        new SelectListItem { Value = "Admin", Text = "Admin" },
-        new SelectListItem { Value = "Nhân viên", Text = "Nhân viên" }
-    };
+                        {
+                        new SelectListItem { Value = "Admin", Text = "Admin" },
+                        new SelectListItem { Value = "Nhân viên", Text = "Nhân viên" }
+                    };
                 }
-
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label font-weight-bold">Vai trò</label>
                     <div class="col-sm-10">
-                        @Html.DropDownListFor(model => model.VaiTro, roles, "Chọn vai trò", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.VaiTro, roles, "Chọn vai trò", new { @class = "form-control rounded-lg" })
                         @Html.ValidationMessageFor(model => model.VaiTro, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-
+                <!-- Form Group: Tài khoản -->
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label font-weight-bold">Tài khoản</label>
                     <div class="col-sm-10">
-                        @Html.EditorFor(model => model.TKhoan, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.TKhoan, new { htmlAttributes = new { @class = "form-control rounded-lg" } })
                         @Html.ValidationMessageFor(model => model.TKhoan, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
+                <!-- Form Group: Mật khẩu mới -->
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label font-weight-bold">Mật khẩu mới</label>
                     <div class="col-sm-10">
-                        <input type="password" id="MKhau" name="MKhau" class="form-control" />
+                        <input type="password" id="MKhau" name="MKhau" class="form-control rounded-lg" />
                         @Html.ValidationMessageFor(model => model.MKhau, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
+                <!-- Form Group: Nhập lại mật khẩu mới -->
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label font-weight-bold">Nhập lại mật khẩu mới</label>
                     <div class="col-sm-10">
-                        <input type="password" id="ConfirmPass" name="ConfirmPass" class="form-control" />
+                        <input type="password" id="ConfirmPass" name="ConfirmPass" class="form-control rounded-lg" />
                         @if (ViewBag.Error != null)
                         {
-                            <center><font color="red"><p>@ViewBag.Error</p></font></center>
+                            <p class="text-danger text-center mt-2">@ViewBag.Error</p>
                         }
                     </div>
                 </div>
 
+                <!-- Submit Button -->
                 <div class="form-group text-center">
-                    <input type="submit" value="Lưu" class="btn btn-success btn-lg rounded-sm" onclick="showSuccessModal(event)" />
+                    <input type="submit" value="Lưu" class="btn btn-success btn-lg rounded-lg px-5" onclick="showSuccessModal(event)" />
                 </div>
             </div>
         </div>
     </div>
 }
+
+<!-- Success Modal -->
 <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-lg">
+            <div class="modal-header bg-success text-white">
                 <h5 class="modal-title" id="successModalLabel">Thông báo</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -126,34 +133,25 @@
         </div>
     </div>
 </div>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         function showSuccessModal(event) {
-            // Ngăn ngừa việc gửi form ngay lập tức
             event.preventDefault();
-
-            // Hiển thị modal
             $('#successModal').modal('show');
-
-            // Đặt sự kiện cho nút "Đóng" để gửi form khi nhấn
             $('#successModal .btn-outline-success').off('click').on('click', function () {
                 $('form').submit();
             });
-
-            // Đảm bảo nút đóng hoạt động
             $('#successModal .close').off('click').on('click', function () {
                 $('#successModal').modal('hide');
             });
         }
     </script>
-
 }
 <!-- Bootstrap CSS -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-
-<!-- Bootstrap JS -->
+<!-- jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>

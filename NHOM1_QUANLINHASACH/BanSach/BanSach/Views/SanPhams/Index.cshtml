@@ -149,7 +149,7 @@
 {
     <table class="table table-condensed table-bordered table-hover">
         <thead style="background-color: black; color: white; text-align: left;">
-            <tr>
+            <tr class="text-center ">
                 <th style="border-top-left-radius: 25px;">Mã sách</th>
                 <th>Tên Sách</th>
                 <th>Thể loại</th>
@@ -158,11 +158,12 @@
                 <th>Ảnh sách</th>
                 <th>Tác giả</th>
                 <th>Nhà xuất bản</th>
+                <th >Khuyến mãi</th>
                 <th>Trạng thái</th>
                 <th style="border-top-right-radius: 25px;">Thao tác</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="text-center ">
             @foreach (var item in Model)
             {
                 <tr style="color: #212121">
@@ -174,6 +175,7 @@
                     <td><img src="~/Content/img/@item.HinhAnh" width="60" alt="Ảnh không hiển thị" /></td>
                     <td>@Html.DisplayFor(modelItem => item.TacGia.TenTacGia)</td>
                     <td>@Html.DisplayFor(modelItem => item.NhaXuatBan.Tennxb)</td>
+                    <td class="text-center ">@Html.DisplayFor(modelItem => item.KhuyenMai.MucGiamGia)%</td>
                     <td>
                         @{
                             string className = item.TrangThaiSach == "Còn hàng" ? "text-success" :

@@ -13,7 +13,7 @@ namespace BanSach.Controllers
 {
     public class DonHangCTsController : Controller
     {
-        private SachEntities1 db = new SachEntities1();
+        private dbSach db = new dbSach();
 
         // GET: DonHangCTs
         public ActionResult Index()
@@ -24,6 +24,19 @@ namespace BanSach.Controllers
 
         // GET: DonHangCTs/Details/5
         public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            DonHangCT donHangCT = db.DonHangCT.Find(id);
+            if (donHangCT == null)
+            {
+                return HttpNotFound();
+            }
+            return View(donHangCT);
+        }
+        public ActionResult DetailsKH(int? id)
         {
             if (id == null)
             {
