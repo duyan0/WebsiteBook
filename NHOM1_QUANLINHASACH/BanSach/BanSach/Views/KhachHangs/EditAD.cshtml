@@ -1,0 +1,103 @@
+﻿@model BanSach.Models.KhachHang
+
+@{
+    ViewBag.Title = "Cập nhật thông tin cá nhân";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header text-center">
+            <h2>Cập nhật thông tin cá nhân</h2>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row mb-3">
+                    <div class="col-md-4 text-right font-weight-bold">Tên:</div>
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.TenKH, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TenKH, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4 text-right font-weight-bold">Số điện thoại:</div>
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.SoDT, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SoDT, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4 text-right font-weight-bold">Email:</div>
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4 text-right font-weight-bold">Tài khoản:</div>
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.TKhoan, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TKhoan, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4 text-right font-weight-bold">Mật khẩu mới:</div>
+                    <div class="col-md-8">
+                        <input type="password" id="MKhau" name="MKhau" class="form-control" value="@Model.MKhau.Trim()" />
+                        @Html.ValidationMessageFor(model => model.MKhau, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4 text-right font-weight-bold ">Nhập lại mật khẩu mới:</div>
+                    <div class="col-md-8 ">
+                        <input type="password" id="ConfirmPass" name="ConfirmPass" class="form-control rounded-sm" value="@Model.MKhau.Trim()" />
+                    </div>
+                </div>
+                <div class="text-center mt-4 ">
+                    <input type="submit" value="Lưu thay đổi" class="btn btn-outline-success btn-lg px-5" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 10px;
+    }
+
+    .card-header {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        font-weight: bold;
+    }
+
+    .btn {
+        padding: 10px 30px;
+        border-radius: 10px;
+    }
+
+    .font-weight-bold {
+        font-weight: 600;
+    }
+
+    .container {
+        max-width: 700px;
+    }
+
+    .form-control {
+        border-color: #eee;
+        min-height: 41px;
+        margin-left: 0;
+        width: 100%;
+        padding: 5px;
+    }
+
+        .form-control:focus {
+            border: 3px solid #5cd3b4;
+        }
+</style>

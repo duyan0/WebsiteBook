@@ -64,7 +64,7 @@
     <Property Name="NgayKetThuc" Type="date" />
     <Property Name="MucGiamGia" Type="int" />
     <Property Name="MoTa" Type="nvarchar(max)" />
-    <Property Name="NgayTao" Type="datetime" Nullable="false" />
+    <Property Name="NgayTao" Type="datetime" />
   </EntityType>
   <EntityType Name="NhaXuatBan">
     <Key>

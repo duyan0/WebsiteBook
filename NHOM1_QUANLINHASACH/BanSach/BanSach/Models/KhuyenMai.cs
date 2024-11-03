@@ -26,7 +26,7 @@ namespace BanSach.Models
         public Nullable<System.DateTime> NgayKetThuc { get; set; }
         public Nullable<int> MucGiamGia { get; set; }
         public string MoTa { get; set; }
-        public System.DateTime NgayTao { get; set; }
+        public Nullable<System.DateTime> NgayTao { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SanPham> SanPham { get; set; }

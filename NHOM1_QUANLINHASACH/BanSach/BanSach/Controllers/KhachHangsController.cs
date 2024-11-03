@@ -135,7 +135,59 @@ namespace BanSach.Controllers
 
             return View(khachHang); // Trả về view cùng với mô hình nếu không hợp lệ
         }
+        public ActionResult EditAD(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
+            KhachHang khachHang = db.KhachHang.Find(id);
+            if (khachHang == null)
+            {
+                return HttpNotFound();
+            }
+            return View(khachHang);
+        }
+
+        // POST: KhachHangs/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditAD([Bind(Include = "IDkh,TenKH,SoDT,Email,TKhoan,MKhau,ConfirmPass")] KhachHang khachHang)
+        {
+            // Kiểm tra mật khẩu nhập lại
+            if (khachHang.MKhau != khachHang.ConfirmPass)
+            {
+                ViewBag.Error = "Mật khẩu nhập lại không đúng";
+                return View(khachHang); // Trả về view cùng với mô hình
+            }
+
+            if (ModelState.IsValid)
+            {
+                // Kiểm tra xem email đã tồn tại chưa (trừ khách hàng hiện tại)
+                var existingEmail = db.KhachHang.FirstOrDefault(kh => kh.Email == khachHang.Email && kh.IDkh != khachHang.IDkh);
+                if (existingEmail != null)
+                {
+                    ModelState.AddModelError("Email", "Email này đã tồn tại. Vui lòng sử dụng email khác.");
+                    return View(khachHang); // Trả về view cùng với mô hình
+                }
+
+                // Kiểm tra xem số điện thoại đã tồn tại chưa (trừ khách hàng hiện tại)
+                var existingPhoneNumber = db.KhachHang.FirstOrDefault(kh => kh.SoDT == khachHang.SoDT && kh.IDkh != khachHang.IDkh);
+                if (existingPhoneNumber != null)
+                {
+                    ModelState.AddModelError("SoDT", "Số điện thoại này đã tồn tại. Vui lòng sử dụng số điện thoại khác.");
+                    return View(khachHang); // Trả về view cùng với mô hình
+                }
+
+                // Nếu mọi điều kiện đều hợp lệ, cập nhật thông tin khách hàng
+                db.Entry(khachHang).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("UpdateSuccesss");
+            }
+
+            return View(khachHang); // Trả về view cùng với mô hình nếu không hợp lệ
+        }
 
         [HttpGet]
         public ActionResult UpdateSuccesss()

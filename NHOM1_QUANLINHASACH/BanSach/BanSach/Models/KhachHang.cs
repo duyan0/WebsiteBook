@@ -29,6 +29,6 @@ namespace BanSach.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonHang> DonHang { get; set; }
-        public string ConfirmPass { get;  set; }
+        public string ConfirmPass { get; internal set; }
     }
 }

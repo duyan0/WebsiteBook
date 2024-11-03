@@ -71,7 +71,7 @@
     <Property Name="MucGiamGia" Type="Int32" />
     <Property Name="MoTa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="SanPham" Relationship="Self.FK_SanPham_KhuyenMai" FromRole="KhuyenMai" ToRole="SanPham" />
-    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgayTao" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="NhaXuatBan">
     <Key>

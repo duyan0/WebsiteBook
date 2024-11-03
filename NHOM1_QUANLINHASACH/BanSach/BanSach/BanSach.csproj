@@ -240,6 +240,7 @@
     <Content Include="Content\img\1 %281%29.jpg" />
     <Content Include="Content\img\1 %282%29.jpg" />
     <Content Include="Content\img\icon_thanhcong.png" />
+    <Content Include="Content\img\logo-icon.png" />
     <Content Include="Content\img\logosach.png" />
     <Content Include="Content\img\OIP.jpg" />
     <Content Include="Content\img\slide.jpg" />
@@ -488,6 +489,7 @@
     <Content Include="Views\KhuyenMai\Delete.cshtml" />
     <Content Include="Views\KhachHangs\LichSuDonHang.cshtml" />
     <Content Include="Views\DonHangCTs\DetailsKH.cshtml" />
+    <Content Include="Views\KhachHangs\EditAD.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

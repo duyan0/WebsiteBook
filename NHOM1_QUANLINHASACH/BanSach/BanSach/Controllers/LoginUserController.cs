@@ -178,10 +178,7 @@ namespace BanSach.Controllers
                 ViewBag.ErrorMessage = "Tài khoản hoặc email không tồn tại!";
                 return View();
             }
-
-            // Tạo mật khẩu mới ngẫu nhiên
             string newPassword = GenerateRandomPassword(8);
-
             try
             {
                 // Cập nhật mật khẩu mới cho khách hàng
@@ -234,7 +231,7 @@ namespace BanSach.Controllers
         {
             try
             {
-                var fromAddress = new MailAddress("crandi21112004@gmail.com", "Tên hiển thị của bạn");
+                var fromAddress = new MailAddress("crandi21112004@gmail.com", "Võ Duy Ân - HUFLIT");
                 var toAddress = new MailAddress(toEmail);
                 string fromPassword = "uisz jzid byry jtqw"; // Sử dụng App Password
 
@@ -268,7 +265,6 @@ namespace BanSach.Controllers
                 System.Diagnostics.Debug.WriteLine("Error: " + ex.Message);
             }
         }
-
         public ActionResult TestEmail()
         {
             SendEmail("crandi21112004@gmail.com", "Test Email", "This is a test email.");

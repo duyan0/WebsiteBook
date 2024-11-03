@@ -1,7 +1,7 @@
 ﻿@model BanSach.Models.KhuyenMai
 
 @{
-    ViewBag.Title = "Chi tiết KM - "+Model.IDkm;
+    ViewBag.Title = "Chi tiết KM - " + Model.IDkm;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -36,6 +36,12 @@
         </dt>
         <dd class="col-sm-9">
             @Html.DisplayFor(model => model.MucGiamGia)%
+        </dd>
+        <dt class="col-sm-3">
+            Ngày tạo
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.NgayTao)
         </dd>
 
         <dt class="col-sm-3">

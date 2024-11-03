@@ -5,59 +5,88 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 <div class="container mt-4">
     <div class="card rounded">
-        <div class="card-header text-center  text-white rounded-top">
+        <div class="card-header text-center text-white rounded-top">
             <h2>Xoá thông tin khuyến mãi</h2>
         </div>
         <div class="card-body">
             <hr />
             <dl class="row">
-                <dt class="col-sm-3">
-                    Tên khuyến mãi
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.TenKhuyenMai)
-                </dd>
+                <dt class="col-sm-3">Tên khuyến mãi</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.TenKhuyenMai)</dd>
 
-                <dt class="col-sm-3">
-                    Ngày bắt đầu
-                </dt>
-                <dd class="col-sm-9">
-                    @(Model.NgayBatDau.HasValue ? Model.NgayBatDau.Value.ToString("dd/MM/yyyy") : "")
-                </dd>
+                <dt class="col-sm-3">Ngày bắt đầu</dt>
+                <dd class="col-sm-9">@(Model.NgayBatDau.HasValue ? Model.NgayBatDau.Value.ToString("dd/MM/yyyy") : "")</dd>
 
-                <dt class="col-sm-3">
-                    Ngày kết thúc
-                </dt>
-                <dd class="col-sm-9">
-                    @(Model.NgayKetThuc.HasValue ? Model.NgayKetThuc.Value.ToString("dd/MM/yyyy") : "")
-                </dd>
+                <dt class="col-sm-3">Ngày kết thúc</dt>
+                <dd class="col-sm-9">@(Model.NgayKetThuc.HasValue ? Model.NgayKetThuc.Value.ToString("dd/MM/yyyy") : "")</dd>
 
-                <dt class="col-sm-3">
-                    Mức giảm giá
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.MucGiamGia)
-                </dd>
+                <dt class="col-sm-3">Mức giảm giá</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.MucGiamGia)</dd>
 
-                <dt class="col-sm-3">
-                    Mô tả
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.MoTa)
-                </dd>
+                <dt class="col-sm-3">Mô tả</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.MoTa)</dd>
             </dl>
 
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
-
                 <div class="form-actions">
                     <button type="submit" class="btn btn-danger rounded">Xoá</button>
                     @Html.ActionLink("Quay về", "Index", null, new { @class = "btn btn-secondary ml-2 rounded" })
                 </div>
             }
+
+            @if (ViewBag.SuccessMessage != null)
+            {
+                <div class="alert alert-success mt-3" role="alert">
+                    @ViewBag.SuccessMessage
+                </div>
+            }
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="alert alert-danger mt-3" role="alert">
+                    @ViewBag.ErrorMessage
+                </div>
+            }
         </div>
     </div>
 </div>
+
+<!-- Modal for success message -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @ViewBag.SuccessMessage
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Show modal if there is a success message
+        @if (ViewBag.SuccessMessage != null)
+        {
+            <text>$('#successModal').modal('show');</text>
+        }
+    });
+</script>

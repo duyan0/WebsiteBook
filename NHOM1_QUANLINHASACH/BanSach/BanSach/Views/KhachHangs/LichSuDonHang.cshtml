@@ -21,7 +21,7 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr class=" text-white text-center">
-                        <th>Mã đơn hàng</th>
+                        <th style="width:134px;">Mã đơn hàng</th>
                         <th>Ngày đặt hàng</th>
                         <th>Ngày nhận hàng</th>
                         <th>Tổng số tiền</th>
@@ -34,13 +34,16 @@
                     {
                         <tr class="text-center ">
                             <td class="font-weight-bold text-white">@order.IDdh</td>
-                            <td class="text-white">@(order.NgayDatHang?.ToString("dd/MM/yyyy HH:mm") ?? DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"))</td>
-                            <td class="text-white">@(order.NgayNhanHang?.ToString("dd/MM/yyyy HH:mm") ?? "Chưa nhận hàng")</td>
-                            <td class="text-danger">@order.GetTongSoTien().ToString("C")</td>
-                            <td class="@(order.TrangThai == "Chờ xử lý" ? "text-white" : order.TrangThai == "Đã xác nhận" ? "text-success" : order.TrangThai == "Đã hủy" ? "text-danger" : "text-white")">
+                            <td class="text-white">@(order.NgayDatHang?.ToString("dd/MM/yyyy HH:mm:ss") ?? "Chưa đặt hàng")</td>
+                            <td class="text-white">@(order.NgayNhanHang?.ToString("dd/MM/yyyy HH:mm:ss") ?? "Chưa nhận hàng")</td>
+                            <td class="text-danger">@order.GetTongSoTien().ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</td>
+                            <td class="@(order.TrangThai == "Chờ xử lý" ? "text-white"
+                              : order.TrangThai == "Đã xác nhận" ? "text-success"
+                              : order.TrangThai == "Đã hủy" ? "text-danger"
+                              : order.TrangThai == "Đã nhận hàng" ? "text-warning"
+                              : "text-white")">
                                 @order.TrangThai
                             </td>
-
                             <td>
                                 <a href="@Url.Action("DetailsKH", "DonHangCTs", new { id = order.IDdh })" class="btn btn-success rounded-sm">Xem chi tiết</a>
                                 @if (order.TrangThai == "Đã xác nhận")

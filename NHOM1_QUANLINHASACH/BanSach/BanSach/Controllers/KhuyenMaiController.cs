@@ -63,26 +63,26 @@ namespace BanSach.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            KhuyenMai tg = db.KhuyenMai.Find(id);  // Tìm tác giả dựa trên ID
-            if (tg == null)
+            KhuyenMai km = db.KhuyenMai.Find(id);  // Tìm tác giả dựa trên ID
+            if (km == null)
             {
                 return HttpNotFound();
             }
 
-            return View(tg);  // Truyền model TacGia vào View để hiển thị
+            return View(km);  // Truyền model TacGia vào View để hiển thị
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IDnxb,Tennxb,DiaChi,SoDienThoai,Email")] NhaXuatBan nxb)
+        public ActionResult Edit([Bind(Include = "IDnxb,Tennxb,DiaChi,SoDienThoai,Email")] KhuyenMai km)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(nxb).State = EntityState.Modified;  // Đánh dấu đối tượng là đã sửa đổi
+                db.Entry(km).State = EntityState.Modified;  // Đánh dấu đối tượng là đã sửa đổi
                 db.SaveChanges();  // Lưu thay đổi vào cơ sở dữ liệu
                 return RedirectToAction("Index");  // Chuyển hướng về trang danh sách sau khi cập nhật thành công
             }
 
-            return View(nxb);  // Nếu không hợp lệ, trả lại form chỉnh sửa với dữ liệu hiện có
+            return View(km);  // Nếu không hợp lệ, trả lại form chỉnh sửa với dữ liệu hiện có
         }
         public ActionResult Details(int? id)
         {
@@ -121,10 +121,21 @@ namespace BanSach.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             KhuyenMai km = db.KhuyenMai.Find(id);
-            db.KhuyenMai.Remove(km);
-            db.SaveChanges();
+            if (km != null)
+            {
+                db.KhuyenMai.Remove(km);
+                db.SaveChanges();
+                ViewBag.SuccessMessage = "Xoá thành công!";
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Không tìm thấy thông tin khuyến mãi.";
+            }
+
             return RedirectToAction("Index");
         }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

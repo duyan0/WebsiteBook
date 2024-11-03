@@ -148,11 +148,15 @@
         <td class="tieude">
             <b>Trạng thái</b>
         </td>
-        <td class="thongtin" style="font-weight:bold; color:@(Model.DonHang.TrangThai == "Đã xác nhận" ? "green" : Model.DonHang.TrangThai == "Đã hủy" ? "red" : Model.DonHang.TrangThai == "Đã nhận hàng" ? "gold" : "black");">
+        <td class="thongtin" style="font-weight:bold; color:@(Model.DonHang.TrangThai == "Đã xác nhận" ? "green"
+                : Model.DonHang.TrangThai == "Đã hủy" ? "red"
+                : Model.DonHang.TrangThai == "Đã nhận hàng" ? "gold"
+                : Model.DonHang.TrangThai == "Chờ xử lý" ? "white" // Add condition for "Chờ xử lý"
+                : "black");">
             @Html.DisplayFor(model => model.DonHang.TrangThai)
         </td>
-
     </tr>
+
 
 
 </table>

@@ -20,7 +20,7 @@ namespace BanSach.Models
         {
             this.DonHangCT = new HashSet<DonHangCT>();
         }
-    
+
         public int IDsp { get; set; }
         public string TenSP { get; set; }
         public string MoTa { get; set; }
@@ -35,7 +35,7 @@ namespace BanSach.Models
         public int IDkm { get; set; }
         public int SoLuong { get; set; }
         public string TrangThaiSach { get; set; }
-    
+
         public virtual DanhMuc DanhMuc { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonHangCT> DonHangCT { get; set; }

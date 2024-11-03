@@ -109,3 +109,16 @@
     --web-sc: black;
 }
 
+@media (max-width: 768px) {
+    .left {
+        max-width: 100%; /* Full width on small screens */
+        float: none;
+    }
+
+    .right {
+        max-width: 100%; /* Full width on small screens */
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+

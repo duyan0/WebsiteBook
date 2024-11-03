@@ -158,7 +158,7 @@
                 <th>Ảnh sách</th>
                 <th>Tác giả</th>
                 <th>Nhà xuất bản</th>
-                <th >Khuyến mãi</th>
+                <th>Khuyến mãi</th>
                 <th>Trạng thái</th>
                 <th style="border-top-right-radius: 25px;">Thao tác</th>
             </tr>
@@ -171,13 +171,25 @@
                     <td>@Html.DisplayFor(modelItem => item.TenSP)</td>
                     <td>@Html.DisplayFor(modelItem => item.DanhMuc.TheLoai)</td>
                     <td style="color:red;">@string.Format("{0:N0} VND", item.GiaBan)</td>
-                    <td>@Html.DisplayFor(modelItem => item.SoLuong)</td>
+                    <td>
+                        @if (item.SoLuong > 0)
+                        {
+                            @Html.DisplayFor(modelItem => item.SoLuong)
+                        }
+                        else
+                        {
+                            <span>0</span>
+                            item.TrangThaiSach = "Hết hàng"; // Cập nhật trạng thái khi số lượng bằng 0
+                        }
+                    </td>
+
                     <td><img src="~/Content/img/@item.HinhAnh" width="60" alt="Ảnh không hiển thị" /></td>
                     <td>@Html.DisplayFor(modelItem => item.TacGia.TenTacGia)</td>
                     <td>@Html.DisplayFor(modelItem => item.NhaXuatBan.Tennxb)</td>
                     <td class="text-center ">@Html.DisplayFor(modelItem => item.KhuyenMai.MucGiamGia)%</td>
                     <td>
                         @{
+                            // Đặt lớp CSS dựa trên trạng thái
                             string className = item.TrangThaiSach == "Còn hàng" ? "text-success" :
                                                item.TrangThaiSach == "Hết hàng" ? "text-danger" : "";
                         }

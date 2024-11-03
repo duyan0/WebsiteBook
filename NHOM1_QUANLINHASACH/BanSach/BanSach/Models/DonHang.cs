@@ -24,12 +24,15 @@ namespace BanSach.Models
 
         public int IDdh { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> NgayDatHang { get; set; }
+        public DateTime? NgayDatHang
+        {
+            get; set;
+        }
         public Nullable<int> IDkh { get; set; }
         public string DiaChi { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> NgayNhanHang { get; set; }
-        public string TrangThai { get; set; }
+        public DateTime? NgayNhanHang { get; set; }
+        public string TrangThai { get; set; } = "Chờ xử lý";
         public virtual KhachHang KhachHang { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonHangCT> DonHangCT { get; set; }
@@ -40,20 +43,5 @@ namespace BanSach.Models
                 ? DonHangCT.Sum(ct => (ct.SoLuong ?? 0) * (decimal)(ct.Gia ?? 0))
                 : 0;
         }
-        public string GetTrangThaiMota()
-        {
-            switch (TrangThai)
-            {
-                case "Pending":
-                    return "Đang chờ xử lý";
-                case "Shipped":
-                    return "Đã gửi";
-                case "Delivered":
-                    return "Đã giao";
-                default:
-                    return "Chờ xử lý";
-            }
-        }
-
     }
 }

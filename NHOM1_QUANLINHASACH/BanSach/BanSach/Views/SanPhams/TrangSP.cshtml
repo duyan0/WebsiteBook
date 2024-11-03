@@ -1,29 +1,46 @@
 ﻿@model BanSach.Models.SanPham
 
 @{
-    ViewBag.Title ="Sách - " + Model.TenSP;
+    ViewBag.Title = "Sách - " + Model.TenSP;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/Content/css/admin.css" rel="stylesheet" />
 <style>
     .left {
         min-height: 450px;
         margin-top: 10px;
         min-width: 20%;
-        max-width: 40%;
+        max-width: 30%; /* Adjust this if necessary */
         float: left;
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s; /* Adding hover effect */
     }
+
+        .left:hover {
+            transform: scale(1.02); /* Slightly scale up on hover */
+        }
 
     .right {
         margin-top: 10px;
         min-height: 450px;
-        float: inline-start;
-        margin-left: 5%;
+        margin-left: 10%;
         margin-right: 5%;
-        max-width: 50%;
+        max-width: 100%; /* Increase this value as needed */
+        color: white; /* Adjust text color */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-wrap: wrap;
     }
 
+        
+
     #productdetails {
-       min-height:420px;
+        min-height: 420px;
     }
 
     #nut1, #nut2 {
@@ -31,25 +48,32 @@
         border-radius: 8px;
         margin: 5px;
         text-align: center;
-        display:inline-block;
+        display: inline-block;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
     }
 
     #nut2 {
         background-color: #c92127;
         color: white;
-        padding: 5px 10%;
+        padding: 10px 15%;
     }
+
         #nut2:hover {
+            background-color: #a81d22;
             text-decoration: none;
         }
 
-    #nut1{
+    #nut1 {
         color: #c92127;
-        padding: 5px 2%;
+        padding: 10px 5%;
     }
-    #nut1:hover{
-        text-decoration:none;
-    }
+
+        #nut1:hover {
+            background-color: #c92127;
+            color: white;
+            text-decoration: none;
+        }
 
     .anh {
         text-align: center;
@@ -65,63 +89,65 @@
     .nut {
         text-align: center;
     }
-    /* CSS cho thông báo tùy chỉnh */
+
     #notification {
         display: none;
         position: fixed;
-        top: 5rem;
-        right: 20px;
-        background-color: #4caf50; /* Màu nền xanh lá */
-        color: white; /* Màu chữ trắng */
+        top: 10%; /* Adjust positioning */
+        right: 5%;
+        background-color: #4caf50;
+        color: white;
         padding: 15px;
         border-radius: 5px;
         font-size: 16px;
         z-index: 1000;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         opacity: 0;
-        transition: opacity 5s ease-in-out; /* Tạo hiệu ứng mờ dần */
+        transition: opacity 0.5s ease-in-out;
     }
 
-        /* Hiện thông báo */
         #notification.show {
             display: block;
-            opacity: 1; /* Đặt opacity về 1 để hiển thị */
+            opacity: 1;
         }
 
-        /* Ẩn thông báo */
         #notification.hide {
-            opacity: 0; /* Mờ dần */
+            opacity: 0;
         }
-
-
 </style>
+
 
 <div class="container-fluid" id="productdetails">
     <div class="row">
         <div class="left">
             <div class="anh">
-                <img src="~/Content/img/@Model.HinhAnh" style="width:70%;"class="rounded-sm" />
+                <img src="~/Content/img/@Model.HinhAnh" style="width:60%;" class="rounded-sm" />
             </div>
             <div class="nut">
                 <a href="/ShoppingCart/AddToCart/@Model.IDsp" id="nut1" onclick="themthanhcong(event, '@Model.IDsp')">Thêm vào giỏ hàng</a>
                 <a href="/ShoppingCart/MuaNgay/@Model.IDsp" id="nut2">Mua ngay</a>
             </div>
         </div>
-        <div class="right" style="color:white;">
-            <p>Tên sách: <b>@Model.TenSP</b></p>
-            <p>Tác giả : <b>@Model.TacGia.TenTacGia</b></p>
-            <p>Nhà xuất bản : <b>@Model.NhaXuatBan.Tennxb</b></p>
-            <p>Thể loại : <b>@Model.DanhMuc.TheLoai</b></p>
-            <p style="color:red;">Giá tiền:
-                <b>@String.Format("{0:C0}", @Model.GiaBan)</b>
-            </p>
-            <p>Mô tả : <b>@Model.MoTa</b></p>
+        <div class="right">
+            <div class="column">
+                <p style="font-size:30px;" class="text-center"><b>@Model.TenSP</b></p>
+                <p>Tác giả : <b>@Model.TacGia.TenTacGia</b></p>
+                <p>Nhà xuất bản : <b>@Model.NhaXuatBan.Tennxb</b></p>
+                <p>Thể loại : <b>@Model.DanhMuc.TheLoai</b></p>
+                <p>Giá khuyến mãi : <b style="color:red;">@Model.KhuyenMai.MucGiamGia%</b></p>
+                <p >
+                    Giá tiền:
+                    <b style="color:red;">@String.Format("{0:C0}", @Model.GiaBan)</b>
+                </p>
+                <p>Mô tả : <b>@Model.MoTa</b></p>
+            </div>
+            
             <div id="notification">Thêm vào giỏ hàng thành công!</div>
         </div>
     </div>
 </div>
 
-<script >
+<script>
     function themthanhcong(event, productId) {
         // Ngăn chặn điều hướng ngay lập tức
         event.preventDefault();
@@ -132,7 +158,7 @@
         notification.classList.add("show");
         notification.classList.remove("hide");  // Bỏ lớp 'hide' nếu có
 
-        // Ẩn thông báo sau 5 giây
+        // Ẩn thông báo sau 3 giây
         setTimeout(function () {
             notification.classList.add("hide");
             // Sau khi ẩn thông báo, thực hiện điều hướng
@@ -141,10 +167,7 @@
 
                 // Điều hướng tới URL sau khi thông báo ẩn
                 window.location.href = "/ShoppingCart/AddToCart/" + productId;
-            }, 0); // 1 giây để hoàn tất hiệu ứng mờ dần
-        }, 1000); // Hiển thị thông báo trong 5 giây
+            }, 0);
+        }, 3000); // Hiển thị thông báo trong 3 giây
     }
-
-
-
 </script>

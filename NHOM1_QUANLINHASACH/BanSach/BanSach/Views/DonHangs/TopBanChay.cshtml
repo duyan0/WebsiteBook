@@ -6,13 +6,24 @@
     }
 
     .product-item {
-        border-radius: 20px; /* Bo tròn góc cho thẻ sản phẩm */
-        transition: transform 0.2s; /* Thêm hiệu ứng chuyển tiếp khi hover */
+        border-radius: 20px; /* Rounded corners for the product card */
+        transition: transform 0.2s; /* Add smooth transition for hover */
     }
 
         .product-item:hover {
-            transform: scale(1.05); /* Phóng to nhẹ sản phẩm khi hover */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Thêm bóng cho sản phẩm khi hover */
+            transform: scale(1.05); /* Slight zoom effect on hover */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add shadow when hovering */
+        }
+
+    .product-img {
+        text-align: center; /* Ensure the image is centered within the container */
+    }
+
+        .product-img img {
+            width: 200px !important; /* Set a fixed width with !important */
+            height: 200px !important; /* Set a fixed height with !important */
+            object-fit: cover; /* Crop the image to fit without distortion */
+            border-radius: 10px; /* Rounded corners for the image */
         }
 </style>
 
@@ -29,16 +40,15 @@
                 {
                     <div class="card product-item">
                         <a href="~/SanPhams/TrangSP/@i.IdPro">
-                            <div class="card-header product-img position-relative overflow-hidden bg-transparent rounded-sm">
-                                <img class="img-fluid w-100" src="~/Content/img/@i.ImgPro" alt="@Html.DisplayFor(model => i.NamePro)">
+                            <div class="card-header product-img position-relative overflow-hidden bg-transparent rounded-sm text-center">
+                                <img src="~/Content/img/@i.ImgPro" alt="@Html.DisplayFor(model => i.NamePro)">
                             </div>
-                            <div class="card-body  text-center p-0 pt-4 pb-3">
+                            <div class="card-body text-center p-0 pt-4 pb-3">
                                 <h6 class="text-truncate mb-3">@Html.DisplayFor(model => i.NamePro)</h6>
                                 <div class="d-flex justify-content-center">
                                     <p style="color:red;" class="font-weight-bold">
                                         @string.Format("{0:N0} VND", i.price)
                                     </p>
-                                    <h6 class="text-muted ml-2"></h6>
                                 </div>
                             </div>
                         </a>
