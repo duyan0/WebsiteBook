@@ -13,10 +13,23 @@
         transform: rotate(0deg);
     }
 
+    25% {
+        transform: rotate(90deg); /* Quay 1/4 vòng */
+    }
+
+    50% {
+        transform: rotate(180deg); /* Quay 1/2 vòng */
+    }
+
+    75% {
+        transform: rotate(270deg); /* Quay 3/4 vòng */
+    }
+
     100% {
-        transform: rotate(360deg);
+        transform: rotate(360deg); /* Quay đầy đủ 1 vòng */
     }
 }
+
 
 
 /*ROOT*/

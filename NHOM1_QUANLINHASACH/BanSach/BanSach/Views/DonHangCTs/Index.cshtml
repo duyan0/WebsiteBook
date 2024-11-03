@@ -41,6 +41,7 @@
         <th> Số lượng  </th>
         <th> Đơn giá  </th>
         <th>Thành tiền</th>
+        <th>Trạng thái</th>
         <th>Thao tác</th>
     </tr>
     @foreach (var item in Model)
@@ -56,7 +57,7 @@
             <td style="color: red;">
                 @item.TongTien.ToString("N0") VND
             </td>
-
+            <td>  @Html.DisplayFor(modelItem => item.DonHang.TrangThai) </td>
             <td>
                 @Html.ActionLink("Xem", "Details", new { id = item.IDdh }, new { @class = "btn btn-warning btn-sm rounded-sm" })
                 @Html.ActionLink("Xoá", "Delete", new { id = item.IDdh }, new { @class = "btn btn-danger btn-sm rounded-sm" })

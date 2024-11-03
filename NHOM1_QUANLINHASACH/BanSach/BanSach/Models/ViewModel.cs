@@ -19,6 +19,7 @@ namespace BanSach.Models
         public DanhMuc category { get; set; }
         public DonHangCT orderDetail { get; set; }
         public SanPham Status { get; set; }
+        public KhuyenMai giaKM { get; set; }
         public IEnumerable<SanPham> ListProduct { get; set; }
         public int? Top5_Quantity { get; set; }
         public int? Sum_Quantity { get; set; }

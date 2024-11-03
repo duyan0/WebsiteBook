@@ -10,6 +10,7 @@ namespace BanSach.Models
         // Khai báo một mục sản phẩm mua CartItem
         public SanPham _product { get; set; }
         public int _quantity { get; set; }
+        public KhuyenMai _price { get; set; }
     }
     public class Cart
     {
@@ -36,7 +37,7 @@ namespace BanSach.Models
         // Hàm tính thành tiền cho mỗi sản phẩm trong giỏ hàng
         public decimal Total_money()
         {
-            var total = items.Sum(s => s._quantity * s._product.GiaBan);
+            var total = items.Sum(s => s._quantity * s._product.GiaBan / s._price.MucGiamGia );
             return (decimal)total;
         }
         // Phương thức cập nhật số lượng khi khách hàng chọn SP mua thêm
