@@ -1,59 +1,106 @@
 ﻿@model BanSach.Models.SanPham
 
 @{
-    ViewBag.Title = "Xoá";
+    ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2 style="text-align:center;padding-bottom:20px;">Bạn có chắc là muốn xoá?</h2>
+<div class="container mt-5">
+    <h2 class="text-center mb-4 font-weight-bold ">Xóa thông tin sản phẩm</h2>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4 font-weight-bold ">
+                    @Html.DisplayName("Tên sản phẩm")
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.TenSP)
+                </dd>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+                <dt class="col-sm-4 font-weight-bold">
+                    @Html.DisplayName("Mô tả")
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.MoTa)
+                </dd>
 
-    <div class="form-actions no-color">
-        <center>
-            @Html.ActionLink("Xem sản phẩm", "Details", new { id = Model.IDsp }) |
-            <input type="button" value="Xoá" class="btn btn-danger" style="border-radius:10px; padding:10px;margin:0 10px 0 10px;" data-toggle="modal" data-target="#confirmDeleteModal" /> |
+                <dt class="col-sm-4 font-weight-bold">
+                    @Html.DisplayName("Giá bán")
+                </dt>
+                <dd class="col-sm-8 text-danger ">
+                    @string.Format("{0:#,##0} VND", Model.GiaBan)
+                </dd>
 
-            @Html.ActionLink("Quay về danh sách", "Index")
-        </center>
-    </div>
-}
+                <dt class="col-sm-4 font-weight-bold">
+                    @Html.DisplayName("Hình ảnh")
+                </dt>
+                <dd class="col-sm-8">
+                    <img src="@Url.Content(Model.HinhAnh)" alt="Hình ảnh sản phẩm" class="img-fluid" />
+                </dd>
 
-<!-- Modal xác nhận xóa -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Bạn có chắc chắn muốn xóa sản phẩm này?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Xoá</button>
-            </div>
+                <dt class="col-sm-4 font-weight-bold">
+                    @Html.DisplayName("Số lượng")
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.SoLuong)
+                </dd>
+
+                <dt class="col-sm-4 font-weight-bold">
+                    @Html.DisplayName("Trạng thái sách")
+                </dt>
+                <dd class="col-sm-8">
+                    @if (Model.TrangThaiSach == "Còn hàng")
+                    {
+                        <span style="color: green;">@Html.DisplayFor(model => model.TrangThaiSach)</span>
+                    }
+                    else if (Model.TrangThaiSach == "Hết hàng")
+                    {
+                        <span style="color: red;">@Html.DisplayFor(model => model.TrangThaiSach)</span>
+                    }
+                    else
+                    {
+                        <span>@Html.DisplayFor(model => model.TrangThaiSach)</span>
+                    }
+                </dd>
+
+
+                <dt class="col-sm-4 font-weight-bold">
+                    @Html.DisplayName("Danh mục")
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.DanhMuc.DanhMuc1)
+                </dd>
+
+                <dt class="col-sm-4 font-weight-bold">
+                    @Html.DisplayName("Tên khuyến mãi")
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.KhuyenMai.TenKhuyenMai)
+                </dd>
+
+                <dt class="col-sm-4 font-weight-bold">
+                    @Html.DisplayName("Nhà xuất bản")
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.NhaXuatBan.Tennxb)
+                </dd>
+
+                <dt class="col-sm-4 font-weight-bold">
+                    @Html.DisplayName("Tên tác giả")
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.TacGia.TenTacGia)
+                </dd>
+            </dl>
         </div>
     </div>
-</div>
 
-<script>
-    document.getElementById('confirmDeleteButton').onclick = function() {
-        // Giả sử bạn có một thuộc tính trong model cho biết số lượng khách hàng đã mua sản phẩm
-        var customerCount = @Model.IDsp; // Thay đổi thuộc tính này thành thuộc tính thực tế của bạn
-
-        if (customerCount > 0) {
-            // Hiển thị thông báo lỗi nếu đã có khách hàng mua
-            alert('Không thể xóa sản phẩm đã được khách hàng mua!');
-        } else {
-            // Nếu chưa có khách hàng nào mua, tiến hành xóa
-            document.forms[0].submit();
-        }
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "mt-4" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions text-center" >
+            <input type="submit" value="Xóa" class="btn btn-danger rounded-sm" />
+            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary rounded-sm" })
+        </div>
     }
-</script>
-
+</div>

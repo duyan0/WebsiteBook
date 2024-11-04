@@ -218,7 +218,6 @@ namespace BanSach.Controllers
             ViewBag.SuccessMessage = "Mật khẩu mới đã được gửi vào email của bạn!";
             return View();
         }
-
         private string GenerateRandomPassword(int length)
         {
             const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";

@@ -60,7 +60,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h2 class="text-center">Sửa</h2>
+        <h2 class="text-center text-dark font-weight-bold ">Cập nhật thông tin sản phẩm</h2>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger error-message" })
         @Html.HiddenFor(model => model.IDsp)
@@ -166,7 +166,6 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Lưu" class="btn btn-success" />
-                <button type="button" onclick="window.location='@Url.Action("Index")'" class="btn btn-link">Quay về</button>
             </div>
         </div>
 

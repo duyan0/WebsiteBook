@@ -8,7 +8,7 @@
 <h2 class="text-center font-weight-bold text-dark">Danh mục sách</h2>
 
 <div class=" mb-4">
-    @Html.ActionLink("Thêm thể loại sách", "Create", null, new { @class = "btn btn-dark btn-lg rounded-sm" })
+    @Html.ActionLink("Thêm ", "Create", null, new { @class = "btn btn-dark  rounded-sm" })
 </div>
 
 <table class="table table-striped table-condensed">
@@ -30,8 +30,8 @@
                     @Html.DisplayFor(modelItem => item.TheLoai)
                 </td>
                 <td>
-                    @Html.ActionLink("Sửa", "Edit", new { id = item.ID }, new { @class = "btn btn-warning btn-sm me-1 rounded-sm" }) |
-                    @Html.ActionLink("Xem", "Details", new { id = item.ID }, new { @class = "btn btn-info btn-sm me-1 rounded-sm" }) |
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.ID }, new { @class = "btn btn-warning btn-sm me-1 rounded-sm" }) 
+                    @Html.ActionLink("Xem", "Details", new { id = item.ID }, new { @class = "btn btn-info btn-sm me-1 rounded-sm" }) 
                     @Html.ActionLink("Xoá", "Delete", new { id = item.ID }, new { @class = "btn btn-danger btn-sm delete-link rounded-sm" })
                 </td>
             </tr>

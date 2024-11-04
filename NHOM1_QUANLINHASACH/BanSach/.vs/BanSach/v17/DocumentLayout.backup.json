@@ -3,52 +3,60 @@
   "WorkspaceRootPath": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\models\\viewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\models\\viewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\content\\bootstrap-utilities.rtl.min.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\content\\bootstrap-utilities.rtl.min.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\models\\cart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\models\\cart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\views\\sanphams\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\sanphams\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\views\\shoppingcart\\showcart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\shoppingcart\\showcart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\controllers\\sanphamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\controllers\\sanphamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\views\\loginuser\\forgotpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\loginuser\\forgotpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\views\\sanphams\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\sanphams\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\views\\sanphams\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\sanphams\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\views\\khachhangs\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\khachhangs\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\views\\khachhangs\\editad.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\khachhangs\\editad.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\views\\khachhangs\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\khachhangs\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\views\\khachhangs\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\khachhangs\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\views\\shared\\_adminlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\shared\\_adminlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\content\\css\\admin.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\content\\css\\admin.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\content\\bootstrap-utilities.rtl.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\content\\bootstrap-utilities.rtl.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\views\\donhangcts\\detailskh.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\donhangcts\\detailskh.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\content\\bootstrap-utilities.rtl.min.css.map||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\content\\bootstrap-utilities.rtl.min.css.map||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\views\\donhangcts\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\donhangcts\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\content\\bootstrap-utilities.rtl.css.map||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\content\\bootstrap-utilities.rtl.css.map||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\views\\donhangcts\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\donhangcts\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\views\\khachhangs\\lichsudonhang.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\khachhangs\\lichsudonhang.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\models\\donhang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\models\\donhang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\demogit\\nhom1_quanlinhasach\\bansach\\bansach\\views\\khachhangs\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\khachhangs\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -58,110 +66,111 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ShowCart.cshtml",
-              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\ShoppingCart\\ShowCart.cshtml",
-              "RelativeDocumentMoniker": "BanSach\\Views\\ShoppingCart\\ShowCart.cshtml",
-              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\ShoppingCart\\ShowCart.cshtml",
-              "RelativeToolTip": "BanSach\\Views\\ShoppingCart\\ShowCart.cshtml",
-              "ViewState": "AgIAALwAAAAAAAAAAAAmwNYAAAABAAAAAAAAAA==",
+              "DocumentIndex": 13,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\KhachHangs\\Index.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\KhachHangs\\Index.cshtml",
+              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\KhachHangs\\Index.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\KhachHangs\\Index.cshtml",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABgAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T13:40:21.728Z",
+              "WhenOpened": "2024-11-04T13:46:47.412Z",
+              "IsPinned": true,
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ViewModel.cs",
-              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Models\\ViewModel.cs",
-              "RelativeDocumentMoniker": "BanSach\\Models\\ViewModel.cs",
-              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Models\\ViewModel.cs",
-              "RelativeToolTip": "BanSach\\Models\\ViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAqAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "SanPhamsController.cs",
+              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Controllers\\SanPhamsController.cs",
+              "RelativeDocumentMoniker": "BanSach\\Controllers\\SanPhamsController.cs",
+              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Controllers\\SanPhamsController.cs",
+              "RelativeToolTip": "BanSach\\Controllers\\SanPhamsController.cs",
+              "ViewState": "AgIAAKwAAAAAAAAAAAAAwLIAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T13:32:38.795Z",
+              "WhenOpened": "2024-11-04T14:26:35.121Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Cart.cs",
-              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Models\\Cart.cs",
-              "RelativeDocumentMoniker": "BanSach\\Models\\Cart.cs",
-              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Models\\Cart.cs",
-              "RelativeToolTip": "BanSach\\Models\\Cart.cs",
-              "ViewState": "AgIAACUAAAAAAAAAAAAxwEEAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T13:32:34.731Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "BanSach\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "BanSach\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAANcAAAAAAAAAAAAIwO8AAAAvAAAAAAAAAA==",
+              "Title": "Delete.cshtml",
+              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\SanPhams\\Delete.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\SanPhams\\Delete.cshtml",
+              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\SanPhams\\Delete.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\SanPhams\\Delete.cshtml",
+              "ViewState": "AgIAACgAAAAAAAAAAAAxwF4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T13:22:44.072Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "_AdminLayout.cshtml",
-              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\Shared\\_AdminLayout.cshtml",
-              "RelativeDocumentMoniker": "BanSach\\Views\\Shared\\_AdminLayout.cshtml",
-              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\Shared\\_AdminLayout.cshtml",
-              "RelativeToolTip": "BanSach\\Views\\Shared\\_AdminLayout.cshtml",
-              "ViewState": "AgIAAM8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T13:22:33.189Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "admin.css",
-              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Content\\css\\admin.css",
-              "RelativeDocumentMoniker": "BanSach\\Content\\css\\admin.css",
-              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Content\\css\\admin.css",
-              "RelativeToolTip": "BanSach\\Content\\css\\admin.css",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2024-11-03T13:20:30.337Z",
+              "WhenOpened": "2024-11-04T14:23:50.708Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "ForgotPassword.cshtml",
-              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\LoginUser\\ForgotPassword.cshtml",
-              "RelativeDocumentMoniker": "BanSach\\Views\\LoginUser\\ForgotPassword.cshtml",
-              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\LoginUser\\ForgotPassword.cshtml",
-              "RelativeToolTip": "BanSach\\Views\\LoginUser\\ForgotPassword.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAaAAAAAAAAAA==",
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\SanPhams\\Edit.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\SanPhams\\Edit.cshtml",
+              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\SanPhams\\Edit.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\SanPhams\\Edit.cshtml",
+              "ViewState": "AgIAAJkAAAAAAAAAAAAqwKcAAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T13:13:48.766Z",
+              "WhenOpened": "2024-11-04T14:20:15.912Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\SanPhams\\Index.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\SanPhams\\Index.cshtml",
+              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\SanPhams\\Index.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\SanPhams\\Index.cshtml",
+              "ViewState": "AgIAAIQAAAAAAAAAAAAAAIgAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-04T14:19:00.266Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Delete.cshtml",
+              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\KhachHangs\\Delete.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\KhachHangs\\Delete.cshtml",
+              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\KhachHangs\\Delete.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\KhachHangs\\Delete.cshtml",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAxwBAAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-04T14:08:21.532Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "EditAD.cshtml",
+              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\KhachHangs\\EditAD.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\KhachHangs\\EditAD.cshtml",
+              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\KhachHangs\\EditAD.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\KhachHangs\\EditAD.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-04T14:07:44.7Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "Details.cshtml",
-              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\DonHangCTs\\Details.cshtml",
-              "RelativeDocumentMoniker": "BanSach\\Views\\DonHangCTs\\Details.cshtml",
-              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\DonHangCTs\\Details.cshtml",
-              "RelativeToolTip": "BanSach\\Views\\DonHangCTs\\Details.cshtml",
-              "ViewState": "AgIAAIEAAAAAAAAAAAAAAJIAAAAIAAAAAAAAAA==",
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\KhachHangs\\Create.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\KhachHangs\\Create.cshtml",
+              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\KhachHangs\\Create.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\KhachHangs\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T13:09:51.44Z",
+              "WhenOpened": "2024-11-04T14:07:25.095Z",
               "EditorCaption": ""
             },
             {
@@ -170,54 +179,80 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\DonHangCTs\\Index.cshtml",
-              "RelativeDocumentMoniker": "BanSach\\Views\\DonHangCTs\\Index.cshtml",
-              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\DonHangCTs\\Index.cshtml",
-              "RelativeToolTip": "BanSach\\Views\\DonHangCTs\\Index.cshtml",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAAADsAAABGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T13:08:44.24Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "DetailsKH.cshtml",
-              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\DonHangCTs\\DetailsKH.cshtml",
-              "RelativeDocumentMoniker": "BanSach\\Views\\DonHangCTs\\DetailsKH.cshtml",
-              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\DonHangCTs\\DetailsKH.cshtml",
-              "RelativeToolTip": "BanSach\\Views\\DonHangCTs\\DetailsKH.cshtml",
-              "ViewState": "AgIAAIoAAAAAAAAAAAAAAJwAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T13:06:43.63Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 11,
-              "Title": "DonHang.cs",
-              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Models\\DonHang.cs",
-              "RelativeDocumentMoniker": "BanSach\\Models\\DonHang.cs",
-              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Models\\DonHang.cs",
-              "RelativeToolTip": "BanSach\\Models\\DonHang.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T13:00:44.032Z",
+              "Title": "bootstrap-utilities.rtl.min.css.map",
+              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Content\\bootstrap-utilities.rtl.min.css.map",
+              "RelativeDocumentMoniker": "BanSach\\Content\\bootstrap-utilities.rtl.min.css.map",
+              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Content\\bootstrap-utilities.rtl.min.css.map",
+              "RelativeToolTip": "BanSach\\Content\\bootstrap-utilities.rtl.min.css.map",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-11-04T13:58:53.535Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "bootstrap-utilities.rtl.min.css",
+              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Content\\bootstrap-utilities.rtl.min.css",
+              "RelativeDocumentMoniker": "BanSach\\Content\\bootstrap-utilities.rtl.min.css",
+              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Content\\bootstrap-utilities.rtl.min.css",
+              "RelativeToolTip": "BanSach\\Content\\bootstrap-utilities.rtl.min.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-11-04T13:58:51.526Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "bootstrap-utilities.rtl.css.map",
+              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Content\\bootstrap-utilities.rtl.css.map",
+              "RelativeDocumentMoniker": "BanSach\\Content\\bootstrap-utilities.rtl.css.map",
+              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Content\\bootstrap-utilities.rtl.css.map",
+              "RelativeToolTip": "BanSach\\Content\\bootstrap-utilities.rtl.css.map",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-11-04T13:58:49.386Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 10,
-              "Title": "LichSuDonHang.cshtml",
-              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\KhachHangs\\LichSuDonHang.cshtml",
-              "RelativeDocumentMoniker": "BanSach\\Views\\KhachHangs\\LichSuDonHang.cshtml",
-              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\KhachHangs\\LichSuDonHang.cshtml",
-              "RelativeToolTip": "BanSach\\Views\\KhachHangs\\LichSuDonHang.cshtml",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAowCYAAACCAAAAAAAAAA==",
+              "Title": "bootstrap-utilities.rtl.css",
+              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Content\\bootstrap-utilities.rtl.css",
+              "RelativeDocumentMoniker": "BanSach\\Content\\bootstrap-utilities.rtl.css",
+              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Content\\bootstrap-utilities.rtl.css",
+              "RelativeToolTip": "BanSach\\Content\\bootstrap-utilities.rtl.css",
+              "ViewState": "AgIAAAkIAAAAAAAAAAAawBAIAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-11-04T13:58:47.664Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "_AdminLayout.cshtml",
+              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\Shared\\_AdminLayout.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\Shared\\_AdminLayout.cshtml",
+              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\Shared\\_AdminLayout.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\Shared\\_AdminLayout.cshtml",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAAAC4BAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T12:52:29.626Z",
+              "WhenOpened": "2024-11-04T13:53:50.299Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\KhachHangs\\Edit.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\KhachHangs\\Edit.cshtml",
+              "ToolTip": "D:\\demogit\\NHOM1_QUANLINHASACH\\BanSach\\BanSach\\Views\\KhachHangs\\Edit.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\KhachHangs\\Edit.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-04T13:48:36.717Z",
               "EditorCaption": ""
             }
           ]

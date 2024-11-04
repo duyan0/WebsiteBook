@@ -3,7 +3,7 @@
 @using PagedList;
 
 @{
-    ViewBag.Title = "Kho sách";
+    ViewBag.Title = "Danh sách sản phẩm";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -126,7 +126,7 @@
                     }
 </style>
 
-<h2 class="tieude">Thông tin sách</h2>
+<h2 class="tieude">Danh sách sản phẩm</h2>
 
 <!-- Search Form -->
 <!-- Search Form -->
@@ -134,7 +134,7 @@
     @using (Html.BeginForm("Index", "SanPhams", FormMethod.Get))
     {
         <p>
-            Tìm kiếm: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @placeholder = "Nhập từ khóa tìm kiếm..." })
+            Tìm kiếm thông tin sách: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @placeholder = "Nhập từ khóa tìm kiếm..." })
             <input type="submit" value="Tìm kiếm" class="btn btn-default" />
         </p>
     }

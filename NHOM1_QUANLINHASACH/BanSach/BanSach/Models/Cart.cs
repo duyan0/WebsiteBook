@@ -37,7 +37,7 @@ namespace BanSach.Models
         // Hàm tính thành tiền cho mỗi sản phẩm trong giỏ hàng
         public decimal Total_money()
         {
-            var total = items.Sum(s => s._quantity * s._product.GiaBan / s._price.MucGiamGia );
+            var total = items.Sum(s => s._quantity * s._product.GiaBan  );
             return (decimal)total;
         }
         // Phương thức cập nhật số lượng khi khách hàng chọn SP mua thêm

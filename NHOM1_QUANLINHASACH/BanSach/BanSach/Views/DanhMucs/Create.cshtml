@@ -11,6 +11,10 @@
         min-height: 41px;
         box-shadow: none !important;
         margin-left: 3%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+       
     }
 
         .form-group .form-control:focus {
@@ -48,11 +52,11 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <center><h2 style="color:black;">Thêm danh mục</h2></center>
+        <H2 class="text-center font-weight-bold text-dark">Thêm danh mục</H2>
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
+        <div cla    ss="form-group">
             <div class="control-label col-md-2"><b>Danh mục có sẵn</b></div>
             <div class="col-md-6">
                 @{

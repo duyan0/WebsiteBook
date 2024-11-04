@@ -4,43 +4,62 @@
     ViewBag.Title = "Chi tiết";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
-<div class="container mt-4" >
-    <h3 class="text-center">Chi tiết thông tin sách</h3>
+<div class="container mt-4">
+    <h3 class="text-center font-weight-bold ">Chi tiết thông tin sản phẩm</h3>
     <hr />
     <dl class="row">
-        <dt class="col-sm-3"><b>Tên sách:</b></dt>
+        <dt class="col-sm-3">Tên sách:</dt>
         <dd class="col-sm-9">@Html.DisplayFor(model => model.TenSP)</dd>
-
         <dt class="col-sm-3"><b>Mô tả:</b></dt>
         <dd class="col-sm-9">@Html.DisplayFor(model => model.MoTa)</dd>
-
-        <dt class="col-sm-3"><b>Giá bán:</b></dt>
-        <dd class="col-sm-9">@string.Format("{0:N0} VND", Model.GiaBan)</dd>
-
+        <dt class="col-sm-3 ">Giá bán:</dt>
+        <dd class="col-sm-9 text-danger font-weight-bold ">@string.Format("{0:N0} VND", Model.GiaBan)</dd>
         <dt class="col-sm-3"><b>Hình ảnh:</b></dt>
-        <dd class="col-sm-9">
-            <img src="~/Content/img/@Model.HinhAnh" class="img-fluid rounded-sm" width="200"  alt="Hình ảnh sách">
+        <dd class="col-sm-9 ">
+            <img src="~/Content/img/@Model.HinhAnh" class="img-fluid rounded-5" width="200" alt="Hình ảnh sách">
         </dd>
-
         <dt class="col-sm-3"><b>Tác giả:</b></dt>
         <dd class="col-sm-9">@Html.DisplayFor(model => model.TacGia.TenTacGia)</dd>
+        <dt class="col-sm-3"><b>Số lượng:</b></dt>
+        <dd class="col-sm-9">
+            @if (Model.SoLuong < 0)
+            {
+                <span class="text-danger">Cảnh cáo số lượng: -@Math.Abs(Model.SoLuong)</span>
+            }
+            else
+            {
+                <span class="text-success">@Html.DisplayFor(model => model.SoLuong)</span>
+            }
+        </dd>
 
         <dt class="col-sm-3"><b>Nhà xuất bản:</b></dt>
         <dd class="col-sm-9">@Html.DisplayFor(model => model.NhaXuatBan.Tennxb)</dd>
-
-        <dt class="col-sm-3"><b>Năm xuất bản:</b></dt>
-        <dd class="col-sm-9">@Html.DisplayFor(model => model.NamXB)</dd>
-
+        <dt class="col-sm-3">Giá khuyến mãi:</dt>
+        <dd class="col-sm-9 text-success">@Html.DisplayFor(model => model.KhuyenMai.MucGiamGia)%</dd>
         <dt class="col-sm-3"><b>Danh mục:</b></dt>
         <dd class="col-sm-9">@Html.DisplayFor(model => model.DanhMuc.DanhMuc1)</dd>
-
         <dt class="col-sm-3"><b>Thể loại:</b></dt>
         <dd class="col-sm-9">@Html.DisplayFor(model => model.DanhMuc.TheLoai)</dd>
+        <dt class="col-sm-3 font-weight-bold">
+            @Html.DisplayName("Trạng thái sách")
+        </dt>
+        <dd class="col-sm-9 font-weight-bold ">
+            @if (Model.TrangThaiSach == "Còn hàng")
+            {
+                <span style="color: green;">@Html.DisplayFor(model => model.TrangThaiSach)</span>
+            }
+            else if (Model.TrangThaiSach == "Hết hàng")
+            {
+                <span style="color: red;">@Html.DisplayFor(model => model.TrangThaiSach)</span>
+            }
+            else
+            {
+                <span>@Html.DisplayFor(model => model.TrangThaiSach)</span>
+            }
+        </dd>
     </dl>
-
     <div class="text-center mt-4 ">
-        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.IDsp }, new { @class = "btn btn-primary me-2 rounded-sm" }) |
+        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.IDsp }, new { @class = "btn btn-warning me-2 rounded-sm" }) |
         @Html.ActionLink("Quay về danh sách", "Index", null, new { @class = "btn btn-secondary me-2 rounded-sm" }) |
         @Html.ActionLink("Xoá", "Delete", new { id = Model.IDsp }, new { @class = "btn btn-danger rounded-sm" })
     </div>

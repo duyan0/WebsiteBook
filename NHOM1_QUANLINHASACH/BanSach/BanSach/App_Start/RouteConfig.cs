@@ -12,20 +12,19 @@ namespace BanSach
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
-            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            // Default Route
-            routes.MapRoute(
-    name: "DaNhanHang",
-    url: "DonHang/DaNhanHang/{id}",
-    defaults: new { controller = "DonHang", action = "DaNhanHang", id = UrlParameter.Optional }
-);
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "SanPhams", action = "TrangChu", id = UrlParameter.Optional }
             );
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapRoute(
+    name: "DaNhanHang",
+    url: "DonHang/DaNhanHang/{id}",
+    defaults: new { controller = "DonHang", action = "DaNhanHang", id = UrlParameter.Optional }
+);
         }
-
-
     }
 }

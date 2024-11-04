@@ -17,11 +17,13 @@
 
     .product-img {
         text-align: center; /* Ensure the image is centered within the container */
+        width: 200px; /* Set a fixed width for the container */
+        height: 200px; /* Set a fixed height for the container */
     }
 
         .product-img img {
-            width: 200px !important; /* Set a fixed width with !important */
-            height: 200px !important; /* Set a fixed height with !important */
+            width: 100%; /* Match the width of the container */
+            height: 100%; /* Match the height of the container */
             object-fit: cover; /* Crop the image to fit without distortion */
             border-radius: 10px; /* Rounded corners for the image */
         }
@@ -33,8 +35,8 @@
             <span class="px-2" style="font-weight:bold;color:white;">Sản phẩm bán chạy</span>
         </h2>
     </div>
-    <div class="row px-xl-5">
-        <div class="col">
+    <div class="row px-xl-4">
+        <div class="col d-md-flex">
             <div class="owl-carousel related-carousel">
                 @foreach (var i in Model)
                 {
@@ -58,3 +60,4 @@
         </div>
     </div>
 </div>
+
