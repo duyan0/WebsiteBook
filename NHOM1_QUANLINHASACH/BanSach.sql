@@ -75,6 +75,7 @@ CREATE TABLE KhuyenMai
     NgayKetThuc DATE  NULL,
     MucGiamGia INT NULL, 
     MoTa NVARCHAR(MAX) NULL,
+	NgayTao Datetime null,
     PRIMARY KEY CLUSTERED (IDkm ASC)
 );
 go
