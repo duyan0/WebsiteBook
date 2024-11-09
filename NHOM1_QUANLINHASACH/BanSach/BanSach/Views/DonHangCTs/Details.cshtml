@@ -144,12 +144,33 @@
         <td class="tieude">
             <b>Trạng thái</b>
         </td>
-        <td class="thongtin" style="font-weight:bold; color:@(Model.DonHang.TrangThai == "Đã xác nhận" ? "green" : Model.DonHang.TrangThai == "Đã hủy" ? "red" : "black");">
+        @{
+            var color = "black";
+            var trangThai = Model.DonHang.TrangThai?.Trim().ToLower();
+
+            if (trangThai == "đã xác nhận")
+            {
+                color = "green";
+            }
+            else if (trangThai == "Đã hủy")
+            {
+                color = "blue";
+            }
+            else if (trangThai == "chờ xử lý")
+            {
+                color = "white";
+            }
+            else if (trangThai == "đã nhận hàng")
+            {
+                color = "gold";
+            }
+        }
+
+        <td class="thongtin" style="font-weight:bold; color:@color;">
             @Html.DisplayFor(model => model.DonHang.TrangThai)
         </td>
+
     </tr>
-
-
 </table>
 <p>
     <div class="form-actions">

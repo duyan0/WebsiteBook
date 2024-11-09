@@ -29,16 +29,34 @@
     .table-striped {
         width: 100%;
     }
+
+    /* Thêm màu sắc cho các trạng thái đơn hàng */
+    .status-waiting {
+        color: orange;
+        font-weight: bold;
+    }
+
+    .status-confirmed {
+        color: green;
+        font-weight: bold;
+    }
+
+    .status-received {
+        color: blue;
+        font-weight: bold;
+    }
+
+    .status-cancelled {
+        color: red;
+        font-weight: bold;
+    }
 </style>
 
 <h2 class="tieude">Quản lý đơn hàng</h2>
 
-@*<p class="them">
-    @Html.ActionLink("Thêm đơn hàng", "Create")
-</p>*@
-<table class="table table-striped">
-    <tr style="color: black; text-align: left;">
-        <th>
+<table class="table table-bordered table-hover">
+    <tr class="text-white" style="background-color:black;">
+        <th >
             Mã ĐH
         </th>
         <th>
@@ -56,43 +74,55 @@
         <th>
             Trạng thái ĐH
         </th>
-
         <th>Thao tác</th>
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
-            <td>@item.IDdh</td>
-            <td>
+            <td class="font-weight-bold">@item.IDdh</td>
+            <td class="font-weight-bold">
                 @Html.DisplayFor(modelItem => item.KhachHang.IDkh) -
                 @Html.DisplayFor(modelItem => item.KhachHang.TenKH)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NgayDatHang)
             </td>
-            <td>
+            <td class="text-danger font-weight-bold">
                 @item.GetTongSoTien().ToString("N0") VND
             </td>
-            <td>
+            <td class="font-weight-bold">
                 Thanh toán khi nhận hàng
             </td>
             <td>
-                <span class="@(item.TrangThai == "Đã xác nhận" ? "text-success" : item.TrangThai == "Đã huỷ" ? "text-danger" : item.TrangThai == "Đã nhận hàng" ? "text-warning" : "")">
+                @{
+                    string statusClass = "status-waiting"; // Mặc định là "Chờ xử lý"
+                    switch (item.TrangThai)
+                    {
+                        case "Đã xác nhận":
+                            statusClass = "status-confirmed";
+                            break;
+                        case "Đã huỷ":
+                            statusClass = "status-cancelled";
+                            break;
+                        case "Đã nhận hàng":
+                            statusClass = "status-received";
+                            break;
+                    }
+                }
+                <span class="@statusClass">
                     @(string.IsNullOrEmpty(item.TrangThai) ? "Chờ xử lý" : item.TrangThai)
                 </span>
-
             </td>
             <td>
-                @Html.ActionLink("Xác nhận", "Confirm", new { id = item.IDdh }, new { @class = "btn btn-success rounded", onclick = "return confirm('Bạn có chắc chắn xác nhận đơn hàng này?');" }) 
-                @Html.ActionLink("Huỷ", "Cancel", new { id = item.IDdh }, new { @class = "btn btn-danger rounded", onclick = "return confirm('Bạn có chắc chắn huỷ đơn hàng này?');" }) 
-                @Html.ActionLink("Xoá", "Delete", new { id = item.IDdh }, new { @class = "btn btn-warning rounded", onclick = "return confirm('Bạn có chắc chắn xoá đơn hàng này?');" })
+                @Html.ActionLink("Xác nhận", "Confirm", new { id = item.IDdh }, new { @class = "btn btn-success btn-sm me-1 rounded", onclick = "return confirm('Bạn có chắc chắn xác nhận đơn hàng này?');" })
+                @Html.ActionLink("Huỷ", "Cancel", new { id = item.IDdh }, new { @class = "btn btn-danger btn-sm me-1 rounded", onclick = "return confirm('Bạn có chắc chắn huỷ đơn hàng này?');" })
+                @Html.ActionLink("Xoá", "Delete", new { id = item.IDdh }, new { @class = "btn btn-warning btn-sm me-1 rounded", onclick = "return confirm('Bạn có chắc chắn xoá đơn hàng này?');" })
             </td>
-
         </tr>
     }
-
 </table>
+
 <style>
     .delete-link {
         color: red; /* Sửa màu trong đây nhaa*/

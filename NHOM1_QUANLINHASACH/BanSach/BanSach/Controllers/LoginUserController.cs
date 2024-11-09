@@ -42,52 +42,29 @@ namespace BanSach.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult RegisterCus(KhachHang _user)
         {
-            // Kiểm tra tính hợp lệ của dữ liệu được truyền vào trước
+            // Kiểm tra tính hợp lệ của dữ liệu
             if (!ModelState.IsValid)
             {
                 ViewBag.ErrorRegister = "Vui lòng điền đầy đủ các thông tin.";
                 return View();
             }
 
-            // Kiểm tra trùng lặp tài khoản và thông tin
-            var check = db.KhachHang.FirstOrDefault(s => s.TKhoan == _user.TKhoan);
-            var check1 = db.Admin.FirstOrDefault(s => s.TKhoan == _user.TKhoan);
-            var check2 = db.KhachHang.FirstOrDefault(s => s.SoDT == _user.SoDT);
-            var check3 = db.KhachHang.FirstOrDefault(s => s.Email == _user.Email);
+            // Kiểm tra trùng lặp tài khoản, số điện thoại, và email
+            var existingUserOrAdmin = db.KhachHang.Any(s => s.TKhoan == _user.TKhoan || s.SoDT == _user.SoDT || s.Email == _user.Email) ||
+                                       db.Admin.Any(s => s.TKhoan == _user.TKhoan);
 
-            // Kiểm tra tài khoản tồn tại
-            if (check != null || check1 != null)
+            if (existingUserOrAdmin)
             {
-                ViewBag.ErrorRegister = "Tài khoản này đã tồn tại!";
-                return View();
-            }
-
-            // Kiểm tra số điện thoại trùng lặp
-            if (check2 != null)
-            {
-                ViewBag.ErrorRegister = "Số điện thoại đã được đăng ký!";
-                return View();
-            }
-
-            // Kiểm tra email trùng lặp
-            if (check3 != null)
-            {
-                ViewBag.ErrorRegister = "Email đã được đăng ký!";
-                return View();
-            }
-
-            // Kiểm tra mật khẩu không được để trống
-            if (string.IsNullOrEmpty(_user.MKhau) || string.IsNullOrEmpty(_user.ConfirmPass))
-            {
-                ViewBag.ErrorRegister = "Mật khẩu và mật khẩu nhập lại không được để trống!";
+                ViewBag.ErrorRegister = "Thông tin tài khoản hoặc liên hệ đã tồn tại!";
                 return View();
             }
 
             // Kiểm tra mật khẩu khớp nhau
-            if (_user.MKhau.Trim() != _user.ConfirmPass.Trim())
+            if (_user.MKhau != _user.ConfirmPass)
             {
                 ViewBag.ErrorRegister = "Mật khẩu nhập lại không đúng!";
                 return View();
@@ -100,6 +77,8 @@ namespace BanSach.Controllers
 
             return View("SignUpSuccess");
         }
+
+
 
         [HttpGet]
         public ActionResult SignUpSuccess()
@@ -214,7 +193,6 @@ namespace BanSach.Controllers
             // Gửi email cho người dùng
             string emailBody = $"Xin chào {khachHang.TenKH},\n\nMật khẩu mới của bạn là: {newPassword}\nHãy đăng nhập và thay đổi mật khẩu ngay lập tức.";
             SendEmail(khachHang.Email, "Khôi phục mật khẩu", emailBody);
-
             ViewBag.SuccessMessage = "Mật khẩu mới đã được gửi vào email của bạn!";
             return View();
         }

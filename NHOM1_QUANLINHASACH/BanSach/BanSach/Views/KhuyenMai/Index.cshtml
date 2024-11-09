@@ -8,10 +8,10 @@
 <h2 class="text-center font-weight-bold">Danh sách khuyến mãi</h2>
 
 <p>
-    @Html.ActionLink("Tạo mới", "Create", null, new { @class = "btn btn-success rounded-sm" })
+    @Html.ActionLink("Thêm", "Create", null, new { @class = "btn btn-dark rounded-sm" })
 </p>
 <table class="table table-bordered table-hover">
-    <thead class="thead-dark">
+    <thead class="text-white" style="background-color:black;">
         <tr>
             <th>
                 ID
@@ -19,44 +19,44 @@
             <th>
                 Tên KM
             </th>
-            <th>
+            <th class="text-center">
                 Ngày bắt đầu
             </th>
-            <th>
+            <th class="text-center">
                 Ngày kết thúc
             </th>
-            <th>
+            <th class="text-center">
                 Giá giảm
             </th>
-            <th>
+            <th class="text-center">
                 Mô tả
             </th>
-            
-
-            <th>Thao tác</th>
+            <th class="text-center">
+                Thao tác
+            </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td>
+                <td class="font-weight-bold text-center">
                     @Html.DisplayFor(modelItem => item.IDkm)
                 </td>
-                <td>
+                <td >
                     @Html.DisplayFor(modelItem => item.TenKhuyenMai)
                 </td>
-                <td class="@(item.NgayBatDau.HasValue && item.NgayKetThuc.HasValue && item.NgayBatDau > item.NgayKetThuc ? "text-danger" : "")">
+                <td class="@(item.NgayBatDau.HasValue && item.NgayKetThuc.HasValue && item.NgayBatDau > item.NgayKetThuc ? "text-danger" : "") text-center">
                     @(item.NgayBatDau.HasValue ? item.NgayBatDau.Value.ToString("dd/MM/yyyy") : "")
                 </td>
-                <td class="@(item.NgayBatDau.HasValue && item.NgayKetThuc.HasValue && item.NgayBatDau > item.NgayKetThuc ? "text-danger" : "")">
+                <td class="@(item.NgayBatDau.HasValue && item.NgayKetThuc.HasValue && item.NgayBatDau > item.NgayKetThuc ? "text-danger" : "") text-center">
                     @(item.NgayKetThuc.HasValue ? item.NgayKetThuc.Value.ToString("dd/MM/yyyy") : "")
                 </td>
 
-                <td>
+                <td class="text-center">
                     @Html.DisplayFor(modelItem => item.MucGiamGia)%
                 </td>
-                <td>
+                <td class="text-center">
                     @{
                         string motangan = item.MoTa != null && item.MoTa.Length > 20
                             ? item.MoTa.Substring(0, 20) + "..."
@@ -64,8 +64,8 @@
                     }
                     @motangan
                 </td>
-                
-                <td>
+
+                <td class="text-center">
                     @Html.ActionLink("Sửa", "Edit", new { id = item.IDkm }, new { @class = "btn btn-warning btn-sm" })
                     @Html.ActionLink("Chi tiết", "Details", new { id = item.IDkm }, new { @class = "btn btn-info btn-sm" })
                     @Html.ActionLink("Xóa", "Delete", new { id = item.IDkm }, new { @class = "btn btn-danger btn-sm" })

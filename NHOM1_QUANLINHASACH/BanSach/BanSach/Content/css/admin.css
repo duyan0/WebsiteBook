@@ -135,3 +135,39 @@
     }
 }
 
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .container-fluid {
+        flex-direction: column;
+    }
+
+    .left, .right {
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .right {
+        margin-top: 20px;
+    }
+
+    #nut1, #nut2 {
+        padding: 10px 20%;
+    }
+}
+
+@media (max-width: 480px) {
+    #nut1, #nut2 {
+        padding: 10px 10%;
+    }
+
+    .right {
+        text-align: center;
+    }
+
+    .nut {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+

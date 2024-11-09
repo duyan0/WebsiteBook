@@ -1,103 +1,86 @@
 ﻿@model BanSach.Models.KhachHang
 
 @{
-    ViewBag.Title = "Cập nhật thông tin cá nhân";
+    ViewBag.Title = "EditAD";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<div class="container my-5 p-4 bg-light rounded-sm">
+    <h2 class="text-center" style="color:black;">Cập nhật Thông Tin</h2>
+    <hr class="mb-5" />
 
-<div class="container mt-5">
-    <div class="card shadow-lg border-0">
-        <div class="card-header text-center">
-            <h2 class="font-weight-bold ">Cập nhật thông tin khách hàng</h2>
-        </div>
-        <div class="card-body">
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-                <div class="row mb-3">
-                    <div class="col-md-4 text-right font-weight-bold">Tên:</div>
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.TenKH, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.TenKH, "", new { @class = "text-danger" })
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.IDkh)
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.TenKH, "Họ và Tên", htmlAttributes: new { @class = "col-md-3 col-form-label font-weight-bold" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.TenKH, new { htmlAttributes = new { @class = "form-control rounded-sm", style = "border: 1px solid #ccc;" } })
+                    @Html.ValidationMessageFor(model => model.TenKH, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.SoDT, "Số điện thoại", htmlAttributes: new { @class = "col-md-3 col-form-label font-weight-bold" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.SoDT, new { htmlAttributes = new { @class = "form-control rounded-sm", style = "border: 1px solid #ccc;" } })
+                    @Html.ValidationMessageFor(model => model.SoDT, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.Email, "Email", htmlAttributes: new { @class = "col-md-3 col-form-label font-weight-bold" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control rounded-sm", style = "border: 1px solid #ccc;" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.TKhoan, "Tài khoản", htmlAttributes: new { @class = "col-md-3 col-form-label font-weight-bold" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.TKhoan, new { htmlAttributes = new { @class = "form-control rounded-sm", @readonly = "readonly", style = "border: 1px solid #ccc;" } })
+                    @Html.ValidationMessageFor(model => model.TKhoan, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.MKhau, "Mật khẩu", htmlAttributes: new { @class = "col-md-3 col-form-label font-weight-bold" })
+                <div class="col-md-9">
+                    <div class="input-group">
+                        @Html.EditorFor(model => model.MKhau, new { htmlAttributes = new { @class = "form-control rounded-sm", style = "border: 1px solid #ccc;", @type = "password", id = "passwordField" } })
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-success rounded-sm" onclick="togglePasswordVisibility()">Hiện</button>
+                        </div>
                     </div>
+                    @Html.ValidationMessageFor(model => model.MKhau, "", new { @class = "text-danger" })
                 </div>
-                <div class="row mb-3">
-                    <div class="col-md-4 text-right font-weight-bold">Số điện thoại:</div>
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.SoDT, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.SoDT, "", new { @class = "text-danger" })
-                    </div>
+            </div>
+
+            <div class="form-group text-center mt-5">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-success btn-lg px-3 rounded-sm">Lưu thông tin</button>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-md-4 text-right font-weight-bold">Email:</div>
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-md-4 text-right font-weight-bold">Tài khoản:</div>
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.TKhoan, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.TKhoan, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-md-4 text-right font-weight-bold">Mật khẩu mới:</div>
-                    <div class="col-md-8">
-                        <input type="password" id="MKhau" name="MKhau" class="form-control" value="@Model.MKhau.Trim()" />
-                        @Html.ValidationMessageFor(model => model.MKhau, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-md-4 text-right font-weight-bold ">Nhập lại mật khẩu mới:</div>
-                    <div class="col-md-8 ">
-                        <input type="password" id="ConfirmPass" name="ConfirmPass" class="form-control rounded-sm" value="@Model.MKhau.Trim()" />
-                    </div>
-                </div>
-                <div class="text-center mt-4 ">
-                    <input type="submit" value="Lưu thay đổi" class="btn btn-outline-success btn-lg px-5" />
-                </div>
-            }
+            </div>
         </div>
-    </div>
+    }
 </div>
 
-<style>
-    .card {
-        border-radius: 10px;
-    }
-
-    .card-header {
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        font-weight: bold;
-    }
-
-    .btn {
-        padding: 10px 30px;
-        border-radius: 10px;
-    }
-
-    .font-weight-bold {
-        font-weight: 600;
-    }
-
-    .container {
-        max-width: 700px;
-    }
-
-    .form-control {
-        border-color: #eee;
-        min-height: 41px;
-        margin-left: 0;
-        width: 100%;
-        padding: 5px;
-    }
-
-        .form-control:focus {
-            border: 3px solid #5cd3b4;
+<script>
+    function togglePasswordVisibility() {
+        const passwordField = document.getElementById('passwordField');
+        const toggleButton = passwordField.nextElementSibling.querySelector('button');
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            toggleButton.textContent = "Ẩn";
+        } else {
+            passwordField.type = "password";
+            toggleButton.textContent = "Hiện";
         }
-</style>
+    }
+</script>

@@ -6,41 +6,52 @@
 }
 <link href="~/Content/css/admin.css" rel="stylesheet" />
 <style>
-    .left {
-        min-height: 450px;
-        margin-top: 10px;
-        min-width: 20%;
-        max-width: 30%; /* Adjust this if necessary */
-        float: left;
+    .container-fluid {
+        
+    }
+
+    .left, .right {
         background-color: #f8f9fa;
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s; /* Adding hover effect */
+        margin-bottom: 20px;
     }
 
-        .left:hover {
-            transform: scale(1.02); /* Slightly scale up on hover */
-        }
+    .left {
+        flex: 1;
+        max-width: 30%;
+        min-width: 280px;
+        transition: transform 0.3s;
+    }
+
+    .left:hover {
+        transform: scale(1.02);
+    }
 
     .right {
-        margin-top: 10px;
-        min-height: 450px;
-        margin-left: 10%;
-        margin-right: 5%;
-        max-width: 100%; /* Increase this value as needed */
-        color: white; /* Adjust text color */
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        display: flex;
-        flex-wrap: wrap;
+        flex: 2;
+        color: #333;
+        margin-left: 20px;
+        max-width: 65%;
     }
 
-        
+    .anh img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-    #productdetails {
-        min-height: 420px;
+    .price {
+        color: #c92127;
+        letter-spacing: 2px;
+        font-size: x-large;
+    }
+
+    .nut {
+        text-align: center;
+        margin-top: 10px;
     }
 
     #nut1, #nut2 {
@@ -59,41 +70,26 @@
         padding: 10px 15%;
     }
 
-        #nut2:hover {
-            background-color: #a81d22;
-            text-decoration: none;
-        }
+    #nut2:hover {
+        background-color: #a81d22;
+        text-decoration: none;
+    }
 
     #nut1 {
         color: #c92127;
         padding: 10px 5%;
     }
 
-        #nut1:hover {
-            background-color: #c92127;
-            color: white;
-            text-decoration: none;
-        }
-
-    .anh {
-        text-align: center;
-        padding-bottom: 10px;
-    }
-
-    .price {
-        color: #c92127;
-        letter-spacing: 2px;
-        font-size: x-large;
-    }
-
-    .nut {
-        text-align: center;
+    #nut1:hover {
+        background-color: #c92127;
+        color: white;
+        text-decoration: none;
     }
 
     #notification {
         display: none;
         position: fixed;
-        top: 10%; /* Adjust positioning */
+        top: 10%;
         right: 5%;
         background-color: #4caf50;
         color: white;
@@ -106,44 +102,43 @@
         transition: opacity 0.5s ease-in-out;
     }
 
-        #notification.show {
-            display: block;
-            opacity: 1;
-        }
+    #notification.show {
+        display: block;
+        opacity: 1;
+    }
 
-        #notification.hide {
-            opacity: 0;
-        }
+    #notification.hide {
+        opacity: 0;
+    }
+
+    
 </style>
 
+<div class="container-fluid d-flex flex-wrap" id="productdetails">
+    <div class="left">
+        <div class="anh">
+            <img src="~/Content/img/@Model.HinhAnh" class="rounded-sm" />
+        </div>
+        <div class="nut">
+            <a href="/ShoppingCart/AddToCart/@Model.IDsp" id="nut1" onclick="themthanhcong(event, '@Model.IDsp')">Thêm vào giỏ hàng</a>
+            <a href="/ShoppingCart/MuaNgay/@Model.IDsp" id="nut2">Mua ngay</a>
+        </div>
+    </div>
+    <div class="right">
+        <div class="column">
+            <p style="font-size:30px;" class="text-center"><b>@Model.TenSP</b></p>
+            <p>Tác giả: <b>@Model.TacGia.TenTacGia</b></p>
+            <p>Nhà xuất bản: <b>@Model.NhaXuatBan.Tennxb</b></p>
+            <p>Thể loại: <b>@Model.DanhMuc.TheLoai</b></p>
+            <p>Giá khuyến mãi: <b style="color:red;">@Model.KhuyenMai.MucGiamGia%</b></p>
+            <p>
+                Giá tiền:
+                <b style="color:red;">@String.Format("{0:N0}", @Model.GiaBan) VND</b>
+            </p>
+            <p>Mô tả: <b>@Model.MoTa</b></p>
+        </div>
 
-<div class="container-fluid" id="productdetails">
-    <div class="row">
-        <div class="left">
-            <div class="anh">
-                <img src="~/Content/img/@Model.HinhAnh" style="width:60%;" class="rounded-sm" />
-            </div>
-            <div class="nut">
-                <a href="/ShoppingCart/AddToCart/@Model.IDsp" id="nut1" onclick="themthanhcong(event, '@Model.IDsp')">Thêm vào giỏ hàng</a>
-                <a href="/ShoppingCart/MuaNgay/@Model.IDsp" id="nut2">Mua ngay</a>
-            </div>
-        </div>
-        <div class="right">
-            <div class="column">
-                <p style="font-size:30px;" class="text-center"><b>@Model.TenSP</b></p>
-                <p>Tác giả : <b>@Model.TacGia.TenTacGia</b></p>
-                <p>Nhà xuất bản : <b>@Model.NhaXuatBan.Tennxb</b></p>
-                <p>Thể loại : <b>@Model.DanhMuc.TheLoai</b></p>
-                <p>Giá khuyến mãi : <b style="color:red;">@Model.KhuyenMai.MucGiamGia%</b></p>
-                <p >
-                    Giá tiền:
-                    <b style="color:red;">@String.Format("{0:C0}", @Model.GiaBan)</b>
-                </p>
-                <p>Mô tả : <b>@Model.MoTa</b></p>
-            </div>
-            
-            <div id="notification">Thêm vào giỏ hàng thành công!</div>
-        </div>
+        <div id="notification">Thêm vào giỏ hàng thành công!</div>
     </div>
 </div>
 

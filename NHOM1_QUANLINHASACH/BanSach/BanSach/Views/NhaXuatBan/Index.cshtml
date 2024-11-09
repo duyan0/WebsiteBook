@@ -8,86 +8,86 @@
 <h2 class="text-center font-weight-bold mt-3">Danh Sách Nhà Xuất Bản</h2> <!-- Tiêu đề chính -->
 
 <p class="text-left  text-white p-2">
-    @Html.ActionLink("Thêm Nhà Xuất Bản Mới", "Create", null, new { @class = "btn btn-dark rounded my-2" })
-<div class="table-responsive">
-    <table class="table table-bordered table-hover table-striped rounded">
-        <thead class="thead-dark">
-            <tr>
-                <th>ID NXB</th>
-                <th>Tên nhà xuất bản</th>
-                <th>Địa chỉ</th>
-                <th>Số điện thoại</th>
-                <th>Email</th>
-                <th class="text-center">Thao Tác</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    @Html.ActionLink("Thêm", "Create", null, new { @class = "btn btn-dark rounded-sm" })
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped rounded">
+            <thead class="text-white"style="background-color:black;">
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.IDnxb)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Tennxb)</td>
-                    <td>
-                        @{
-                            var address = item.DiaChi; 
-                            string displayAddress = address.Length > 20 ? address.Substring(0, 20) + "..." : address;
-                        }
-                        @displayAddress
-                    </td>
-
-                    <td>@Html.DisplayFor(modelItem => item.SoDienThoai)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                    <td class="text-center">
-                        <div class="btn-group" >
-                            @Html.ActionLink("Sửa", "Edit", new { id = item.IDnxb }, new { @class = "btn btn-warning  rounded" })
-                            @Html.ActionLink("Chi tiết", "Details", new { id = item.IDnxb }, new { @class = "btn btn-info  rounded" })
-                            @Html.ActionLink("Xoá", "Delete", new { id = item.IDnxb }, new { @class = "btn btn-danger  rounded" })
-                        </div>
-                    </td>
+                    <th>ID </th>
+                    <th>Tên nhà xuất bản</th>
+                    <th>Địa chỉ</th>
+                    <th>Số điện thoại</th>
+                    <th>Email</th>
+                    <th class="text-center">Thao Tác</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="font-weight-bold">
+                            @Html.DisplayFor(modelItem => item.IDnxb)
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.Tennxb)</td>
+                        <td>
+                            @{
+                                var address = item.DiaChi;
+                                string displayAddress = address.Length > 20 ? address.Substring(0, 20) + "..." : address;
+                            }
+                            @displayAddress
+                        </td>
 
-<style>
-    /* Bo góc cho bảng và các nút */
-    .rounded {
-        border-radius: 0.25rem;
-    }
+                        <td>@Html.DisplayFor(modelItem => item.SoDienThoai)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                        <td class="text-center">
+                            <div>
+                                @Html.ActionLink("Sửa", "Edit", new { id = item.IDnxb }, new { @class = "btn btn-warning btn-sm me-1 rounded-sm" })
+                                @Html.ActionLink("Chi tiết", "Details", new { id = item.IDnxb }, new { @class = "btn btn-info btn-sm me-1 rounded-sm" })
+                                @Html.ActionLink("Xoá", "Delete", new { id = item.IDnxb }, new { @class = "btn btn-danger btn-sm me-1 rounded-sm" })
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
-    /* Bảng hiển thị */
-    .table {
-        margin-top: 1rem;
-        font-size: 0.95rem;
-    }
+    <style>
+        /* Bo góc cho bảng và các nút */
+        .rounded {
+            border-radius: 0.25rem;
+        }
 
-    /* Tiêu đề bảng */
-    .thead-dark th {
-        text-align: center;
-        vertical-align: middle;
-    }
+        /* Bảng hiển thị */
+        .table {
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
 
-    /* Ô dữ liệu */
-    td, th {
-       
-        text-align: left;
-        vertical-align: middle;
-    }
+        /* Tiêu đề bảng */
+        .thead-dark th {
+            text-align: center;
+            vertical-align: middle;
+        }
 
-    /* Căn giữa và khoảng cách cho các nút thao tác */
-    .btn {
-        min-width: 80px;
-    }
+        /* Ô dữ liệu */
+        td, th {
+            text-align: left;
+            vertical-align: middle;
+        }
 
-    /* Padding cho nút thêm mới */
-    .text-right .btn {
-        margin-bottom: 1rem;
-    }
+        /* Căn giữa và khoảng cách cho các nút thao tác */
+        .btn {
+            min-width: 80px;
+        }
 
-    /* Nhóm nút nằm ngang */
-    .btn-group {
-        
-        gap: 5px; /* Khoảng cách giữa các nút */
-    }
-</style>
+        /* Padding cho nút thêm mới */
+        .text-right .btn {
+            margin-bottom: 1rem;
+        }
+
+        /* Nhóm nút nằm ngang */
+        .btn-group {
+            gap: 5px; /* Khoảng cách giữa các nút */
+        }
+    </style>

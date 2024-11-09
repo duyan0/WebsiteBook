@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BanSach.Models;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using BanSach.Models;
+using PagedList;
 
 namespace BanSach.Controllers
 {
@@ -19,13 +18,30 @@ namespace BanSach.Controllers
         }
 
         // GET: KhachHangs
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(db.KhachHang.ToList());
+            int pageSize = 10; // Số bản ghi trên mỗi trang
+            int pageNumber = (page ?? 1); // Trang hiện tại, mặc định là trang 1
+
+            var khachHangList = db.KhachHang.OrderBy(kh => kh.IDkh).ToPagedList(pageNumber, pageSize);
+            return View(khachHangList);
         }
 
         // GET: KhachHangs/Details/5
         public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            KhachHang khachHang = db.KhachHang.Find(id);
+            if (khachHang == null)
+            {
+                return HttpNotFound();
+            }
+            return View(khachHang);
+        }
+        public ActionResult DetailsAD(int? id)
         {
             if (id == null)
             {
@@ -82,112 +98,72 @@ namespace BanSach.Controllers
 
 
         // GET: KhachHangs/Edit/5
+        [HttpGet]
+        // GET: KhachHangAD/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            KhachHang khachHang = db.KhachHang.Find(id);
-            if (khachHang == null)
+            KhachHang kh = db.KhachHang.Find(id);
+            if (kh == null)
             {
                 return HttpNotFound();
             }
-            return View(khachHang);
+            return View(kh);
         }
 
-        // POST: KhachHangs/Edit/5
+        // POST: KhachHangAD/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IDkh,TenKH,SoDT,Email,TKhoan,MKhau,ConfirmPass")] KhachHang khachHang)
+        public ActionResult Edit([Bind(Include = "IDkh,TenKH,SoDT,Email,TKhoan,MKhau,ConfirmPass")] KhachHang kh)
         {
-            // Kiểm tra mật khẩu nhập lại
-            if (khachHang.MKhau != khachHang.ConfirmPass)
-            {
-                ViewBag.Error = "Mật khẩu nhập lại không đúng";
-                return View(khachHang); // Trả về view cùng với mô hình
-            }
 
             if (ModelState.IsValid)
             {
-                // Kiểm tra xem email đã tồn tại chưa (trừ khách hàng hiện tại)
-                var existingEmail = db.KhachHang.FirstOrDefault(kh => kh.Email == khachHang.Email && kh.IDkh != khachHang.IDkh);
-                if (existingEmail != null)
-                {
-                    ModelState.AddModelError("Email", "Email này đã tồn tại. Vui lòng sử dụng email khác.");
-                    return View(khachHang); // Trả về view cùng với mô hình
-                }
-
-                // Kiểm tra xem số điện thoại đã tồn tại chưa (trừ khách hàng hiện tại)
-                var existingPhoneNumber = db.KhachHang.FirstOrDefault(kh => kh.SoDT == khachHang.SoDT && kh.IDkh != khachHang.IDkh);
-                if (existingPhoneNumber != null)
-                {
-                    ModelState.AddModelError("SoDT", "Số điện thoại này đã tồn tại. Vui lòng sử dụng số điện thoại khác.");
-                    return View(khachHang); // Trả về view cùng với mô hình
-                }
-
-                // Nếu mọi điều kiện đều hợp lệ, cập nhật thông tin khách hàng
-                db.Entry(khachHang).State = EntityState.Modified;
+                db.Entry(kh).State = EntityState.Modified;
+                db.Configuration.ValidateOnSaveEnabled = false;
                 db.SaveChanges();
-                return RedirectToAction("UpdateSuccesss");
+                return RedirectToAction("UpdateSuccesss", "KhachHangs");
             }
-
-            return View(khachHang); // Trả về view cùng với mô hình nếu không hợp lệ
+            return View();
         }
+        // GET: KhachHangAD/Edit/5
         public ActionResult EditAD(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            KhachHang khachHang = db.KhachHang.Find(id);
-            if (khachHang == null)
+            KhachHang kh = db.KhachHang.Find(id);
+            if (kh == null)
             {
                 return HttpNotFound();
             }
-            return View(khachHang);
+            return View(kh);
         }
 
-        // POST: KhachHangs/Edit/5
+        // POST: KhachHangAD/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditAD([Bind(Include = "IDkh,TenKH,SoDT,Email,TKhoan,MKhau,ConfirmPass")] KhachHang khachHang)
+        public ActionResult EditAD([Bind(Include = "IDkh,TenKH,SoDT,Email,TKhoan,MKhau,ConfirmPass")] KhachHang kh)
         {
-            // Kiểm tra mật khẩu nhập lại
-            if (khachHang.MKhau != khachHang.ConfirmPass)
-            {
-                ViewBag.Error = "Mật khẩu nhập lại không đúng";
-                return View(khachHang); // Trả về view cùng với mô hình
-            }
 
             if (ModelState.IsValid)
             {
-                // Kiểm tra xem email đã tồn tại chưa (trừ khách hàng hiện tại)
-                var existingEmail = db.KhachHang.FirstOrDefault(kh => kh.Email == khachHang.Email && kh.IDkh != khachHang.IDkh);
-                if (existingEmail != null)
-                {
-                    ModelState.AddModelError("Email", "Email này đã tồn tại. Vui lòng sử dụng email khác.");
-                    return View(khachHang); // Trả về view cùng với mô hình
-                }
-
-                // Kiểm tra xem số điện thoại đã tồn tại chưa (trừ khách hàng hiện tại)
-                var existingPhoneNumber = db.KhachHang.FirstOrDefault(kh => kh.SoDT == khachHang.SoDT && kh.IDkh != khachHang.IDkh);
-                if (existingPhoneNumber != null)
-                {
-                    ModelState.AddModelError("SoDT", "Số điện thoại này đã tồn tại. Vui lòng sử dụng số điện thoại khác.");
-                    return View(khachHang); // Trả về view cùng với mô hình
-                }
-
-                // Nếu mọi điều kiện đều hợp lệ, cập nhật thông tin khách hàng
-                db.Entry(khachHang).State = EntityState.Modified;
+                db.Entry(kh).State = EntityState.Modified;
+                db.Configuration.ValidateOnSaveEnabled = false;
                 db.SaveChanges();
-                return RedirectToAction("UpdateSuccesss");
+                return RedirectToAction("Index", "KhachHangs");
             }
-
-            return View(khachHang); // Trả về view cùng với mô hình nếu không hợp lệ
+            return View();
         }
+
 
         [HttpGet]
         public ActionResult UpdateSuccesss()

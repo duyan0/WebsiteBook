@@ -16,7 +16,7 @@ namespace BanSach.Models
     {
         public int IDdh { get; set; }
         public Nullable<int> IDSanPham { get; set; }
-        public Nullable<int> IDDonHang { get; set; }
+        public int IDDonHang { get; set; }
         public Nullable<int> SoLuong { get; set; }
         public Nullable<double> Gia { get; set; }
         public string DanhGia { get; set; }

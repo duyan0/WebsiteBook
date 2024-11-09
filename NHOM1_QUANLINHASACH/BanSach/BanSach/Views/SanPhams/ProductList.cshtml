@@ -34,9 +34,9 @@
 
         .card-pro img {
             border-radius: 15px;
-            max-height: 300px;
-            object-fit: cover;
-            width: 100%;
+            width: 200px; /* Set the desired width */
+            height: 300px; /* Set the desired height */
+            object-fit: cover; /* Maintain the aspect ratio and cover the container */
         }
 
     .availability {
@@ -77,26 +77,27 @@
         width: fit-content;
         text-align: center;
         margin: 40px auto;
+        color: white;
     }
 
         .dieuhuongtrang li a {
-            color: #fff;
+            color: white;
             padding: 12px;
             margin: 3px;
-            background-color: #007bff;
+            background-color: green;
             border-radius: 10px;
             transition: background-color 0.3s, color 0.3s;
         }
 
         .dieuhuongtrang .active a, .dieuhuongtrang .active a:hover {
-            background-color: #C92127;
-            color: #fff;
+            background-color: green;
+            color: white;
             border-radius: 12px;
         }
 
         .dieuhuongtrang li a:hover {
-            background-color: #0056b3;
-            color: #fff;
+            background-color: green;
+            color: white;
             border-radius: 12px;
         }
 
@@ -106,7 +107,6 @@
         font-weight: bold;
         text-align: center;
     }
-    
 </style>
 
 <h3 class="page-title">Danh sách sản phẩm</h3>
@@ -132,9 +132,22 @@
         }
         else
         {
-            
-                <h5 class="text-center text-white-50">Chưa có thông tin sản phẩm</h5>
-            
+
+            <div class="text-center" style="width: 100%; padding: 20px;">
+                <h5 class="text-white">Chưa có thông tin sản phẩm</h5>
+                <p class="text-white-50">Sản phẩm này hiện tại không có thông tin hiển thị. Vui lòng kiểm tra lại sau hoặc liên hệ với cửa hàng để biết thêm chi tiết.</p>
+
+                
+                <i class="fas fa-box-open text-white" style="font-size: 50px; margin: 20px;"></i>
+
+                
+                <div style="margin-top: 20px;">
+                    <a href="#" class="btn btn-outline-success rounded-sm">Quay lại trang chủ</a>
+                </div>
+            </div>
+
+
+
 
         }
     </div>

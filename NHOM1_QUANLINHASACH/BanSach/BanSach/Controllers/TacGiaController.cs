@@ -1,10 +1,8 @@
 ﻿using BanSach.Models;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BanSach.Controllers
@@ -23,12 +21,12 @@ namespace BanSach.Controllers
         {
             // Tạo danh sách quốc gia
             ViewBag.QuocGia = new SelectList(new List<SelectListItem>
-    {
-        new SelectListItem { Value = "VN", Text = "Việt Nam" },
-        new SelectListItem { Value = "US", Text = "Mỹ" },
-        new SelectListItem { Value = "JP", Text = "Nhật Bản" },
-        new SelectListItem { Value = "FR", Text = "Pháp" },
-    }, "Value", "Text");
+                    {
+                        new SelectListItem { Value = "VN", Text = "Việt Nam" },
+                        new SelectListItem { Value = "US", Text = "Mỹ" },
+                        new SelectListItem { Value = "JP", Text = "Nhật Bản" },
+                        new SelectListItem { Value = "FR", Text = "Pháp" },
+                    }, "Value", "Text");
 
             // Lấy danh sách tác giả từ cơ sở dữ liệu
             var tacGias = db.TacGia.ToList();

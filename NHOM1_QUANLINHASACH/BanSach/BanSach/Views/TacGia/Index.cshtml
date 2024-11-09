@@ -8,14 +8,14 @@
 <h2 class="text-center">Danh mục tác giả</h2>
 
 <p>
-    @Html.ActionLink("Thêm mới", "Create", null, new { @class = "btn btn-primary rounded" })
+    @Html.ActionLink("Thêm", "Create", null, new { @class = "btn btn-dark rounded-sm" })
 </p>
 
-<table class="table table-responsive-sm rounded">
-    <thead class="thead-dark rounded-sm">
+<table class="table table-hover rounded-sm">
+    <thead class="rounded-sm text-white"style="background-color:black;">
         <tr>
-            <th>
-                ID TG
+            <th >
+                ID 
             </th>
             <th>
                 Tên TG
@@ -36,14 +36,14 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
+                <td class="font-weight-bold">
                     @Html.DisplayFor(modelItem => item.IDtg)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.TenTacGia)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.NgaySinh)
+                    @String.Format("{0:dd-MM-yyyy}", item.NgaySinh)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.QuocGia)

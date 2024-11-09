@@ -11,22 +11,22 @@
     @Html.ActionLink("Thêm ", "Create", null, new { @class = "btn btn-dark  rounded-sm" })
 </div>
 
-<table class="table table-striped table-condensed">
-    <thead class="thead-dark">
+<table class="table table-striped table-hover" >
+    <thead class="table-bordered text-white"style="background-color:black;" >
         <tr>
-            <th style="border-top-left-radius: 25px;">Danh mục</th>
+            <th>Danh mục</th>
             <th>Thể loại</th>
-            <th style="border-top-right-radius: 25px;">Chỉnh sửa</th>
+            <th >Chỉnh sửa</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td>
+                <td class="font-weight-bold">
                     @Html.DisplayFor(modelItem => item.DanhMuc1)
                 </td>
-                <td>
+                <td class="font-weight-bold">
                     @Html.DisplayFor(modelItem => item.TheLoai)
                 </td>
                 <td>

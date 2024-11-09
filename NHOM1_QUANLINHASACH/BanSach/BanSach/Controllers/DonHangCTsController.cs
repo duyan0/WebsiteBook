@@ -50,68 +50,7 @@ namespace BanSach.Controllers
             return View(donHangCT);
         }
 
-        // GET: DonHangCTs/Create
-        public ActionResult Create()
-        {
-            ViewBag.IDDonHang = new SelectList(db.DonHang, "IDdh", "DiaChi");
-            ViewBag.IDSanPham = new SelectList(db.SanPham, "IDsp", "TenSP");
-            return View();
-        }
-
-        // POST: DonHangCTs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IDdh,IDSanPham,IDDonHang,SoLuong,Gia,DanhGia")] DonHangCT donHangCT)
-        {
-            if (ModelState.IsValid)
-            {
-                db.DonHangCT.Add(donHangCT);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.IDDonHang = new SelectList(db.DonHang, "IDdh", "DiaChi", donHangCT.IDDonHang);
-            ViewBag.IDSanPham = new SelectList(db.SanPham, "IDsp", "TenSP", donHangCT.IDSanPham);
-            return View(donHangCT);
-        }
-
-        // GET: DonHangCTs/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DonHangCT donHangCT = db.DonHangCT.Find(id);
-            if (donHangCT == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.IDDonHang = new SelectList(db.DonHang, "IDdh", "DiaChi", donHangCT.IDDonHang);
-            ViewBag.IDSanPham = new SelectList(db.SanPham, "IDsp", "TenSP", donHangCT.IDSanPham);
-            return View(donHangCT);
-        }
-
-        // POST: DonHangCTs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IDdh,IDSanPham,IDDonHang,SoLuong,Gia,DanhGia")] DonHangCT donHangCT)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(donHangCT).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.IDDonHang = new SelectList(db.DonHang, "IDdh", "DiaChi", donHangCT.IDDonHang);
-            ViewBag.IDSanPham = new SelectList(db.SanPham, "IDsp", "TenSP", donHangCT.IDSanPham);
-            return View(donHangCT);
-        }
-
+        
         // GET: DonHangCTs/Delete/5
         public ActionResult Delete(int? id)
         {

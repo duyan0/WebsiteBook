@@ -10,6 +10,7 @@
         text-align: center;
         padding: 5px;
         border-radius: 15px;
+        margin:40px;
     }
 
         .showcart h5 {
@@ -201,9 +202,9 @@ else
                 else
                 {
                     <tr class="py-2">
-                        <td>(Hãy đăng nhập trước)</td>
+                        <td class="text-danger font-weight-bold ">Hãy đăng nhập trước</td>
                         <td>
-                            <a style="width:120px" href="@Url.Action("LoginAccountCus", "LoginUser")" class="btn btn-danger">Đăng nhập</a>
+                            <a style="width:120px" href="@Url.Action("LoginAccountCus", "LoginUser")" class="btn btn-danger ">Đăng nhập</a>
                         </td>
                     </tr>
                 }

@@ -3518,7 +3518,7 @@ input[type="button"].btn-block {
   display: block;
   min-height: 1.5rem;
   padding-left: 1.5rem;
-  color-adjust: exact;
+ 
 }
 
 .custom-control-inline {
@@ -3848,7 +3848,7 @@ input[type="button"].btn-block {
   border-color: transparent;
 }
 
-.custom-range: {
+.custom-range{
   width: 1rem;
   height: 1rem;
   background-color: #D19C97;
@@ -3858,16 +3858,16 @@ input[type="button"].btn-block {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .custom-range: {
+  .custom-range {
     transition: none;
   }
 }
 
-.custom-range: {
+.custom-range {
   background-color: white;
 }
 
-.custom-range::-moz-range-track {
+.custom-range {
   width: 100%;
   height: 0.5rem;
   color: transparent;
@@ -3925,11 +3925,11 @@ input[type="button"].btn-block {
   cursor: default;
 }
 
-.custom-range:disabled: {
+.custom-range:disabled {
   background-color: #adb5bd;
 }
 
-.custom-range:disabled::-moz-range-track {
+.custom-range:disabled {
   cursor: default;
 }
 
@@ -4552,9 +4552,6 @@ input[type="button"].btn-block {
   }
 }
 
-.accordion {
-  overflow-anchor: none;
-}
 
 .accordion > .card {
   overflow: hidden;
@@ -9658,3 +9655,104 @@ a.text-dark:hover, a.text-dark:focus {
         margin: 10px 0;
     }
 }
+
+/* Responsive Footer Styles */
+.ft {
+    margin-top: auto;
+    border-top: 1px solid black;
+    color: black;
+    background-color: #1f1f20;
+    border-radius: 10px;
+    padding: 20px 10px;
+}
+
+.p {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    flex-wrap: wrap; /* Allows items to wrap in smaller screens */
+}
+
+.pk {
+    flex: 1; /* Distribute available space evenly */
+    margin: 10px;
+    min-width: 200px; /* Ensure a minimum width for items */
+}
+
+.pk-1 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.pk-2 {
+    font-size: 15px;
+    margin: 10px 0px;
+    color: white;
+}
+
+    .pk-2 a {
+        text-decoration: none;
+        color: white;
+    }
+
+        .pk-2 a:hover {
+            color: red;
+        }
+
+    .pk-2 i {
+        width: 20px;
+    }
+
+.pk-3 a {
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: green;
+    font-size: 15px;
+}
+
+.pk-3 i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+}
+
+@media (max-width: 768px) {
+    .p {
+        flex-direction: column;
+        align-items: center; /* Center items vertically for smaller screens */
+        text-align: center;
+    }
+
+    .pk {
+        margin: 20px 0; /* Adds vertical space between footer sections */
+    }
+}
+
+@media (max-width: 576px) {
+    .ft {
+        padding: 10px; /* Reduce padding for smaller screens */
+    }
+
+    .pk-1 {
+        font-size: 14px; /* Smaller font for section headers */
+    }
+
+    .pk-2 {
+        font-size: 13px; /* Smaller font for section items */
+    }
+
+        .pk-2 i {
+            width: 15px; /* Reduce icon size */
+        }
+}
+
+

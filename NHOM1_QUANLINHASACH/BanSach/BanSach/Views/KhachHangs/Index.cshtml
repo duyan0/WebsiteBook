@@ -1,10 +1,12 @@
-﻿@model IEnumerable<BanSach.Models.KhachHang>
+﻿@model IPagedList<BanSach.Models.KhachHang>
+@using PagedList.Mvc;
+@using PagedList;
 
 @{
     ViewBag.Title = "Quản lý danh sách khách hàng";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
+<link href="~/Content/css/khachhang.css" rel="stylesheet" />
 <style>
     .tieude {
         text-align: center;
@@ -12,88 +14,134 @@
     }
 
     .them a {
-        border-radius: 10px;
-        background-color: #212121;
-        color: white;
-        font-size: large;
-        padding: 5px;
-        margin: 50px 10px 0 10px;
+        color:white;
+        background-color:black;
+        padding:10px;
+        border-radius:5px;
     }
 
         .them a:hover {
             text-decoration: none;
-            
         }
 
     .table-striped {
         width: 100%;
     }
+
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+    }
+
+        .pagination-container .pagination {
+            list-style-type: none;
+            display: flex;
+            gap: 10px;
+            padding: 0;
+        }
+
+            .pagination-container .pagination li {
+                display: inline-block;
+            }
+
+                .pagination-container .pagination li a {
+                    padding: 8px 12px;
+                    border-radius: 5px;
+                    background-color: #f1f1f1;
+                    color: #007bff;
+                    text-decoration: none;
+                    transition: background-color 0.3s ease, color 0.3s ease;
+                }
+
+                    .pagination-container .pagination li a:hover {
+                        background-color: #007bff;
+                        color: white;
+                    }
+
+                .pagination-container .pagination li.active a {
+                    background-color: #007bff;
+                    color: white;
+                    cursor: default;
+                }
+
+                .pagination-container .pagination li.disabled a {
+                    color: #cccccc;
+                    cursor: not-allowed;
+                }
+
+                    .pagination-container .pagination li.disabled a:hover {
+                        background-color: #f1f1f1;
+                        color: #cccccc;
+                    }
+
+    /* Table customization */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        table th, table td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        table th {
+            background-color: #212121;
+            color: white;
+        }
+
+
+
+    /* Responsive table design */
+
 </style>
 
 <h2 class="tieude">Danh sách khách hàng</h2>
 
 <p class="them">
-    @Html.ActionLink("Thêm ", "Create")
+    @Html.ActionLink("Thêm", "Create")
 </p>
-<table class="table table-condensed bg-black" width="100%">
-    <tr class="text-center" style=" color: white; text-align: left; background-color:#3b3636;">
-        <th  style="border-top-left-radius: 25px;" >
-            ID
-        </th>
-        <th >
-            Tên KH
-        </th>
-        <th>
-            Số điện thoại
-        </th>
-        <th>
-            Email
-        </th>
-        <th>
-            Tài khoản
-        </th>
-        <th>
-            Mật khẩu
-        </th>
-        <th style="border-top-right-radius: 25px;">Thao tác</th>
+
+<table class="table table-condensed bg-black table-hover">
+    <tr class="text-center">
+        <th>ID</th>
+        <th>Tên KH</th>
+        <th>Số điện thoại</th>
+        <th>Email</th>
+        <th>Tài khoản</th>
+        <th>Mật khẩu</th>
+        <th>Thao tác</th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr class="text-center">
-            <td>
-                @Html.DisplayFor(modelItem => item.IDkh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenKH)
-            </td>
-            <td>
-                @(item.SoDT != null && item.SoDT.Length >= 3 ? item.SoDT.Substring(0, 3) + new string('*', item.SoDT.Length - 3) : "")
-            </td>
-            <td class="text-danger">
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TKhoan)
-            </td>
-            <td>
-                @Html.Raw("********")
-            </td>
-
+        <tr >
+            <td>@Html.DisplayFor(modelItem => item.IDkh)</td>
+            <td>@Html.DisplayFor(modelItem => item.TenKH)</td>
+            <td>@(item.SoDT != null && item.SoDT.Length >= 3 ? item.SoDT.Substring(0, 3) + new string('*', item.SoDT.Length - 3) : "")</td>
+            <td class="text-danger">@Html.DisplayFor(modelItem => item.Email)</td>
+            <td>@Html.DisplayFor(modelItem => item.TKhoan)</td>
+            <td>@Html.Raw("********")</td>
             <td>
                 @Html.ActionLink("Sửa", "EditAD", new { id = item.IDkh }, new { @class = "btn btn-warning btn-sm rounded-sm" })
                 @Html.ActionLink("Xoá", "Delete", new { id = item.IDkh }, new { @class = "btn btn-danger btn-sm rounded-sm" })
-                @Html.ActionLink("Chi tiết", "Details", new { id = item.IDkh }, new { @class = "btn btn-info btn-sm rounded-sm" })
+                @Html.ActionLink("Chi tiết", "DetailsAD", new { id = item.IDkh }, new { @class = "btn btn-info btn-sm rounded-sm" })
             </td>
         </tr>
     }
 </table>
-<style>
-    .delete-link {
-        color: red; /* Sửa màu trong đây nhaa*/
-    }
 
-        .delete-link:hover {
-            color: darkred; /* Sửa màu trong đây nhaa*/
-        }
-</style>
+<div class="pagination-container">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+        new PagedListRenderOptions
+        {
+            DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+            DisplayLinkToLastPage = PagedListDisplayMode.Always,
+            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+            DisplayLinkToNextPage = PagedListDisplayMode.Always,
+            DisplayLinkToIndividualPages = true,
+            DisplayPageCountAndCurrentLocation = false,
+            MaximumPageNumbersToDisplay = 5
+        })
+</div>

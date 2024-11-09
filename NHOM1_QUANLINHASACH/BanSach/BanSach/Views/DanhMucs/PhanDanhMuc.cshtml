@@ -1,70 +1,47 @@
 ﻿@model IEnumerable<BanSach.Models.DanhMuc>
 
 <style>
-    .danhmuctong li a, .theloai li a {
+    .danhmuc a {
         color: black;
         text-decoration: none;
-        position: relative;
-        z-index: 10;
+        z-index: 1000;
     }
 
-    .danhmuctong li:hover > a, .theloai li:hover > a {
-        color: chocolate;
-        transition: color 0.25s ease-in-out;
-        position: relative;
-        z-index: 10;
-    }
+        .danhmuc a:hover {
+            color: chocolate;
+            transition: color 0.25s ease-in-out;
+            z-index: 1000;
+        }
 
-    .danhmuctong {
-        margin-top: 8px;
-    }
-
-    .danhmuc {
-        display: block;
-        height: auto;
-        margin-top: 20px;
-        padding-right: 20px;
-        cursor: pointer;
-    }
-
-    .theloai {
-        display: none;
-        position: relative; /* Định vị tuyệt đối so với container-danhmuc */
-        left: 20%; /* Đảm bảo nó nằm bên trái của .container-danhmuc */
-        padding: 5px;
-        z-index: 1500; /* Giá trị cao để đảm bảo hiển thị trên các phần tử khác */
-    }
-
-    .danhmuc:hover .theloai {
-        display: block;
-        /* Hiển thị khi hover vào .danhmuc */
+    .container-danhmuc {
+        border-left: 1px solid black;
+        border-radius: 10px;
+        background-color: white;
+        padding: 10px;
+        z-index: 1000;
     }
 
     .tentheloai {
         list-style-type: none;
         padding: 5px;
         margin: 5px 0;
-        width: max-content;
+        z-index: 1000;
     }
 
-    .container-danhmuc {
-        border-left: 1px solid black;
-        border-radius: 10px;
-        position: relative; /* Đặt vị trí tương đối để .theloai định vị theo container */
-        z-index: 1500; /* Giá trị z-index cao để hiển thị đè lên */
-        background-color: white; /* Đặt màu nền để dễ nhìn */
-        padding: 10px; /* Khoảng cách bên trong cho đẹp */
-    }
+        .tentheloai:hover {
+            background-color:#71f361;
+            border-radius:5px;
+        }
 
-    .banchay {
-        text-decoration: none;
-        list-style-type: none;
-        padding: 20px 0 10px 0;
+    .collapse {
+        position: relative;
+        z-index: 1000;
+        display: none; /* Để collapse ẩn mặc định */
     }
 </style>
 
 <div class="container-danhmuc">
-    <ul class="danhmuctong">
+    <div class="list-group">
         @{
             var temp = new BanSach.Models.DanhMuc();
 
@@ -74,21 +51,25 @@
                 {
                     if (Session[item.DanhMuc1] == null)
                     {
-                        <li class="danhmuc">
-                            <a><strong>@item.DanhMuc1</strong></a>
+                        <div class="list-group-item danhmuc">
+                            <a href="javascript:void(0)" role="button">
+                                <strong>@item.DanhMuc1</strong>
+                            </a>
 
-                            <ul class="theloai">
-                                @foreach (var item2 in Model)
-                                {
-                                    if (item2.DanhMuc1 == item.DanhMuc1 && !string.IsNullOrEmpty(item2.TheLoai))
+                            <div class="collapse" id="collapse-@item.DanhMuc1.Replace(" ", "-")">
+                                <ul class="list-unstyled mt-2 ml-3">
+                                    @foreach (var item2 in Model)
                                     {
-                                        <li class="tentheloai">
-                                            @Html.ActionLink(item2.TheLoai, "ProductList", "SanPhams", new { category = item2.ID }, new { @class = "tentheloai-link" })
-                                        </li>
+                                        if (item2.DanhMuc1 == item.DanhMuc1 && !string.IsNullOrEmpty(item2.TheLoai))
+                                        {
+                                            <li class="tentheloai">
+                                                @Html.ActionLink(item2.TheLoai, "ProductList", "SanPhams", new { category = item2.ID }, new { @class = "tentheloai-link text-dark" })
+                                            </li>
+                                        }
                                     }
-                                }
-                            </ul>
-                        </li>
+                                </ul>
+                            </div>
+                        </div>
                     }
                     Session[item.DanhMuc1] = "co";
                     temp = item;
@@ -100,5 +81,30 @@
                 Session[item.DanhMuc1] = null;
             }
         }
-    </ul>
+    </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Sử dụng sự kiện hover để mở/đóng danh mục con
+        $('.danhmuc').hover(
+            function () {
+                // Khi hover vào, phần collapse sẽ mở ra
+                $(this).find('.collapse').stop(true, true).slideDown(100);
+            },
+            function () {
+                // Khi rời chuột, phần collapse sẽ đóng lại
+                $(this).find('.collapse').stop(true, true).slideUp(100);
+            }
+        );
+
+        // Toggle the navbar-vertical khi nhấn vào nút "Danh mục"
+        $('[data-toggle="collapse"]').click(function (e) {
+            e.preventDefault();
+            var target = $(this).attr('href');
+            $(target).stop(true, true).slideToggle(100);
+        });
+    });
+</script>

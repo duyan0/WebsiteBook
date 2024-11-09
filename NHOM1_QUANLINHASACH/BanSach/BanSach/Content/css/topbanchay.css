@@ -1,0 +1,26 @@
+﻿.card a:hover {
+    text-decoration: none !important;
+}
+
+.product-item {
+    border-radius: 20px !important; /* Rounded corners for the product card */
+    transition: transform 0.2s !important; /* Add smooth transition for hover */
+}
+
+    .product-item:hover {
+        transform: scale(1.05) !important; /* Slight zoom effect on hover */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important; /* Add shadow when hovering */
+    }
+
+.product-img {
+    text-align: center !important; /* Ensure the image is centered within the container */
+    width: 200px !important; /* Set a fixed width for the container */
+    height: 200px !important; /* Set a fixed height for the container */
+}
+
+    .product-img img {
+        width: 200px !important; /* Match the fixed width of the container */
+        height: 200px !important; /* Match the fixed height of the container */
+        object-fit: cover !important; /* Crop the image to fit without distortion */
+        border-radius: 10px !important; /* Rounded corners for the image */
+    }

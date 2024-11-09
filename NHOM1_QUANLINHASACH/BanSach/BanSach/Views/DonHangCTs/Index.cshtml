@@ -29,13 +29,34 @@
     .table-striped {
         width: 100%;
     }
+
+    .status-waiting {
+        color: orange;
+        font-weight: bold;
+    }
+
+    .status-processing {
+        color: blue;
+        font-weight: bold;
+    }
+
+    .status-confirmed {
+        color: green;
+        font-weight: bold;
+    }
+
+    .status-cancelled {
+        color: red;
+        font-weight: bold;
+    }
 </style>
 
 <h2 class="tieude">Chi tiết các đơn hàng </h2>
 
-<table class="table table-striped embed-responsive-16by9">
-    <tr style="color: black; text-align: match-parent;">
+<table class="table table-bordered table-hover">
+    <tr class="text-white" style="background-color:black;">
         <th class="text-center">  Mã CTĐH  </th>
+        <th class="text-center">  Mã DH </th>
         <th class="text-center">  Mã sách </th>
         <th> Tên sách </th>
         <th> Số lượng  </th>
@@ -48,6 +69,7 @@
     {
         <tr>
             <td class="font-weight-bold text-center">  @Html.DisplayFor(modelItem => item.IDdh) </td>
+            <td class="font-weight-bold text-center">  @Html.DisplayFor(modelItem => item.DonHang.IDdh) </td>
             <td class="font-weight-bold text-center">  @Html.DisplayFor(modelItem => item.SanPham.IDsp) </td>
             <td>  @Html.DisplayFor(modelItem => item.SanPham.TenSP) </td>
             <td>  @Html.DisplayFor(modelItem => item.SoLuong) </td>
@@ -57,7 +79,30 @@
             <td style="color: red;">
                 @item.TongTien.ToString("N0") VND
             </td>
-            <td>  @Html.DisplayFor(modelItem => item.DonHang.TrangThai) </td>
+            <td>
+                @{
+                    var statusClass = "";
+                    switch (item.DonHang.TrangThai)
+                    {
+                        case "Chờ xử lý":
+                            statusClass = "status-waiting";
+                            break;
+                        case "Xử lý":
+                            statusClass = "status-processing";
+                            break;
+                        case "Đã nhận hàng":
+                            statusClass = "status-confirmed";
+                            break;
+                        case "Đã xác nhận":
+                            statusClass = "status-confirmed";
+                            break;
+                        case "Đã huỷ":
+                            statusClass = "status-cancelled";
+                            break;
+                    }
+                }
+                <span class="@statusClass">@Html.DisplayFor(modelItem => item.DonHang.TrangThai)</span>
+            </td>
             <td>
                 @Html.ActionLink("Xem", "Details", new { id = item.IDdh }, new { @class = "btn btn-warning btn-sm rounded-sm" })
                 @Html.ActionLink("Xoá", "Delete", new { id = item.IDdh }, new { @class = "btn btn-danger btn-sm rounded-sm" })
@@ -65,12 +110,5 @@
         </tr>
     }
 </table>
-<style>
-    .delete-link {
-        color: red; /* Sửa màu trong đây nhaa*/
-    }
 
-        .delete-link:hover {
-            color: darkred; /* Sửa màu trong đây nhaa*/
-        }
-</style>
+
