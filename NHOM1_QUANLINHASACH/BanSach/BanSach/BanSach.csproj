@@ -248,6 +248,7 @@
     <Content Include="Content\img\OIP.jpg" />
     <Content Include="Content\img\slide.jpg" />
     <Content Include="Content\img\slide1.jpg" />
+    <Content Include="Content\img\zalo.png" />
     <Content Include="Content\lib\easing\easing.js" />
     <Content Include="Content\lib\easing\easing.min.js" />
     <Content Include="Content\lib\owlcarousel\assets\ajax-loader.gif" />

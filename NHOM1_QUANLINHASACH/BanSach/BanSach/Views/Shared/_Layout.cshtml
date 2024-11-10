@@ -95,7 +95,7 @@
                                     <a href="#" class="nav-item nav-link text-white">@Session["TenKH"]</a>
                                     <div class="dropdown-content">
                                         <a href="@Url.Action("InfoCustomer", "LoginUser")">Thông tin cá nhân</a>
-                                      
+
                                         <a href="~/KhachHangs/LichSuDonHang">Lịch sử đơn hàng</a>
                                         <a href="@Url.Action("Logout", "LoginUser")">Đăng xuất</a>
                                     </div>
@@ -126,7 +126,7 @@
     </div>
     <!-- Main End -->
     <!-- Footer Start -->
-    <footer class="card-body "style="background-color:black;" >
+    <footer class="card-body " style="background-color:black;">
         <div class="ft">
             <div class="kt p text-center">
                 <div class="pk ">
@@ -175,6 +175,9 @@
 
     </footer>
     <!-- Footer End -->
+    <a href="https://zalo.me/0355079864" target="_blank" class="zalo-contact">
+        <img src="~/Content/img/zalo.png" alt="Liên hệ qua Zalo" />
+    </a>
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -257,10 +260,30 @@
             animation: spin 1s linear infinite; /* Áp dụng hiệu ứng quay */
         }
 
+        .zalo-contact {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            z-index: 1000;
+            border-radius: 60%;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+            .zalo-contact img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .zalo-contact:hover {
+                transform: scale(1.1); /* Tăng kích thước khi hover */
+            }
     </style>
     <!-- FT nè -->
-    
-
     <!-- Custom JavaScript -->
     <script>
         window.addEventListener("load", function () {

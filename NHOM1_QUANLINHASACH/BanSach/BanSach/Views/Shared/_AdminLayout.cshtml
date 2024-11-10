@@ -102,6 +102,9 @@
 
 
                             </nav>
+                            <a href="https://zalo.me/0355079864" target="_blank" class="zalo-contact">
+                                <img src="~/Content/img/zalo.png" alt="Liên hệ qua Zalo" />
+                            </a>
 
                         }
 
@@ -119,22 +122,25 @@
     </div>
     <footer class="footer bg-dark text-white text-center py-4 mt-5">
         <div class="container">
-            <p class="mb-0">© 2024 Công ty CHI SÁO SẬU. Bản quyền thuộc về Công ty CHI SÁO SẬU. Tất cả quyền được bảo lưu.</p>
+            <p class="text-white font-weight-semi-bold">© 2024 Võ Duy Ân. All rights reserved.</p>
             <ul class="list-inline mt-3">
                 <li class="list-inline-item">
                     <a href="#" class="footer-link">Trang chủ</a>
                 </li>
                 <li class="list-inline-item">
-                    <a href="#" class="footer-link">Giới thiệu</a>
+                    <a href="mailto:crandi21112004@gmail.com" class="footer-link">Giới thiệu</a>
                 </li>
                 <li class="list-inline-item">
-                    <a href="#" class="footer-link">Liên hệ</a>
+                    <a href="mailto:crandi21112004@gmail.com" class="footer-link">Liên hệ</a>
                 </li>
                 <li class="list-inline-item">
-                    <a href="#" class="footer-link">Chính sách bảo mật</a>
+                    <a href="mailto:crandi21112004@gmail.com" class="footer-link">Chính sách bảo mật</a>
                 </li>
+
             </ul>
         </div>
+        
+
     </footer>
     @Scripts.Render("~/bundles/jquery")
     <script src="~/Scripts/bootstrap.bundle.js"></script>
@@ -229,6 +235,28 @@
             display: inline-block;
             margin: 0 5px;
         }
+        .zalo-contact {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            z-index: 1000;
+            border-radius: 60%;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+            .zalo-contact img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .zalo-contact:hover {
+                transform: scale(1.1); /* Tăng kích thước khi hover */
+            }
     </style>
     <style>
         /* Navbar Styling */
@@ -286,6 +314,8 @@
             border-radius: 50%; /* Bo góc thành hình tròn */
             animation: spin 1s linear infinite; /* Áp dụng hiệu ứng quay */
         }
+
+        
     </style>
     <script>
         window.addEventListener("load", function () {
