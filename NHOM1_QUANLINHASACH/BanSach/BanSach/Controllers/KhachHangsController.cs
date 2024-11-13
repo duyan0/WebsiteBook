@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using PagedList;
+using System;
 
 namespace BanSach.Controllers
 {
@@ -119,17 +120,28 @@ namespace BanSach.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IDkh,TenKH,SoDT,Email,TKhoan,MKhau,ConfirmPass")] KhachHang kh)
+        public ActionResult Edit([Bind(Include = "IDkh,TenKH,SoDT,Email,TKhoan,MKhau")] KhachHang kh)
         {
-
             if (ModelState.IsValid)
             {
                 db.Entry(kh).State = EntityState.Modified;
+
+                // Nếu bạn cần ValidateOnSaveEnabled = false
                 db.Configuration.ValidateOnSaveEnabled = false;
-                db.SaveChanges();
-                return RedirectToAction("UpdateSuccesss", "KhachHangs");
+
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "KhachHangs");
+                }
+                catch (Exception ex)
+                {
+                    // Log lỗi để kiểm tra thêm chi tiết nếu cần
+                    Console.WriteLine(ex.Message);
+                }
             }
-            return View();
+
+            return View(kh);
         }
         // GET: KhachHangAD/Edit/5
         public ActionResult EditAD(int? id)
@@ -151,20 +163,29 @@ namespace BanSach.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditAD([Bind(Include = "IDkh,TenKH,SoDT,Email,TKhoan,MKhau,ConfirmPass")] KhachHang kh)
+        public ActionResult EditAD([Bind(Include = "IDkh,TenKH,SoDT,Email,TKhoan,MKhau")] KhachHang kh)
         {
-
             if (ModelState.IsValid)
             {
                 db.Entry(kh).State = EntityState.Modified;
+
+                // Nếu bạn cần ValidateOnSaveEnabled = false
                 db.Configuration.ValidateOnSaveEnabled = false;
-                db.SaveChanges();
-                return RedirectToAction("Index", "KhachHangs");
+
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "KhachHangs");
+                }
+                catch (Exception ex)
+                {
+                    // Log lỗi để kiểm tra thêm chi tiết nếu cần
+                    Console.WriteLine(ex.Message);
+                }
             }
-            return View();
+
+            return View(kh);
         }
-
-
         [HttpGet]
         public ActionResult UpdateSuccesss()
         {

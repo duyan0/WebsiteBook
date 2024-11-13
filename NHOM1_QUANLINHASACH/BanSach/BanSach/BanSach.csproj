@@ -186,6 +186,7 @@
     <Compile Include="Models\KhachHang.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\KhachHangService.cs" />
     <Compile Include="Models\KhuyenMai.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

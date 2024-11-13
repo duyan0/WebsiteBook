@@ -11,6 +11,7 @@
     .tieude {
         text-align: center;
         font-weight: bold;
+        margin-top: 20px;
     }
 
     .them a {
@@ -18,14 +19,16 @@
         background-color: #212121;
         color: white;
         font-size: large;
-        padding: 5px;
-        margin: 50px 10px 0 10px;
+        padding: 10px 10px;
+        margin: 20px 0;
+        display: inline-block;
     }
 
         .them a:hover {
             text-decoration: none;
-            color: white;
-            background-color: #027171;
+            color: black;
+            outline:solid 1px black;
+            background-color: white;
         }
 
     .table-striped {
@@ -35,53 +38,68 @@
     .search-bar {
         display: flex;
         justify-content: center;
-        align-items: center; /* Căn giữa theo chiều dọc */
-        margin-bottom: 20px;
-        gap: 10px; /* Khoảng cách giữa các phần tử trong thanh tìm kiếm */
+        align-items: center;
+        margin-bottom: 10px;
+        gap: 10px;
         padding: 10px;
-        background-color: #f8f9fa; /* Màu nền nhẹ để làm nổi bật thanh tìm kiếm */
-        border-radius: 8px; /* Bo góc thanh tìm kiếm */
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Tạo hiệu ứng đổ bóng nhẹ */
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 20px auto; /* Tạo khoảng cách đều và căn giữa */
     }
 
         .search-bar input[type="text"] {
             padding: 10px;
             font-size: 16px;
-            width: 350px; /* Tăng chiều rộng cho sự thoải mái */
-            border: 1px solid #ced4da; /* Màu viền nhẹ */
-            border-radius: 5px; /* Bo góc input */
-            transition: border-color 0.3s ease; /* Hiệu ứng chuyển khi tập trung vào input */
+            width: 350px;
+            max-width: 100%; /* Đảm bảo tính tương thích cho các màn hình nhỏ hơn */
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
         }
 
             .search-bar input[type="text"]:focus {
-                border-color: #007bff; /* Đổi màu viền khi input được chọn */
-                outline: none; /* Xóa viền mặc định của trình duyệt */
+                border-color: #007bff;
+                outline: none;
             }
 
         .search-bar button {
             padding: 10px 15px;
             font-size: 16px;
             border: none;
-            border-radius: 5px; /* Bo góc nút tìm kiếm */
-            background-color: #007bff; /* Màu nền nút tìm kiếm */
+            border-radius: 5px;
+            background-color: #007bff;
             color: white;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease; /* Hiệu ứng khi hover và click */
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
             .search-bar button:hover {
-                background-color: #0056b3; /* Đổi màu nền khi hover */
+                background-color: #0056b3;
             }
 
             .search-bar button:active {
-                transform: scale(0.95); /* Hiệu ứng nhỏ lại khi click vào nút */
+                transform: scale(0.95);
             }
 
+    table {
+        width: 100%;
+        table-layout: fixed; /* Đảm bảo rằng bảng không bị giãn quá mức */
+        margin-top: 10px;
+    }
+
+        table th, table td {
+            padding: 15px;
+            text-align: center;
+            word-wrap: break-word; /* Điều chỉnh nếu nội dung quá dài */
+            font-size: 16px; /* Cân bằng kích thước chữ */
+        }
 
     .pagination-container {
         display: flex;
         justify-content: center;
-        margin: 20px 0;
+        margin: 30px 0;
     }
 
         .pagination-container .pagination {
@@ -129,17 +147,13 @@
 <h2 class="tieude">Danh sách sản phẩm</h2>
 
 <!-- Search Form -->
-<!-- Search Form -->
-<div class="search-bar" style="margin-top:20px;">
+<div class="search-bar">
     @using (Html.BeginForm("Index", "SanPhams", FormMethod.Get))
     {
-        <p>
-            Tìm kiếm thông tin sách: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @placeholder = "Nhập từ khóa tìm kiếm..." })
-            <input type="submit" value="Tìm kiếm" class="btn btn-default" />
-        </p>
+        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @placeholder = "Nhập từ khóa tìm kiếm..." })
+        <button type="submit">Tìm kiếm</button>
     }
 </div>
-
 
 <p class="them">
     @Html.ActionLink("Thêm", "Create")
@@ -148,25 +162,23 @@
 @if (Model != null && Model.Any())
 {
     <table class="table table-condensed table-bordered table-hover">
-        <thead style="background-color: black; color: white; text-align: left;">
-            <tr class="text-center ">
-                <th style="border-top-left-radius: 25px;">Mã sách</th>
+        <thead style="background-color: black; color: white;">
+            <tr>
+                <th style="border-top-left-radius: 10px;">Mã sách</th>
                 <th>Tên Sách</th>
                 <th>Thể loại</th>
                 <th>Giá tiền</th>
                 <th>Số lượng</th>
                 <th>Ảnh sách</th>
-                <th>Tác giả</th>
-                <th>Nhà xuất bản</th>
                 <th>Khuyến mãi</th>
                 <th>Trạng thái</th>
-                <th style="border-top-right-radius: 25px;">Thao tác</th>
+                <th style="border-top-right-radius: 10px;">Thao tác</th>
             </tr>
         </thead>
-        <tbody class="text-center ">
+        <tbody>
             @foreach (var item in Model)
             {
-                <tr style="color: #212121">
+                <tr style="color: #212121;">
                     <td>@Html.DisplayFor(modelItem => item.IDsp)</td>
                     <td>@Html.DisplayFor(modelItem => item.TenSP)</td>
                     <td>@Html.DisplayFor(modelItem => item.DanhMuc.TheLoai)</td>
@@ -179,26 +191,19 @@
                         else
                         {
                             <span>0</span>
-                            item.TrangThaiSach = "Hết hàng"; // Cập nhật trạng thái khi số lượng bằng 0
+                            item.TrangThaiSach = "Hết hàng";
                         }
                     </td>
-
-                    <td><img src="~/Content/img/@item.HinhAnh" width="60" alt="Ảnh không hiển thị" /></td>
-                    <td>@Html.DisplayFor(modelItem => item.TacGia.TenTacGia)</td>
-                    <td>@Html.DisplayFor(modelItem => item.NhaXuatBan.Tennxb)</td>
-                    <td class="text-center ">@Html.DisplayFor(modelItem => item.KhuyenMai.MucGiamGia)%</td>
+                    <td><img src="~/Content/img/@item.HinhAnh" width="50" height="50" alt="Ảnh không hiển thị" /></td>
+                    <td>@Html.DisplayFor(modelItem => item.KhuyenMai.MucGiamGia)%</td>
                     <td>
                         @{
-                            // Đặt lớp CSS dựa trên trạng thái
                             string className = item.TrangThaiSach == "Còn hàng" ? "text-success" :
                                                item.TrangThaiSach == "Hết hàng" ? "text-danger" : "";
                         }
-                        <span class="@className">
-                            @Html.DisplayFor(modelItem => item.TrangThaiSach)
-                        </span>
+                        <span class="@className">@Html.DisplayFor(modelItem => item.TrangThaiSach)</span>
                     </td>
-
-                    <td style="display: flex; gap: 5px;">
+                    <td style="display: flex; gap: 3px; justify-content: center;">
                         @Html.ActionLink("Sửa", "Edit", new { id = item.IDsp }, new { @class = "btn btn-warning btn-sm rounded-sm" })
                         @Html.ActionLink("Xoá", "Delete", new { id = item.IDsp }, new { @class = "btn btn-danger btn-sm rounded-sm" })
                         @Html.ActionLink("Chi tiết", "Details", new { id = item.IDsp }, new { @class = "btn btn-info btn-sm rounded-sm" })
@@ -213,7 +218,6 @@ else
     <p style="text-align:center; margin-top:20px; font-weight:bold;">Không tìm thấy sản phẩm nào phù hợp với từ khóa tìm kiếm.</p>
 }
 
-
 <div class="pagination-container">
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
         new PagedListRenderOptions
@@ -227,3 +231,4 @@ else
             MaximumPageNumbersToDisplay = 5
         })
 </div>
+

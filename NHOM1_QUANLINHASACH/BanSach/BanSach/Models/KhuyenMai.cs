@@ -22,8 +22,7 @@ namespace BanSach.Models
         [DataType(DataType.Date, ErrorMessage = "Ngày bắt đầu không hợp lệ")]
         public Nullable<System.DateTime> NgayBatDau { get; set; }
 
-        [Required(ErrorMessage = "Ngày kết thúc không được để trống")]
-        [DataType(DataType.Date, ErrorMessage = "Ngày kết thúc không hợp lệ")]
+        
         [CustomValidation(typeof(KhuyenMai), "ValidateNgayKetThuc")]
         public Nullable<System.DateTime> NgayKetThuc { get; set; }
 

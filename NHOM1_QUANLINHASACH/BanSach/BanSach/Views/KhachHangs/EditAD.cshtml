@@ -16,6 +16,7 @@
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.IDkh)
+            @Html.HiddenFor(model => model.TKhoan) <!-- Đảm bảo TKhoan được gửi lên server -->
 
             <div class="form-group row">
                 @Html.LabelFor(model => model.TenKH, "Họ và Tên", htmlAttributes: new { @class = "col-md-3 col-form-label font-weight-bold" })
@@ -44,7 +45,7 @@
             <div class="form-group row">
                 @Html.LabelFor(model => model.TKhoan, "Tài khoản", htmlAttributes: new { @class = "col-md-3 col-form-label font-weight-bold" })
                 <div class="col-md-9">
-                    @Html.EditorFor(model => model.TKhoan, new { htmlAttributes = new { @class = "form-control rounded-sm", @readonly = "readonly", style = "border: 1px solid #ccc;" } })
+                    @Html.EditorFor(model => model.TKhoan, new { htmlAttributes = new { @class = "form-control rounded-sm", @disabled = "disabled", style = "border: 1px solid #ccc;" } })
                     @Html.ValidationMessageFor(model => model.TKhoan, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -59,6 +60,14 @@
                         </div>
                     </div>
                     @Html.ValidationMessageFor(model => model.MKhau, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.ConfirmPass, "Xác nhận mật khẩu", htmlAttributes: new { @class = "col-md-3 col-form-label font-weight-bold" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.ConfirmPass, new { htmlAttributes = new { @class = "form-control rounded-sm", style = "border: 1px solid #ccc;", @type = "password" } })
+                    @Html.ValidationMessageFor(model => model.ConfirmPass, "", new { @class = "text-danger" })
                 </div>
             </div>
 
