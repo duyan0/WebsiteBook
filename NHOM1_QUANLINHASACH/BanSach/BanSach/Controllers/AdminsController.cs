@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using BanSach.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using BanSach.Models;
 
 
 namespace BanSach.Controllers
@@ -15,13 +11,11 @@ namespace BanSach.Controllers
     {
         private dbSach db = new dbSach();
 
-        // GET: Admins
         public ActionResult Index()
         {
+            // Trả về view với danh sách tất cả các Admin từ cơ sở dữ liệu
             return View(db.Admin.ToList());
         }
-
-        // GET: Admins/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -41,10 +35,6 @@ namespace BanSach.Controllers
         {
             return View();
         }
-
-        // POST: Admins/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,HoTen,Email,DiaChi,SoDT,VaiTro,TKhoan,MKhau")] Admin admin)
@@ -55,11 +45,8 @@ namespace BanSach.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             return View(admin);
         }
-
-        // GET: Admins/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -73,26 +60,19 @@ namespace BanSach.Controllers
             }
             return View(admin);
         }
-
-        // POST: Admins/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,HoTen,Email,DiaChi,SoDT,VaiTro,TKhoan,MKhau,ConfirmPass")] Admin admin)
+        public ActionResult Edit([Bind(Include = "ID,HoTen,Email,DiaChi,SoDT,VaiTro,TKhoan,MKhau")] Admin admin)
         {
-           
             if (ModelState.IsValid)
             {
                 db.Entry(admin).State = EntityState.Modified;
-                db.Configuration.ValidateOnSaveEnabled = false;               
+                db.Configuration.ValidateOnSaveEnabled = false;
                 db.SaveChanges();
                 return RedirectToAction("Index", "Admins");
             }
             return View();
         }
-
-        // GET: Admins/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -106,8 +86,6 @@ namespace BanSach.Controllers
             }
             return View(admin);
         }
-
-        // POST: Admins/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

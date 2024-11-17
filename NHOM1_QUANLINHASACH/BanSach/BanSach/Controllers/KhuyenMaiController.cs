@@ -1,10 +1,7 @@
 ﻿using BanSach.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BanSach.Controllers
@@ -73,7 +70,7 @@ namespace BanSach.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IDnxb,Tennxb,DiaChi,SoDienThoai,Email")] KhuyenMai km)
+        public ActionResult Edit([Bind(Include = "IDkm,TenKhuyenMai,NgayBatDau,NgayKetThuc,MucGiamGia,MoTa")] KhuyenMai km)
         {
             if (ModelState.IsValid)
             {

@@ -11,8 +11,6 @@ namespace BanSach.Controllers
     {
         // GET: TacGia
         dbSach db = new dbSach();
-
-
         public ActionResult Index()
         {
             return View(db.TacGia.ToList());
@@ -70,9 +68,6 @@ namespace BanSach.Controllers
 
             return View(model);
         }
-
-
-
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -121,7 +116,6 @@ namespace BanSach.Controllers
             {
                 return HttpNotFound();  // Nếu không tìm thấy, trả về lỗi 404
             }
-
             return View(tg);  // Trả về view và truyền model TacGia vào view để hiển thị chi tiết
         }
         // GET: TacGia/Delete/5
@@ -137,7 +131,6 @@ namespace BanSach.Controllers
             {
                 return HttpNotFound();
             }
-
             return View(tg);
         }
         // POST: TacGia/Delete/5

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web.Mvc;
 using PagedList;
 using System;
+using System.Threading.Tasks;
 
 namespace BanSach.Controllers
 {
@@ -94,13 +95,7 @@ namespace BanSach.Controllers
 
             return View(khachHang);
         }
-
-
-
-
-        // GET: KhachHangs/Edit/5
         [HttpGet]
-        // GET: KhachHangAD/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -114,10 +109,6 @@ namespace BanSach.Controllers
             }
             return View(kh);
         }
-
-        // POST: KhachHangAD/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "IDkh,TenKH,SoDT,Email,TKhoan,MKhau")] KhachHang kh)
@@ -143,7 +134,6 @@ namespace BanSach.Controllers
 
             return View(kh);
         }
-        // GET: KhachHangAD/Edit/5
         public ActionResult EditAD(int? id)
         {
             if (id == null)
@@ -157,10 +147,6 @@ namespace BanSach.Controllers
             }
             return View(kh);
         }
-
-        // POST: KhachHangAD/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditAD([Bind(Include = "IDkh,TenKH,SoDT,Email,TKhoan,MKhau")] KhachHang kh)
@@ -216,22 +202,20 @@ namespace BanSach.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        [HttpGet]
-        public ActionResult LichSuDonHang()
+        public async Task<ActionResult> LichSuDonHang()
         {
             int? currentCustomerId = Session["IDkh"] as int?;
 
-            if (currentCustomerId == null)
+            if (!currentCustomerId.HasValue)
             {
-                // Nếu khách hàng chưa đăng nhập, chuyển hướng họ tới trang đăng nhập
                 return RedirectToAction("LoginAccountCus", "LoginUser");
             }
 
-            // Lấy danh sách đơn hàng của khách hàng hiện tại
-            var orders = db.DonHang
-                .Where(dh => dh.IDkh == currentCustomerId)
-                .Include(dh => dh.DonHangCT)  // Bao gồm chi tiết đơn hàng
-                .ToList();
+            // Truy vấn đơn hàng bất đồng bộ
+            var orders = await db.DonHang
+                .Where(dh => dh.IDkh == currentCustomerId.Value)
+                .Include(dh => dh.DonHangCT)
+                .ToListAsync();
 
             return View(orders);
         }

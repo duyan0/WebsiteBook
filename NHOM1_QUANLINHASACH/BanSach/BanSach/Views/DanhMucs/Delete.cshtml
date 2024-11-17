@@ -40,7 +40,7 @@
     </table>
 
     <p class="text-danger">Bạn có chắc chắn muốn xóa danh mục này không?</p>
-
+   
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -49,5 +49,6 @@
             @Html.ActionLink("Quay về quản lý danh mục", "Index", null, new { @class = "btn btn-secondary me-2" })
             <input type="submit" value="Xoá" class="btn btn-danger" />
         </div>
+
     }
 </div>

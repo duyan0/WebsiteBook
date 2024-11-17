@@ -127,3 +127,20 @@ CREATE TABLE DonHangCT
 	FOREIGN KEY (IDSanPham) REFERENCES SanPham (IDsp),
 	FOREIGN KEY (IDDonHang) REFERENCES DonHang (IDdh)
 );
+-- Nhớ chạy cái này luôn
+CREATE TRIGGER trg_UpdateTrangThaiSach
+ON [Sach].[dbo].[SanPham]
+AFTER INSERT, UPDATE
+AS
+BEGIN
+        UPDATE [Sach].[dbo].[SanPham]
+    SET [TrangThaiSach] = 'Hết hàng'
+    WHERE [SoLuong] = 0
+      AND [IDsp] IN (SELECT [IDsp] FROM inserted)
+    
+    UPDATE [Sach].[dbo].[SanPham]
+    SET [TrangThaiSach] = 'Còn hàng'
+    WHERE [SoLuong] > 0
+      AND [IDsp] IN (SELECT [IDsp] FROM inserted)
+END
+

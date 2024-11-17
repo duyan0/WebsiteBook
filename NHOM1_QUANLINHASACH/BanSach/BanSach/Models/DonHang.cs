@@ -33,5 +33,6 @@
                 ? DonHangCT.Sum(ct => (ct.SoLuong ?? 0) * (decimal)(ct.Gia ?? 0))
                 : 0;
         }
+
     }
 }

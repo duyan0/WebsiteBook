@@ -1,154 +1,89 @@
 ﻿@model BanSach.Models.Admin
 
 @{
-    ViewBag.Title = "Cập nhật thông tin";
+    ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+<h2 class="text-center">Cập nhật tài khoản nhân sự</h2>
 
-    <div class="container mt-5">
-        <div class="card  rounded-lg border-0">
-            <div class="card-body p-5">
-                <h2 class="text-center font-weight-bold mb-4 ">Thay đổi thông tin</h2>
+<div class="container mt-4">
+    <div class="card shadow rounded">
 
-                @if (Session["Error"] != null)
-                {
-                    <div class="alert alert-danger text-center">
-                        @ViewBag.Error
+        <div class="card-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "alert alert-danger rounded" })
+                    @Html.HiddenFor(model => model.ID)
+
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">Họ tên</div>
+                        <div class="col-sm-10">
+                            @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Enter full name" } })
+                            @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                }
 
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-                <!-- Form Group: Họ tên -->
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label font-weight-bold">Họ tên</label>
-                    <div class="col-sm-10">
-                        @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control rounded-lg" } })
-                        @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">Email</div>
+                        <div class="col-sm-10">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Enter email address" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
 
-                <!-- Form Group: Email -->
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label font-weight-bold">Email</label>
-                    <div class="col-sm-10">
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control rounded-lg" } })
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">Địa chỉ</div>
+                        <div class="col-sm-10">
+                            @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Enter address" } })
+                            @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
 
-                <!-- Form Group: Địa chỉ -->
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label font-weight-bold">Địa chỉ</label>
-                    <div class="col-sm-10">
-                        @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control rounded-lg" } })
-                        @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">Số điện thoại</div>
+                        <div class="col-sm-10">
+                            @Html.EditorFor(model => model.SoDT, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Enter phone number" } })
+                            @Html.ValidationMessageFor(model => model.SoDT, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
 
-                <!-- Form Group: Số điện thoại -->
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label font-weight-bold">Số điện thoại</label>
-                    <div class="col-sm-10">
-                        @Html.EditorFor(model => model.SoDT, new { htmlAttributes = new { @class = "form-control rounded-lg" } })
-                        @Html.ValidationMessageFor(model => model.SoDT, "", new { @class = "text-danger" })
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">Vai trò</div>
+                        <div class="col-sm-10">
+                            @Html.EditorFor(model => model.VaiTro, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Enter role" } })
+                            @Html.ValidationMessageFor(model => model.VaiTro, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
 
-                <!-- Form Group: Vai trò -->
-                @{
-                    var roles = new List<SelectListItem>
-                        {
-                        new SelectListItem { Value = "Admin", Text = "Admin" },
-                        new SelectListItem { Value = "Nhân viên", Text = "Nhân viên" }
-                    };
-                }
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label font-weight-bold">Vai trò</label>
-                    <div class="col-sm-10">
-                        @Html.DropDownListFor(model => model.VaiTro, roles, "Chọn vai trò", new { @class = "form-control rounded-lg" })
-                        @Html.ValidationMessageFor(model => model.VaiTro, "", new { @class = "text-danger" })
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">Tài khoản</div>
+                        <div class="col-sm-10">
+                            @Html.EditorFor(model => model.TKhoan, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Enter username", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.TKhoan, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
 
-                <!-- Form Group: Tài khoản -->
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label font-weight-bold">Tài khoản</label>
-                    <div class="col-sm-10">
-                        @Html.EditorFor(model => model.TKhoan, new { htmlAttributes = new { @class = "form-control rounded-lg" } })
-                        @Html.ValidationMessageFor(model => model.TKhoan, "", new { @class = "text-danger" })
+
+                    <div class="form-group row">
+                        <div class="col-sm-2 col-form-label">Mật khẩu</div>
+                        <div class="col-sm-10">
+                            @Html.EditorFor(model => model.MKhau, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Enter password", @readonly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.MKhau, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
 
-                <!-- Form Group: Mật khẩu mới -->
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label font-weight-bold">Mật khẩu mới</label>
-                    <div class="col-sm-10">
-                        <input type="password" id="MKhau" name="MKhau" class="form-control rounded-lg" />
-                        @Html.ValidationMessageFor(model => model.MKhau, "", new { @class = "text-danger" })
+                    <div class="form-group row">
+                        <div class="col-sm-10 offset-sm-2">
+                            <button type="submit" class="btn btn-success rounded">Save</button>
+                            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-secondary ml-2 rounded" })
+                        </div>
                     </div>
                 </div>
-
-                <!-- Form Group: Nhập lại mật khẩu mới -->
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label font-weight-bold">Nhập lại mật khẩu mới</label>
-                    <div class="col-sm-10">
-                        <input type="password" id="ConfirmPass" name="ConfirmPass" class="form-control rounded-lg" />
-                        @if (ViewBag.Error != null)
-                        {
-                            <p class="text-danger text-center mt-2">@ViewBag.Error</p>
-                        }
-                    </div>
-                </div>
-
-                <!-- Submit Button -->
-                <div class="form-group text-center">
-                    @Html.ActionLink("Trở lại danh sách", "Index", null, new { @class = "btn btn-secondary rounded-pill px-4 ml-2" })
-                    <input type="submit" value="Lưu" class="btn btn-success btn-lg rounded-lg " onclick="showSuccessModal(event)" />
-                </div>
-            </div>
-        </div>
-    </div>
-}
-
-<!-- Success Modal -->
-<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content rounded-lg">
-            <div class="modal-header bg-success text-white">
-                <h5 class="modal-title" id="successModalLabel">Thông báo</h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Lưu thông tin thành công!
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-success" data-dismiss="modal">Đóng</button>
-            </div>
+            }
         </div>
     </div>
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script>
-        function showSuccessModal(event) {
-            event.preventDefault();
-            $('#successModal').modal('show');
-            $('#successModal .btn-outline-success').off('click').on('click', function () {
-                $('form').submit();
-            });
-            $('#successModal .close').off('click').on('click', function () {
-                $('#successModal').modal('hide');
-            });
-        }
-    </script>
-}
-<!-- Bootstrap CSS -->
-

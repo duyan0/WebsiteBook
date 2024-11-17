@@ -22,7 +22,7 @@ namespace BanSach.Models
 
         [Required(ErrorMessage = "Số điện thoại không được để trống")]
         [Phone(ErrorMessage = "Số điện thoại không hợp lệ")]
-        [StringLength(15, MinimumLength = 9, ErrorMessage = "Số điện thoại phải có từ 9 đến 15 ký tự")]
+        [StringLength(11, MinimumLength = 11, ErrorMessage = "Dưới 11 số")]
         public string SoDT { get; set; }
 
         [Required(ErrorMessage = "Vai trò không được để trống")]
@@ -34,7 +34,7 @@ namespace BanSach.Models
         public string TKhoan { get; set; }
 
         [Required(ErrorMessage = "Mật khẩu không được để trống")]
-        [StringLength(100, MinimumLength = 6, ErrorMessage = "Mật khẩu phải có ít nhất 6 ký tự")]
+        [StringLength(20, MinimumLength = 6, ErrorMessage = "Mật khẩu phải có ít nhất 6 ký tự")]
         public string MKhau { get; set; }
     }
 }

@@ -21,8 +21,6 @@ namespace BanSach.Controllers
             var cateList = db.DanhMuc.ToList();
             return PartialView(cateList);
         }
-
-        // GET: DanhMucs
         public ActionResult Index()
         {
             return View(db.DanhMuc.ToList());
@@ -42,46 +40,40 @@ namespace BanSach.Controllers
             }
             return View(danhMuc);
         }
+        //Factory Method
+        private readonly DanhMucService danhMucService;
+        public DanhMucsController()
+        {
+            var db = new dbSach();
+            var factory = new DanhMucFactory();
+            danhMucService = new DanhMucService(db, factory);
+        }
 
-        // GET: DanhMucs/Create
         public ActionResult Create()
         {
-            var danhMucList = db.DanhMuc.Select(d => d.DanhMuc1).ToList();
+            var danhMucList = danhMucService.GetDanhMucList();
             ViewBag.DanhMucList = danhMucList;
 
             return View();
         }
-
-        // POST: DanhMucs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,DanhMuc1,TheLoai")] DanhMuc danhMuc)
         {
             if (ModelState.IsValid)
             {
-                // Kiểm tra xem danh mục và thể loại đã tồn tại chưa
-                var existingCategory = db.DanhMuc
-                    .FirstOrDefault(d => d.DanhMuc1 == danhMuc.DanhMuc1 && d.TheLoai == danhMuc.TheLoai);
-
-                if (existingCategory != null)
+                if (danhMucService.IsDanhMucExists(danhMuc.DanhMuc1, danhMuc.TheLoai))
                 {
                     ModelState.AddModelError("", "Danh mục và thể loại đã tồn tại. Vui lòng nhập danh mục khác.");
                     return View(danhMuc);
                 }
 
-                db.DanhMuc.Add(danhMuc);
-                db.SaveChanges();
+                danhMucService.AddDanhMuc(danhMuc.ID, danhMuc.DanhMuc1, danhMuc.TheLoai);
                 return RedirectToAction("Index");
             }
 
             return View(danhMuc);
         }
-
-
-
-        // GET: DanhMucs/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -95,10 +87,6 @@ namespace BanSach.Controllers
             }
             return View(danhMuc);
         }
-
-        // POST: DanhMuc/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,DanhMuc1,TheLoai")] DanhMuc danhMuc)
@@ -111,8 +99,6 @@ namespace BanSach.Controllers
             }
             return View(danhMuc);
         }
-
-        // GET: DanhMuc/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -126,12 +112,18 @@ namespace BanSach.Controllers
             }
             return View(danhMuc);
         }
-
-        // POST: DanhMuc/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            // Tìm tất cả sản phẩm liên quan và xóa chúng
+            var relatedProducts = db.SanPham.Where(sp => sp.TheLoai == id);
+            foreach (var product in relatedProducts)
+            {
+                db.SanPham.Remove(product);
+            }
+
+            // Xóa danh mục sau khi sản phẩm liên quan đã được xóa
             DanhMuc danhMuc = db.DanhMuc.Find(id);
             db.DanhMuc.Remove(danhMuc);
             db.SaveChanges();
@@ -148,3 +140,5 @@ namespace BanSach.Controllers
         }
     }
 }
+
+

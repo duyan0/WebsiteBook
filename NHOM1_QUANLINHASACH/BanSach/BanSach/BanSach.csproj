@@ -177,6 +177,8 @@
     <Compile Include="Models\DanhMuc.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DanhMucFactory.cs" />
+    <Compile Include="Models\DanhMucService.cs" />
     <Compile Include="Models\DonHang.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -496,6 +498,7 @@
     <Content Include="Views\DonHangCTs\DetailsKH.cshtml" />
     <Content Include="Views\KhachHangs\EditAD.cshtml" />
     <Content Include="Views\KhachHangs\DetailsAD.cshtml" />
+    <Content Include="Views\KhuyenMai\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

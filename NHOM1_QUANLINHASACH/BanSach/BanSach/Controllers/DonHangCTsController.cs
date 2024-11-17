@@ -14,15 +14,11 @@ namespace BanSach.Controllers
     public class DonHangCTsController : Controller
     {
         private dbSach db = new dbSach();
-
-        // GET: DonHangCTs
         public ActionResult Index()
         {
             var donHangCTs = db.DonHangCT.Include(d => d.DonHang).Include(d => d.SanPham);
             return View(donHangCTs.ToList());
         }
-
-        // GET: DonHangCTs/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -49,9 +45,6 @@ namespace BanSach.Controllers
             }
             return View(donHangCT);
         }
-
-        
-        // GET: DonHangCTs/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -65,8 +58,6 @@ namespace BanSach.Controllers
             }
             return View(donHangCT);
         }
-
-        // POST: DonHangCTs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -75,15 +66,6 @@ namespace BanSach.Controllers
             db.DonHangCT.Remove(donHangCT);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         [ChildActionOnly]
@@ -109,6 +91,14 @@ namespace BanSach.Controllers
 
 
             return PartialView(query.Take(10).ToList());
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

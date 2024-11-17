@@ -22,15 +22,11 @@ namespace BanSach.Controllers
         {
             _donHangService = donHangService;
         }
-
-        // GET: DonHangs
         public ActionResult Index()
         {
             var donHangs = db.DonHang.Include(d => d.KhachHang);
             return View(donHangs.ToList());
         }
-
-        // GET: DonHangs/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -44,15 +40,11 @@ namespace BanSach.Controllers
             }
             return View(donHang);
         }
-
-        // GET: DonHangs/Create
         public ActionResult Create()
         {
             ViewBag.IDkh = new SelectList(db.KhachHang, "IDkh", "TenKH");
             return View();
         }
-
-        // POST: DonHangs/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IDdh,NgayDatHang,IDkh,DiaChi,NgayNhanHang")] DonHang donHang)
@@ -114,16 +106,38 @@ namespace BanSach.Controllers
             return View(donHang);
         }
 
-        // POST: DonHangs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            DonHang donHang = db.DonHang.Find(id);
-            db.DonHang.Remove(donHang);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                DonHang donHang = db.DonHang.Find(id);
+
+                if (donHang == null)
+                {
+                    TempData["ErrorMessage"] = "Order not found.";
+                    return RedirectToAction("Index");
+                }
+
+                // Xoá các bản ghi liên quan trong DonHangCT
+                var relatedOrderDetails = db.DonHangCT.Where(dhct => dhct.IDDonHang == id).ToList();
+                db.DonHangCT.RemoveRange(relatedOrderDetails);
+
+                // Xoá DonHang
+                db.DonHang.Remove(donHang);
+                db.SaveChanges();
+
+                TempData["SuccessMessage"] = "Order and its related details deleted successfully.";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "An error occurred while trying to delete the order: " + ex.Message;
+                return RedirectToAction("Index");
+            }
         }
+
 
         // GET: DonHangs/Confirm/5
         public ActionResult Confirm(int id)

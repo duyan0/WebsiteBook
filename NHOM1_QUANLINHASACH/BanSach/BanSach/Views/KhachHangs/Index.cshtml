@@ -107,7 +107,6 @@
         <th>ID</th>
         <th>Tên KH</th>
         <th>Số điện thoại</th>
-        <th>Email</th>
         <th>Tài khoản</th>
         <th>Mật khẩu</th>
         <th>Thao tác</th>
@@ -119,7 +118,7 @@
             <td>@Html.DisplayFor(modelItem => item.IDkh)</td>
             <td>@Html.DisplayFor(modelItem => item.TenKH)</td>
             <td>@(item.SoDT != null && item.SoDT.Length >= 3 ? item.SoDT.Substring(0, 3) + new string('*', item.SoDT.Length - 3) : "")</td>
-            <td class="text-danger">@Html.DisplayFor(modelItem => item.Email)</td>
+            
             <td>@Html.DisplayFor(modelItem => item.TKhoan)</td>
             <td>@Html.Raw("********")</td>
             <td>

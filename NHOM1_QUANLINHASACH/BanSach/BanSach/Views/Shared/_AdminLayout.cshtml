@@ -92,7 +92,6 @@
                                 <a href="~/DonHangCTs/Index" class="dropdown-item nav-item">Chi tiết đơn hàng</a>
                             </nav>
                             <a href="https://zalo.me/0355079864" target="_blank" class="zalo-contact">
-                                <img src="~/Content/img/zalo.png" alt="Liên hệ qua Zalo" />
                             </a>
                         }
                     }
@@ -189,35 +188,7 @@
             animation: spin 1s linear infinite;
         }
 
-        .zalo-contact {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px; /* Tăng kích thước để làm nổi bật hơn */
-            height: 60px;
-            border-radius: 50%; /* Đổi thành tròn hoàn toàn */
-            overflow: hidden;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Thêm bóng đổ để nổi bật hơn */
-            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Thêm hiệu ứng transition cho cả bóng đổ */
-            background: linear-gradient(135deg, #00b3ff, #0066cc); /* Thêm hiệu ứng gradient để nhìn hấp dẫn hơn */
-            cursor: pointer; /* Thêm con trỏ pointer để người dùng biết có thể click */
-        }
-
-            .zalo-contact img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                transition: transform 0.3s ease-in-out; /* Thêm hiệu ứng để làm mượt hình ảnh khi hover */
-            }
-
-            .zalo-contact:hover {
-                transform: scale(1.1);
-                box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4); /* Tăng bóng đổ khi hover để tạo cảm giác "nổi" */
-            }
-
-                .zalo-contact:hover img { /* Thêm hiệu ứng xoay nhẹ để tạo điểm nhấn */
-                    transform: rotate(360deg); /* Thêm hiệu ứng xoay nhẹ để tạo điểm nhấn */
-                }
+        
     </style>
 </body>
 </html>

@@ -57,7 +57,7 @@
                 <td>@Html.DisplayFor(modelItem => item.ID)</td>
                 <td>@Html.DisplayFor(modelItem => item.HoTen)</td>
                 <td>
-                    @(item.SoDT != null && item.SoDT.Length >= 3 ? item.SoDT.Substring(0, 3) + new string('*', item.SoDT.Length - 3) : "")
+                    @(item.SoDT != null && item.SoDT.Length >= 3 ? item.SoDT.Substring(0, 3) + new string('*', item.SoDT.Length - 7) : "")
                 </td>
                 <td>@Html.DisplayFor(modelItem => item.VaiTro)</td>
                 <td>@Html.DisplayFor(modelItem => item.TKhoan)</td>

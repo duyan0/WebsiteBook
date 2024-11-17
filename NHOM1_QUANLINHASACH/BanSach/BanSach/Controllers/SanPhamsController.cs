@@ -102,8 +102,6 @@ namespace BanSach.Controllers
             }
             return View(sanPham);
         }
-
-        // GET: SanPhams/Create
         public ActionResult Create()
         {
             ViewBag.TheLoai = new SelectList(db.DanhMuc, "ID", "TheLoai");
@@ -112,10 +110,6 @@ namespace BanSach.Controllers
             ViewBag.KM = new SelectList(db.KhuyenMai, "IDkm", "MucGiamGia");
             return View();
         }
-
-        // POST: SanPhams/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IDsp,TenSP,MoTa,TheLoai,GiaBan,HinhAnh,IDtg,IDnxb,IDkm,SoLuong,TrangThaiSach")] SanPham sanPham)
@@ -134,8 +128,6 @@ namespace BanSach.Controllers
 
             return View(sanPham);
         }
-
-        // GET: SanPhams/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -153,10 +145,6 @@ namespace BanSach.Controllers
             ViewBag.KM = new SelectList(db.KhuyenMai, "IDkm", "MucGiamGia", product.KhuyenMai);
             return View(product);
         }
-
-        // POST: SanPhams/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "IDsp,TenSP,MoTa,TheLoai,GiaBan,HinhAnh,IDtg,IDnxb,IDkm,SoLuong,TrangThaiSach")] SanPham sanPham)
@@ -176,30 +164,30 @@ namespace BanSach.Controllers
         }
 
         // GET: SanPhams/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
+            public ActionResult Delete(int? id)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                SanPham sanPham = db.SanPham.Find(id);
+                if (sanPham == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(sanPham);
             }
-            SanPham sanPham = db.SanPham.Find(id);
-            if (sanPham == null)
-            {
-                return HttpNotFound();
-            }
-            return View(sanPham);
-        }
 
-        // POST: SanPhams/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            SanPham sanPham = db.SanPham.Find(id);
-            db.SanPham.Remove(sanPham);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+            // POST: SanPhams/Delete/5
+            [HttpPost, ActionName("Delete")]
+            [ValidateAntiForgeryToken]
+            public ActionResult DeleteConfirmed(int id)
+            {
+                SanPham sanPham = db.SanPham.Find(id);
+                db.SanPham.Remove(sanPham);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
 
         protected override void Dispose(bool disposing)
         {

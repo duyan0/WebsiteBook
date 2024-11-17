@@ -15,6 +15,7 @@ namespace BanSach.Models
         [System.ComponentModel.DataAnnotations.Key]
         public int? IdPro { get; set; }
         public decimal Total_Money { get; set; }
+
         public SanPham product { get; set; }
         public DanhMuc category { get; set; }
         public DonHangCT orderDetail { get; set; }
