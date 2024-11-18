@@ -49,7 +49,11 @@
                     @Html.DisplayFor(modelItem => item.QuocGia)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TieuSu)
+                    @{
+                        var text = item.TieuSu;
+                        var displayText = text.Length > 30 ? text.Substring(0, 30) + "..." : text;
+                    }
+                    @Html.Raw(displayText)
                 </td>
                 <td class="text-center">
                     @Html.ActionLink("Sửa", "Edit", new { id = item.IDtg }, new { @class = "btn btn-warning btn-sm rounded" })

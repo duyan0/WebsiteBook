@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<BanSach.Models.ViewModel>
-
 <style>
     .card a:hover {
         text-decoration: none;
@@ -37,3 +36,43 @@
         </div>
     </div>
 </div>
+
+<style>
+    .card a:hover {
+        text-decoration: none !important;
+        border-radius: 5rem;
+    }
+
+    .product-item {
+        border-radius: 20px !important; /* Rounded corners for the product card */
+        transition: transform 0.2s !important; /* Add smooth transition for hover */
+        display: flex; /* Use flexbox to center content */
+        flex-direction: column; /* Arrange content vertically */
+        align-items: center; /* Center horizontally */
+        justify-content: center; /* Center vertically */
+        padding: 20px; /* Add some padding to ensure content is not touching edges */
+    }
+
+        .product-item:hover {
+            transform: scale(1.05) !important; /* Slight zoom effect on hover */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important; 
+        }
+
+    .product-img {
+        text-align: center;
+        /* Ensure the image is centered within the container */
+        width: 200px !important; /* Set a fixed width for the container */
+        height: 200px !important; /* Set a fixed height for the container */
+        display: flex; /* Use flexbox to center image */
+        align-items: center; /* Center image vertically */
+        justify-content: center; /* Center image horizontally */
+    }
+
+        .product-img img {
+            width: 200px !important; /* Match the fixed width of the container */
+            height: 200px !important; /* Match the fixed height of the container */
+            object-fit: cover !important; /* Crop the image to fit without distortion */
+            border-radius: 10px !important; /* Rounded corners for the image */
+        }
+
+</style>

@@ -38,7 +38,7 @@
                             <td class="text-white">@(order.NgayDatHang?.ToString("dd/MM/yyyy HH:mm:ss") ?? "Chưa đặt hàng")</td>
                             <td class="text-white">@(order.NgayNhanHang?.ToString("dd/MM/yyyy HH:mm:ss") ?? "Chưa nhận hàng")</td>
                             <td class="text-danger">@order.GetTongSoTien().ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</td>
-                            <td class="@(order.TrangThai == "Chờ xử lý" ? "text-white"
+                            <td class="font-weight-bold @(order.TrangThai == "Chờ xử lý" ? "text-white"
   : order.TrangThai == "Đã xác nhận" ? "text-success"
   : order.TrangThai == "Đã hủy" ? "text-danger"
   : order.TrangThai == "Đã nhận hàng" ? "text-warning"
@@ -50,7 +50,7 @@
                                 <a href="@Url.Action("DetailsKH", "DonHangCTs", new { id = order.IDdh })" class="btn btn-success rounded-sm">Xem chi tiết</a>
                                 @if (order.TrangThai == "Đã xác nhận")
                                 {
-                                    <a href="@Url.Action("DaNhanHang", "DonHangs", new { id = order.IDdh })" class="btn btn-primary rounded-sm ml-2">Đã nhận hàng</a>
+                                    <a href="@Url.Action("DaNhanHang", "DonHangs", new { id = order.IDdh })" class="btn btn-danger rounded-sm ml-2">Đã nhận hàng</a>
                                 }
                             </td>
 

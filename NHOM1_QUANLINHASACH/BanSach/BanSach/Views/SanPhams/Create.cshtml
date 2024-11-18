@@ -42,20 +42,20 @@
         <div class="form-group row">
             <label class="control-label col-md-2 font-weight-bold">Giá</label>
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.GiaBan, new SelectList(new[]
+                @Html.DropDownListFor(model => model.GiaBan, new List<SelectListItem>
                 {
-                    new { Value = "", Text = "Chọn giá" },
-                    new { Value = "1000", Text = "1.000 VND" },
-                    new { Value = "5000", Text = "5.000 VND" },
-                    new { Value = "10000", Text = "10.000 VND" },
-                    new { Value = "20000", Text = "20.000 VND" },
-                    new { Value = "50000", Text = "50.000 VND" },
-                    new { Value = "100000", Text = "100.000 VND" },
-                    new { Value = "200000", Text = "200.000 VND" },
-                    new { Value = "500000", Text = "500.000 VND" },
-                    new { Value = "1000000", Text = "1.000.000 VND" },
-                    new { Value = "Tùy chỉnh", Text = "Tùy chỉnh" }
-                }, "Value", "Text"), new { @class = "form-control border border-dark", @id = "GiaBanDropdown", style = "border-radius: 10px;", @placeholder = "Chọn giá" })
+                    new SelectListItem { Value = "", Text = "Chọn giá" },
+                    new SelectListItem { Value = "1000", Text = "1.000 VND" },
+                    new SelectListItem { Value = "5000", Text = "5.000 VND" },
+                    new SelectListItem { Value = "10000", Text = "10.000 VND" },
+                    new SelectListItem { Value = "20000", Text = "20.000 VND" },
+                    new SelectListItem { Value = "50000", Text = "50.000 VND" },
+                    new SelectListItem { Value = "100000", Text = "100.000 VND" },
+                    new SelectListItem { Value = "200000", Text = "200.000 VND" },
+                    new SelectListItem { Value = "500000", Text = "500.000 VND" },
+                    new SelectListItem { Value = "1000000", Text = "1.000.000 VND" },
+                    new SelectListItem { Value = "Tùy chỉnh", Text = "Tùy chỉnh" }
+                }, new { @class = "form-control border border-dark", @id = "GiaBanDropdown", style = "border-radius: 10px;", @placeholder = "Chọn giá" })
 
                 <div id="GiaTuTuyChinhDiv" style="margin-top: 10px; display: none;">
                     @Html.TextBox("GiaTuTuyChinh", null, new { @class = "form-control border border-dark", placeholder = "Nhập giá tùy chỉnh", type = "text", @id = "GiaTuTuyChinh", style = "border-radius: 10px;" })
@@ -136,7 +136,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Hiện thị ô nhập giá tùy chỉnh
+        // Hiển thị ô nhập giá tùy chỉnh
         $('#GiaBanDropdown').change(function () {
             if ($(this).val() === "Tùy chỉnh") {
                 $('#GiaTuTuyChinhDiv').show();

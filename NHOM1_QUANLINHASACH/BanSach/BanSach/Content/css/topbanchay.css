@@ -5,6 +5,11 @@
 .product-item {
     border-radius: 20px !important; /* Rounded corners for the product card */
     transition: transform 0.2s !important; /* Add smooth transition for hover */
+    display: flex; /* Use flexbox to center content */
+    flex-direction: column; /* Arrange content vertically */
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    padding: 20px; /* Add some padding to ensure content is not touching edges */
 }
 
     .product-item:hover {
@@ -13,9 +18,13 @@
     }
 
 .product-img {
-    text-align: center !important; /* Ensure the image is centered within the container */
+    text-align: center;
+    /* Ensure the image is centered within the container */
     width: 200px !important; /* Set a fixed width for the container */
     height: 200px !important; /* Set a fixed height for the container */
+    display: flex; /* Use flexbox to center image */
+    align-items: center; /* Center image vertically */
+    justify-content: center; /* Center image horizontally */
 }
 
     .product-img img {

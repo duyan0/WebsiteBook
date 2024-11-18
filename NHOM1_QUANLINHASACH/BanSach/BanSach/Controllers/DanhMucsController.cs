@@ -64,7 +64,7 @@ namespace BanSach.Controllers
             {
                 if (danhMucService.IsDanhMucExists(danhMuc.DanhMuc1, danhMuc.TheLoai))
                 {
-                    ModelState.AddModelError("", "Danh mục và thể loại đã tồn tại. Vui lòng nhập danh mục khác.");
+                    ModelState.AddModelError("", "Thể loại này đã tồn tại");
                     return View(danhMuc);
                 }
 
