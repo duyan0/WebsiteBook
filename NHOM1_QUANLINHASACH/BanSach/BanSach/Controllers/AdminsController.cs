@@ -1,4 +1,6 @@
-﻿using BanSach.Models;
+﻿
+using BanSach.Models;
+using PagedList;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -7,15 +9,36 @@ using System.Web.Mvc;
 
 namespace BanSach.Controllers
 {
+   
     public class AdminsController : Controller
     {
         private dbSach db = new dbSach();
 
-        public ActionResult Index()
+        public ActionResult Index(int? page, string searchString)
         {
-            // Trả về view với danh sách tất cả các Admin từ cơ sở dữ liệu
-            return View(db.Admin.ToList());
+            int pageSize = 10; // Số bản ghi trên mỗi trang
+            int pageNumber = (page ?? 1); // Trang hiện tại, mặc định là trang 1
+
+            // Lưu từ khóa tìm kiếm vào ViewBag để sử dụng lại trong View (giữ nguyên từ khóa trong ô input khi người dùng tìm kiếm)
+            ViewBag.CurrentFilter = searchString;
+
+            // Truy vấn danh sách Admin
+            var admins = db.Admin.AsQueryable();
+
+            // Nếu có từ khóa tìm kiếm thì lọc danh sách Admin
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                admins = admins.Where(a => a.SoDT.Contains(searchString) ||
+                                           a.VaiTro.Contains(searchString));
+            }
+
+            // Sắp xếp danh sách Admin theo ID
+            var adminList = admins.OrderBy(a => a.ID).ToPagedList(pageNumber, pageSize);
+
+            return View(adminList);
         }
+
+
         public ActionResult Details(int? id)
         {
             if (id == null)

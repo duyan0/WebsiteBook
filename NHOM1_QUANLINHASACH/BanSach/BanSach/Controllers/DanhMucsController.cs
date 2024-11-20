@@ -40,40 +40,57 @@ namespace BanSach.Controllers
             }
             return View(danhMuc);
         }
-        //Factory Method
+        // Factory Method: Sử dụng DanhMucService để thao tác với các đối tượng DanhMuc
         private readonly DanhMucService danhMucService;
+
+        // Constructor cho DanhMucsController
         public DanhMucsController()
         {
-            var db = new dbSach();
-            var factory = new DanhMucFactory();
-            danhMucService = new DanhMucService(db, factory);
+            // Khởi tạo db context và Factory để tạo đối tượng DanhMucService
+            var db = new dbSach();  // dbSach đại diện cho cơ sở dữ liệu
+            var factory = new DanhMucFactory();  // Factory để tạo đối tượng DanhMuc
+            danhMucService = new DanhMucService(db, factory);  // Tạo instance của DanhMucService
         }
 
+        // Phương thức Create (GET): Tạo một View để hiển thị danh sách DanhMuc cho người dùng
         public ActionResult Create()
         {
+            // Lấy danh sách các tên danh mục từ DanhMucService
             var danhMucList = danhMucService.GetDanhMucList();
+
+            // Gán danh sách danh mục vào ViewBag để sử dụng trong View
             ViewBag.DanhMucList = danhMucList;
 
-            return View();
+            return View();  // Trả về View cho người dùng điền thông tin để tạo danh mục mới
         }
+
+        // Phương thức Create (POST): Nhận dữ liệu từ người dùng để thêm một danh mục mới
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,DanhMuc1,TheLoai")] DanhMuc danhMuc)
         {
+            // Kiểm tra xem dữ liệu nhập vào có hợp lệ hay không
             if (ModelState.IsValid)
             {
+                // Kiểm tra xem danh mục với tên và thể loại đã tồn tại chưa
                 if (danhMucService.IsDanhMucExists(danhMuc.DanhMuc1, danhMuc.TheLoai))
                 {
+                    // Nếu danh mục đã tồn tại, thêm lỗi vào ModelState để hiển thị cho người dùng
                     ModelState.AddModelError("", "Thể loại này đã tồn tại");
-                    return View(danhMuc);
+                    return View(danhMuc);  // Trả lại View với thông tin đã nhập cùng với thông báo lỗi
                 }
 
+                // Nếu danh mục chưa tồn tại, thêm vào cơ sở dữ liệu
                 danhMucService.AddDanhMuc(danhMuc.ID, danhMuc.DanhMuc1, danhMuc.TheLoai);
+
+                // Sau khi thêm thành công, chuyển hướng về trang Index để xem danh sách danh mục
                 return RedirectToAction("Index");
             }
 
+            // Nếu dữ liệu không hợp lệ, trả lại View với thông tin đã nhập
             return View(danhMuc);
         }
+
         public ActionResult Edit(int? id)
         {
             if (id == null)

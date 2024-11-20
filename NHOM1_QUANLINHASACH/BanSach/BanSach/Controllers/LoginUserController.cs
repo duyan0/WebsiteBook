@@ -9,6 +9,7 @@ using System.Net.Mail;
 using System.Data.Entity.Validation;
 
 
+
 namespace BanSach.Controllers
 {
     public class LoginUserController : Controller
@@ -91,7 +92,7 @@ namespace BanSach.Controllers
             return View();
         }
 
-
+        //.../auth/userinfo.email,.../auth/userinfo.profile	
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public ActionResult LoginAccountCus(KhachHang _cus)
         {
@@ -122,8 +123,8 @@ namespace BanSach.Controllers
             Session["SoDT"] = check.SoDT;
 
             return RedirectToAction("SignInSuccess");
-
         }
+
         [HttpGet]
         public ActionResult SignInSuccess()
         {

@@ -1,16 +1,19 @@
 ﻿using BanSach.Models;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Core;
-using System.Linq;
-using System.Net;
-using System.Web.Mvc;
+using ClosedXML.Excel;
 using PagedList;
 using System;
+using System.Data;
+using System.Data.Entity;
+using System.IO;
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using System.Web.Mvc;
+
 
 namespace BanSach.Controllers
 {
+
     public class KhachHangsController : Controller
     {
         private dbSach db = new dbSach();
@@ -20,12 +23,23 @@ namespace BanSach.Controllers
         }
 
         // GET: KhachHangs
-        public ActionResult Index(int? page)
+        [HttpGet]
+        public ActionResult Index(int? page, string searchString)
         {
             int pageSize = 10; // Số bản ghi trên mỗi trang
             int pageNumber = (page ?? 1); // Trang hiện tại, mặc định là trang 1
+            ViewBag.CurrentFilter = searchString;
+            var khachhang = db.KhachHang.AsQueryable();
 
-            var khachHangList = db.KhachHang.OrderBy(kh => kh.IDkh).ToPagedList(pageNumber, pageSize);
+            // Nếu có từ khóa tìm kiếm thì lọc danh sách Admin
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                khachhang = khachhang.Where(a => a.TenKH.Contains(searchString) ||
+                                           a.SoDT.Contains(searchString) ||
+                                           a.Email.Contains(searchString) ||
+                                           a.TKhoan.Contains(searchString));
+            }
+            var khachHangList = khachhang.OrderBy(kh => kh.IDkh).ToPagedList(pageNumber, pageSize);
             return View(khachHangList);
         }
 
@@ -123,7 +137,7 @@ namespace BanSach.Controllers
                 try
                 {
                     db.SaveChanges();
-                    return RedirectToAction("Index", "KhachHangs");
+                    return RedirectToAction("UpdateSuccesss", "KhachHangs");
                 }
                 catch (Exception ex)
                 {
@@ -202,7 +216,7 @@ namespace BanSach.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        public async Task<ActionResult> LichSuDonHang()
+        public ActionResult LichSuDonHang(int? page)
         {
             int? currentCustomerId = Session["IDkh"] as int?;
 
@@ -211,15 +225,100 @@ namespace BanSach.Controllers
                 return RedirectToAction("LoginAccountCus", "LoginUser");
             }
 
-            // Truy vấn đơn hàng bất đồng bộ
+            // Truy vấn đơn hàng và sắp xếp theo ngày đặt hàng giảm dần
+            var orders = db.DonHang
+                .Where(dh => dh.IDkh == currentCustomerId.Value)
+                .OrderByDescending(dh => dh.NgayDatHang) // Sắp xếp theo ngày đặt hàng giảm dần
+                .Include(dh => dh.DonHangCT)
+                .ToList();
+
+            int pageSize = 10; // Số đơn hàng mỗi trang
+            int pageNumber = (page ?? 1);
+
+            // Chuyển đổi từ List sang IPagedList
+            var pagedOrders = orders.ToPagedList(pageNumber, pageSize);
+
+            return View(pagedOrders);
+        }
+
+
+
+        [HttpPost]
+        public async Task<ActionResult> HuyDonHang(int orderId)
+        {
+            int? currentCustomerId = Session["IDkh"] as int?;
+
+            if (!currentCustomerId.HasValue)
+            {
+                return RedirectToAction("LoginAccountCus", "LoginUser");
+            }
+
+            // Tìm đơn hàng theo ID và kiểm tra quyền sở hữu
+            var order = await db.DonHang.FirstOrDefaultAsync(dh => dh.IDdh == orderId && dh.IDkh == currentCustomerId.Value);
+
+            if (order == null)
+            {
+                return HttpNotFound(); // Hoặc hiển thị thông báo lỗi phù hợp
+            }
+
+            // Cập nhật trạng thái đơn hàng thành "Canceled"
+            order.TrangThai = "Đã hủy";
+
+            // Lưu thay đổi vào cơ sở dữ liệu
+            await db.SaveChangesAsync();
+
+            // Quay lại lịch sử đơn hàng
+            return RedirectToAction("LichSuDonHang");
+        }
+        public async Task<ActionResult> ExportToExcel()
+        {
+            int? currentCustomerId = Session["IDkh"] as int?;
+
+            if (!currentCustomerId.HasValue)
+            {
+                return RedirectToAction("LoginAccountCus", "LoginUser");
+            }
+
             var orders = await db.DonHang
                 .Where(dh => dh.IDkh == currentCustomerId.Value)
                 .Include(dh => dh.DonHangCT)
                 .ToListAsync();
 
-            return View(orders);
-        }
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("LichSuDonHang");
+                var currentRow = 1;
 
+                // Tiêu đề cột
+                worksheet.Cell(currentRow, 1).Value = "Mã đơn hàng";
+                worksheet.Cell(currentRow, 2).Value = "Ngày đặt hàng";
+                worksheet.Cell(currentRow, 3).Value = "Ngày nhận hàng";
+                worksheet.Cell(currentRow, 4).Value = "Tổng số tiền";
+                worksheet.Cell(currentRow, 5).Value = "Trạng thái";
+
+                // Nội dung đơn hàng
+                foreach (var order in orders)
+                {
+                    currentRow++;
+                    worksheet.Cell(currentRow, 1).Value = order.IDdh;
+                    worksheet.Cell(currentRow, 2).Value = order.NgayDatHang?.ToString("dd/MM/yyyy HH:mm:ss") ?? "Chưa đặt hàng";
+                    worksheet.Cell(currentRow, 3).Value = order.TrangThai == "Đã nhận hàng" && order.NgayNhanHang.HasValue
+                        ? order.NgayNhanHang.Value.ToString("dd/MM/yyyy HH:mm:ss")
+                        : (order.TrangThai == "Đã xác nhận" && order.NgayDatHang.HasValue
+                            ? "Dự kiến: " + order.NgayDatHang.Value.AddDays(2).ToString("dd/MM/yyyy")
+                            : "Chưa có thông tin");
+                    worksheet.Cell(currentRow, 4).Value = order.GetTongSoTien().ToString("C0", new System.Globalization.CultureInfo("vi-VN"));
+                    worksheet.Cell(currentRow, 5).Value = order.TrangThai;
+                }
+
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    var content = stream.ToArray();
+                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "LichSuDonHang.xlsx");
+                }
+            }
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

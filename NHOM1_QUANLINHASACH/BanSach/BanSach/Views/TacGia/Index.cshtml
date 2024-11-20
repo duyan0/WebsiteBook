@@ -1,66 +1,115 @@
-﻿@model IEnumerable<BanSach.Models.TacGia>
+﻿@model PagedList.IPagedList<BanSach.Models.TacGia>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Tác giả nè";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<h2 class="text-center font-weight-bold">Danh mục tác giả</h2>
 
-<h2 class="text-center">Danh mục tác giả</h2>
+<div class="search-bar mb-4">
+    @using (Html.BeginForm("Index", "TacGia", FormMethod.Get, new { id = "searchForm" }))
+    {
+        <div class="input-group mb-1">
+            <input type="text" name="searchString" value="@ViewBag.CurrentFilter" class="form-control" placeholder="Tìm kiếm Tác Giả..." />
+            <div class="input-group-append">
+                <button class="btn btn-dark" type="submit">Tìm kiếm</button>
+            </div>
+        </div>
+    }
+</div>
 
 <p>
     @Html.ActionLink("Thêm", "Create", null, new { @class = "btn btn-dark rounded-sm" })
 </p>
 
-<table class="table table-hover rounded-sm">
-    <thead class="rounded-sm text-white"style="background-color:black;">
-        <tr>
-            <th >
-                ID 
-            </th>
-            <th>
-                Tên TG
-            </th>
-            <th>
-                Ngày sinh
-            </th>
-            <th>
-                Quốc gia
-            </th>
-            <th>
-                Tiểu sử
-            </th>
-            <th class="text-center">Thao tác</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+@if (Model != null && Model.Any())
+{
+    <table class="table table-bordered table-hover rounded-sm w-100">
+        <thead class="rounded-sm text-white" style="background-color:black;">
             <tr>
-                <td class="font-weight-bold">
-                    @Html.DisplayFor(modelItem => item.IDtg)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TenTacGia)
-                </td>
-                <td>
-                    @String.Format("{0:dd-MM-yyyy}", item.NgaySinh)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.QuocGia)
-                </td>
-                <td>
-                    @{
-                        var text = item.TieuSu;
-                        var displayText = text.Length > 30 ? text.Substring(0, 30) + "..." : text;
-                    }
-                    @Html.Raw(displayText)
-                </td>
-                <td class="text-center">
-                    @Html.ActionLink("Sửa", "Edit", new { id = item.IDtg }, new { @class = "btn btn-warning btn-sm rounded" })
-                    @Html.ActionLink("ChiTiết", "Details", new { id = item.IDtg }, new { @class = "btn btn-info btn-sm rounded" })
-                    @Html.ActionLink("Xoá", "Delete", new { id = item.IDtg }, new { @class = "btn btn-danger btn-sm rounded" })
-                </td>
+                <th>ID</th>
+                <th>Tên TG</th>
+                <th>Ngày sinh</th>
+                <th>Quốc gia</th>
+                <th>Tiểu sử</th>
+                <th class="text-center">Thao tác</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="font-weight-bold text-dark">
+                        @Html.DisplayFor(modelItem => item.IDtg)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenTacGia)
+                    </td>
+                    <td>
+                        @String.Format("{0:dd-MM-yyyy}", item.NgaySinh)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.QuocGia)
+                    </td>
+                    <td>
+                        @{
+                            var text = item.TieuSu;
+                            var displayText = text.Length > 30 ? text.Substring(0, 30) + "..." : text;
+                        }
+                        @Html.Raw(displayText)
+                    </td>
+                    <td class="text-center">
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.IDtg }, new { @class = "btn btn-warning btn-sm rounded btn-fixed-size" })
+                        @Html.ActionLink("Xem", "Details", new { id = item.IDtg }, new { @class = "btn btn-info btn-sm rounded btn-fixed-size" })
+                        @Html.ActionLink("Xoá", "Delete", new { id = item.IDtg }, new { @class = "btn btn-danger btn-sm rounded btn-fixed-size" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Pagination Controls -->
+    <div class="pagination-container">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.CurrentFilter }),
+            new PagedListRenderOptions
+            {
+                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                DisplayLinkToIndividualPages = true,
+                MaximumPageNumbersToDisplay = 5
+            })
+    </div>
+}
+else
+{
+    <div class="alert alert-info text-center" role="alert">
+        Không có tác giả nào trong hệ thống.
+    </div>
+}
+
+<style>
+    .btn-fixed-size {
+        width: 70px; /* Set fixed width for consistency */
+        height: 35px; /* Set fixed height for consistency */
+        text-align: center; /* Center text inside the button */
+        line-height: 1.2; /* Adjust line-height for proper vertical centering */
+        white-space: nowrap; /* Prevents text wrapping */
+        font-size: 13px; /* Font size for buttons */
+        padding: 5px; /* Adjust padding to fit text comfortably */
+    }
+
+    .pagination-container {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .search-bar {
+        max-width: 400px;
+        margin: 0 auto 20px auto;
+    }
+</style>

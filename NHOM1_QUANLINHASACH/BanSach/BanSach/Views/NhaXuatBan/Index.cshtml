@@ -1,19 +1,39 @@
-﻿@model IEnumerable<BanSach.Models.NhaXuatBan>
+﻿@model PagedList.IPagedList<BanSach.Models.NhaXuatBan>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Danh Sách Nhà Xuất Bản";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<h2 class="text-center font-weight-bold mt-3">Danh Sách Nhà Xuất Bản</h2>
 
-<h2 class="text-center font-weight-bold mt-3">Danh Sách Nhà Xuất Bản</h2> <!-- Tiêu đề chính -->
+<!-- Search Form -->
+<div class="search-bar mb-1">
+    @using (Html.BeginForm("Index", "NhaXuatBan", FormMethod.Get, new { id = "searchForm" }))
+    {
+        <div class="input-group mb-1">
+            <input type="text" name="searchString" value="@Request.QueryString["searchString"]" class="form-control" placeholder="Tìm kiếm Nhà Xuất Bản..." />
+            <div class="input-group-append">
+                <button class="btn btn-dark" type="submit">Tìm kiếm</button>
+            </div>
+        </div>
+    }
+</div>
 
-<p class="text-left  text-white p-2">
+<!-- Add New Publisher Button -->
+<p class="text-left text-white p-1">
     @Html.ActionLink("Thêm", "Create", null, new { @class = "btn btn-dark rounded-sm" })
+</p>
+
+@if (Model != null && Model.Any())
+{
+    <!-- Publishers Table -->
     <div class="table-responsive">
         <table class="table table-bordered table-hover table-striped rounded">
-            <thead class="text-white"style="background-color:black;">
+            <thead class="text-white" style="background-color:black;">
                 <tr>
-                    <th>ID </th>
+                    <th>ID</th>
                     <th>Tên nhà xuất bản</th>
                     <th>Địa chỉ</th>
                     <th>Số điện thoại</th>
@@ -36,7 +56,6 @@
                             }
                             @displayAddress
                         </td>
-
                         <td>@Html.DisplayFor(modelItem => item.SoDienThoai)</td>
                         <td>@Html.DisplayFor(modelItem => item.Email)</td>
                         <td class="text-center">
@@ -52,42 +71,75 @@
         </table>
     </div>
 
-    <style>
-        /* Bo góc cho bảng và các nút */
-        .rounded {
-            border-radius: 0.25rem;
-        }
+    <!-- Pagination Controls -->
+    <div class="pagination-container">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = Request.QueryString["searchString"] }),
+            new PagedListRenderOptions
+            {
+                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                DisplayLinkToIndividualPages = true,
+                MaximumPageNumbersToDisplay = 5
+            })
+    </div>
+}
+else
+{
+    <div class="alert alert-info text-center" role="alert">
+        Không có Nhà Xuất Bản nào trong hệ thống.
+    </div>
+}
 
-        /* Bảng hiển thị */
-        .table {
-            margin-top: 1rem;
-            font-size: 0.95rem;
-        }
+<!-- Custom CSS for Consistent Button Sizing -->
+<style>
+    /* Rounded corners for table and buttons */
+    .rounded {
+        border-radius: 0.25rem;
+    }
 
-        /* Tiêu đề bảng */
-        .thead-dark th {
-            text-align: center;
-            vertical-align: middle;
-        }
+    /* Table display */
+    .table {
+        margin-top: 1rem;
+        font-size: 0.95rem;
+    }
 
-        /* Ô dữ liệu */
-        td, th {
-            text-align: left;
-            vertical-align: middle;
-        }
+    /* Header styling */
+    .thead-dark th {
+        text-align: center;
+        vertical-align: middle;
+    }
 
-        /* Căn giữa và khoảng cách cho các nút thao tác */
-        .btn {
-            min-width: 80px;
-        }
+    /* Table cell styling */
+    td, th {
+        text-align: left;
+        vertical-align: middle;
+    }
 
-        /* Padding cho nút thêm mới */
-        .text-right .btn {
-            margin-bottom: 1rem;
-        }
+    /* Button sizing and alignment */
+    .btn {
+        min-width: 80px;
+    }
 
-        /* Nhóm nút nằm ngang */
-        .btn-group {
-            gap: 5px; /* Khoảng cách giữa các nút */
-        }
-    </style>
+    /* Padding for the "Add New" button */
+    .text-right .btn {
+        margin-bottom: 1rem;
+    }
+
+    /* Button group spacing */
+    .btn-group {
+        gap: 5px; /* Space between buttons */
+    }
+
+    .pagination-container {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .search-bar {
+        max-width: 400px;
+        margin: 0 auto 20px auto;
+    }
+</style>

@@ -1,4 +1,5 @@
 ﻿using BanSach.Models;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -13,9 +14,23 @@ namespace BanSach.Controllers
     {
         // GET: NhaXuatBan
         dbSach db = new dbSach();
-        public ActionResult Index()
+        public ActionResult Index(string searchString, int? page)
         {
-            return View(db.NhaXuatBan.ToList());
+            // Get all publishers from the database
+            var publishers = db.NhaXuatBan.AsQueryable();
+
+            // Apply search filter if searchString is provided
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                publishers = publishers.Where(p => p.Tennxb.Contains(searchString));
+            }
+
+            // Define page size and page number
+            int pageSize = 10; // Number of items per page
+            int pageNumber = (page ?? 1); // Default to page 1 if no page is specified
+
+            // Return the paginated and filtered list to the view
+            return View(publishers.OrderBy(p => p.IDnxb).ToPagedList(pageNumber, pageSize));
         }
         public ActionResult Create()
         {

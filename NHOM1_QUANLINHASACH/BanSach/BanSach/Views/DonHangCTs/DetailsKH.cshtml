@@ -30,6 +30,7 @@
 
     .thongtin {
         color: white; /* Đổi màu chữ thông tin thành màu trắng */
+        margin-right: 5px;
     }
 
     table {
@@ -44,6 +45,12 @@
 </style>
 
 <h2>Thông tin đơn hàng</h2>
+<p>
+    <div class="form-actions text-center">
+        <a href="~/KhachHangs/LichSuDonHang" class="btn btn-success shadow-sm rounded-sm">Quay về</a>
+        <a href="@Url.Action("ExportOrderDetailsToExcel", "DonHangCTs", new { id = Model.IDDonHang })" class="btn btn-primary shadow-sm rounded-sm ml-2">Xuất Excel</a>
+    </div>
+</p>
 
 <table class="bang">
     <tr>
@@ -161,9 +168,8 @@
 
 </table>
 <p>
-    <div class="form-actions">
-        <span class="mx-1"></span>
-        <a href="~/KhachHangs/LichSuDonHang" class="btn btn-secondary btn-lg shadow-sm rounded-sm">Quay về</a>
+    <div class="form-actions text-center">
+        <a href="~/KhachHangs/LichSuDonHang" class="btn btn-outline-success  shadow-sm rounded-sm">Quay về</a>
     </div>
 
 </p>

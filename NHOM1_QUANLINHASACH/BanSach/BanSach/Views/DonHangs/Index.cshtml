@@ -1,9 +1,13 @@
-﻿@model IEnumerable<BanSach.Models.DonHang>
-@using System
+﻿@model PagedList.IPagedList<BanSach.Models.DonHang>
+@using PagedList.Mvc;
+
 @{
     ViewBag.Title = "Quản lý đơn hàng";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
 <style>
     .tieude {
         text-align: center;
@@ -50,85 +54,127 @@
         color: red;
         font-weight: bold;
     }
+
+    /* Search bar styling */
+    .search-bar {
+        max-width: 400px;
+        margin: 0 auto 20px auto;
+    }
+
+    /* Pagination container styling */
+    .pagination-container {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+    }
 </style>
 
 <h2 class="tieude">Quản lý đơn hàng</h2>
 
-<table class="table table-bordered table-hover">
-    <tr class="text-white" style="background-color:black;">
-        <th >
-            Mã ĐH
-        </th>
-        <th>
-            ID và Tên KH
-        </th>
-        <th>
-            Ngày ĐH
-        </th>
-        <th>
-            Tổng số tiền
-        </th>
-        <th>
-            Phương thức thanh toán
-        </th>
-        <th>
-            Trạng thái ĐH
-        </th>
-        <th>Thao tác</th>
-    </tr>
-
-    @foreach (var item in Model)
+<!-- Search Form -->
+<div class="search-bar mb-0">
+    @using (Html.BeginForm("Index", "DonHangs", FormMethod.Get, new { id = "searchForm" }))
     {
-        <tr>
-            <td class="font-weight-bold">@item.IDdh</td>
-            <td class="font-weight-bold">
-                @Html.DisplayFor(modelItem => item.KhachHang.IDkh) -
-                @Html.DisplayFor(modelItem => item.KhachHang.TenKH)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayDatHang)
-            </td>
-            <td class="text-danger font-weight-bold">
-                @item.GetTongSoTien().ToString("N0") VND
-            </td>
-            <td class="font-weight-bold">
-                Thanh toán khi nhận hàng
-            </td>
-            <td>
-                @{
-                    string statusClass = "status-waiting"; // Mặc định là "Chờ xử lý"
-                    switch (item.TrangThai)
-                    {
-                        case "Đã xác nhận":
-                            statusClass = "status-confirmed";
-                            break;
-                        case "Đã huỷ":
-                            statusClass = "status-cancelled";
-                            break;
-                        case "Đã nhận hàng":
-                            statusClass = "status-received";
-                            break;
-                    }
-                }
-                <span class="@statusClass">
-                    @(string.IsNullOrEmpty(item.TrangThai) ? "Chờ xử lý" : item.TrangThai)
-                </span>
-            </td>
-            <td>
-                @Html.ActionLink("Xác nhận", "Confirm", new { id = item.IDdh }, new { @class = "btn btn-success btn-sm me-1 rounded", onclick = "return confirm('Bạn có chắc chắn xác nhận đơn hàng này?');" })
-                @Html.ActionLink("Huỷ", "Cancel", new { id = item.IDdh }, new { @class = "btn btn-danger btn-sm me-1 rounded", onclick = "return confirm('Bạn có chắc chắn huỷ đơn hàng này?');" })
-                @Html.ActionLink("Xoá", "Delete", new { id = item.IDdh }, new { @class = "btn btn-warning btn-sm me-1 rounded", onclick = "return confirm('Bạn có chắc chắn xoá đơn hàng này?');" })
-            </td>
-        </tr>
+        <div class="input-group mb-1">
+            <input type="text" name="searchString" value="@Request.QueryString["searchString"]" class="form-control" placeholder="Tìm kiếm Đơn Hàng hoặc Khách Hàng..." />
+            <div class="input-group-append">
+                <button class="btn btn-dark" type="submit">Tìm kiếm</button>
+            </div>
+        </div>
     }
-</table>
+</div>
+
+
+@if (Model != null && Model.Any())
+{
+    <!-- Orders Table -->
+    <table class="table table-bordered table-hover mt-2">
+        <thead class="text-white" style="background-color:black;">
+            <tr>
+                <th>Mã ĐH</th>
+                <th>ID và Tên KH</th>
+                <th>Ngày ĐH</th>
+                <th>Tổng số tiền</th>
+                <th>Phương thức thanh toán</th>
+                <th>Trạng thái ĐH</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="font-weight-bold">@item.IDdh</td>
+                    <td class="font-weight-bold">
+                        @Html.DisplayFor(modelItem => item.KhachHang.IDkh) -
+                        @Html.DisplayFor(modelItem => item.KhachHang.TenKH)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayDatHang)
+                    </td>
+                    <td class="text-danger font-weight-bold">
+                        @item.GetTongSoTien().ToString("N0") VND
+                    </td>
+                    <td class="font-weight-bold">
+                        Thanh toán khi nhận hàng
+                    </td>
+                    <td>
+                        @{
+                            string statusClass = "status-waiting"; // Default status is "Chờ xử lý"
+                            switch (item.TrangThai)
+                            {
+                                case "Đã xác nhận":
+                                    statusClass = "status-confirmed";
+                                    break;
+                                case "Đã huỷ":
+                                    statusClass = "status-cancelled";
+                                    break;
+                                case "Đã nhận hàng":
+                                    statusClass = "status-received";
+                                    break;
+                            }
+                        }
+                        <span class="@statusClass">
+                            @(string.IsNullOrEmpty(item.TrangThai) ? "Chờ xử lý" : item.TrangThai)
+                        </span>
+                    </td>
+                    <td>
+                        @Html.ActionLink("Xác nhận", "Confirm", new { id = item.IDdh }, new { @class = "btn btn-success btn-sm me-1 rounded", onclick = "return confirm('Bạn có chắc chắn xác nhận đơn hàng này?');" })
+                        @Html.ActionLink("Huỷ", "Cancel", new { id = item.IDdh }, new { @class = "btn btn-danger btn-sm me-1 rounded", onclick = "return confirm('Bạn có chắc chắn huỷ đơn hàng này?');" })
+                        @Html.ActionLink("Xoá", "Delete", new { id = item.IDdh }, new { @class = "btn btn-warning btn-sm me-1 rounded", onclick = "return confirm('Bạn có chắc chắn xoá đơn hàng này?');" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Pagination Controls -->
+    <div class="pagination-container">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = Request.QueryString["searchString"] }),
+            new PagedListRenderOptions
+            {
+                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                DisplayLinkToIndividualPages = true,
+                MaximumPageNumbersToDisplay = 5
+            })
+    </div>
+}
+else
+{
+    <div class="alert alert-info text-center" role="alert">
+        Không có đơn hàng nào trong hệ thống.
+    </div>
+}
 
 <style>
     .delete-link {
-        color: red; /* Sửa màu trong đây nhaa*/
+        color: red; /* Modify delete link color */
     }
 
         .delete-link:hover {
-            color: darkred; /* Sửa màu trong đây nhaa*/
+            color: darkred; /* Modify delete link hover color */
         }
 </style>

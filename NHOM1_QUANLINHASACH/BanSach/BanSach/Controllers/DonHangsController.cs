@@ -4,9 +4,11 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using BanSach.Models;
+using PagedList;
 
 namespace BanSach.Controllers
 {
@@ -22,10 +24,26 @@ namespace BanSach.Controllers
         {
             _donHangService = donHangService;
         }
-        public ActionResult Index()
+        public ActionResult Index(string searchString, int? page)
         {
-            var donHangs = db.DonHang.Include(d => d.KhachHang);
-            return View(donHangs.ToList());
+            // Get orders with customer information
+            var donHangs = db.DonHang.Include(d => d.KhachHang).AsQueryable();
+
+            // Apply search filter if searchString is provided
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                // Search by Order ID or Customer Name (you can customize this based on your needs)
+                donHangs = donHangs.Where(d => d.IDdh.ToString().Contains(searchString)
+                                             || d.KhachHang.TenKH.Contains(searchString)
+                                             || d.TrangThai.Contains(searchString));
+            }
+
+            // Define page size and number
+            int pageSize = 10; // Number of items per page
+            int pageNumber = (page ?? 1); // Default to page 1 if no page is specified
+
+            // Return the paginated and filtered list to the view
+            return View(donHangs.OrderBy(d => d.IDdh).ToPagedList(pageNumber, pageSize));
         }
         public ActionResult Details(int? id)
         {
@@ -172,20 +190,25 @@ namespace BanSach.Controllers
         }
         [HttpGet]
         [Route("DonHang/DaNhanHang/{id:int}")]
-        public ActionResult DaNhanHang(int id)
+        public async Task<ActionResult> DaNhanHang(int id)
         {
-            var donHang = db.DonHang.Find(id);
+            var donHang = await db.DonHang.FindAsync(id); // Sử dụng FindAsync cho bất đồng bộ
             if (donHang == null)
             {
                 return HttpNotFound();
             }
 
+            // Cập nhật ngày nhận hàng và trạng thái khi người dùng đã nhận hàng
             donHang.NgayNhanHang = DateTime.Now;
             donHang.TrangThai = "Đã nhận hàng";
-            db.SaveChanges();
+            await db.SaveChangesAsync(); // Sử dụng SaveChangesAsync để lưu bất đồng bộ
 
+            // Chuyển hướng về trang lịch sử đơn hàng sau khi cập nhật
             return RedirectToAction("LichSuDonHang", "KhachHangs");
         }
+
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

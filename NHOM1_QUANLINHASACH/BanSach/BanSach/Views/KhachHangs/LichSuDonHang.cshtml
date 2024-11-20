@@ -1,12 +1,13 @@
-﻿@model IEnumerable<BanSach.Models.DonHang>
-
+﻿@model PagedList.IPagedList<BanSach.Models.DonHang>
+@using PagedList.Mvc; 
+@using PagedList; 
 @{
     ViewBag.Title = "LichSuDonHang";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container-fluid mt-5">
-    <h2 class="text-white text-center">Lịch sử Đơn Hàng</h2>
+    <h2 class="text-white text-center font-weight-bold">Lịch sử Đơn Hàng</h2>
 
     @if (!Model.Any())
     {
@@ -17,10 +18,14 @@
     }
     else
     {
+        <div class="text-right mb-3">
+            <a href="@Url.Action("ExportToExcel", "KhachHangs")" class="btn btn-success ml-2 rounded-sm ">Xuất Excel</a>
+        </div>
+
         <div class="table-responsive mt-4">
             <table class="table table-bordered table-hover">
                 <thead>
-                    <tr class=" text-white text-center">
+                    <tr class="text-white text-center">
                         <th style="width:134px;">Mã đơn hàng</th>
                         <th>Ngày đặt hàng</th>
                         <th>Ngày nhận hàng</th>
@@ -32,33 +37,125 @@
                 <tbody>
                     @foreach (var order in Model)
                     {
-                       
-                        <tr class="text-center ">
+                        <tr class="text-center">
                             <td class="font-weight-bold text-white">@order.IDdh</td>
-                            <td class="text-white">@(order.NgayDatHang?.ToString("dd/MM/yyyy HH:mm:ss") ?? "Chưa đặt hàng")</td>
-                            <td class="text-white">@(order.NgayNhanHang?.ToString("dd/MM/yyyy HH:mm:ss") ?? "Chưa nhận hàng")</td>
-                            <td class="text-danger">@order.GetTongSoTien().ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</td>
-                            <td class="font-weight-bold @(order.TrangThai == "Chờ xử lý" ? "text-white"
-  : order.TrangThai == "Đã xác nhận" ? "text-success"
-  : order.TrangThai == "Đã hủy" ? "text-danger"
-  : order.TrangThai == "Đã nhận hàng" ? "text-warning"
-  : "text-white")">
-                                @order.TrangThai
+                            <td class="text-white">
+                                @(
+                                    order.NgayDatHang.HasValue
+                                    ? order.NgayDatHang.Value.ToString("dd/MM/yyyy HH:mm:ss")
+                                    : "Chưa đặt hàng"
+                                )
                             </td>
-
-                            <td>
-                                <a href="@Url.Action("DetailsKH", "DonHangCTs", new { id = order.IDdh })" class="btn btn-success rounded-sm">Xem chi tiết</a>
-                                @if (order.TrangThai == "Đã xác nhận")
+                            <td class="text-white">
+                                @if (order.TrangThai == "Đã nhận hàng" && order.NgayNhanHang.HasValue)
                                 {
-                                    <a href="@Url.Action("DaNhanHang", "DonHangs", new { id = order.IDdh })" class="btn btn-danger rounded-sm ml-2">Đã nhận hàng</a>
+                                    @order.NgayNhanHang.Value.ToString("dd/MM/yyyy HH:mm:ss")
+                                }
+                                else if (order.TrangThai == "Đã xác nhận" && order.NgayDatHang.HasValue)
+                                {
+                                    <span style="color: orange;">Dự kiến: @order.NgayDatHang.Value.AddDays(2).ToString("dd/MM/yyyy")</span>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-success rounded-sm btn-fixed-sizee" disabled>Chưa có thông tin</button>
                                 }
                             </td>
-
+                            <td class="text-danger font-weight-bold">
+                                @order.GetTongSoTien().ToString("C0", new System.Globalization.CultureInfo("vi-VN"))
+                            </td>
+                            <td class="text-center">
+                                <button class="btn @(order.TrangThai == "Chờ xử lý" ? "btn-secondary rounded-sm"
+                             : order.TrangThai == "Đã xác nhận" ? "btn-success rounded-sm"
+                             : order.TrangThai == "Đã hủy" ? "btn-danger rounded-sm"
+                             : order.TrangThai == "Đã nhận hàng" ? "btn-warning rounded-sm"
+                             : "btn-secondary")  btn-fixed-size rounded-sm" disabled>
+                                    @order.TrangThai
+                                </button>
+                            </td>
+                            <td>
+                                <a href="@Url.Action("DetailsKH", "DonHangCTs", new { id = order.IDdh })" class="btn btn-success btn-sm rounded-sm btn-fixed-sizee">Xem chi tiết</a>
+                                @if (order.TrangThai == "Đã xác nhận")
+                                {
+                                    <a href="@Url.Action("DaNhanHang", "DonHangs", new { id = order.IDdh })" class="btn btn-danger btn-sm rounded-sm ml-2 btn-fixed-sizee">Đã nhận hàng</a>
+                                }
+                                @if (order.TrangThai == "Chờ xử lý")
+                                {
+                                    <form action="@Url.Action("HuyDonHang", "KhachHangs")" method="post" class="d-inline">
+                                        <input type="hidden" name="orderId" value="@order.IDdh" />
+                                        <button type="submit" class="btn btn-warning btn-sm rounded-sm ml-2 btn-fixed-sizee">Hủy đơn</button>
+                                    </form>
+                                }
+                            </td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
+
+        <div class="pagination-container">
+            @Html.PagedListPager(Model, page => Url.Action("LichSuDonHang", new { page }), new PagedListRenderOptions
+            {
+                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                DisplayLinkToIndividualPages = true,
+                LinkToFirstPageFormat = "Đầu tiên",
+                LinkToLastPageFormat = "Cuối cùng",
+                LinkToPreviousPageFormat = "Trước",
+                LinkToNextPageFormat = "Tiếp",
+                UlElementClasses = new[] { "pagination" }
+            })
+        </div>
+
+
+
     }
 </div>
 
+<style>
+    .btn-fixed-size {
+        width: 150px;
+        height: 40px;
+    }
+    .pagination-container {
+        text-align: center; /* Căn giữa phân trang */
+        margin-top: 20px; /* Tùy chọn: tạo khoảng cách phía trên */
+    }
+
+    .pagination {
+        display: inline-flex; /* Sử dụng inline-flex để đảm bảo các item căn đều nhau theo chiều ngang */
+        padding-left: 0; /* Loại bỏ khoảng cách mặc định bên trái của ul */
+        list-style: none; /* Bỏ dấu chấm mặc định của ul */
+    }
+
+        .pagination > li {
+            display: inline-block; /* Đảm bảo các item hiển thị theo dạng hàng ngang */
+            margin-right: 5px; /* Tạo khoảng cách giữa các item */
+        }
+
+            .pagination > li > a,
+            .pagination > li > span {
+                color: white; /* Màu sắc cho các liên kết phân trang */
+                padding: 10px 15px; /* Khoảng cách bên trong của liên kết */
+                text-decoration: none; /* Bỏ gạch chân */
+                border-radius: 5px; /* Bo tròn các góc */
+                background-color: #5a5a5a; /* Màu nền của liên kết phân trang */
+            }
+
+            .pagination > li.active > a,
+            .pagination > li.active > span,
+            .pagination > li.active > a:hover,
+            .pagination > li.active > span:hover {
+                background-color: #007bff; /* Màu nền cho trang hiện tại */
+                color: white; /* Màu chữ cho trang hiện tại */
+            }
+
+            .pagination > li > a:hover,
+            .pagination > li > span:hover {
+                background-color: #f0f0f0; /* Màu nền khi rê chuột vào */
+                color: #5a5a5a; /* Màu chữ khi rê chuột vào */
+            }
+
+
+</style>

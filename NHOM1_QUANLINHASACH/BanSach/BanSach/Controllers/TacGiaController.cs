@@ -1,4 +1,6 @@
-﻿    using BanSach.Models;
+﻿using BanSach.Models;
+using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -11,9 +13,23 @@ namespace BanSach.Controllers
     {
         // GET: TacGia
         dbSach db = new dbSach();
-        public ActionResult Index()
+        public ActionResult Index(string searchString, int? page)
         {
-            return View(db.TacGia.ToList());
+            // Query to get authors from the database
+            var authors = db.TacGia.AsQueryable();
+
+            // Filtering logic if search string is provided
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                authors = authors.Where(a => a.TenTacGia.Contains(searchString));
+            }
+
+            // Set page size and page number
+            int pageSize = 10; // Number of authors per page
+            int pageNumber = (page ?? 1); // Default to page 1 if page is null
+
+            // Use ToPagedList to paginate the list of authors
+            return View(authors.OrderBy(a => a.IDtg).ToPagedList(pageNumber, pageSize));
         }
         public ActionResult Create()
         {

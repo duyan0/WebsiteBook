@@ -1,80 +1,105 @@
-﻿@model IEnumerable<BanSach.Models.KhuyenMai>
+﻿@model PagedList.IPagedList<BanSach.Models.KhuyenMai>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Danh sách khuyến mãi";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
+<link href="~/Content/PagedList.css" rel="stylesheet" />
 <h2 class="text-center font-weight-bold">Danh sách khuyến mãi</h2>
 
+<!-- Search Form -->
+<div class="search-bar mb-4">
+    @using (Html.BeginForm("Index", "KhuyenMai", FormMethod.Get, new { id = "searchForm" }))
+    {
+        <div class="input-group mb-3">
+            <input type="text" name="searchString" value="@ViewBag.CurrentFilter" class="form-control" placeholder="Tìm kiếm Khuyến Mãi..." />
+            <div class="input-group-append">
+                <button class="btn btn-dark" type="submit">Tìm kiếm</button>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Add New Promotion Button -->
 <p>
     @Html.ActionLink("Thêm", "Create", null, new { @class = "btn btn-dark rounded-sm" })
 </p>
-<table class="table table-bordered table-hover">
-    <thead class="text-white" style="background-color:black;">
-        <tr>
-            <th>
-                ID
-            </th>
-            <th>
-                Tên KM
-            </th>
-            <th class="text-center">
-                Ngày bắt đầu
-            </th>
-            <th class="text-center">
-                Ngày kết thúc
-            </th>
-            <th class="text-center">
-                Giá giảm
-            </th>
-            <th class="text-center">
-                Mô tả
-            </th>
-            <th class="text-center">
-                Thao tác
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+
+@if (Model != null && Model.Any())
+{
+    <!-- Promotions Table -->
+    <table class="table table-bordered table-hover">
+        <thead class="text-white" style="background-color:black;">
             <tr>
-                <td class="font-weight-bold text-center">
-                    @Html.DisplayFor(modelItem => item.IDkm)
-                </td>
-                <td >
-                    @Html.DisplayFor(modelItem => item.TenKhuyenMai)
-                </td>
-                <td class="@(item.NgayBatDau.HasValue && item.NgayKetThuc.HasValue && item.NgayBatDau > item.NgayKetThuc ? "text-danger" : "") text-center">
-                    @(item.NgayBatDau.HasValue ? item.NgayBatDau.Value.ToString("dd/MM/yyyy") : "")
-                </td>
-                <td class="@(item.NgayBatDau.HasValue && item.NgayKetThuc.HasValue && item.NgayBatDau > item.NgayKetThuc ? "text-danger" : "") text-center">
-                    @(item.NgayKetThuc.HasValue ? item.NgayKetThuc.Value.ToString("dd/MM/yyyy") : "")
-                </td>
-
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.MucGiamGia)%
-                </td>
-                <td class="text-center">
-                    @{
-                        string motangan = item.MoTa != null && item.MoTa.Length > 20
-                            ? item.MoTa.Substring(0, 20) + "..."
-                            : (item.MoTa ?? string.Empty);
-                    }
-                    @motangan
-                </td>
-
-                <td class="text-center">
-                    @Html.ActionLink("Sửa", "Edit", new { id = item.IDkm }, new { @class = "btn btn-warning btn-sm" })
-                    @Html.ActionLink("Chi tiết", "Details", new { id = item.IDkm }, new { @class = "btn btn-info btn-sm" })
-                    @Html.ActionLink("Xóa", "Delete", new { id = item.IDkm }, new { @class = "btn btn-danger btn-sm" })
-                </td>
+                <th>ID</th>
+                <th>Tên KM</th>
+                <th class="text-center">Ngày bắt đầu</th>
+                <th class="text-center">Ngày kết thúc</th>
+                <th class="text-center">Giá giảm</th>
+                <th class="text-center">Mô tả</th>
+                <th class="text-center">Thao tác</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="font-weight-bold text-center">
+                        @Html.DisplayFor(modelItem => item.IDkm)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenKhuyenMai)
+                    </td>
+                    <td class="@(item.NgayBatDau.HasValue && item.NgayKetThuc.HasValue && item.NgayBatDau > item.NgayKetThuc ? "text-danger" : "") text-center">
+                        @(item.NgayBatDau.HasValue ? item.NgayBatDau.Value.ToString("dd/MM/yyyy") : "")
+                    </td>
+                    <td class="@(item.NgayBatDau.HasValue && item.NgayKetThuc.HasValue && item.NgayBatDau > item.NgayKetThuc ? "text-danger" : "") text-center">
+                        @(item.NgayKetThuc.HasValue ? item.NgayKetThuc.Value.ToString("dd/MM/yyyy") : "")
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.MucGiamGia)%
+                    </td>
+                    <td class="text-center">
+                        @{
+                            string motangan = item.MoTa != null && item.MoTa.Length > 20
+                                ? item.MoTa.Substring(0, 20) + "..."
+                                : (item.MoTa ?? string.Empty);
+                        }
+                        @motangan
+                    </td>
+                    <td class="text-center">
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.IDkm }, new { @class = "btn btn-warning btn-sm" })
+                        @Html.ActionLink("Chi tiết", "Details", new { id = item.IDkm }, new { @class = "btn btn-info btn-sm" })
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.IDkm }, new { @class = "btn btn-danger btn-sm" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
+    <!-- Pagination Controls -->
+    <div class="pagination-container">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.CurrentFilter }),
+            new PagedListRenderOptions
+            {
+                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                DisplayLinkToIndividualPages = true,
+                MaximumPageNumbersToDisplay = 5
+            })
+    </div>
+}
+else
+{
+    <div class="alert alert-info text-center" role="alert">
+        Không có khuyến mãi nào trong hệ thống.
+    </div>
+}
+
+<!-- Custom CSS -->
 <style>
     .table {
         border-radius: 10px;
@@ -83,5 +108,16 @@
 
     .btn {
         border-radius: 5px;
+    }
+
+    .search-bar {
+        max-width: 400px;
+        margin: 0 auto 20px auto;
+    }
+
+    .pagination-container {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
     }
 </style>

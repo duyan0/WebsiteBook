@@ -11,17 +11,21 @@
     .tieude {
         text-align: center;
         font-weight: bold;
+        margin-bottom: 20px;
     }
 
     .them a {
-        color:white;
-        background-color:black;
-        padding:10px;
-        border-radius:5px;
+        color: white;
+        background-color: #007bff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
     }
 
         .them a:hover {
-            text-decoration: none;
+            background-color: #0056b3;
         }
 
     .table-striped {
@@ -79,67 +83,143 @@
     table {
         width: 100%;
         border-collapse: collapse;
+        margin-bottom: 20px;
     }
 
         table th, table td {
-            padding: 12px;
+            padding: 15px;
             text-align: center;
+            border-bottom: 1px solid #ddd;
         }
 
         table th {
-            background-color: #212121;
+            background-color: #343a40;
             color: white;
         }
 
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    /* Make sure the row containing the search bar is centered */
+    .row.mb-3 {
+        display: flex;
+        justify-content: center; /* Centers the search bar horizontally */
+    }
+
+    /* Ensure the search bar takes an appropriate width */
+    .search-bar {
+        max-width: 500px; /* Limit the maximum width to prevent it from being too large */
+        width: 100%; /* Allow the container to be flexible */
+    }
+
+        .search-bar .input-group {
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-bar .btn-search {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+            .search-bar .btn-search:hover {
+                background-color: #0056b3;
+                text-decoration: none;
+            }
 
 
 
+    .btn-container {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+        .btn-container .btn-add {
+            background-color: black;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-container .btn-add:hover {
+                background-color: #23272b;
+            }
 </style>
 
 <h2 class="tieude">Danh sách khách hàng</h2>
 
-<p class="them">
-    @Html.ActionLink("Thêm", "Create")
-</p>
-
-<table class="table table-condensed bg-black table-hover">
-    <tr class="text-center">
-        <th>ID</th>
-        <th>Tên KH</th>
-        <th>Số điện thoại</th>
-        <th>Tài khoản</th>
-        <th>Mật khẩu</th>
-        <th>Thao tác</th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr >
-            <td>@Html.DisplayFor(modelItem => item.IDkh)</td>
-            <td>@Html.DisplayFor(modelItem => item.TenKH)</td>
-            <td>@(item.SoDT != null && item.SoDT.Length >= 3 ? item.SoDT.Substring(0, 3) + new string('*', item.SoDT.Length - 3) : "")</td>
-            
-            <td>@Html.DisplayFor(modelItem => item.TKhoan)</td>
-            <td>@Html.Raw("********")</td>
-            <td>
-                @Html.ActionLink("Sửa", "EditAD", new { id = item.IDkh }, new { @class = "btn btn-warning btn-sm rounded-sm" })
-                @Html.ActionLink("Xoá", "Delete", new { id = item.IDkh }, new { @class = "btn btn-danger btn-sm rounded-sm" })
-                @Html.ActionLink("Chi tiết", "DetailsAD", new { id = item.IDkh }, new { @class = "btn btn-info btn-sm rounded-sm" })
-            </td>
-        </tr>
-    }
-</table>
-
-<div class="pagination-container">
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
-        new PagedListRenderOptions
+<div class="row mb-3">
+    <div class="col-md-6 search-bar">
+        @using (Html.BeginForm("Index", "KhachHangs", FormMethod.Get, new { id = "searchForm" }))
         {
-            DisplayLinkToFirstPage = PagedListDisplayMode.Always,
-            DisplayLinkToLastPage = PagedListDisplayMode.Always,
-            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-            DisplayLinkToNextPage = PagedListDisplayMode.Always,
-            DisplayLinkToIndividualPages = true,
-            DisplayPageCountAndCurrentLocation = false,
-            MaximumPageNumbersToDisplay = 5
-        })
+            <div class="input-group mb-1">
+                <input type="text" name="searchString" value="@ViewBag.CurrentFilter" class="form-control" id="searchInput" placeholder="Tìm kiếm Khách hàng...">
+                <div class="input-group-append">
+                    <button class="btn btn-search" type="submit">Tìm kiếm</button>
+                </div>
+            </div>
+        }
+    </div>
 </div>
+
+<div class="btn-container">
+    @Html.ActionLink("Thêm", "Create", null, new { @class = "btn-add" })
+</div>
+
+@if (Model != null && Model.Count > 0)
+{
+    <table class="table table-condensed table-hover">
+        <thead>
+            <tr class="text-center">
+                <th>ID</th>
+                <th>Tên KH</th>
+                <th>Số điện thoại</th>
+                <th>Tài khoản</th>
+                <th>Mật khẩu</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.IDkh)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TenKH)</td>
+                    <td>@(item.SoDT != null && item.SoDT.Length >= 3 ? item.SoDT.Substring(0, 3) + new string('*', item.SoDT.Length - 3) : "")</td>
+                    <td>@Html.DisplayFor(modelItem => item.TKhoan)</td>
+                    <td>@Html.Raw("********")</td>
+                    <td>
+                        @Html.ActionLink("Sửa", "EditAD", new { id = item.IDkh }, new { @class = "btn btn-warning btn-sm rounded-sm mx-1" })
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.IDkh }, new { @class = "btn btn-danger btn-sm rounded-sm mx-1" })
+                        @Html.ActionLink("Chi tiết", "DetailsAD", new { id = item.IDkh }, new { @class = "btn btn-info btn-sm rounded-sm mx-1" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="pagination-container">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.CurrentFilter }),
+            new PagedListRenderOptions
+            {
+                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                DisplayLinkToIndividualPages = true,
+                DisplayPageCountAndCurrentLocation = false,
+                MaximumPageNumbersToDisplay = 5
+            })
+    </div>
+}
+else
+{
+    <div class="alert alert-info text-center" role="alert">
+        Không có khách hàng nào trong hệ thống.
+    </div>
+}

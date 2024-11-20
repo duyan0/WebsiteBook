@@ -17,11 +17,11 @@
         }
 
         public int IDdh { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime? NgayDatHang { get; set; }
         public Nullable<int> IDkh { get; set; }
         public string DiaChi { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime? NgayNhanHang { get; set; }
         public string TrangThai { get; set; } = "Chờ xử lý";
         public virtual KhachHang KhachHang { get; set; }
