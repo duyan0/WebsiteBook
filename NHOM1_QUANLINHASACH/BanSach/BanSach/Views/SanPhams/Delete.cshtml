@@ -6,101 +6,103 @@
 }
 
 <div class="container mt-5">
-    <h2 class="text-center mb-4 font-weight-bold ">Xóa thông tin sản phẩm</h2>
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-4 font-weight-bold ">
-                    @Html.DisplayName("Tên sản phẩm")
-                </dt>
-                <dd class="col-sm-8">
+    <h2 class="text-center mb-4 font-weight-bold text-danger">Xóa Thông Tin Sản Phẩm</h2>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger text-center" })
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-5">
+            <div class="row mb-0">
+                <p class="col-sm-4 font-weight-bold text-dark mb-3 text-black">
+                    Tên sản phẩm
+                </p>
+                <p class="col-sm-8 mb-3 text-black">
                     @Html.DisplayFor(model => model.TenSP)
-                </dd>
+                </p>
 
-                <dt class="col-sm-4 font-weight-bold">
-                    @Html.DisplayName("Mô tả")
-                </dt>
-                <dd class="col-sm-8">
+                <p class="col-sm-4 font-weight-bold text-dark mb-3 text-black">
+                    Mô tả
+                </p>
+                <p class="col-sm-8 mb-3 text-black">
                     @Html.DisplayFor(model => model.MoTa)
-                </dd>
+                </p>
 
-                <dt class="col-sm-4 font-weight-bold">
-                    @Html.DisplayName("Giá bán")
-                </dt>
-                <dd class="col-sm-8 text-danger ">
+                <p class="col-sm-4 font-weight-bold text-dark mb-3 text-black">
+                    Giá bán
+                </p>
+                <p class="col-sm-8 text-danger font-weight-bold mb-3">
                     @string.Format("{0:#,##0} VND", Model.GiaBan)
-                </dd>
+                </p>
 
-                <dt class="col-sm-4 font-weight-bold">
-                    @Html.DisplayName("Hình ảnh")
-                </dt>
-                <dd class="col-sm-8">
-                    <img src="@Url.Content(Model.HinhAnh)" alt="Hình ảnh sản phẩm" class="img-fluid" />
-                </dd>
+                <p class="col-sm-4 font-weight-bold text-dark mb-3 text-black">
+                    Hình ảnh
+                </p>
+                <p class="col-sm-8 mb-3">
+                    <img src="~/Content/img/@Model.HinhAnh" class="img-fluid rounded" width="150" alt="Hình ảnh sách">
+                </p>
 
-                <dt class="col-sm-4 font-weight-bold">
-                    @Html.DisplayName("Số lượng")
-                </dt>
-                <dd class="col-sm-8">
+                <p class="col-sm-4 font-weight-bold text-dark mb-3">
+                    Số lượng
+                </p>
+                <p class="col-sm-8 mb-3 @(Model.SoLuong == 0 ? "text-danger" : "text-black")">
                     @Html.DisplayFor(model => model.SoLuong)
-                </dd>
+                </p>
 
-                <dt class="col-sm-4 font-weight-bold">
-                    @Html.DisplayName("Trạng thái sách")
-                </dt>
-                <dd class="col-sm-8">
+
+                <p class="col-sm-4 font-weight-bold text-dark mb-3 text-black">
+                    Trạng thái sách
+                </p>
+                <p class="col-sm-8 mb-3">
                     @if (Model.TrangThaiSach == "Còn hàng")
                     {
-                        <span style="color: green;">@Html.DisplayFor(model => model.TrangThaiSach)</span>
+                        <span class="badge badge-success p-2">@Html.DisplayFor(model => model.TrangThaiSach)</span>
                     }
                     else if (Model.TrangThaiSach == "Hết hàng")
                     {
-                        <span style="color: red;">@Html.DisplayFor(model => model.TrangThaiSach)</span>
+                        <span class="badge badge-danger p-2">@Html.DisplayFor(model => model.TrangThaiSach)</span>
                     }
                     else
                     {
                         <span>@Html.DisplayFor(model => model.TrangThaiSach)</span>
                     }
-                </dd>
+                </p>
 
-
-                <dt class="col-sm-4 font-weight-bold">
-                    @Html.DisplayName("Danh mục")
-                </dt>
-                <dd class="col-sm-8">
+                <p class="col-sm-4 font-weight-bold text-dark mb-3 text-black">
+                    Danh mục
+                </p>
+                <p class="col-sm-8 mb-3 text-black">
                     @Html.DisplayFor(model => model.DanhMuc.DanhMuc1)
-                </dd>
+                </p>
 
-                <dt class="col-sm-4 font-weight-bold">
-                    @Html.DisplayName("Tên khuyến mãi")
-                </dt>
-                <dd class="col-sm-8">
+                <p class="col-sm-4 font-weight-bold text-dark mb-3 text-black">
+                    Tên khuyến mãi
+                </p>
+                <p class="col-sm-8 mb-3 text-black">
                     @Html.DisplayFor(model => model.KhuyenMai.TenKhuyenMai)
-                </dd>
+                </p>
 
-                <dt class="col-sm-4 font-weight-bold">
-                    @Html.DisplayName("Nhà xuất bản")
-                </dt>
-                <dd class="col-sm-8">
+                <p class="col-sm-4 font-weight-bold text-dark mb-3 text-black">
+                    Nhà xuất bản
+                </p>
+                <p class="col-sm-8 mb-3 text-black">
                     @Html.DisplayFor(model => model.NhaXuatBan.Tennxb)
-                </dd>
+                </p>
 
-                <dt class="col-sm-4 font-weight-bold">
-                    @Html.DisplayName("Tên tác giả")
-                </dt>
-                <dd class="col-sm-8">
+                <p class="col-sm-4 font-weight-bold text-dark mb-3 text-black">
+                    Tên tác giả
+                </p>
+                <p class="col-sm-8 mb-3 text-black">
                     @Html.DisplayFor(model => model.TacGia.TenTacGia)
-                </dd>
-            </dl>
+                </p>
+            </div>
         </div>
     </div>
 
     @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "mt-4" }))
     {
         @Html.AntiForgeryToken()
-        <div class="form-actions text-center" >
-            <input type="submit" value="Xóa" class="btn btn-danger rounded-sm" />
-            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary rounded-sm" })
+        <div class="form-actions text-center">
+            <input type="submit" value="Xóa" class="btn btn-danger  rounded-pill px-4 py-2 mx-2 shadow-sm" />
+            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary  rounded-pill px-4 py-2 mx-2 shadow-sm" })
         </div>
     }
 </div>

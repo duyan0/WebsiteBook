@@ -4,6 +4,7 @@ using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Web.Mvc;
 
 namespace BanSach.Controllers
@@ -15,6 +16,7 @@ namespace BanSach.Controllers
         dbSach db = new dbSach();
         public ActionResult Index(string searchString, int? page)
         {
+            var sanPham = db.SanPham.Include(s => s.KhuyenMai).FirstOrDefault(s => s.IDsp == s.IDkm);
             // Fetch all KhuyenMai records from the database
             var promotions = db.KhuyenMai.AsQueryable();
 

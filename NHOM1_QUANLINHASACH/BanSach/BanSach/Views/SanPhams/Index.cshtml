@@ -6,7 +6,7 @@
     ViewBag.Title = "Danh sách sản phẩm";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
+<link href="~/Content/PagedList.css" rel="stylesheet" />
 <style>
     .tieude {
         text-align: center;
@@ -96,52 +96,7 @@
             font-size: 16px; /* Cân bằng kích thước chữ */
         }
 
-    .pagination-container {
-        display: flex;
-        justify-content: center;
-        margin: 30px 0;
-    }
-
-        .pagination-container .pagination {
-            list-style-type: none;
-            display: flex;
-            gap: 10px;
-            padding: 0;
-        }
-
-            .pagination-container .pagination li {
-                display: inline-block;
-            }
-
-                .pagination-container .pagination li a {
-                    padding: 8px 12px;
-                    border-radius: 5px;
-                    background-color: #f1f1f1;
-                    color: #007bff;
-                    text-decoration: none;
-                    transition: background-color 0.3s ease, color 0.3s ease;
-                }
-
-                    .pagination-container .pagination li a:hover {
-                        background-color: #007bff;
-                        color: white;
-                    }
-
-                .pagination-container .pagination li.active a {
-                    background-color: #007bff;
-                    color: white;
-                    cursor: default;
-                }
-
-                .pagination-container .pagination li.disabled a {
-                    color: #cccccc;
-                    cursor: not-allowed;
-                }
-
-                    .pagination-container .pagination li.disabled a:hover {
-                        background-color: #f1f1f1;
-                        color: #cccccc;
-                    }
+    
 </style>
 
 <h2 class="tieude">Danh sách sản phẩm</h2>
@@ -194,7 +149,9 @@
                             item.TrangThaiSach = "Hết hàng";
                         }
                     </td>
-                    <td><img src="~/Content/img/@item.HinhAnh" width="50" height="50" alt="Ảnh không hiển thị" /></td>
+                    <td>
+                        <img src="@Url.Content("~/Content/img/" + System.Web.HttpUtility.UrlPathEncode(item.HinhAnh))" width="50" height="50" alt="Ảnh không hiển thị" />
+                    </td>
                     <td>@Html.DisplayFor(modelItem => item.KhuyenMai.MucGiamGia)%</td>
                     <td>
                         @{
@@ -218,7 +175,7 @@ else
     <p style="text-align:center; margin-top:20px; font-weight:bold;">Không tìm thấy sản phẩm nào phù hợp với từ khóa tìm kiếm.</p>
 }
 
-<div class="pagination-container">
+<div class="pagination-container text-center">
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
         new PagedListRenderOptions
         {

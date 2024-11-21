@@ -47,5 +47,6 @@ namespace BanSach.Models
 
             return ValidationResult.Success;
         }
+
     }
 }

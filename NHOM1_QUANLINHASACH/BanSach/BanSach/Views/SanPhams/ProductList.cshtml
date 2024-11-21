@@ -1,28 +1,28 @@
 ﻿@using PagedList.Mvc;
-
 @model PagedList.IPagedList<BanSach.Models.SanPham>
+
 @{
     ViewBag.Title = "Sách";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
 <style>
     .card-pro {
         text-decoration: none;
-        border-radius: 15px;
-        padding: 10px;
-        text-align: center;
-        margin-top: 20px;
+        border-radius: 10px;
+        padding: 15px;
         transition: transform 0.3s, box-shadow 0.3s;
-        background-color: #f8f9fa;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
     }
 
         .card-pro:hover {
-            transform: scale(1.08);
+            transform: scale(1.05);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
@@ -33,29 +33,56 @@
         }
 
         .card-pro img {
-            border-radius: 15px;
-            width: 200px; /* Set the desired width */
-            height: 300px; /* Set the desired height */
-            object-fit: cover; /* Maintain the aspect ratio and cover the container */
+            border-radius: 10px;
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            transition: opacity 0.3s;
+            align-self: center;
         }
 
     .availability {
-        margin: 10px 0;
         font-weight: bold;
-        color: #28a745;
+        font-size: 1em;
+        text-align: left;
+        width: 100%;
     }
 
     .product-name {
         font-weight: bold;
         font-size: 1.2em;
+        color: #212529;
+        min-height: 20px;
+        text-align: left;
+        width: 100%;
         margin-top: 10px;
-        color: #333;
     }
 
     .price {
         font-weight: bold;
-        color: #dc3545;
+        color: #e74c3c;
         font-size: 1.1em;
+        text-align: left;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .old-price {
+        font-size: 0.9em;
+        color: #999;
+        text-decoration: line-through;
+        margin-right: 5px;
+    }
+
+    .discount-badge {
+        background-color: #ff6f61;
+        color: #fff;
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 3px;
+        text-align: left;
+        width: 100%;
+        margin-top: 10px;
     }
 
     .sotrang {
@@ -67,98 +94,178 @@
             padding: 8px;
             border-radius: 5px;
             transition: background-color 0.2s;
+            color: #007bff;
+            text-decoration: none;
         }
 
             .sotrang a:hover {
-                background-color: #e8e8e8;
+                background-color: #f0f0f0;
             }
 
-    .dieuhuongtrang {
-        width: fit-content;
-        text-align: center;
-        margin: 40px auto;
-        color: white;
-    }
-
-        .dieuhuongtrang li a {
-            color: white;
-            padding: 12px;
-            margin: 3px;
-            background-color: green;
-            border-radius: 10px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .dieuhuongtrang .active a, .dieuhuongtrang .active a:hover {
-            background-color: green;
-            color: white;
-            border-radius: 12px;
-        }
-
-        .dieuhuongtrang li a:hover {
-            background-color: green;
-            color: white;
-            border-radius: 12px;
-        }
-
     h3.page-title {
-        color: white;
+        color: #343a40;
         margin: 30px auto;
         font-weight: bold;
         text-align: center;
+        font-size: 1.75em;
     }
+
+    .out-of-stock {
+        color: red;
+        font-weight: bold;
+    }
+
+    .in-stock {
+        color: #28a745;
+        font-weight: bold;
+    }
+
+    .price-filter {
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-left: 20px;
+    }
+
+    .filter-title {
+        font-size: 1.25em;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    .filter-option {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+        .filter-option input[type="checkbox"] {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            accent-color: orange;
+        }
+
+        .filter-option label {
+            font-size: 1em;
+            color: #333;
+        }
+
+    .btn-filter {
+        margin-top: 15px;
+        padding: 10px 20px;
+        background-color: #f39c12;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-weight: bold;
+    }
+
+        .btn-filter:hover {
+            background-color: #e67e22;
+        }
 </style>
 
-<h3 class="page-title">Danh sách sản phẩm</h3>
+<h3 class="page-title text-white">Danh sách sản phẩm</h3>
+
 <div class="container">
     <div class="row">
-        @if (Model != null && Model.Any())
-        {
-            foreach (var item in Model)
-            {
-                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex align-items-stretch">
-                    <div class="card-pro">
-                        <a href="~/SanPhams/TrangSP/@item.IDsp">
-                            <img src="~/Content/img/@item.HinhAnh" class="img-fluid" alt="@item.TenSP" />
-                            <p class="availability" style="color: @(item.TrangThaiSach == "Hết hàng" ? "red" : "#28a745")">@item.TrangThaiSach</p>
-                            <p class="product-name">@Html.DisplayFor(model => item.TenSP)</p>
-                            <p class="price">
-                                @string.Format("{0:N0} VND", item.GiaBan)
-                            </p>
-                        </a>
+        <!-- Bộ lọc giá -->
+        <div class="col-12 col-md-3 mb-4">
+            <div class="price-filter">
+                <h4 class="filter-title">GIÁ</h4>
+                <form method="get" action="/SanPhams/FilterByPrice">
+                    <div class="filter-option">
+                        <input type="checkbox" id="price1" name="priceRange" value="0-150000">
+                        <label for="price1">0₫ - 150,000₫</label>
                     </div>
-                </div>
-            }
-        }
-        else
-        {
+                    <div class="filter-option">
+                        <input type="checkbox" id="price2" name="priceRange" value="150000-300000">
+                        <label for="price2">150,000₫ - 300,000₫</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="price3" name="priceRange" value="300000-500000">
+                        <label for="price3">300,000₫ - 500,000₫</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="price4" name="priceRange" value="500000-700000">
+                        <label for="price4">500,000₫ - 700,000₫</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="price5" name="priceRange" value="700000-up">
+                        <label for="price5">700,000₫ - Trở Lên</label>
+                    </div>
+                    <button type="submit" class="btn-filter">Áp dụng</button>
+                </form>
+            </div>
+        </div>
 
-            <div class="text-center" style="width: 100%; padding: 20px;">
-                <h5 class="text-white">Chưa có thông tin sản phẩm</h5>
-                <p class="text-white-50">Sản phẩm này hiện tại không có thông tin hiển thị. Vui lòng kiểm tra lại sau hoặc liên hệ với cửa hàng để biết thêm chi tiết.</p>
+        <!-- Danh sách sản phẩm -->
+        <div class="col-12 col-md-9">
+            <div class="row">
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex align-items-stretch mb-4">
+                            <div class="card-pro">
+                                <a href="@Url.Action("TrangSP", "SanPhams", new { id = item.IDsp })">
+                                    <img src="~/Content/img/@item.HinhAnh" class="img-fluid" alt="@item.TenSP" />
+                                    <p class="availability @(item.TrangThaiSach == "Hết hàng" ? "out-of-stock" : "in-stock")">
+                                        @item.TrangThaiSach
+                                    </p>
+                                    <p class="product-name">@item.TenSP</p>
 
-                
-                <i class="fas fa-box-open text-white" style="font-size: 50px; margin: 20px;"></i>
+                                    @if (item.KhuyenMai != null && item.KhuyenMai.MucGiamGia > 0)
+                                    {
+                                        var giaBan = item.GiaBan;
+                                        var mucGiamGia = item.KhuyenMai?.MucGiamGia ?? 0;
+                                        var giaSauGiam = giaBan * (1 - (decimal)mucGiamGia / 100.0m);
 
-                
-                <div style="margin-top: 20px;">
-                    <a href="~/SanPhams/TrangChu" class="btn btn-outline-success rounded-sm">Quay lại trang chủ</a>
-                </div>
+                                        <p class="price">
+                                            <span class="old-price">
+                                                @string.Format("{0:N0} VND", giaBan)
+                                            </span>
+                                            <br />
+                                            <span class="price">
+                                                @string.Format("{0:N0} VND", giaSauGiam)
+                                            </span>
+                                        </p>
+                                        <div class="discount-badge">-@mucGiamGia% OFF</div>
+                                    }
+                                    else
+                                    {
+                                        <p class="price">
+                                            @string.Format("{0:N0} VND", item.GiaBan)
+                                        </p>
+                                    }
+                                </a>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="text-white">Hiện tại sản phẩm này không có thông tin hiển thị. Vui lòng kiểm tra lại sau hoặc liên hệ với cửa hàng để biết thêm chi tiết.</p>
+                }
             </div>
 
-
-
-
-        }
-    </div>
-    <div class="dieuhuongtrang">
-        @Html.PagedListPager(Model, page => Url.Action("ProductList", new { page }), new PagedListRenderOptions()
-        {
-            DisplayLinkToFirstPage = PagedListDisplayMode.Always,
-            DisplayLinkToLastPage = PagedListDisplayMode.Always,
-            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-            DisplayLinkToNextPage = PagedListDisplayMode.Always,
-            LinkToIndividualPageFormat = "{0}"
-        })
+            <!-- Phân trang -->
+            <div class="text-center sotrang">
+                @Html.PagedListPager(Model, page => Url.Action("ProductList", new { page }), new PagedListRenderOptions()
+                {
+                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                    LinkToIndividualPageFormat = "{0}"
+                })
+            </div>
+        </div>
     </div>
 </div>

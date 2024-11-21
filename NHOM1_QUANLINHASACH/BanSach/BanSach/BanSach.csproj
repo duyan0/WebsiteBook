@@ -545,6 +545,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\img\themsach\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

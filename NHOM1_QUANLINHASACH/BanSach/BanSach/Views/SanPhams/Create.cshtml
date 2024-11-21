@@ -16,7 +16,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group row">
-            @Html.LabelFor(model => model.TenSP, "Tên sản phẩm", htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            @Html.LabelFor(model => model.TenSP, "Tên sản phẩm", htmlAttributes: new { @class = "control-label text-dark col-md-2 font-weight-bold" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control border border-dark", style = "border-radius: 10px;", placeholder = "Nhập tên sản phẩm" } })
                 @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
@@ -24,7 +24,7 @@
         </div>
 
         <div class="form-group row">
-            @Html.LabelFor(model => model.MoTa, "Mô tả sách", htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            @Html.LabelFor(model => model.MoTa, "Mô tả sách", htmlAttributes: new { @class = "control-label col-md-2 text-dark font-weight-bold" })
             <div class="col-md-10">
                 @Html.TextAreaFor(model => model.MoTa, new { @class = "form-control border border-dark", rows = 5, style = "border-radius: 10px;", placeholder = "Nhập mô tả cho sản phẩm" })
                 @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
@@ -32,7 +32,7 @@
         </div>
 
         <div class="form-group row">
-            @Html.LabelFor(model => model.TheLoai, "Thể loại sách", htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            @Html.LabelFor(model => model.TheLoai, "Thể loại sách", htmlAttributes: new { @class = "control-label col-md-2 text-dark font-weight-bold" })
             <div class="col-md-10">
                 @Html.DropDownList("TheLoai", null, htmlAttributes: new { @class = "form-control border border-dark", style = "border-radius: 10px;", @placeholder = "Chọn thể loại sách" })
                 @Html.ValidationMessageFor(model => model.TheLoai, "", new { @class = "text-danger" })
@@ -40,7 +40,7 @@
         </div>
 
         <div class="form-group row">
-            <label class="control-label col-md-2 font-weight-bold">Giá</label>
+            <label class="control-label col-md-2 font-weight-bold text-dark">Giá</label>
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.GiaBan, new List<SelectListItem>
                 {
@@ -65,24 +65,24 @@
         </div>
 
         <div class="form-group row">
-            <div class="control-label col-md-2 font-weight-bold">Hình</div>
+            <div class="control-label text-dark col-md-2 font-weight-bold">Hình</div>
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.HinhAnh, null, new { type = "file", @class = "form-control border border-dark", @id = "fileInput", style = "border-radius: 10px;", @placeholder = "Chọn hình ảnh cho sản phẩm" })
+                @Html.TextBoxFor(model => model.HinhAnh, null, new { type = "file", @class = "form-control text-dark border border-dark", @id = "fileInput", style = "border-radius: 10px;", @placeholder = "Chọn hình ảnh cho sản phẩm" })
                 <br />
                 <img id="previewImage" src="#" alt="Hình xem trước" style="display: none; max-width: 200px; max-height: 200px;" class="img-thumbnail" />
             </div>
         </div>
 
         <div class="form-group row">
-            @Html.LabelFor(model => model.IDtg, "Tác giả", htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            @Html.LabelFor(model => model.IDtg, "Tác giả", htmlAttributes: new { @class = "control-label text-dark col-md-2 font-weight-bold" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.IDtg, (SelectList)ViewBag.TacGia, "Chọn tác giả", new { @class = "form-control border border-dark", style = "border-radius: 10px;", @placeholder = "Chọn tác giả" })
+                @Html.DropDownListFor(model => model.IDtg, (SelectList)ViewBag.TacGia, "Chọn tác giả", new { @class = "form-control text-dark border border-dark", style = "border-radius: 10px;", @placeholder = "Chọn tác giả" })
                 @Html.ValidationMessageFor(model => model.IDtg, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group row">
-            @Html.LabelFor(model => model.IDnxb, "Nhà xuất bản", htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            @Html.LabelFor(model => model.IDnxb, "Nhà xuất bản", htmlAttributes: new { @class = "control-label text-dark col-md-2 font-weight-bold" })
             <div class="col-md-10">
                 @Html.DropDownList("IDnxb", (SelectList)ViewBag.NXB, "Chọn nhà xuất bản", new { @class = "form-control border border-dark", style = "border-radius: 10px;", @placeholder = "Chọn nhà xuất bản" })
                 @Html.ValidationMessageFor(model => model.IDnxb, "", new { @class = "text-danger" })
@@ -90,7 +90,7 @@
         </div>
 
         <div class="form-group row">
-            @Html.LabelFor(model => model.IDkm, "Khuyến mãi", htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            @Html.LabelFor(model => model.IDkm, "Khuyến mãi", htmlAttributes: new { @class = "control-label text-dark col-md-2 font-weight-bold" })
             <div class="col-md-10">
                 @Html.DropDownList("IDkm", (SelectList)ViewBag.KM, "Chọn mức giảm giá", new { @class = "form-control border border-dark", style = "border-radius: 10px;", @placeholder = "Chọn mức giảm giá" })
                 @Html.ValidationMessageFor(model => model.IDkm, "", new { @class = "text-danger" })
@@ -98,7 +98,7 @@
         </div>
 
         <div class="form-group row">
-            @Html.LabelFor(model => model.SoLuong, "Số lượng sản phẩm", htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            @Html.LabelFor(model => model.SoLuong, "Số lượng sản phẩm", htmlAttributes: new { @class = "control-label text-dark col-md-2 font-weight-bold" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.SoLuong, new
                 {
@@ -117,7 +117,7 @@
 
 
         <div class="form-group row">
-            <div class="control-label col-md-2 font-weight-bold">Trạng thái sách</div>
+            <div class="control-label text-dark col-md-2 font-weight-bold">Trạng thái sách</div>
             <div class="col-md-10">
                 @Html.HiddenFor(model => model.TrangThaiSach, new { @Value = "Còn hàng" })
                 <p class="form-control-plaintext text-success">Còn hàng</p>
@@ -176,4 +176,5 @@
             reader.readAsDataURL(event.target.files[0]);
         });
     });
+    
 </script>

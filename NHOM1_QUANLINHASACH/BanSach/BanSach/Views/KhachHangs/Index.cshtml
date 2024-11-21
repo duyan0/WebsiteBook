@@ -7,6 +7,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <link href="~/Content/css/khachhang.css" rel="stylesheet" />
+<link href="~/Content/PagedList.css" rel="stylesheet" />
 <style>
     .tieude {
         text-align: center;
@@ -32,52 +33,7 @@
         width: 100%;
     }
 
-    .pagination-container {
-        display: flex;
-        justify-content: center;
-        margin: 20px 0;
-    }
-
-        .pagination-container .pagination {
-            list-style-type: none;
-            display: flex;
-            gap: 10px;
-            padding: 0;
-        }
-
-            .pagination-container .pagination li {
-                display: inline-block;
-            }
-
-                .pagination-container .pagination li a {
-                    padding: 8px 12px;
-                    border-radius: 5px;
-                    background-color: #f1f1f1;
-                    color: #007bff;
-                    text-decoration: none;
-                    transition: background-color 0.3s ease, color 0.3s ease;
-                }
-
-                    .pagination-container .pagination li a:hover {
-                        background-color: #007bff;
-                        color: white;
-                    }
-
-                .pagination-container .pagination li.active a {
-                    background-color: #007bff;
-                    color: white;
-                    cursor: default;
-                }
-
-                .pagination-container .pagination li.disabled a {
-                    color: #cccccc;
-                    cursor: not-allowed;
-                }
-
-                    .pagination-container .pagination li.disabled a:hover {
-                        background-color: #f1f1f1;
-                        color: #cccccc;
-                    }
+    
 
     /* Table customization */
     table {
@@ -173,9 +129,9 @@
 
 @if (Model != null && Model.Count > 0)
 {
-    <table class="table table-condensed table-hover">
-        <thead>
-            <tr class="text-center">
+    <table class="table table-bordered table-hover">
+        <thead  >
+            <tr class="text-center" >
                 <th>ID</th>
                 <th>Tên KH</th>
                 <th>Số điện thoại</th>
@@ -203,7 +159,7 @@
         </tbody>
     </table>
 
-    <div class="pagination-container">
+    <div class="pagination-container text-center">
         @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.CurrentFilter }),
             new PagedListRenderOptions
             {

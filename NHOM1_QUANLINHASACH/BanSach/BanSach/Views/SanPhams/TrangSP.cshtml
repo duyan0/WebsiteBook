@@ -11,10 +11,8 @@
     }
 
     .left, .right {
-        background-color: #f8f9fa;
         padding: 20px;
         border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         margin-bottom: 20px;
     }
 
@@ -43,19 +41,41 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
+    .price-container {
+        margin-top: 15px;
+    }
+
     .price {
         color: #c92127;
         letter-spacing: 2px;
-        font-size: x-large;
+        font-size: 1.5em;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .old-price {
+        text-decoration: line-through;
+        color: #999;
+        font-weight: normal;
+        font-size: 1em;
+    }
+
+    .discount-price {
+        color: #e74c3c;
+        font-size: 1.5em;
+        font-weight: bold;
+        margin-top: 5px;
+        display: inline-block;
     }
 
     .nut {
         text-align: center;
-        margin-top: 10px;
+        margin-top: 20px;
         display: flex;
         justify-content: center;
-        gap: 15px;
-        flex-wrap: wrap;
+        gap: 10px;
+        flex-wrap: nowrap; /* Không cho phép xuống dòng để các nút nằm cùng một hàng */
+        align-items: center; /* Căn giữa theo chiều dọc */
     }
 
         .nut a {
@@ -69,6 +89,7 @@
             align-items: center;
             gap: 10px;
             text-decoration: none;
+            white-space: nowrap; /* Đảm bảo nội dung không bị ngắt dòng */
         }
 
     #nut1 {
@@ -91,6 +112,7 @@
             background-color: #a81d22;
             transform: translateY(-3px);
         }
+
 
     #notification {
         display: none;
@@ -116,6 +138,32 @@
         #notification.hide {
             opacity: 0;
         }
+
+    .product-details {
+        margin-top: 20px;
+    }
+
+    .product-details-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .product-details-table td {
+            padding: 10px 5px;
+            font-size: 1.1em;
+            vertical-align: top;
+            border-bottom: 1px solid #ddd; /* Thêm đường gạch dưới cho từng hàng để dễ phân biệt */
+        }
+
+        .product-details-table .label {
+            font-weight: bold;
+            width: 30%;
+            color: white;
+        }
+
+        .product-details-table .value {
+            color: white;
+        }
 </style>
 
 <div class="container-fluid d-flex flex-wrap" id="productdetails">
@@ -127,7 +175,7 @@
         {
             <div class="nut mt-4">
                 <a href="/ShoppingCart/AddToCart/@Model.IDsp" id="nut1" onclick="themthanhcong(event, '@Model.IDsp')">
-                    <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
+                    <i class="fas fa-cart-plus"></i> Thêm 
                 </a>
                 <a href="/ShoppingCart/MuaNgay/@Model.IDsp" id="nut2">
                     <i class="fas fa-bolt"></i> Mua ngay
@@ -142,17 +190,55 @@
         }
     </div>
     <div class="right">
-        <div class="column">
-            <p style="font-size:30px;" class="text-center"><b>@Model.TenSP</b></p>
-            <p>Tác giả: <b>@Model.TacGia.TenTacGia</b></p>
-            <p>Nhà xuất bản: <b>@Model.NhaXuatBan.Tennxb</b></p>
-            <p>Thể loại: <b>@Model.DanhMuc.TheLoai</b></p>
-            <p>Giá khuyến mãi: <b style="color:red;">@Model.KhuyenMai.MucGiamGia%</b></p>
-            <p>
-                Giá tiền:
-                <b style="color:red;">@String.Format("{0:N0}", @Model.GiaBan) VND</b>
-            </p>
-            <p>Mô tả: <b>@Model.MoTa</b></p>
+        <div class="product-details">
+            <p class="text-center text-white" style="font-size:30px;"><b>@Model.TenSP</b></p>
+            <table class="product-details-table">
+                <tr>
+                    <td class="label">Tác giả:</td>
+                    <td class="value">@Model.TacGia.TenTacGia</td>
+                </tr>
+
+                <tr>
+                    <td class="label">Nhà xuất bản:</td>
+                    <td class="value">@Model.NhaXuatBan.Tennxb</td>
+                </tr>
+                <tr>
+                    <td class="label">Thể loại:</td>
+                    <td class="value">@Model.DanhMuc.TheLoai</td>
+                </tr>
+                @if (Model.KhuyenMai?.MucGiamGia > 0)
+                {
+                    <tr>
+                        <td class="label">Giá khuyến mãi:</td>
+                        <td class="value">@Model.KhuyenMai.MucGiamGia %</td>
+                    </tr>
+                }
+                <tr>
+                    <td class="label">Giá tiền:</td>
+                    <td class="value">
+                        @{
+                            var giaGoc = Model.GiaBan;
+                            var mucGiam = Model.KhuyenMai?.MucGiamGia ?? 0;
+                            var giaSauGiam = mucGiam > 0 ? giaGoc * (1 - (decimal)mucGiam / 100.0m) : giaGoc;
+
+                            if (mucGiam > 0)
+                            {
+                                <span class="old-price">@string.Format("{0:N0} VND", giaGoc)</span> <!-- Hiển thị giá gốc đã gạch bỏ -->
+                                <br />
+                                <span class="discount-price">@string.Format("{0:N0} VND", giaSauGiam)</span> <!-- Hiển thị giá sau giảm -->
+                            }
+                            else
+                            {
+                                <span class="normal-price">@string.Format("{0:N0} VND", giaGoc)</span> <!-- Hiển thị giá gốc nếu không có khuyến mãi -->
+                            }
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">Mô tả:</td>
+                    <td class="value">@Model.MoTa</td>
+                </tr>
+            </table>
         </div>
 
         <div id="notification">Thêm vào giỏ hàng thành công!</div>

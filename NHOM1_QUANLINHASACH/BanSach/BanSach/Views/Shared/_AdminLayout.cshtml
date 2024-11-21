@@ -5,22 +5,18 @@
     <meta charset="utf-8">
     <title>@ViewBag.Title</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
-
-    <!-- Favicon -->
     <link href="~/Content/img/logosach.png" rel="icon">
 
     <!-- Google Web Fonts & Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
-    <!-- Libraries & Customized Stylesheets -->
-    <link href="~/Content/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <!-- Bootstrap & Custom Stylesheets -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link href="~/Content/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/Content/css/style.min.css" rel="stylesheet">
     <link href="~/Content/css/duyan.css" rel="stylesheet">
     <link href="~/Content/css/admin.css" rel="stylesheet">
-    <link href="~/Content/css/style.min.css" rel="stylesheet">
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -30,7 +26,7 @@
 <body style="width: 100%; background-color: white;">
     <!-- Navbar -->
     <div class="container-fluid" id="navbar">
-        <div class="row  px-xl-5 align-items-center" style="background-color: #1f1f20;">
+        <div class="row px-xl-5 align-items-center" style="background-color: #1f1f20;">
             <div class="col-lg-3 d-none d-lg-flex align-items-center">
                 <a href="~/LoginUser/QuanTri" class="text-decoration-none d-flex align-items-center">
                     <img src="~/Content/img/logosach.png" style="width: 40px; margin-right: 10px;">
@@ -56,10 +52,11 @@
                             }
                             else
                             {
-                                <a href="~/LoginUser/LoginAccountCus" class="nav-item nav-link text-white">Đăng nhập</a>
-                                <a href="~/LoginUser/RegisterCus" class="nav-item nav-link text-white">Đăng ký</a>
+                                // Đoạn này sẽ không hiển thị Đăng nhập và Đăng ký mà thay vào đó chuyển hướng.
+                                Response.Redirect(Url.Action("LoginAccountCus", "LoginUser"));
                             }
                         </div>
+
                     </div>
                 </nav>
             </div>
@@ -74,65 +71,77 @@
                     <h2 class="font-weight-semi-bold text-center">Thư mục ADMIN</h2>
                     @{
                         var vaitro = Session["Vaitro"] as string;
-                        if (!string.IsNullOrEmpty(vaitro))
+                        if (!string.IsNullOrEmpty(vaitro) && (vaitro.Contains("Admin") || vaitro.Contains("Quản lý chính")))
                         {
-                            if (vaitro.Contains("admin") || vaitro.Contains("Quản lý chính"))
-                            {
-                                // Navigation links
-                            }
-                                        <nav id="concard">
-                                            <a href="~/LoginUser/QuanTri" class="nav-item nav-link">Trang Chủ</a>
-                                            <a href="~/Admins/Index" class="nav-item nav-link">Quản lý nhân sự</a>
-                                            <a href="~/KhachHangs/Index" class="nav-item nav-link">Quản lý Khách hàng</a>
-                                            <a href="~/SanPhams/Index" class="nav-item nav-link">Quản lý sách</a>
-                                            <a href="~/DanhMucs/Index" class="nav-item nav-link">Quản lý thể loại sách</a>
-                                            <a href="~/TacGia/Index" class="nav-item nav-link">Quản lý Tác giả</a>
-                                            <a href="~/NhaXuatBan/Index" class="nav-item nav-link">Quản lý Nhà xuất bản</a>
-                                            <a href="~/KhuyenMai/Index" class="nav-item nav-link">Quản lý khuyến mãi</a>
-                                            <a href="~/DonHangs/Index" class="dropdown-item nav-item">Quản lý đơn hàng</a>
-                                            <a href="~/DonHangCTs/Index" class="dropdown-item nav-item">Chi tiết đơn hàng</a>
-                                        </nav>
-                            <a href="https://zalo.me/0355079864" target="_blank" class="zalo-contact">
-                            </a>
+                            <nav id="concard">
+                                <a href="~/LoginUser/QuanTri" class="nav-item nav-link">Trang Chủ</a>
+                                <a href="~/Admins/Index" class="nav-item nav-link">Quản lý nhân sự</a>
+                                <a href="~/KhachHangs/Index" class="nav-item nav-link">Quản lý Khách hàng</a>
+                                <a href="~/SanPhams/Index" class="nav-item nav-link">Quản lý sách</a>
+                                <a href="~/DanhMucs/Index" class="nav-item nav-link">Quản lý thể loại sách</a>
+                                <a href="~/TacGia/Index" class="nav-item nav-link">Quản lý Tác giả</a>
+                                <a href="~/NhaXuatBan/Index" class="nav-item nav-link">Quản lý Nhà xuất bản</a>
+                                <a href="~/KhuyenMai/Index" class="nav-item nav-link">Quản lý khuyến mãi</a>
+                                <a href="~/DonHangs/Index" class="nav-item nav-link">Quản lý đơn hàng</a>
+                                <a href="~/DonHangCTs/Index" class="nav-item nav-link">Chi tiết đơn hàng</a>
+                            </nav>
                         }
                     }
                 </div>
             </div>
-            <div class="col-lg-10 col-md-12" style="background-color:#f8f9fa ">
+            <div class="col-lg-10 col-md-12" style="background-color:#f8f9fa;">
                 @RenderBody()
             </div>
         </div>
     </div>
-    <!-- Loading Spinner -->
-    <div id="loading">
-        <div class="spinner"></div>
-    </div>
+
     <!-- Footer -->
-    <footer class="footer bg-dark text-white text-center py-4 mt-5">
+    <footer class="footer bg-dark text-white text-center py-3 mt-5">
         <div class="container">
-            <p class="text-white font-weight-semi-bold">© 2024 Võ Duy Ân. All rights reserved.</p>
-            <ul class="list-inline mt-3">
-                <li class="list-inline-item"><a href="#" class="footer-link">Trang chủ</a></li>
-                <li class="list-inline-item"><a href="mailto:crandi21112004@gmail.com" class="footer-link">Giới thiệu</a></li>
-                <li class="list-inline-item"><a href="mailto:crandi21112004@gmail.com" class="footer-link">Liên hệ</a></li>
-                <li class="list-inline-item"><a href="mailto:crandi21112004@gmail.com" class="footer-link">Chính sách bảo mật</a></li>
-            </ul>
+            <p class="text-white font-weight-semi-bold">© 2024 Võ Duy Ân. Admin Dashboard. All rights reserved.</p>
         </div>
     </footer>
+
 
     <!-- JavaScript Libraries -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="~/Content/lib/easing/easing.min.js"></script>
     <script src="~/Content/lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="~/Scripts/main.js"></script>
+
+    <!-- Custom JavaScript -->
     <script>
-        window.addEventListener("load", function () {
-            document.getElementById("loading").style.display = "none";
+        $(document).ready(function () {
+            var currentUrl = window.location.href.toLowerCase();
+
+            // Set active class for current link
+            $('#concard a').each(function () {
+                if (currentUrl.indexOf($(this).attr('href').toLowerCase()) !== -1) {
+                    $('#concard a').removeClass('active');
+                    $(this).addClass('active');
+                }
+            });
+
+            $('#concard a').click(function () {
+                $('#concard a').removeClass('active');
+                $(this).addClass('active');
+            });
+
+            // Hide loading spinner on load
+            window.addEventListener("load", function () {
+                document.getElementById("loading").style.display = "none";
+            });
         });
     </script>
 
     <!-- Custom Styles -->
     <style>
+        #concard .nav-item.nav-link.active {
+            color: black;
+            background-color: #acaf79dd;
+            font-weight: bold;
+        }
+
         #concard {
             display: flex;
             flex-direction: column;
@@ -151,7 +160,7 @@
                 transition: background-color 0.3s ease, color 0.3s ease;
             }
 
-                #concard a:hover, .dropdown-item:hover {
+                #concard a:hover {
                     background-color: #acaf79dd;
                     color: black;
                 }
@@ -166,32 +175,7 @@
                 color: #f8f9fa;
                 text-decoration: underline;
             }
-
-        #loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 6px solid rgba(255, 0, 0, 0.5);
-            border-top: 6px solid red;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        
     </style>
 </body>
 </html>
 @RenderSection("Scripts", false)
-

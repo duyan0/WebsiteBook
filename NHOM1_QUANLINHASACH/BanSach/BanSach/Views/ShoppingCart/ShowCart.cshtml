@@ -10,7 +10,7 @@
         text-align: center;
         padding: 5px;
         border-radius: 15px;
-        margin:40px;
+        margin: 40px;
     }
 
         .showcart h5 {
@@ -81,21 +81,16 @@
 
 <div class="text-center ">
     <h3 class="m-0 display-5 font-weight-semi-bold text-white">GIỎ HÀNG</h3>
-
 </div>
 
 @if (Model == null || Model.Total_quantity() == 0)
 {
     <div class="showcart">
-
         <h5 class="text-white">
             Chưa có sản phẩm trong giỏ hàng của bạn.
         </h5><br />
-
         @Html.ActionLink("Tiếp tục mua hàng", "ProductList", "SanPhams")
     </div>
-
-
 }
 else
 {
@@ -113,8 +108,9 @@ else
             {
                 // Sử dụng toán tử ?? để gán giá trị mặc định là 0 nếu GiaBan là null
                 decimal giaBan = item._product.GiaBan;
-                decimal total = item._quantity * giaBan;
-
+                decimal mucGiamGia = item.MucGiamGia; // Lấy mức giảm giá từ CartItem
+                decimal giaSauKhuyenMai = giaBan * (1 - mucGiamGia / 100);
+                decimal total = item._quantity * giaSauKhuyenMai;
 
                 <tr class="text-center text-white">
                     <td width="40%">
@@ -123,27 +119,30 @@ else
                             @Html.DisplayFor(model => item._product.TenSP)
                         </p>
                         <p>
-                            <b style="color:red">@giaBan.ToString("#,##0").Replace(',', '.') VND</b>
+                            <b style="color:red">@giaSauKhuyenMai.ToString("#,##0").Replace(',', '.') VND</b>
                         </p>
-
+                        @if (mucGiamGia > 0)
+                        {
+                            <p>
+                                <del style="color:grey">@giaBan.ToString("#,##0").Replace(',', '.') VND</del> <!-- Giá gốc -->
+                                <span style="color:green;">(@mucGiamGia% Off)</span> <!-- Mức khuyến mãi -->
+                            </p>
+                        }
                     </td>
                     <td class="text-center">
                         @using (Html.BeginForm("Update_Cart_Quantity", "ShoppingCart"))
                         {
                             <input type="hidden" value="@item._product.IDsp" name="idPro" />
-                            <input type="number" min="1" max="@item._product.SoLuong" @item._product . value="@item._quantity" name="carQuantity" style="width: 50px; text-align: center; border-radius:10px;" />
+                            <input type="number" min="1" max="@item._product.SoLuong" value="@item._quantity" name="carQuantity" style="width: 50px; text-align: center; border-radius:10px;" />
                             <input type="submit" value="Cập nhật" class="capnhat bg-white" />
                         }
                     </td>
                     <td style="color: #c92127;"><b>@total.ToString("#,##0").Replace(',', '.') VND</b></td>
-
                     <td class="xoa">
                         <form action="/ShoppingCart/RemoveCart/@item._product.IDsp" method="get">
                             <button type="submit" class="xoa" style="background-color: red; color: white; border: none; outline: none;">Xóa</button>
                         </form>
                     </td>
-
-
                 </tr>
             }
         </tbody>
@@ -153,7 +152,6 @@ else
                     Tổng tiền: <b style="color: #c92127;">@Model.Total_money().ToString("#,##0").Replace(',', '.') VND</b>
                 </td>
             </tr>
-
         </tfoot>
     </table>
 
@@ -197,7 +195,6 @@ else
                             <input type="submit" value="Thanh toán" class="btn btn-danger" />
                         </td>
                     </tr>
-
                 }
                 else
                 {
@@ -211,6 +208,4 @@ else
             </table>
         </form>
     </div>
-
-
 }

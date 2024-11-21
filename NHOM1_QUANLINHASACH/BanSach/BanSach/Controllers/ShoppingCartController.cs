@@ -45,28 +45,33 @@ namespace BanSach.Controllers
         // Thêm sản phẩm vào giỏ hàng
         public ActionResult AddToCart(int id)
         {
-            // lấy sản phẩm theo id
-            var _pro = db.SanPham.SingleOrDefault(s => s.IDsp == id);
+            // Lấy sản phẩm theo id, đồng thời lấy cả thông tin khuyến mãi
+            var _pro = db.SanPham.Include(s => s.KhuyenMai).SingleOrDefault(s => s.IDsp == id);
             if (_pro != null)
             {
-                GetCart().Add_Product_Cart(_pro);
+                // Kiểm tra xem sản phẩm có khuyến mãi không
+                decimal mucGiamGia = _pro.KhuyenMai != null ? _pro.KhuyenMai.MucGiamGia ?? 0 : 0;
+
+                // Thêm sản phẩm vào giỏ hàng cùng với mức giảm giá
+                GetCart().Add_Product_Cart(_pro, mucGiamGia);
             }
-            return RedirectToAction("TrangSP", "SanPhams", new {id});
+            return RedirectToAction("TrangSP", "SanPhams", new { id });
         }
         //Mua ngay chuyển tới giỏ hàng
         public ActionResult MuaNgay(int id)
         {
-            // lấy sản phẩm theo id
-            var _pro = db.SanPham.SingleOrDefault(s => s.IDsp == id);
+            // Lấy sản phẩm theo id, đồng thời lấy cả thông tin khuyến mãi
+            var _pro = db.SanPham.Include(s => s.KhuyenMai).SingleOrDefault(s => s.IDsp == id);
             if (_pro != null)
             {
-                GetCart().Add_Product_Cart(_pro);
+                // Kiểm tra xem sản phẩm có khuyến mãi không
+                decimal mucGiamGia = _pro.KhuyenMai != null ? _pro.KhuyenMai.MucGiamGia ?? 0 : 0;
+
+                // Thêm sản phẩm vào giỏ hàng cùng với mức giảm giá
+                GetCart().Add_Product_Cart(_pro, mucGiamGia);
             }
             return RedirectToAction("ShowCart", "ShoppingCart");
-           
         }
-
-
         // Cập nhật số lượng và tính lại tổng tiền
         public ActionResult Update_Cart_Quantity(FormCollection form)
         {
@@ -91,37 +96,54 @@ namespace BanSach.Controllers
             try
             {
                 Cart cart = Session["Cart"] as Cart;
+
+                if (cart == null || !cart.Items.Any())
+                {
+                    return RedirectToAction("ShowCart", "ShoppingCart");
+                }
+
                 DonHang _order = new DonHang();
                 _order.NgayDatHang = DateTime.Now;
                 _order.DiaChi = form["AddressDeliverry"];
                 _order.IDkh = int.Parse(form["CodeCustomer"]);
-                
+
                 db.DonHang.Add(_order);
+
                 foreach (var item in cart.Items)
                 {
-                    // lưu dòng sản phẩm vào chi tiết hóa đơn
+                    // Lưu dòng sản phẩm vào chi tiết hóa đơn
                     DonHangCT _order_detail = new DonHangCT();
                     _order_detail.IDDonHang = _order.IDdh;
                     _order_detail.IDSanPham = item._product.IDsp;
-                    _order_detail.Gia = (double)item._product.GiaBan;
+
+                    // Tính giá sau khi đã áp dụng khuyến mãi
+                    decimal giaBan = item._product.GiaBan;
+                    decimal mucGiamGia = item.MucGiamGia;
+                    decimal giaSauKhuyenMai = giaBan * (1 - (mucGiamGia / 100));
+
+                    _order_detail.Gia = (double)giaSauKhuyenMai; // Lưu giá sau khi đã áp dụng khuyến mãi
                     _order_detail.SoLuong = item._quantity;
+
                     db.DonHangCT.Add(_order_detail);
-                    //xử lý cập nhật lại số lượng tồn trong bảng Product
-                    foreach (var p in db.SanPham.Where(s => s.IDsp == _order_detail.IDSanPham)) //lấy ID Product đang có trong giỏ hàng
+
+                    // Xử lý cập nhật lại số lượng tồn trong bảng SanPham
+                    var product = db.SanPham.SingleOrDefault(s => s.IDsp == item._product.IDsp);
+                    if (product != null)
                     {
-                        var update_quan_pro = p.SoLuong - item._quantity; //số lượng tồn mới = số lượng tồn - số lượng đã mua
-                        p.SoLuong = update_quan_pro; //thực hiện cập nhật lại số lượng tồn cho cột Quantity của bảng Product
+                        product.SoLuong -= item._quantity; // Số lượng tồn mới = số lượng tồn - số lượng đã mua
                     }
                 }
+
                 db.SaveChanges();
                 cart.ClearCart();
                 return RedirectToAction("CheckOut_Success", "ShoppingCart");
             }
             catch
             {
-                return Content("Có sai sót! Xin kiểm tra lại thông tin"); 
+                return Content("Có sai sót! Xin kiểm tra lại thông tin");
             }
         }
+
         // Thông báo thanh toán thành công
         public ActionResult CheckOut_Success()
         {

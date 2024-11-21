@@ -5,104 +5,63 @@
     ViewBag.Title = "Xin chào";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<link href="~/Content/PagedList.css" rel="stylesheet" />
 
 <style>
     .tieude {
         text-align: center;
         font-weight: bold;
-        color: black;
+        color: #343a40;
     }
 
-    .them a {
+    .action-link {
         border-radius: 10px;
-        background-color: black;
-        color: white;
+        color: #ffffff;
         font-size: large;
-        padding: 5px;
-        margin: 10px 10px 0 10px;
-        outline: none;
-        border: 1px solid black;
+        padding: 5px 15px;
+        margin: 10px;
+        border: 1px solid #343a40;
+        text-decoration: none;
+        transition: background-color 0.3s, color 0.3s;
     }
 
-        .them a:hover {
-            text-decoration: none;
-            color: white;
-            background-color: black;
-            outline: none;
+        .action-link:hover {
+            color: #ffffff;
+            background-color: #343a40;
         }
 
     .search-bar {
         max-width: 400px;
-        margin: 0 auto 20px auto;
+        margin: 0 auto 20px;
     }
 
-    .pagination {
-        display: flex;
-        justify-content: center;
-        padding-left: 0;
-        list-style: none;
-        border-radius: 0.25rem;
-        margin-top: 20px;
+    .input-group .form-control:focus {
+        box-shadow: none;
+        border-color: #343a40;
     }
-
-        .pagination li {
-            margin: 0 5px;
-        }
-
-            .pagination li a,
-            .pagination li span {
-                position: relative;
-                display: block;
-                padding: 10px 15px;
-                text-decoration: none;
-                border: 1px solid #007bff;
-                border-radius: 5px;
-                color: #007bff;
-                transition: all 0.3s;
-            }
-
-                .pagination li a:hover,
-                .pagination li span:hover {
-                    background-color: #007bff;
-                    color: #ffffff;
-                }
-
-            .pagination li.active span {
-                background-color: #007bff;
-                border-color: #007bff;
-                color: #ffffff;
-            }
-
-            .pagination li.disabled span,
-            .pagination li.disabled a {
-                color: #cccccc;
-                pointer-events: none;
-                cursor: default;
-            }
 </style>
 
 <h2 class="tieude">Quản lí Admin</h2>
 
+<!-- Search Bar -->
 <div class="search-bar">
     @using (Html.BeginForm("Index", "Admins", FormMethod.Get, new { id = "searchForm" }))
     {
         <div class="input-group mb-1">
             <input type="text" name="searchString" value="@ViewBag.CurrentFilter" class="form-control" id="searchInput" placeholder="Tìm kiếm Admin...">
-            <div class="input-group-append">
-                <button class="btn btn-dark" type="submit">Tìm kiếm</button>
-            </div>
+            <button class="btn btn-dark" type="submit">Tìm kiếm</button>
         </div>
     }
 </div>
 
-<p class="them">
-    @Html.ActionLink("Thêm ", "Create", null, new { @class = "btn btn-dark" })
+<p>
+    @Html.ActionLink("Thêm ", "Create", null, new { @class = "action-link btn btn-dark" })
 </p>
 
 @if (Model != null && Model.Count > 0)
 {
     <table class="table table-bordered table-hover">
-        <thead class="text-white" style="background-color:black; max-width:20%;">
+        <thead class="bg-dark text-white">
             <tr>
                 <th>ID</th>
                 <th>Họ tên</th>
@@ -110,40 +69,37 @@
                 <th>Vai trò</th>
                 <th>Tài khoản</th>
                 <th>Mật khẩu</th>
-                <th class="text-center" style="max-width:20%;">Thao tác</th>
+                <th class="text-center">Thao tác</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.ID)</td>
-                    <td>@Html.DisplayFor(modelItem => item.HoTen)</td>
+                    <td>@item.ID</td>
+                    <td>@item.HoTen</td>
                     <td>
                         @(item.SoDT != null && item.SoDT.Length >= 3 ? item.SoDT.Substring(0, 3) + new string('*', item.SoDT.Length - 7) : "")
                     </td>
-                    <td>@Html.DisplayFor(modelItem => item.VaiTro)</td>
-                    <td>@Html.DisplayFor(modelItem => item.TKhoan)</td>
-                    <td>
-                        @Html.Raw("******")
-                    </td>
+                    <td>@item.VaiTro</td>
+                    <td>@item.TKhoan</td>
+                    <td>******</td>
                     <td class="text-center">
                         @if (!string.Equals(item.VaiTro.Trim(), "Admin", StringComparison.OrdinalIgnoreCase))
                         {
-                            @Html.ActionLink("Sửa", "Edit", new { id = item.ID }, new { @class = "btn btn-warning btn-sm rounded-sm " })
-                            <span></span>
-                            @Html.ActionLink("Xoá", "Delete", new { id = item.ID }, new { @class = "btn btn-danger btn-sm rounded-sm  " })
+                            @Html.ActionLink("Sửa", "Edit", new { id = item.ID }, new { @class = "btn btn-warning btn-sm rounded-sm mx-1" })
+                            @Html.ActionLink("Xoá", "Delete", new { id = item.ID }, new { @class = "btn btn-danger btn-sm rounded-sm mx-1" })
                         }
-                        @Html.ActionLink("Chi tiết", "Details", new { id = item.ID }, new { @class = "btn btn-info btn-sm rounded-sm" })
+                        @Html.ActionLink("Chi tiết", "Details", new { id = item.ID }, new { @class = "btn btn-info btn-sm rounded-sm mx-1" })
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 
-    <!-- Phân trang -->
+    <!-- Pagination -->
     <div class="d-flex justify-content-center">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page, searchString = ViewBag.CurrentFilter }), new PagedListRenderOptions
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.CurrentFilter }), new PagedListRenderOptions
         {
             DisplayLinkToFirstPage = PagedListDisplayMode.Always,
             DisplayLinkToLastPage = PagedListDisplayMode.Always,
@@ -162,22 +118,15 @@ else
     </div>
 }
 
-
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Tạo một biến để lưu trữ bộ đếm thời gian
         let typingTimer;
-        let debounceTime = 500; // Thời gian trễ (ms) sau khi người dùng ngừng gõ trước khi gửi yêu cầu
+        let debounceTime = 500;
 
-        // Sự kiện khi người dùng nhập vào ô tìm kiếm
         $('#searchInput').on('input', function () {
-            // Xóa bộ đếm thời gian trước đó nếu người dùng tiếp tục gõ
             clearTimeout(typingTimer);
-
-            // Thiết lập lại bộ đếm thời gian mới
             typingTimer = setTimeout(function () {
-                // Gửi form sau khi ngừng nhập 500ms
                 $('#searchForm').submit();
             }, debounceTime);
         });

@@ -49,7 +49,7 @@ namespace BanSach.Controllers
         {
             var products = db.SanPham.Include(p => p.DanhMuc);
             
-            int pageSize = 8;           
+            int pageSize = 12;           
             int pageNumber = (page ?? 1);
             if (page == null) page = 1;
 
@@ -107,13 +107,21 @@ namespace BanSach.Controllers
             ViewBag.TheLoai = new SelectList(db.DanhMuc, "ID", "TheLoai");
             ViewBag.TacGia = new SelectList(db.TacGia, "IDtg", "TenTacGia");
             ViewBag.NXB = new SelectList(db.NhaXuatBan, "IDnxb", "Tennxb");
-            ViewBag.KM = new SelectList(db.KhuyenMai, "IDkm", "MucGiamGia");
+
+            // Điều chỉnh ViewBag.KM để hiển thị MucGiamGia và TenKm kết hợp
+            ViewBag.KM = new SelectList(db.KhuyenMai.ToList().Select(km => new
+            {
+                IDKM = km.IDkm,
+                MucGiamGiaTenKm = km.MucGiamGia + "% - " + km.TenKhuyenMai
+            }), "IDkm", "MucGiamGiaTenKm");
+
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IDsp,TenSP,MoTa,TheLoai,GiaBan,HinhAnh,IDtg,IDnxb,IDkm,SoLuong,TrangThaiSach")] SanPham sanPham)
-        {           
+        {
             if (ModelState.IsValid)
             {
                 db.SanPham.Add(sanPham);
@@ -123,11 +131,19 @@ namespace BanSach.Controllers
 
             ViewBag.TheLoai = new SelectList(db.DanhMuc, "ID", "TheLoai", sanPham.TheLoai);
             ViewBag.TacGia = new SelectList(db.TacGia, "IDtg", "TenTacGia", sanPham.TacGia);
-            ViewBag.NXB = new SelectList(db.NhaXuatBan, "IDnxb", "Tennxb",sanPham.NhaXuatBan);
-            ViewBag.KM = new SelectList(db.KhuyenMai, "IDkm", "MucGiamGia", sanPham.KhuyenMai);
+            ViewBag.NXB = new SelectList(db.NhaXuatBan, "IDnxb", "Tennxb", sanPham.NhaXuatBan);
+            ViewBag.KM = new SelectList(db.KhuyenMai.ToList().Select(km => new
+            {
+                IDKM = km.IDkm,
+                MucGiamGiaTenKm = km.MucGiamGia + "% - " + km.TenKhuyenMai
+            }), "IDkm", "MucGiamGiaTenKm", sanPham.KhuyenMai);
+
 
             return View(sanPham);
         }
+
+
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -139,32 +155,47 @@ namespace BanSach.Controllers
             {
                 return HttpNotFound();
             }
+
+            // Cập nhật ViewBag.TheLoai, ViewBag.TacGia, ViewBag.NXB, và ViewBag.KM
             ViewBag.TheLoai = new SelectList(db.DanhMuc, "ID", "TheLoai", product.TheLoai);
             ViewBag.TacGia = new SelectList(db.TacGia, "IDtg", "TenTacGia", product.TacGia);
             ViewBag.NXB = new SelectList(db.NhaXuatBan, "IDnxb", "Tennxb", product.NhaXuatBan);
-            ViewBag.KM = new SelectList(db.KhuyenMai, "IDkm", "MucGiamGia", product.KhuyenMai);
+            ViewBag.KM = new SelectList(db.KhuyenMai.ToList().Select(km => new
+            {
+                IDkm = km.IDkm,
+                MucGiamGiaTenKm = km.MucGiamGia + "% - " + km.TenKhuyenMai
+            }), "IDkm", "MucGiamGiaTenKm", product.KhuyenMai);
+
             return View(product);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "IDsp,TenSP,MoTa,TheLoai,GiaBan,HinhAnh,IDtg,IDnxb,IDkm,SoLuong,TrangThaiSach")] SanPham sanPham)
         {
             if (ModelState.IsValid)
-            {                
+            {
                 db.Entry(sanPham).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            // Cập nhật ViewBag.TheLoai, ViewBag.TacGia, ViewBag.NXB, và ViewBag.KM khi model state không hợp lệ
             ViewBag.TheLoai = new SelectList(db.DanhMuc, "ID", "TheLoai", sanPham.TheLoai);
             ViewBag.TacGia = new SelectList(db.TacGia, "IDtg", "TenTacGia", sanPham.TacGia);
             ViewBag.NXB = new SelectList(db.NhaXuatBan, "IDnxb", "Tennxb", sanPham.NhaXuatBan);
-            ViewBag.KM = new SelectList(db.NhaXuatBan, "IDkm", "MucGiamGia", sanPham.KhuyenMai);
-            return View(sanPham);
+            ViewBag.KM = new SelectList(db.KhuyenMai.ToList().Select(km => new
+            {
+                IDkm = km.IDkm,
+                MucGiamGiaTenKm = km.MucGiamGia + "% - " + km.TenKhuyenMai
+            }), "IDkm", "MucGiamGiaTenKm", sanPham.KhuyenMai);
 
+            return View(sanPham);
         }
 
+
         // GET: SanPhams/Delete/5
-            public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id)
             {
                 if (id == null)
                 {
@@ -178,16 +209,75 @@ namespace BanSach.Controllers
                 return View(sanPham);
             }
 
-            // POST: SanPhams/Delete/5
-            [HttpPost, ActionName("Delete")]
-            [ValidateAntiForgeryToken]
-            public ActionResult DeleteConfirmed(int id)
+        // POST: SanPhams/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            SanPham sanPham = db.SanPham.Find(id);
+
+            if (sanPham == null)
             {
-                SanPham sanPham = db.SanPham.Find(id);
-                db.SanPham.Remove(sanPham);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return HttpNotFound();
             }
+
+            // Kiểm tra nếu sản phẩm này đã tồn tại trong chi tiết đơn hàng nào đó
+            bool isReferencedInOrder = db.DonHangCT.Any(dhct => dhct.IDSanPham == id);
+
+            if (isReferencedInOrder)
+            {
+                // Nếu sản phẩm có liên kết với đơn hàng, không xóa và trả về thông báo lỗi
+                ModelState.AddModelError("", "Không thể xóa sản phẩm này vì nó đã có trong đơn hàng.");
+                return View("Delete", sanPham); // Trả lại View Delete để hiển thị thông báo
+            }
+
+            // Nếu không có liên kết nào, thực hiện xóa
+            db.SanPham.Remove(sanPham);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+        // Thêm phương thức lọc sản phẩm theo giá
+        public ActionResult FilterByPrice(List<string> priceRange, int? page)
+        {
+            // Lấy danh sách tất cả sản phẩm
+            var sanPhams = db.SanPham.AsQueryable();
+
+            // Nếu có phạm vi giá được chọn, áp dụng điều kiện lọc
+            if (priceRange != null && priceRange.Any())
+            {
+                var filteredProducts = new List<SanPham>();
+
+                foreach (var range in priceRange)
+                {
+                    // Tách giá trị thấp và cao từ priceRange (dạng "0-150000" hoặc "700000-up")
+                    var values = range.Split('-');
+
+                    if (values.Length == 2 && decimal.TryParse(values[0], out var minPrice))
+                    {
+                        if (values[1] == "up")
+                        {
+                            // Nếu giá trị là "700000-up", lọc những sản phẩm có giá từ 700000 trở lên
+                            filteredProducts.AddRange(sanPhams.Where(sp => sp.GiaBan >= minPrice).ToList());
+                        }
+                        else if (decimal.TryParse(values[1], out var maxPrice))
+                        {
+                            // Nếu giá trị là dạng số (ví dụ "0-150000"), lọc theo khoảng giá
+                            filteredProducts.AddRange(sanPhams.Where(sp => sp.GiaBan >= minPrice && sp.GiaBan <= maxPrice).ToList());
+                        }
+                    }
+                }
+
+                // Xóa các bản sao trùng lặp (nếu có)
+                sanPhams = filteredProducts.Distinct().AsQueryable();
+            }
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
+            // Trả về kết quả đã được phân trang
+            return View("ProductList", sanPhams.OrderBy(s => s.IDsp).ToPagedList(pageNumber, pageSize));
+        }
 
         protected override void Dispose(bool disposing)
         {
