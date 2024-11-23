@@ -8,6 +8,15 @@
 <h2 class="text-center">Xác nhận xóa Nhà Xuất Bản</h2> <!-- Tiêu đề chính -->
 
 <div class="container mt-4">
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
     <div class="table-responsive">
         <table class="table table-bordered" style="border: 2px solid black;">
             <!-- Bảng với viền đen -->
@@ -20,7 +29,7 @@
             <tbody>
                 <tr>
                     <td style="border: 2px solid black;">
-                        @Html.DisplayNameFor(model => model.Tennxb)
+                        Tên nhà xuất bản
                     </td>
                     <td style="border: 2px solid black;">
                         @Html.DisplayFor(model => model.Tennxb)
@@ -28,7 +37,7 @@
                 </tr>
                 <tr>
                     <td style="border: 2px solid black;">
-                        @Html.DisplayNameFor(model => model.DiaChi)
+                        Địa chỉ
                     </td>
                     <td style="border: 2px solid black;">
                         @Html.DisplayFor(model => model.DiaChi)
@@ -36,7 +45,7 @@
                 </tr>
                 <tr>
                     <td style="border: 2px solid black;">
-                        @Html.DisplayNameFor(model => model.SoDienThoai)
+                        Hotline
                     </td>
                     <td style="border: 2px solid black;">
                         @Html.DisplayFor(model => model.SoDienThoai)
@@ -44,7 +53,7 @@
                 </tr>
                 <tr>
                     <td style="border: 2px solid black;">
-                        @Html.DisplayNameFor(model => model.Email)
+                        Email
                     </td>
                     <td style="border: 2px solid black;">
                         @Html.DisplayFor(model => model.Email)

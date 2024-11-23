@@ -7,36 +7,47 @@
 
 <h2 class="text-center font-weight-bold text-dark">Danh mục sách</h2>
 
-<div class=" mb-4">
-    @Html.ActionLink("Thêm ", "Create", null, new { @class = "btn btn-dark  rounded-sm" })
+<div class="mb-4 text-left">
+    @Html.ActionLink("Thêm ", "Create", null, new { @class = "btn btn-dark rounded-sm mr-2" })
+    @Html.ActionLink("Thống kê danh mục", "ThongKeDanhMuc", null, new { @class = "btn btn-success rounded-sm" })
 </div>
 
-<table class="table table-bordered-custom table-hover" >
-    <thead class="table-bordered text-white"style="background-color:black;" >
-        <tr>
+<table class="table table-bordered table-hover">
+    <thead class="text-white" style="background-color:black;">
+        <tr class="text-center">
+            <th>ID</th>
             <th>Danh mục</th>
             <th>Thể loại</th>
-            <th >Chỉnh sửa</th>
+            <th style="width: 200px;">Chỉnh sửa</th> <!-- Đặt chiều rộng để cân đối -->
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td >
+                <td class="text-center align-middle">
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td class="align-middle">
                     @Html.DisplayFor(modelItem => item.DanhMuc1)
                 </td>
-                <td>
+                <td class="align-middle">
                     @Html.DisplayFor(modelItem => item.TheLoai)
                 </td>
-                <td>
-                    @Html.ActionLink("Sửa", "Edit", new { id = item.ID }, new { @class = "btn btn-warning btn-sm me-1 rounded-sm" }) 
-                    @Html.ActionLink("Xem", "Details", new { id = item.ID }, new { @class = "btn btn-info btn-sm me-1 rounded-sm" }) 
-                    @Html.ActionLink("Xoá", "Delete", new { id = item.ID }, new { @class = "btn btn-danger btn-sm delete-link rounded-sm" })
+                <td class="text-center align-middle" style="width: 200px;">
+                    <a href="@Url.Action("Edit", new { id = item.ID })" class="btn btn-warning btn-sm rounded-sm" title="Sửa">
+                        <i class="fas fa-edit text-white"></i> 
+                    </a>
+                    <a href="@Url.Action("Details", new { id = item.ID })" class="btn btn-info btn-sm rounded-sm" title="Xem">
+                        <i class="fas fa-eye text-white"></i> 
+                    </a>
+                    <a href="@Url.Action("Delete", new { id = item.ID })" class="btn btn-danger btn-sm rounded-sm delete-link" title="Xoá">
+                        <i class="fas fa-trash-alt text-white"></i> 
+                    </a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMhT37z6nK7E6ZPZk7h4oh6K+apj7R8LbtJv9y1" crossorigin="anonymous">

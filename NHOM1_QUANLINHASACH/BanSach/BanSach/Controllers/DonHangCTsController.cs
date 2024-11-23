@@ -20,25 +20,35 @@ namespace BanSach.Controllers
         private dbSach db = new dbSach();
         public ActionResult Index(string searchString, int? page)
         {
-            // Get order details along with related order and product information
+            // Lấy chi tiết đơn hàng cùng với thông tin đơn hàng và sản phẩm liên quan
             var donHangCTs = db.DonHangCT.Include(d => d.DonHang).Include(d => d.SanPham).AsQueryable();
 
-            // Apply search filter if searchString is provided
+            // Áp dụng bộ lọc tìm kiếm nếu có searchString
             if (!String.IsNullOrEmpty(searchString))
             {
-                // Search by Order ID, Product Name, or Product ID
+                // Tìm kiếm theo ID đơn hàng, tên sản phẩm, hoặc ID sản phẩm
                 donHangCTs = donHangCTs.Where(d => d.DonHang.IDdh.ToString().Contains(searchString)
                                                  || d.SanPham.TenSP.Contains(searchString)
+                                                 || d.SanPham.TrangThaiSach.Contains(searchString)
                                                  || d.SanPham.IDsp.ToString().Contains(searchString));
             }
 
-            // Define page size and number
-            int pageSize = 10; // Number of items per page
-            int pageNumber = (page ?? 1); // Default to page 1 if no page is specified
+            // Định nghĩa kích thước trang và số trang
+            int pageSize = 10; // Số lượng item mỗi trang
+            int pageNumber = (page ?? 1); // Nếu không có trang cụ thể, mặc định là trang 1
 
-            // Return the paginated and filtered list to the view
-            return View(donHangCTs.OrderBy(d => d.IDDonHang).ToPagedList(pageNumber, pageSize));
+            // Sắp xếp chi tiết đơn hàng theo thứ tự ưu tiên của trạng thái đơn hàng
+            donHangCTs = donHangCTs
+                .OrderBy(d => d.DonHang.TrangThai == null || d.DonHang.TrangThai == "Chờ xử lý" ? 0 :
+                              d.DonHang.TrangThai == "Đã xác nhận" ? 1 :
+                              d.DonHang.TrangThai == "Đã nhận hàng" ? 2 : 3) // Sắp xếp theo thứ tự ưu tiên của trạng thái đơn hàng
+                .ThenBy(d => d.DonHang.IDdh) // Sắp xếp tiếp theo theo ID đơn hàng
+                .ThenBy(d => d.IDDonHang); // Sắp xếp tiếp theo theo ID chi tiết đơn hàng
+
+            // Trả về danh sách đã phân trang và lọc đến view
+            return View(donHangCTs.ToPagedList(pageNumber, pageSize));
         }
+
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -91,27 +101,31 @@ namespace BanSach.Controllers
         [ChildActionOnly]
         public PartialViewResult TopBanChay()
         {
-            List<DonHangCT> orderD = db.DonHangCT.ToList();
-            List<SanPham> prolist = db.SanPham.ToList();
-            var query = from od in orderD join p in prolist on od.IDSanPham equals p.IDsp into tbl
-                        group od by new { idPro = od.IDSanPham,
-                            namePro = od.SanPham.TenSP,
-                            imgPro = od.SanPham.HinhAnh,
-                            price = od.SanPham.GiaBan 
-                        } into gr
-                        orderby gr.Sum(s => s.SoLuong) descending
-                        select new ViewModel
-                        {
-                            IdPro = gr.Key.idPro,
-                            NamePro = gr.Key.namePro,
-                            ImgPro = gr.Key.imgPro,
-                            price = (decimal)gr.Key.price,
-                            Sum_Quantity = gr.Sum(s => s.SoLuong)
-                        };
+            // Lọc và nhóm sản phẩm theo ID và thông tin liên quan
+            var query = db.DonHangCT
+                            .Include(d => d.SanPham)
+                            .GroupBy(d => new
+                            {
+                                idPro = d.IDSanPham,
+                                namePro = d.SanPham.TenSP,
+                                imgPro = d.SanPham.HinhAnh,
+                                price = d.SanPham.GiaBan
+                            })
+                            .OrderByDescending(gr => gr.Sum(d => d.SoLuong)) // Lấy tổng số lượng bán
+                            .Take(10) // Lấy 10 sản phẩm bán chạy nhất
+                            .Select(gr => new ViewModel
+                            {
+                                IdPro = gr.Key.idPro,
+                                NamePro = gr.Key.namePro,
+                                ImgPro = gr.Key.imgPro,
+                                price = (decimal)gr.Key.price,
+                                Sum_Quantity = gr.Sum(d => d.SoLuong)
+                            })
+                            .ToList();
 
-
-            return PartialView(query.Take(10).ToList());
+            return PartialView(query);
         }
+
         public ActionResult ExportOrderDetailsToExcel(int? id)
         {
             if (id == null)
@@ -148,15 +162,15 @@ namespace BanSach.Controllers
                 currentRow++;
 
                 worksheet.Cell(currentRow, 1).Value = "Tên khách hàng";
-                worksheet.Cell(currentRow, 2).Value = donHangCT.DonHang.KhachHang.TenKH;
+                worksheet.Cell(currentRow, 2).Value = donHangCT.DonHang.KhachHang?.TenKH ?? "N/A"; // Kiểm tra null
                 currentRow++;
 
                 worksheet.Cell(currentRow, 1).Value = "Số điện thoại";
-                worksheet.Cell(currentRow, 2).Value = donHangCT.DonHang.KhachHang.SoDT;
+                worksheet.Cell(currentRow, 2).Value = donHangCT.DonHang.KhachHang?.SoDT ?? "N/A"; // Kiểm tra null
                 currentRow++;
 
                 worksheet.Cell(currentRow, 1).Value = "Địa chỉ";
-                worksheet.Cell(currentRow, 2).Value = donHangCT.DonHang.DiaChi;
+                worksheet.Cell(currentRow, 2).Value = donHangCT.DonHang.DiaChi ?? "N/A"; // Kiểm tra null
                 currentRow++;
 
                 worksheet.Cell(currentRow, 1).Value = "Ngày đặt hàng";
@@ -189,7 +203,7 @@ namespace BanSach.Controllers
                 currentRow++;
 
                 worksheet.Cell(currentRow, 1).Value = "Trạng thái";
-                worksheet.Cell(currentRow, 2).Value = donHangCT.DonHang.TrangThai;
+                worksheet.Cell(currentRow, 2).Value = donHangCT.DonHang.TrangThai ?? "N/A";
 
                 using (var stream = new MemoryStream())
                 {
@@ -199,6 +213,10 @@ namespace BanSach.Controllers
                 }
             }
         }
+
+        
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

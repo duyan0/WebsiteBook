@@ -44,27 +44,47 @@
                     <td class="font-weight-bold text-dark">
                         @Html.DisplayFor(modelItem => item.IDtg)
                     </td>
-                    <td>
+                    <td style="width:200px;">
                         @Html.DisplayFor(modelItem => item.TenTacGia)
                     </td>
                     <td>
-                        @String.Format("{0:dd-MM-yyyy}", item.NgaySinh)
+                        @{
+                            string ngaySinhMasked;
+                            if (item.NgaySinh.HasValue)
+                            {
+                                var ngaySinh = item.NgaySinh.Value.ToString("dd-MM-yyyy");
+                                ngaySinhMasked = ngaySinh.Length > 5 ? "****-" + ngaySinh.Substring(6) : "****";
+                            }
+                            else
+                            {
+                                ngaySinhMasked = "****";
+                            }
+                        }
+                        @ngaySinhMasked
                     </td>
+
                     <td>
                         @Html.DisplayFor(modelItem => item.QuocGia)
                     </td>
-                    <td>
+                    <td style="width:270px;">
                         @{
                             var text = item.TieuSu;
                             var displayText = text.Length > 30 ? text.Substring(0, 30) + "..." : text;
                         }
                         @Html.Raw(displayText)
                     </td>
-                    <td class="text-center">
-                        @Html.ActionLink("Sửa", "Edit", new { id = item.IDtg }, new { @class = "btn btn-warning btn-sm rounded btn-fixed-size" })
-                        @Html.ActionLink("Xem", "Details", new { id = item.IDtg }, new { @class = "btn btn-info btn-sm rounded btn-fixed-size" })
-                        @Html.ActionLink("Xoá", "Delete", new { id = item.IDtg }, new { @class = "btn btn-danger btn-sm rounded btn-fixed-size" })
+                    <td class="text-center" style="width:200px;">
+                        <a href="@Url.Action("Edit", new { id = item.IDtg })" title="Sửa" class="btn btn-warning btn-group-sm rounded-sm mx-1">
+                            <i class="fas fa-edit"></i> <!-- Icon Sửa -->
+                        </a>
+                        <a href="@Url.Action("Details", new { id = item.IDtg })" title="Xem" class="btn btn-info btn-group-sm rounded-sm mx-1">
+                            <i class="fas fa-eye"></i> <!-- Icon Xem -->
+                        </a>
+                        <a href="@Url.Action("Delete", new { id = item.IDtg })" title="Xoá" class="btn btn-danger btn-group-sm rounded-sm mx-1" onclick="return confirm('Bạn có chắc chắn muốn xoá?');">
+                            <i class="fas fa-trash-alt"></i> <!-- Icon Xoá -->
+                        </a>
                     </td>
+
                 </tr>
             }
         </tbody>

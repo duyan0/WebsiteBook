@@ -5,171 +5,150 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <style>
     body {
         background-color: #000; /* Đặt màu nền là màu đen để chữ trắng nổi bật */
     }
 
-    table, h2 {
-        margin-left: auto;
-        margin-right: auto;
+    .container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-top: 20px;
     }
 
     h2 {
         text-align: center;
         color: white; /* Đổi màu chữ thành màu trắng */
         font-weight: bold;
+        margin-bottom: 20px;
     }
 
-    tr {
-        border: 1px solid white; /* Đổi màu viền thành màu trắng */
-        color: white; /* Đổi màu chữ trong bảng thành màu trắng */
-        width: 100%;
-    }
-
-    .thongtin {
-        color: white; /* Đổi màu chữ thông tin thành màu trắng */
-        margin-right: 5px;
-    }
-
-    table {
+    .bang {
+        border: 1px solid #ccc;
+        padding: 20px;
+        width: 45%;
+        min-width: 300px;
         font-size: large;
-        width: 70%;
+        background-color: #fff; /* Màu nền trắng để nổi bật chữ */
+        color: black; /* Màu chữ đen */
     }
 
     .tieude {
         padding: 10px;
-        color: white; /* Đổi màu tiêu đề thành màu trắng */
+        font-weight: bold;
+        color: black; /* Đổi màu tiêu đề thành màu đen */
+        width: 40%;
+    }
+
+    .value {
+        padding: 10px;
+        color: black;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    tr {
+        border: 1px solid black; /* Đổi màu viền thành màu đen */
+    }
+
+    .form-actions {
+        margin-top: 20px;
     }
 </style>
 
-<h2>Thông tin đơn hàng</h2>
-<p>
-    <div class="form-actions text-center">
-        <a href="~/KhachHangs/LichSuDonHang" class="btn btn-success shadow-sm rounded-sm">Quay về</a>
-        <a href="@Url.Action("ExportOrderDetailsToExcel", "DonHangCTs", new { id = Model.IDDonHang })" class="btn btn-primary shadow-sm rounded-sm ml-2">Xuất Excel</a>
-    </div>
-</p>
-
-<table class="bang">
-    <tr>
-        <td class="tieude"> <b>Mã đơn hàng</b></td>
-        <td class="thongtin">
-            @Html.DisplayFor(model => model.IDdh)
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td class="tieude"><b>ID khách hàng  </b></td>
-        <td class="thongtin">
-            @Html.DisplayFor(model => model.DonHang.IDkh)
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td class="tieude">
-            <b>Tên khách hàng  </b>
-
-        </td>
-        <td class="thongtin">
-            @Html.DisplayFor(model => model.DonHang.KhachHang.TenKH)
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td class="tieude">
-            <b>Số điện thoại  </b>
-        </td>
-        <td class="thongtin">
-            @Html.DisplayFor(model => model.DonHang.KhachHang.SoDT)
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td class="tieude">
-            <b>Địa chỉ  </b>
-        </td>
-        <td class="thongtin">
-            @Html.DisplayFor(model => model.DonHang.DiaChi)
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td class="tieude">
-            <b>Ngày đặt hàng  </b>
-        <td class="thongtin">
-            @Html.DisplayFor(model => model.DonHang.NgayDatHang)
-        </td>
-    </tr>
-
-</table>
-<br />
 <h2>Chi tiết đơn hàng</h2>
 
-<table class="bang">
-    <tr>
-        <td class="tieude">
-            <b>Sản phẩm  </b>
-        <td class="thongtin">
-            @Html.DisplayFor(model => model.SanPham.TenSP)
-        </td>
-    </tr>
-    <tr>
-        <td class="tieude">
-            <b>Số lượng  </b>
-        <td class="thongtin">
-            @Html.DisplayFor(model => model.SoLuong)
-        </td>
-    </tr>
-    <tr>
-        <td class="tieude">
-            <b>Giá  </b>
-        <td class="thongtin" style="color:red;">
-            @string.Format("{0:N0} VND", Model.Gia)
-        </td>
-    </tr>
-    <tr>
-        <td class="tieude">
-            <b>Tổng tiền  </b>
-        <td class="thongtin" style="color:red;">
-            @Model.TongTien.ToString("N0") VND
-        </td>
-    </tr>
-    <tr>
-        <td class="tieude">
-            <b>Trạng thái</b>
-        </td>
-        <td class="thongtin" style="font-weight:bold; color:@(Model.DonHang.TrangThai == "Đã xác nhận" ? "green"
-                : Model.DonHang.TrangThai == "Đã hủy" ? "red"
-                : Model.DonHang.TrangThai == "Đã nhận hàng" ? "gold"
-                : Model.DonHang.TrangThai == "Chờ xử lý" ? "white" // Add condition for "Chờ xử lý"
-                : "Blue");">
-            @Html.DisplayFor(model => model.DonHang.TrangThai)
-        </td>
-    </tr>
+<div class="form-actions text-center">
+    <a href="~/KhachHangs/LichSuDonHang" class="btn btn-outline-success shadow-sm rounded-sm">Quay về</a>
+    <a href="@Url.Action("ExportOrderDetailsToExcel", "DonHangCTs", new { id = Model.IDDonHang })" class="btn btn-primary shadow-sm rounded-sm ml-2">Xuất Excel</a>
+</div>
 
+<div class="container">
+    <!-- Bảng thông tin đơn hàng -->
+    <table class="bang">
+        <tr>
+            <td class="tieude">Mã đơn hàng</td>
+            <td class="value">
+                @Html.DisplayFor(model => model.IDdh)
+            </td>
+        </tr>
+        <tr>
+            <td class="tieude">ID khách hàng</td>
+            <td class="value">
+                @Html.DisplayFor(model => model.DonHang.IDkh)
+            </td>
+        </tr>
+        <tr>
+            <td class="tieude">Tên khách hàng</td>
+            <td class="value">
+                @Html.DisplayFor(model => model.DonHang.KhachHang.TenKH)
+            </td>
+        </tr>
+        <tr>
+            <td class="tieude">Số điện thoại</td>
+            <td class="value">
+                @Html.DisplayFor(model => model.DonHang.KhachHang.SoDT)
+            </td>
+        </tr>
+        <tr>
+            <td class="tieude">Địa chỉ</td>
+            <td class="value">
+                @Html.DisplayFor(model => model.DonHang.DiaChi)
+            </td>
+        </tr>
+        <tr>
+            <td class="tieude">Ngày đặt hàng</td>
+            <td class="value">
+                @Html.DisplayFor(model => model.DonHang.NgayDatHang)
+            </td>
+        </tr>
+    </table>
 
+    <!-- Bảng chi tiết sản phẩm -->
+    <table class="bang">
+        <tr>
+            <td class="tieude">Sản phẩm</td>
+            <td class="value">
+                @Html.DisplayFor(model => model.SanPham.TenSP)
+            </td>
+        </tr>
+        <tr>
+            <td class="tieude">Số lượng</td>
+            <td class="value">
+                @Html.DisplayFor(model => model.SoLuong)
+            </td>
+        </tr>
+        <tr>
+            <td class="tieude">Giá</td>
+            <td class="value" style="color:red;">
+                @string.Format("{0:N0} VND", Model.Gia)
+            </td>
+        </tr>
+        <tr>
+            <td class="tieude">Tổng tiền</td>
+            <td class="value" style="color:red;">
+                @Model.TongTien.ToString("N0") VND
+            </td>
+        </tr>
+        <tr>
+            <td class="tieude">Trạng thái</td>
+            <td class="value" style="font-weight:bold; color:@(Model.DonHang.TrangThai == "Đã xác nhận" ? "green"
+                    : Model.DonHang.TrangThai == "Đã hủy" ? "red"
+                    : Model.DonHang.TrangThai == "Đã nhận hàng" ? "blue"
+                    : Model.DonHang.TrangThai == "Chờ xử lý" ? "orange"
+                    : "black");">
+                @Html.DisplayFor(model => model.DonHang.TrangThai)
+            </td>
+        </tr>
+    </table>
+</div>
 
-</table>
 <p>
     <div class="form-actions text-center">
-        <a href="~/KhachHangs/LichSuDonHang" class="btn btn-outline-success  shadow-sm rounded-sm">Quay về</a>
+        <a href="~/KhachHangs/LichSuDonHang" class="btn btn-outline-success shadow-sm rounded-sm">Quay về</a>
     </div>
-
 </p>

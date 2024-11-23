@@ -67,6 +67,11 @@
         display: flex;
         justify-content: center;
     }
+
+    /* Button styling */
+    .btn-action {
+        margin-right: 5px;
+    }
 </style>
 
 <h2 class="tieude">Quản lý đơn hàng</h2>
@@ -84,6 +89,13 @@
     }
 </div>
 
+<div class="text-left mb-3 mt-3 text-dark font-weight-bold">
+    <p>Tổng đơn hàng: @Model.TotalItemCount</p>
+</div>
+<!-- Thêm liên kết tới trang Thống kê đơn hàng -->
+<p>
+    @Html.ActionLink("Xem thống kê đơn hàng", "ThongKeDonHang", "DonHangs", null, new { @class = "btn btn-info mb-3" })
+</p>
 
 @if (Model != null && Model.Any())
 {
@@ -95,7 +107,7 @@
                 <th>ID và Tên KH</th>
                 <th>Ngày ĐH</th>
                 <th>Tổng số tiền</th>
-                <th>Phương thức thanh toán</th>
+                <th>PTT Toán</th>
                 <th>Trạng thái ĐH</th>
                 <th>Thao tác</th>
             </tr>
@@ -106,8 +118,7 @@
                 <tr>
                     <td class="font-weight-bold">@item.IDdh</td>
                     <td class="font-weight-bold">
-                        @Html.DisplayFor(modelItem => item.KhachHang.IDkh) -
-                        @Html.DisplayFor(modelItem => item.KhachHang.TenKH)
+                        @Html.DisplayFor(modelItem => item.KhachHang.IDkh) - @Html.DisplayFor(modelItem => item.KhachHang.TenKH)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.NgayDatHang)
@@ -115,33 +126,45 @@
                     <td class="text-danger font-weight-bold">
                         @item.GetTongSoTien().ToString("N0") VND
                     </td>
+
                     <td class="font-weight-bold">
-                        Thanh toán khi nhận hàng
+                        Tiền mặt
                     </td>
                     <td>
                         @{
-                            string statusClass = "status-waiting"; // Default status is "Chờ xử lý"
-                            switch (item.TrangThai)
+                            string statusClass = "status-waiting"; // Default to waiting status
+                            string displayStatus = "Chờ xử lý"; // Default display status
+
+                            if (!string.IsNullOrEmpty(item.TrangThai))
                             {
-                                case "Đã xác nhận":
-                                    statusClass = "status-confirmed";
-                                    break;
-                                case "Đã huỷ":
-                                    statusClass = "status-cancelled";
-                                    break;
-                                case "Đã nhận hàng":
-                                    statusClass = "status-received";
-                                    break;
+                                displayStatus = item.TrangThai;
+                                switch (item.TrangThai)
+                                {
+                                    case "Đã xác nhận":
+                                        statusClass = "status-confirmed";
+                                        break;
+                                    case "Đã huỷ":
+                                        statusClass = "status-cancelled";
+                                        break;
+                                    case "Đã nhận hàng":
+                                        statusClass = "status-received";
+                                        break;
+                                    default:
+                                        statusClass = "status-waiting";
+                                        break;
+                                }
                             }
                         }
-                        <span class="@statusClass">
-                            @(string.IsNullOrEmpty(item.TrangThai) ? "Chờ xử lý" : item.TrangThai)
-                        </span>
+                        <span class="@statusClass">@displayStatus</span>
                     </td>
-                    <td>
-                        @Html.ActionLink("Xác nhận", "Confirm", new { id = item.IDdh }, new { @class = "btn btn-success btn-sm me-1 rounded", onclick = "return confirm('Bạn có chắc chắn xác nhận đơn hàng này?');" })
-                        @Html.ActionLink("Huỷ", "Cancel", new { id = item.IDdh }, new { @class = "btn btn-danger btn-sm me-1 rounded", onclick = "return confirm('Bạn có chắc chắn huỷ đơn hàng này?');" })
-                        @Html.ActionLink("Xoá", "Delete", new { id = item.IDdh }, new { @class = "btn btn-warning btn-sm me-1 rounded", onclick = "return confirm('Bạn có chắc chắn xoá đơn hàng này?');" })
+                    <td style="width:270px;">
+                        @if (item.TrangThai == null || item.TrangThai == "Chờ xử lý")
+                        {
+                            @Html.ActionLink("Xác nhận", "Confirm", new { id = item.IDdh }, new { @class = "btn btn-success btn-sm btn-action rounded mx-1", onclick = "return confirm('Bạn có chắc chắn muốn xác nhận đơn hàng này?');" })
+                            @Html.ActionLink("Huỷ", "Cancel", new { id = item.IDdh }, new { @class = "btn btn-danger btn-sm btn-action rounded mx-1", onclick = "return confirm('Bạn có chắc chắn muốn huỷ đơn hàng này?');" })
+                        }
+                        @Html.ActionLink("Xoá", "Delete", new { id = item.IDdh }, new { @class = "btn btn-warning btn-sm btn-action rounded mx-1", onclick = "return confirm('Bạn có chắc chắn muốn xoá đơn hàng này?');" })
+                        @Html.ActionLink("In", "PrintInvoice", new { id = item.IDdh }, new { @class = "btn btn-primary btn-sm btn-action rounded mx-1" })
                     </td>
                 </tr>
             }
@@ -168,13 +191,3 @@ else
         Không có đơn hàng nào trong hệ thống.
     </div>
 }
-
-<style>
-    .delete-link {
-        color: red; /* Modify delete link color */
-    }
-
-        .delete-link:hover {
-            color: darkred; /* Modify delete link hover color */
-        }
-</style>

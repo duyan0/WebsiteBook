@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BanSach.Models;
+using OfficeOpenXml;
 using PagedList;
 
 namespace BanSach.Controllers
@@ -30,6 +31,7 @@ namespace BanSach.Controllers
                 sanPhams = sanPhams.Where(s => s.TenSP.Contains(searchString)
                                              || s.TacGia.TenTacGia.Contains(searchString)
                                              || s.DanhMuc.TheLoai.Contains(searchString)
+                                             || s.TrangThaiSach.Contains(searchString)
                                              || s.NhaXuatBan.Tennxb.Contains(searchString));
             }
 
@@ -108,12 +110,16 @@ namespace BanSach.Controllers
             ViewBag.TacGia = new SelectList(db.TacGia, "IDtg", "TenTacGia");
             ViewBag.NXB = new SelectList(db.NhaXuatBan, "IDnxb", "Tennxb");
 
-            // Điều chỉnh ViewBag.KM để hiển thị MucGiamGia và TenKm kết hợp
-            ViewBag.KM = new SelectList(db.KhuyenMai.ToList().Select(km => new
-            {
-                IDKM = km.IDkm,
-                MucGiamGiaTenKm = km.MucGiamGia + "% - " + km.TenKhuyenMai
-            }), "IDkm", "MucGiamGiaTenKm");
+            // Tạo SelectList cho KM với thông tin kết hợp từ MucGiamGia và TenKhuyenMai
+            ViewBag.KM = new SelectList(
+                db.KhuyenMai.ToList().Select(km => new
+                {
+                    IDkm = km.IDkm,
+                    MucGiamGiaTenKm = $"{km.MucGiamGia}% - {km.TenKhuyenMai}"
+                }),
+                "IDkm",
+                "MucGiamGiaTenKm"
+            );
 
             return View();
         }
@@ -132,12 +138,16 @@ namespace BanSach.Controllers
             ViewBag.TheLoai = new SelectList(db.DanhMuc, "ID", "TheLoai", sanPham.TheLoai);
             ViewBag.TacGia = new SelectList(db.TacGia, "IDtg", "TenTacGia", sanPham.TacGia);
             ViewBag.NXB = new SelectList(db.NhaXuatBan, "IDnxb", "Tennxb", sanPham.NhaXuatBan);
-            ViewBag.KM = new SelectList(db.KhuyenMai.ToList().Select(km => new
-            {
-                IDKM = km.IDkm,
-                MucGiamGiaTenKm = km.MucGiamGia + "% - " + km.TenKhuyenMai
-            }), "IDkm", "MucGiamGiaTenKm", sanPham.KhuyenMai);
-
+            ViewBag.KM = new SelectList(
+                db.KhuyenMai.ToList().Select(km => new
+                {
+                    IDkm = km.IDkm,
+                    MucGiamGiaTenKm = $"{km.MucGiamGia}% - {km.TenKhuyenMai}"
+                }),
+                "IDkm",
+                "MucGiamGiaTenKm",
+                sanPham.IDkm
+            );
 
             return View(sanPham);
         }
@@ -156,15 +166,21 @@ namespace BanSach.Controllers
                 return HttpNotFound();
             }
 
-            // Cập nhật ViewBag.TheLoai, ViewBag.TacGia, ViewBag.NXB, và ViewBag.KM
             ViewBag.TheLoai = new SelectList(db.DanhMuc, "ID", "TheLoai", product.TheLoai);
             ViewBag.TacGia = new SelectList(db.TacGia, "IDtg", "TenTacGia", product.TacGia);
             ViewBag.NXB = new SelectList(db.NhaXuatBan, "IDnxb", "Tennxb", product.NhaXuatBan);
-            ViewBag.KM = new SelectList(db.KhuyenMai.ToList().Select(km => new
-            {
-                IDkm = km.IDkm,
-                MucGiamGiaTenKm = km.MucGiamGia + "% - " + km.TenKhuyenMai
-            }), "IDkm", "MucGiamGiaTenKm", product.KhuyenMai);
+
+            // Tạo SelectList cho KM với thông tin kết hợp từ MucGiamGia và TenKhuyenMai
+            ViewBag.KM = new SelectList(
+                db.KhuyenMai.ToList().Select(km => new
+                {
+                    IDkm = km.IDkm,
+                    MucGiamGiaTenKm = $"{km.MucGiamGia}% - {km.TenKhuyenMai}"
+                }),
+                "IDkm",
+                "MucGiamGiaTenKm",
+                product.IDkm
+            );
 
             return View(product);
         }
@@ -180,18 +196,24 @@ namespace BanSach.Controllers
                 return RedirectToAction("Index");
             }
 
-            // Cập nhật ViewBag.TheLoai, ViewBag.TacGia, ViewBag.NXB, và ViewBag.KM khi model state không hợp lệ
             ViewBag.TheLoai = new SelectList(db.DanhMuc, "ID", "TheLoai", sanPham.TheLoai);
             ViewBag.TacGia = new SelectList(db.TacGia, "IDtg", "TenTacGia", sanPham.TacGia);
             ViewBag.NXB = new SelectList(db.NhaXuatBan, "IDnxb", "Tennxb", sanPham.NhaXuatBan);
-            ViewBag.KM = new SelectList(db.KhuyenMai.ToList().Select(km => new
-            {
-                IDkm = km.IDkm,
-                MucGiamGiaTenKm = km.MucGiamGia + "% - " + km.TenKhuyenMai
-            }), "IDkm", "MucGiamGiaTenKm", sanPham.KhuyenMai);
+            ViewBag.KM = new SelectList(
+                db.KhuyenMai.ToList().Select(km => new
+                {
+                    IDkm = km.IDkm,
+                    MucGiamGiaTenKm = $"{km.MucGiamGia}% - {km.TenKhuyenMai}"
+                }),
+                "IDkm",
+                "MucGiamGiaTenKm",
+                sanPham.IDkm
+            );
 
             return View(sanPham);
         }
+
+
 
 
         // GET: SanPhams/Delete/5
@@ -278,7 +300,100 @@ namespace BanSach.Controllers
             // Trả về kết quả đã được phân trang
             return View("ProductList", sanPhams.OrderBy(s => s.IDsp).ToPagedList(pageNumber, pageSize));
         }
+        // GET: SanPhams/Import
+        public ActionResult Import()
+        {
+            return View();
+        }
 
+        // POST: SanPhams/Import
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Import(HttpPostedFileBase file)
+        {
+            if (file != null && file.ContentLength > 0)
+            {
+                // Check if the file is an Excel file
+                if (file.FileName.EndsWith(".xlsx"))
+                {
+                    using (var package = new ExcelPackage(file.InputStream))
+                    {
+                        // Get the first worksheet in the Excel file
+                        var worksheet = package.Workbook.Worksheets[0];
+                        int rowCount = worksheet.Dimension.Rows;
+
+                        for (int row = 2; row <= rowCount; row++) // Start from row 2 (skip header)
+                        {
+                            // Read the Excel data (assuming columns are: IDsp, TenSP, MoTa, TheLoai, GiaBan, HinhAnh, IDtg, IDnxb, IDkm, SoLuong, TrangThaiSach)
+                            var sanPham = new SanPham
+                            {
+                                TenSP = worksheet.Cells[row, 1].Text,
+                                MoTa = worksheet.Cells[row, 2].Text,
+                                TheLoai = int.TryParse(worksheet.Cells[row, 3].Text, out var category) ? category : 0,  // Updated line to properly parse the integer value
+                                GiaBan = decimal.TryParse(worksheet.Cells[row, 4].Text, out var price) ? price : 0,
+                                HinhAnh = worksheet.Cells[row, 5].Text,
+                                IDtg = int.TryParse(worksheet.Cells[row, 6].Text, out var tacGiaId) ? tacGiaId : 0,
+                                IDnxb = int.TryParse(worksheet.Cells[row, 7].Text, out var nxbId) ? nxbId : 0,
+                                IDkm = int.TryParse(worksheet.Cells[row, 8].Text, out var kmId) ? kmId : 0,
+                                SoLuong = int.TryParse(worksheet.Cells[row, 9].Text, out var soLuong) ? soLuong : 0,
+                                TrangThaiSach = worksheet.Cells[row, 10].Text
+                            };
+
+                            // Add the product to the database
+                            db.SanPham.Add(sanPham);
+                        }
+
+                        db.SaveChanges();
+                        TempData["Message"] = "Nhập sách thành công";
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Please upload a valid Excel file.");
+                }
+            }
+            return View();
+        }
+        public ActionResult ThongKeSanPham()
+        {
+            // Lấy danh sách tất cả sản phẩm từ cơ sở dữ liệu
+            var sanPhams = db.SanPham.ToList();
+
+            // Tổng sách hết hàng (có số lượng bằng 0)
+            int tongSachHetHang = sanPhams.Count(sp => sp.SoLuong == 0);
+
+            // Tổng sách còn hàng (có số lượng lớn hơn 0)
+            int tongSachConHang = sanPhams.Count(sp => sp.SoLuong > 0);
+
+            // Tổng số lượng tất cả các cuốn sách
+            int tongSoLuongSach = sanPhams.Sum(sp => sp.SoLuong);
+
+            // Tổng số lượng các đầu sách (số lượng sản phẩm riêng biệt)
+            int tongDauSach = sanPhams.Count();
+
+            // Tổng giá trị tồn kho (tổng giá bán * số lượng cho tất cả sản phẩm còn hàng)
+            decimal tongGiaTriTonKho = sanPhams.Where(sp => sp.SoLuong > 0).Sum(sp => sp.GiaBan * sp.SoLuong);
+
+            
+
+            // Số lượng các sản phẩm có khuyến mãi
+            int tongSanPhamKhuyenMai = sanPhams.Count(sp => sp.IDkm != null);
+
+            // Số lượng các sản phẩm không có khuyến mãi
+            int tongSanPhamKhongKhuyenMai = sanPhams.Count(sp => sp.IDkm == null);
+
+            // Tạo đối tượng ViewBag để truyền thông tin sang View
+            ViewBag.TongSachHetHang = tongSachHetHang;
+            ViewBag.TongSachConHang = tongSachConHang;
+            ViewBag.TongSoLuongSach = tongSoLuongSach;
+            ViewBag.TongDauSach = tongDauSach;
+            ViewBag.TongGiaTriTonKho = tongGiaTriTonKho;
+            ViewBag.TongSanPhamKhuyenMai = tongSanPhamKhuyenMai;
+            ViewBag.TongSanPhamKhongKhuyenMai = tongSanPhamKhongKhuyenMai;
+
+            return View();
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

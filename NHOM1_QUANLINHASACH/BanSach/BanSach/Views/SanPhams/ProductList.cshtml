@@ -11,51 +11,50 @@
 <style>
     .card-pro {
         text-decoration: none;
-        border-radius: 10px;
-        padding: 15px;
-        transition: transform 0.3s, box-shadow 0.3s;
+        border-radius: 8px;
+        padding: 10px;
         background-color: #ffffff;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        transition: transform 0.3s, box-shadow 0.3s;
     }
 
-        .card-pro:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
+    .card-pro:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
 
-        .card-pro a {
-            text-decoration: none;
-            color: inherit;
-            width: 100%;
-        }
+    .card-pro a {
+        text-decoration: none;
+        color: inherit;
+        width: 100%;
+    }
 
-        .card-pro img {
-            border-radius: 10px;
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            transition: opacity 0.3s;
-            align-self: center;
-        }
+    .card-pro img {
+        border-radius: 8px;
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        transition: opacity 0.3s;
+    }
 
     .availability {
         font-weight: bold;
-        font-size: 1em;
+        font-size: 0.9em;
         text-align: left;
         width: 100%;
     }
 
     .product-name {
         font-weight: bold;
-        font-size: 1.2em;
+        font-size: 1.1em;
         color: #212529;
-        min-height: 20px;
         text-align: left;
         width: 100%;
-        margin-top: 10px;
+        margin-top: 8px;
+        min-height: 35px;
     }
 
     .price {
@@ -64,7 +63,7 @@
         font-size: 1.1em;
         text-align: left;
         width: 100%;
-        margin-top: 10px;
+        margin-top: 8px;
     }
 
     .old-price {
@@ -80,8 +79,6 @@
         font-weight: bold;
         padding: 5px 10px;
         border-radius: 3px;
-        text-align: left;
-        width: 100%;
         margin-top: 10px;
     }
 
@@ -90,24 +87,24 @@
         margin: 20px 0;
     }
 
-        .sotrang a {
-            padding: 8px;
-            border-radius: 5px;
-            transition: background-color 0.2s;
-            color: #007bff;
-            text-decoration: none;
-        }
+    .sotrang a {
+        padding: 8px 12px;
+        border-radius: 5px;
+        color: #007bff;
+        text-decoration: none;
+        margin: 0 3px;
+    }
 
-            .sotrang a:hover {
-                background-color: #f0f0f0;
-            }
+    .sotrang a:hover {
+        background-color: #f0f0f0;
+    }
 
     h3.page-title {
         color: #343a40;
-        margin: 30px auto;
         font-weight: bold;
         text-align: center;
         font-size: 1.75em;
+        margin-bottom: 20px;
     }
 
     .out-of-stock {
@@ -121,18 +118,17 @@
     }
 
     .price-filter {
-        padding: 20px;
+        padding: 15px;
         border: 1px solid #ddd;
-        border-radius: 10px;
+        border-radius: 8px;
         background-color: #fff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin-left: 20px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
 
     .filter-title {
-        font-size: 1.25em;
+        font-size: 1.1em;
         font-weight: bold;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
         color: #333;
     }
 
@@ -142,21 +138,21 @@
         align-items: center;
     }
 
-        .filter-option input[type="checkbox"] {
-            margin-right: 10px;
-            width: 20px;
-            height: 20px;
-            accent-color: orange;
-        }
+    .filter-option input[type="checkbox"] {
+        margin-right: 10px;
+        width: 20px;
+        height: 20px;
+        accent-color: orange;
+    }
 
-        .filter-option label {
-            font-size: 1em;
-            color: #333;
-        }
+    .filter-option label {
+        font-size: 0.95em;
+        color: #333;
+    }
 
     .btn-filter {
         margin-top: 15px;
-        padding: 10px 20px;
+        padding: 8px 16px;
         background-color: #f39c12;
         color: #fff;
         border: none;
@@ -166,9 +162,11 @@
         font-weight: bold;
     }
 
-        .btn-filter:hover {
-            background-color: #e67e22;
-        }
+    .btn-filter:hover {
+        background-color: #e67e22;
+    }
+
+    
 </style>
 
 <h3 class="page-title text-white">Danh sách sản phẩm</h3>
@@ -212,7 +210,7 @@
                 {
                     foreach (var item in Model)
                     {
-                        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 d-flex align-items-stretch mb-4">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch mb-4">
                             <div class="card-pro">
                                 <a href="@Url.Action("TrangSP", "SanPhams", new { id = item.IDsp })">
                                     <img src="~/Content/img/@item.HinhAnh" class="img-fluid" alt="@item.TenSP" />
@@ -251,12 +249,12 @@
                 }
                 else
                 {
-                    <p class="text-white">Hiện tại sản phẩm này không có thông tin hiển thị. Vui lòng kiểm tra lại sau hoặc liên hệ với cửa hàng để biết thêm chi tiết.</p>
+                    <p>Không có sản phẩm nào hiển thị.</p>
                 }
             </div>
 
             <!-- Phân trang -->
-            <div class="text-center sotrang">
+            <div class="sotrang">
                 @Html.PagedListPager(Model, page => Url.Action("ProductList", new { page }), new PagedListRenderOptions()
                 {
                     DisplayLinkToFirstPage = PagedListDisplayMode.Always,

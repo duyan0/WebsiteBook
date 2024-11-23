@@ -47,7 +47,6 @@ namespace BanSach.Controllers
         [HttpPost]
         public ActionResult RegisterCus(KhachHang _user)
         {
-            // Kiểm tra tính hợp lệ của dữ liệu
             if (!ModelState.IsValid)
             {
                 ViewBag.ErrorRegister = "Vui lòng điền đầy đủ các thông tin.";
@@ -71,15 +70,93 @@ namespace BanSach.Controllers
                 return View();
             }
 
-            // Nếu tất cả điều kiện đều hợp lệ
-            db.Configuration.ValidateOnSaveEnabled = false;
+            // Lưu người dùng vào cơ sở dữ liệu mà không có OTP ngay lập tức
+            _user.TrangThaiTaiKhoan = "Chưa xác nhận"; // Đặt trạng thái ban đầu là chưa xác nhận
             db.KhachHang.Add(_user);
-            db.SaveChanges();
+            db.SaveChanges(); // Lưu người dùng mà không có OTP
 
-            return View("SignUpSuccess");
+            // Tạo mã OTP ngẫu nhiên (4 chữ số)
+            string otp = GenerateOtp();
+            _user.OTP = otp;
+            _user.OTPExpiry = DateTime.Now.AddMinutes(5); // Mã OTP có hiệu lực trong 5 phút
+
+            db.SaveChanges(); // Cập nhật mã OTP vào cơ sở dữ liệu
+
+            // Gửi email chứa mã OTP
+            SendEmail(_user.Email, "Xác nhận tài khoản", $"Vui lòng xác nhận tài khoản của bạn bằng cách nhập mã OTP: {otp}");
+
+            // Chuyển hướng đến trang nhập mã OTP
+            return RedirectToAction("VerifyOtp", new { userId = _user.IDkh });
         }
 
 
+        private string GenerateOtp()
+        {
+            Random random = new Random();
+            return random.Next(1000, 9999).ToString(); // Tạo mã OTP 4 chữ số
+        }
+        [HttpGet]
+        public ActionResult VerifyOtp(int userId)
+        {
+            var user = db.KhachHang.FirstOrDefault(u => u.IDkh == userId);
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = "Không tìm thấy người dùng.";
+                return View();
+            }
+
+            return View(new VerifyOtpViewModel { UserId = userId });
+        }
+
+        [HttpPost]
+        public ActionResult VerifyOtp(VerifyOtpViewModel model)
+        {
+            var user = db.KhachHang.FirstOrDefault(u => u.IDkh == model.UserId);
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = "Không tìm thấy người dùng.";
+                return View();
+            }
+
+            // Kiểm tra mã OTP có hợp lệ không
+            if (user.OTP != model.EnteredOtp)
+            {
+                ViewBag.ErrorMessage = "Mã OTP không đúng.";
+                return View(model);
+            }
+
+            // Kiểm tra mã OTP có hết hạn không
+            if (user.OTPExpiry < DateTime.Now)
+            {
+                ViewBag.ErrorMessage = "Mã OTP đã hết hạn.";
+                return View(model);
+            }
+
+            // Cập nhật trạng thái tài khoản thành đã xác nhận
+            user.TrangThaiTaiKhoan = "Hoạt động";
+            user.OTP = null;  // Xóa mã OTP đã sử dụng
+            db.SaveChanges();
+
+            ViewBag.Message = "Email đã được xác nhận thành công!";
+            return RedirectToAction("LoginAccountCus", "LoginUser");
+        }
+        [HttpGet]
+        public ActionResult VerifyEmail(int userId)
+        {
+            var user = db.KhachHang.FirstOrDefault(u => u.IDkh == userId);
+            if (user != null)
+            {
+                user.TrangThaiTaiKhoan = "Hoạt động";
+                db.SaveChanges();
+                ViewBag.Message = "Email đã được xác nhận thành công!";
+            }
+            else
+            {
+                ViewBag.Message = "Không tìm thấy người dùng.";
+            }
+
+            return View();
+        }
 
         [HttpGet]
         public ActionResult SignUpSuccess()
@@ -96,34 +173,65 @@ namespace BanSach.Controllers
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public ActionResult LoginAccountCus(KhachHang _cus)
         {
-            // check là khách hàng cần tìm
-            var check = db.KhachHang.Where(s => s.TKhoan == _cus.TKhoan && s.MKhau == _cus.MKhau).FirstOrDefault();
-            var check2 = db.Admin.Where(x => x.TKhoan == _cus.TKhoan && x.MKhau == _cus.MKhau).FirstOrDefault();
+            // Kiểm tra thông tin đăng nhập của khách hàng
             if (_cus.TKhoan == null)
             {
                 return View();
             }
-            if (check2 != null)
+
+            // Tìm kiếm trong bảng Admin
+            var checkAdmin = db.Admin.FirstOrDefault(x => x.TKhoan == _cus.TKhoan && x.MKhau == _cus.MKhau);
+            if (checkAdmin != null)
             {
-                Session["IDQly"] = check2.ID;
-                Session["TenQly"] = check2.HoTen;
-                Session["TKQly"] = check2.TKhoan;
-                Session["Vaitro"] = check2.VaiTro;
+                // Nếu là quản trị viên, thiết lập session quản lý và chuyển đến trang Admin
+                Session["IDQly"] = checkAdmin.ID;
+                Session["TenQly"] = checkAdmin.HoTen;
+                Session["TKQly"] = checkAdmin.TKhoan;
+                Session["Vaitro"] = checkAdmin.VaiTro;
+
                 return RedirectToAction("Index", "Admins");
             }
-            if (check == null)  //không có KH
+
+            // Tìm kiếm trong bảng KhachHang
+            var checkCustomer = db.KhachHang.FirstOrDefault(s => s.TKhoan == _cus.TKhoan && s.MKhau == _cus.MKhau);
+
+            if (checkCustomer == null)
             {
+                // Nếu không tìm thấy tài khoản khách hàng
                 ViewBag.ErrorInfo = "Sai tài khoản hoặc mật khẩu";
                 return View();
             }
-            db.Configuration.ValidateOnSaveEnabled = false;
-            Session["IDkh"] = check.IDkh;
-            Session["MKhau"] = check.MKhau;
-            Session["TenKH"] = check.TenKH;
-            Session["SoDT"] = check.SoDT;
 
+            // Kiểm tra nếu tài khoản khách hàng bị khóa
+            if (checkCustomer.TrangThaiTaiKhoan != null)
+            {
+                if (checkCustomer.TrangThaiTaiKhoan.Equals("Bị khoá", StringComparison.OrdinalIgnoreCase))
+                {
+                    ViewBag.ErrorInfo = "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ với quản trị viên.";
+                    return View();
+                }
+                else if (checkCustomer.TrangThaiTaiKhoan.Equals("Chưa xác nhận", StringComparison.OrdinalIgnoreCase))
+                {
+                    ViewBag.ErrorInfo = "Tài khoản của bạn chưa được xác nhận. Vui lòng kiểm tra email để xác nhận tài khoản.";
+                    return View();
+                }
+            }
+
+
+            // Nếu tài khoản khách hàng hợp lệ và không bị khóa, thiết lập session
+            db.Configuration.ValidateOnSaveEnabled = false;
+            Session["IDkh"] = checkCustomer.IDkh;
+            Session["MKhau"] = checkCustomer.MKhau;
+            Session["TenKH"] = checkCustomer.TenKH;
+            Session["SoDT"] = checkCustomer.SoDT;
+
+            // Chuyển hướng tới trang sau khi đăng nhập thành công
             return RedirectToAction("SignInSuccess");
         }
+
+        // Thêm thuộc tính này vào lớp KhachHang nếu chưa có
+        public string TrangThaiTaiKhoan { get; set; }
+
 
         [HttpGet]
         public ActionResult SignInSuccess()
@@ -207,42 +315,30 @@ namespace BanSach.Controllers
 
         private void SendEmail(string toEmail, string subject, string body)
         {
-            try
-            {
-                var fromAddress = new MailAddress("crandi21112004@gmail.com", "Võ Duy Ân - HUFLIT");
-                var toAddress = new MailAddress(toEmail);
-                string fromPassword = "uisz jzid byry jtqw"; // Sử dụng App Password
+            var fromAddress = new MailAddress("crandi21112004@gmail.com", "Võ Duy Ân - HUFLIT");
+            var toAddress = new MailAddress(toEmail);
+            string fromPassword = "uisz jzid byry jtqw"; // Sử dụng App Password
 
-                var smtp = new SmtpClient
-                {
-                    Host = "smtp.gmail.com",
-                    Port = 587,
-                    EnableSsl = true,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
-                };
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+            };
 
-                using (var message = new MailMessage(fromAddress, toAddress)
-                {
-                    Subject = subject,
-                    Body = body
-                })
-                {
-                    smtp.Send(message);
-                }
-            }
-            catch (SmtpException smtpEx)
+            using (var message = new MailMessage(fromAddress, toAddress)
             {
-                // Ghi lại lỗi SMTP
-                System.Diagnostics.Debug.WriteLine("SMTP Error: " + smtpEx.Message);
-            }
-            catch (Exception ex)
+                Subject = subject,
+                Body = body
+            })
             {
-                // Ghi lại các lỗi khác
-                System.Diagnostics.Debug.WriteLine("Error: " + ex.Message);
+                smtp.Send(message);
             }
         }
+
         public ActionResult TestEmail()
         {
             SendEmail("crandi21112004@gmail.com", "Test Email", "This is a test email.");

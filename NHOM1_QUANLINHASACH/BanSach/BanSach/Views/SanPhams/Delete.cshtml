@@ -100,9 +100,9 @@
     @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "mt-4" }))
     {
         @Html.AntiForgeryToken()
-        <div class="form-actions text-center">
-            <input type="submit" value="Xóa" class="btn btn-danger  rounded-pill px-4 py-2 mx-2 shadow-sm" />
-            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary  rounded-pill px-4 py-2 mx-2 shadow-sm" })
+        <div class="form-actions text-center mb-4">
+            <input type="submit" value="Xóa" class="btn btn-danger  rounded-sm px-4 py-2 mx-2 shadow-sm" />
+            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-success  rounded-sm px-4 py-2 mx-2 shadow-sm" })
         </div>
     }
 </div>

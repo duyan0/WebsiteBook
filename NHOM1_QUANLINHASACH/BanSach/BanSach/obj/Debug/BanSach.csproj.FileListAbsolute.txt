@@ -570,3 +570,14 @@ D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Owin.xml
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Owin.Security.xml
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Owin.Security.Cookies.xml
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Owin.Security.Google.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EPPlus.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EPPlus.Interfaces.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EPPlus.System.Drawing.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.IO.RecyclableMemoryStream.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.ComponentModel.Annotations.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Drawing.Common.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EPPlus.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.IO.RecyclableMemoryStream.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Drawing.Common.pdb
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Drawing.Common.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Rotativa.dll

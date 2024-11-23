@@ -10,7 +10,8 @@
     <!-- Google Web Fonts & Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Bootstrap & Custom Stylesheets -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
     <link href="~/Content/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -52,11 +53,10 @@
                             }
                             else
                             {
-                                // Đoạn này sẽ không hiển thị Đăng nhập và Đăng ký mà thay vào đó chuyển hướng.
+                                // Chuyển hướng đến trang đăng nhập nếu không đăng nhập
                                 Response.Redirect(Url.Action("LoginAccountCus", "LoginUser"));
                             }
                         </div>
-
                     </div>
                 </nav>
             </div>
@@ -64,28 +64,42 @@
     </div>
 
     <!-- Main Content -->
-    <div class="container-fluid pt-5" style="background-color:white;">
+    <div class="container-fluid mt-3" style="background-color:whitesmoke;">
         <div class="row">
             <div class="col-lg-2 col-md-12 bg-light border">
                 <div class="mb-4 pb-4">
-                    <h2 class="font-weight-semi-bold text-center">Thư mục ADMIN</h2>
-                    @{
-                        var vaitro = Session["Vaitro"] as string;
-                        if (!string.IsNullOrEmpty(vaitro) && (vaitro.Contains("Admin") || vaitro.Contains("Quản lý chính")))
-                        {
-                            <nav id="concard">
-                                <a href="~/LoginUser/QuanTri" class="nav-item nav-link">Trang Chủ</a>
-                                <a href="~/Admins/Index" class="nav-item nav-link">Quản lý nhân sự</a>
-                                <a href="~/KhachHangs/Index" class="nav-item nav-link">Quản lý Khách hàng</a>
-                                <a href="~/SanPhams/Index" class="nav-item nav-link">Quản lý sách</a>
-                                <a href="~/DanhMucs/Index" class="nav-item nav-link">Quản lý thể loại sách</a>
-                                <a href="~/TacGia/Index" class="nav-item nav-link">Quản lý Tác giả</a>
-                                <a href="~/NhaXuatBan/Index" class="nav-item nav-link">Quản lý Nhà xuất bản</a>
-                                <a href="~/KhuyenMai/Index" class="nav-item nav-link">Quản lý khuyến mãi</a>
-                                <a href="~/DonHangs/Index" class="nav-item nav-link">Quản lý đơn hàng</a>
-                                <a href="~/DonHangCTs/Index" class="nav-item nav-link">Chi tiết đơn hàng</a>
-                            </nav>
-                        }
+
+                    @if (!string.IsNullOrEmpty(Session["Vaitro"] as string) &&
+                        (Session["Vaitro"].ToString().Contains("Admin") || Session["Vaitro"].ToString().Contains("Quản lý chính")))
+                    {
+                        <h2 class="font-weight-semi-bold text-center">Thư mục ADMIN</h2>
+                        <nav id="concard">
+                            <a href="~/LoginUser/QuanTri" class="nav-item nav-link">Trang Chủ</a>
+                            <a href="~/Admins/Index" class="nav-item nav-link">Quản lý nhân sự</a>
+                            <a href="~/KhachHangs/Index" class="nav-item nav-link">Quản lý Khách hàng</a>
+                            <a href="~/SanPhams/Index" class="nav-item nav-link">Quản lý sách</a>
+                            <a href="~/DanhMucs/Index" class="nav-item nav-link">Quản lý thể loại sách</a>
+                            <a href="~/TacGia/Index" class="nav-item nav-link">Quản lý Tác giả</a>
+                            <a href="~/NhaXuatBan/Index" class="nav-item nav-link">Quản lý Nhà xuất bản</a>
+                            <a href="~/KhuyenMai/Index" class="nav-item nav-link">Quản lý khuyến mãi</a>
+                            <a href="~/DonHangs/Index" class="nav-item nav-link">Quản lý đơn hàng</a>
+                            <a href="~/DonHangCTs/Index" class="nav-item nav-link">Chi tiết đơn hàng</a>
+                        </nav>
+                    }
+                    else
+                    {
+                        <h2 class="font-weight-semi-bold text-center">Thư mục Nhân viên</h2>
+                        <nav id="concard">
+                            <a href="~/LoginUser/QuanTri" class="nav-item nav-link">Trang Chủ</a>
+                            <a href="~/KhachHangs/Index" class="nav-item nav-link">Quản lý Khách hàng</a>
+                            <a href="~/SanPhams/Index" class="nav-item nav-link">Quản lý sách</a>
+                            <a href="~/DanhMucs/Index" class="nav-item nav-link">Quản lý thể loại sách</a>
+                            <a href="~/TacGia/Index" class="nav-item nav-link">Quản lý Tác giả</a>
+                            <a href="~/NhaXuatBan/Index" class="nav-item nav-link">Quản lý Nhà xuất bản</a>
+                            <a href="~/KhuyenMai/Index" class="nav-item nav-link">Quản lý khuyến mãi</a>
+                            <a href="~/DonHangs/Index" class="nav-item nav-link">Quản lý đơn hàng</a>
+                            <a href="~/DonHangCTs/Index" class="nav-item nav-link">Chi tiết đơn hàng</a>
+                        </nav>
                     }
                 </div>
             </div>
@@ -96,12 +110,11 @@
     </div>
 
     <!-- Footer -->
-    <footer class="footer bg-dark text-white text-center py-3 mt-5">
+    <footer class="footer bg-dark text-white text-center py-3 mt-2">
         <div class="container">
             <p class="text-white font-weight-semi-bold">© 2024 Võ Duy Ân. Admin Dashboard. All rights reserved.</p>
         </div>
     </footer>
-
 
     <!-- JavaScript Libraries -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
@@ -126,19 +139,14 @@
                 $('#concard a').removeClass('active');
                 $(this).addClass('active');
             });
-
-            // Hide loading spinner on load
-            window.addEventListener("load", function () {
-                document.getElementById("loading").style.display = "none";
-            });
         });
     </script>
 
     <!-- Custom Styles -->
     <style>
         #concard .nav-item.nav-link.active {
-            color: black;
-            background-color: #acaf79dd;
+            color: white;
+            background-color: green;
             font-weight: bold;
         }
 
@@ -161,8 +169,8 @@
             }
 
                 #concard a:hover {
-                    background-color: #acaf79dd;
-                    color: black;
+                    background-color: #50a862;
+                    color: white;
                 }
 
         .footer-link {
@@ -175,6 +183,12 @@
                 color: #f8f9fa;
                 text-decoration: underline;
             }
+
+        .body {
+            font-family: "Poppins", sans-serif;
+            font-weight: 600;
+            font-style: normal;
+        }
     </style>
 </body>
 </html>

@@ -16,58 +16,64 @@
             <h4 class="card-title mb-4">Thông tin khuyến mãi</h4>
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.IDkm)
-            @Html.LabelFor(model => model.TenKhuyenMai, "Tên khuyến mãi")
-            <div class="form-floating mb-3">
-                @Html.EditorFor(model => model.TenKhuyenMai, new { htmlAttributes = new { @class = "form-control", placeholder = "Tên khuyến mãi" } })
-                @Html.ValidationMessageFor(model => model.TenKhuyenMai, "", new { @class = "text-danger" })
-            </div>
-            @Html.LabelFor(model => model.NgayBatDau, "Ngày bắt đầu")
-            <div class="form-floating mb-3">
-                @Html.EditorFor(model => model.NgayBatDau, new { htmlAttributes = new { @class = "form-control", placeholder = "Ngày bắt đầu" } })
-                @Html.ValidationMessageFor(model => model.NgayBatDau, "", new { @class = "text-danger" })
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        @Html.LabelFor(model => model.TenKhuyenMai, "Tên khuyến mãi")
+                        @Html.EditorFor(model => model.TenKhuyenMai, new { htmlAttributes = new { @class = "form-control", placeholder = "Tên khuyến mãi" } })
+                        @Html.ValidationMessageFor(model => model.TenKhuyenMai, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        @Html.LabelFor(model => model.MucGiamGia, "Mức giảm giá (%)")
+                        @Html.EditorFor(model => model.MucGiamGia, new { htmlAttributes = new { @class = "form-control", placeholder = "Mức giảm giá" } })
+                        @Html.ValidationMessageFor(model => model.MucGiamGia, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
 
-            <div class="form-floating mb-3">
-                @Html.EditorFor(model => model.NgayKetThuc, new { htmlAttributes = new { @class = "form-control", placeholder = "Ngày kết thúc" } })
-                @Html.LabelFor(model => model.NgayKetThuc, "Ngày kết thúc")
-                @Html.ValidationMessageFor(model => model.NgayKetThuc, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        @Html.LabelFor(model => model.NgayBatDau, "Ngày bắt đầu")
+
+                        @Html.TextBoxFor(model => model.NgayBatDau, new { @class = "form-control", @type = "datetime-local", placeholder = "Ngày bắt đầu", @Value = (Model.NgayBatDau.HasValue ? Model.NgayBatDau.Value.ToString("yyyy-MM-ddTHH:mm") : "") })
+                        @Html.ValidationMessageFor(model => model.NgayBatDau, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        @Html.LabelFor(model => model.NgayKetThuc, "Ngày kết thúc")
+
+                        @Html.TextBoxFor(model => model.NgayKetThuc, new { @class = "form-control", @type = "datetime-local", placeholder = "Ngày kết thúc", @Value = (Model.NgayKetThuc.HasValue ? Model.NgayKetThuc.Value.ToString("yyyy-MM-ddTHH:mm") : "") })
+                        @Html.ValidationMessageFor(model => model.NgayKetThuc, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
 
-            <div class="form-floating mb-3">
-                @Html.EditorFor(model => model.MucGiamGia, new { htmlAttributes = new { @class = "form-control", placeholder = "Mức giảm giá" } })
-                @Html.LabelFor(model => model.MucGiamGia, "Mức giảm giá (%)")
-                @Html.ValidationMessageFor(model => model.MucGiamGia, "", new { @class = "text-danger" })
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        @Html.LabelFor(model => model.MoTa, "Mô tả")
+                        @Html.EditorFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control", placeholder = "Mô tả" } })
+
+                        @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
             </div>
 
-            <div class="form-floating mb-3">
-                @Html.EditorFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control", placeholder = "Mô tả" } })
-                @Html.LabelFor(model => model.MoTa, "Mô tả")
-                @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
-            </div>
-
-            <div class="form-floating mb-3">
-                @Html.TextBoxFor(model => model.NgayTao, new { @class = "form-control", @readonly = "readonly", placeholder = "Ngày tạo", @value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") })
-                @Html.LabelFor(model => model.NgayTao, "Ngày tạo")
-                @Html.ValidationMessageFor(model => model.NgayTao, "", new { @class = "text-danger" })
-            </div>
-
-            <div class="d-flex justify-content-end">
-                <input type="submit" value="Lưu" class="btn btn-primary" />
+            <div class="d-flex justify-content-center mt-4">
+                <input type="submit" value="Lưu" class="btn btn-success me-2 rounded-sm mx-1" />
+                @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary rounded-sm mx-1" })
             </div>
         </div>
     </div>
 }
 
-<div class="mt-4">
-    @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary" })
-</div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var ngayTaoInput = document.getElementById('NgayTao');
-        if (ngayTaoInput) {
-            var now = new Date().toISOString().slice(0, 16);
-            ngayTaoInput.value = now;
-        }
-    });
-</script>

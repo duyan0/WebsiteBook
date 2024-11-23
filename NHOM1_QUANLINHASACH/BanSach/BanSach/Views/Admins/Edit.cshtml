@@ -3,13 +3,13 @@
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    bool isAdmin = Model.VaiTro.Trim().ToLower() == "admin";
 }
 
 <h2 class="text-center">Cập nhật tài khoản nhân sự</h2>
 
 <div class="container mt-4">
     <div class="card shadow rounded">
-
         <div class="card-body">
             @using (Html.BeginForm())
             {
@@ -22,7 +22,14 @@
                     <div class="form-group row">
                         <div class="col-sm-2 col-form-label">Họ tên</div>
                         <div class="col-sm-10">
-                            @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Enter full name" } })
+                            @if (isAdmin)
+                            {
+                                @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Enter full name" } })
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control-plaintext" } })
+                            }
                             @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -30,7 +37,14 @@
                     <div class="form-group row">
                         <div class="col-sm-2 col-form-label">Email</div>
                         <div class="col-sm-10">
-                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Enter email address" } })
+                            @if (isAdmin)
+                            {
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Enter email address" } })
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(model => model.Email, new { htmlAttributes = new { @class = "form-control-plaintext" } })
+                            }
                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -38,7 +52,14 @@
                     <div class="form-group row">
                         <div class="col-sm-2 col-form-label">Địa chỉ</div>
                         <div class="col-sm-10">
-                            @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Enter address" } })
+                            @if (isAdmin)
+                            {
+                                @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Enter address" } })
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control-plaintext" } })
+                            }
                             @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -46,7 +67,14 @@
                     <div class="form-group row">
                         <div class="col-sm-2 col-form-label">Số điện thoại</div>
                         <div class="col-sm-10">
-                            @Html.EditorFor(model => model.SoDT, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Enter phone number" } })
+                            @if (isAdmin)
+                            {
+                                @Html.EditorFor(model => model.SoDT, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Enter phone number" } })
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(model => model.SoDT, new { htmlAttributes = new { @class = "form-control-plaintext" } })
+                            }
                             @Html.ValidationMessageFor(model => model.SoDT, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -54,7 +82,14 @@
                     <div class="form-group row">
                         <div class="col-sm-2 col-form-label">Vai trò</div>
                         <div class="col-sm-10">
-                            @Html.EditorFor(model => model.VaiTro, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Enter role" } })
+                            @if (isAdmin)
+                            {
+                                @Html.EditorFor(model => model.VaiTro, new { htmlAttributes = new { @class = "form-control rounded", placeholder = "Enter role" } })
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(model => model.VaiTro, new { htmlAttributes = new { @class = "form-control-plaintext" } })
+                            }
                             @Html.ValidationMessageFor(model => model.VaiTro, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -67,7 +102,6 @@
                         </div>
                     </div>
 
-
                     <div class="form-group row">
                         <div class="col-sm-2 col-form-label">Mật khẩu</div>
                         <div class="col-sm-10">
@@ -76,12 +110,23 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <div class="col-sm-10 offset-sm-2">
-                            <button type="submit" class="btn btn-success rounded">Save</button>
-                            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-secondary ml-2 rounded" })
+                    @if (isAdmin)
+                    {
+                        <div class="form-group row">
+                            <div class="col-sm-10 offset-sm-2">
+                                <button type="submit" class="btn btn-success rounded">Save</button>
+                                @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-secondary ml-2 rounded" })
+                            </div>
                         </div>
-                    </div>
+                    }
+                    else
+                    {
+                        <div class="form-group row">
+                            <div class="col-sm-10 offset-sm-2">
+                                @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-secondary ml-2 rounded" })
+                            </div>
+                        </div>
+                    }
                 </div>
             }
         </div>

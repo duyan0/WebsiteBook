@@ -74,12 +74,17 @@ namespace BanSach.Controllers
         // GET: KhachHangs/Create
         public ActionResult Create()
         {
-            return View();
+            var khachHang = new KhachHang
+            {
+                TrangThaiTaiKhoan = "Hoạt động" 
+            };
+
+            return View(khachHang);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IDkh,TenKH,SoDT,Email,TKhoan,MKhau")] KhachHang khachHang)
+        public ActionResult Create([Bind(Include = "IDkh,TenKH,SoDT,Email,TKhoan,MKhau,TrangThaiTaiKhoan")] KhachHang khachHang)
         {
             if (ModelState.IsValid)
             {
@@ -318,6 +323,51 @@ namespace BanSach.Controllers
                     return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "LichSuDonHang.xlsx");
                 }
             }
+        }
+        public ActionResult LockAccount(int id)
+        {
+            var khachHang = db.KhachHang.Find(id);
+            if (khachHang != null)
+            {
+                try
+                {
+                    khachHang.TrangThaiTaiKhoan = "Bị khoá"; // Set status to "Bị khoá" to lock the account
+                    db.Entry(khachHang).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                    // Alternatively, use logging to record the error
+                    ModelState.AddModelError("", "Không thể khóa tài khoản. Lỗi: " + ex.Message);
+                    return View("Error"); // Display an error page if necessary
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult UnlockAccount(int id)
+        {
+            var khachHang = db.KhachHang.Find(id);
+            if (khachHang != null)
+            {
+                try
+                {
+                    khachHang.TrangThaiTaiKhoan = "Hoạt động"; // Set status to "Hoạt động" to unlock the account
+                    db.Entry(khachHang).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                    // Alternatively, use logging to record the error
+                    ModelState.AddModelError("", "Không thể mở khóa tài khoản. Lỗi: " + ex.Message);
+                    return View("Error"); // Display an error page if necessary
+                }
+            }
+
+            return RedirectToAction("Index");
         }
         protected override void Dispose(bool disposing)
         {

@@ -135,16 +135,78 @@ namespace BanSach.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            // Tìm đối tượng KhuyenMai theo id
             KhuyenMai km = db.KhuyenMai.Find(id);
             if (km != null)
             {
-                db.KhuyenMai.Remove(km);
-                db.SaveChanges();
-                ViewBag.SuccessMessage = "Xoá thành công!";
+                // Kiểm tra nếu có sản phẩm liên kết với khuyến mãi này
+                var sanPhams = db.SanPham.Where(s => s.IDkm == id).ToList();
+
+                if (sanPhams.Any()) // Nếu có sản phẩm liên kết
+                {
+                    // Thay vì xóa, bạn có thể bỏ liên kết các sản phẩm với khuyến mãi
+                    foreach (var sp in sanPhams)
+                    {
+                        sp.KhuyenMai.MucGiamGia = 0; // Hoặc bạn có thể gán giá trị khác tùy theo yêu cầu
+                    }
+
+                    db.SaveChanges(); // Lưu lại thay đổi
+
+                    // Hiển thị cảnh báo và không xóa khuyến mãi
+                    ViewBag.ErrorMessage = "Không thể xóa khuyến mãi vì có sản phẩm đang áp dụng khuyến mãi này.";
+                    return View(km); // Trả về view chi tiết khuyến mãi, không xóa
+                }
+                else
+                {
+                    // Nếu không có sản phẩm liên kết, tiến hành xóa khuyến mãi
+                    db.KhuyenMai.Remove(km);
+                    db.SaveChanges();
+
+                    ViewBag.SuccessMessage = "Xoá thành công!";
+                    return RedirectToAction("Index"); // Redirect về danh sách khuyến mãi
+                }
             }
             else
             {
+                // Nếu không tìm thấy khuyến mãi
                 ViewBag.ErrorMessage = "Không tìm thấy thông tin khuyến mãi.";
+                return RedirectToAction("Index");
+            }
+        }
+
+
+
+
+
+
+        public ActionResult XoaKhuyenMaiHetHan()
+        {
+            // Lọc tất cả các chương trình khuyến mãi đã hết hạn trước ngày hiện tại
+            var khuyenMaiHetHan = db.KhuyenMai.Where(km => km.NgayKetThuc < DateTime.Now).ToList();
+
+            if (khuyenMaiHetHan.Any())
+            {
+                foreach (var khuyenMai in khuyenMaiHetHan)
+                {
+                    // Kiểm tra xem có sản phẩm nào còn liên kết với khuyến mãi này không
+                    var sanPhamsLienKet = db.SanPham.Any(sp => sp.IDkm == khuyenMai.IDkm);
+
+                    if (sanPhamsLienKet)
+                    {
+                        TempData["ErrorMessage"] = $"Không thể xóa khuyến mãi {khuyenMai.TenKhuyenMai} vì có sản phẩm liên kết.";
+                        continue;
+                    }
+
+                    // Nếu không có sản phẩm liên kết, tiếp tục xóa
+                    db.KhuyenMai.Remove(khuyenMai);
+                }
+
+                db.SaveChanges();
+                TempData["ThongBaoThanhCong"] = "Xóa thành công tất cả các chương trình khuyến mãi đã hết hạn không có liên kết với sản phẩm!";
+            }
+            else
+            {
+                TempData["ThongBaoLoi"] = "Không có chương trình khuyến mãi nào đã hết hạn.";
             }
 
             return RedirectToAction("Index");

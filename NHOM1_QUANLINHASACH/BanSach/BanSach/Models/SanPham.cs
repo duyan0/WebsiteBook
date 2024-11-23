@@ -60,7 +60,7 @@ namespace BanSach.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonHangCT> DonHangCT { get; set; }
-        
+
         public virtual KhuyenMai KhuyenMai { get; set; }
         public virtual NhaXuatBan NhaXuatBan { get; set; }
         public virtual TacGia TacGia { get; set; }

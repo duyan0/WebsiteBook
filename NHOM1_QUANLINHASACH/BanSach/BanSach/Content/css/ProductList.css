@@ -1,0 +1,129 @@
+﻿/* Bảo đảm card sản phẩm có thể co giãn khi màn hình nhỏ hơn */
+.card-pro {
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 15px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+    /* Cải thiện ảnh sản phẩm */
+    .card-pro img {
+        border-radius: 10px;
+        width: 100%; /* Cho phép ảnh co giãn */
+        height: auto; /* Duy trì tỷ lệ ảnh */
+        object-fit: cover;
+        transition: opacity 0.3s;
+    }
+
+/* Cải thiện phân bố cho các sản phẩm */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Khoảng cách giữa các sản phẩm */
+}
+
+/* Phân chia 4 cột cho màn hình lớn */
+.col-sm-12.col-md-6.col-lg-4.col-xl-3 {
+    flex: 1 1 calc(25% - 15px); /* 4 cột trên màn hình lớn */
+}
+
+/* Cải thiện độ rộng cho các cột khi màn hình nhỏ */
+@media (max-width: 1200px) {
+    .col-sm-12.col-md-6.col-lg-4.col-xl-3 {
+        flex: 1 1 calc(33.33% - 15px); /* 3 cột trên màn hình medium */
+    }
+}
+
+@media (max-width: 992px) {
+    .col-sm-12.col-md-6.col-lg-4.col-xl-3 {
+        flex: 1 1 calc(50% - 15px); /* 2 cột trên màn hình tablet */
+    }
+}
+
+@media (max-width: 576px) {
+    .col-sm-12.col-md-6.col-lg-4.col-xl-3 {
+        flex: 1 1 100%; /* 1 cột trên màn hình nhỏ */
+    }
+
+    .price {
+        font-size: 1em; /* Giảm kích thước chữ giá khi màn hình nhỏ */
+    }
+}
+
+/* Cải thiện các phần tử khác trong card */
+.availability, .product-name, .price, .discount-badge {
+    width: 100%;
+    text-align: left;
+}
+
+/* Điều chỉnh kiểu lọc khi trên thiết bị di động */
+.price-filter {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; /* Thêm khoảng cách dưới cho lọc */
+}
+
+@media (max-width: 768px) {
+    .price-filter {
+        margin-left: 0;
+    }
+}
+
+.sotrang a {
+    padding: 8px;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+    color: #007bff;
+    text-decoration: none;
+}
+
+    .sotrang a:hover {
+        background-color: #f0f0f0;
+    }
+
+/* Cải thiện kiểu trang trong phần phân trang */
+.sotrang {
+    text-align: center;
+    margin: 20px 0;
+}
+
+    .sotrang a {
+        margin: 0 5px;
+    }
+
+/* Đảm bảo tiêu đề trang đẹp hơn trên màn hình nhỏ */
+h3.page-title {
+    color: #343a40;
+    margin: 30px auto;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.75em;
+}
+
+@media (max-width: 576px) {
+    h3.page-title {
+        font-size: 1.5em; /* Giảm kích thước font tiêu đề trên màn hình nhỏ */
+    }
+}
+/* Responsive layout */
+@media (max-width: 767px) {
+    .card-pro img {
+        height: 150px;
+    }
+
+    .product-name {
+        font-size: 1em;
+    }
+
+    .price {
+        font-size: 1em;
+    }
+}

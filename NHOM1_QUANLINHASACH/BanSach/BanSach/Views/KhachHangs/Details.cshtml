@@ -5,80 +5,102 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container mt-5">
-    <div class="card shadow-lg border-0">
+<div class="container mt-5 mb-5 rounded-sm">
+    <div class="card shadow-sm border-0">
         <div class="card-header bg-success text-white text-center">
-            <h2 class="text-center text-white"> Thông tin tài khoản</h2>
+            <h4 class="mb-0 font-weight-bold text-white">Thông tin tài khoản</h4>
         </div>
-        <div class="card-body p-4">
-            <div class="row mb-3 align-items-center">
-                <div class="col-md-4 text-right font-weight-bold"><i class="fas fa-user"></i> Tên:</div>
+        <div class="card-body">
+            <!-- Tên khách hàng -->
+            <div class="mb-3 row">
+                <label class="col-md-4 col-form-label font-weight-bold">
+                    <i class="fas fa-user"></i> Tên:
+                </label>
                 <div class="col-md-8">
-                    <span class="text-dark">@Html.DisplayFor(model => model.TenKH)</span>
-                </div>
-            </div>
-            <hr>
-            <div class="row mb-3 align-items-center">
-                <div class="col-md-4 text-right font-weight-bold"><i class="fas fa-phone-alt"></i> Số điện thoại:</div>
-                <div class="col-md-8">
-                    <span class="text-dark">@Html.DisplayFor(model => model.SoDT)</span>
-                </div>
-            </div>
-            <hr>
-            <div class="row mb-3 align-items-center">
-                <div class="col-md-4 text-right font-weight-bold"><i class="fas fa-envelope"></i> Email:</div>
-                <div class="col-md-8">
-                    <span class="text-dark">@Html.DisplayFor(model => model.Email)</span>
-                </div>
-            </div>
-            <hr>
-            <div class="row mb-3">
-                <div class="col-md-4 text-right font-weight-bold">Tài khoản:</div>
-                <div class="col-md-8">
-                    <span class="text-dark">@Model.TKhoan.Substring(0, 2)****</span> 
+                    <p class="form-control-plaintext">@Html.DisplayFor(model => model.TenKH)</p>
                 </div>
             </div>
 
-            <hr>
-            <div class="row mb-3 align-items-center">
-                <div class="col-md-4 text-right font-weight-bold"><i class="fas fa-key"></i> Mật khẩu:</div>
+            <!-- Số điện thoại -->
+            <div class="mb-3 row">
+                <label class="col-md-4 col-form-label font-weight-bold">
+                    <i class="fas fa-phone-alt"></i> Số điện thoại:
+                </label>
                 <div class="col-md-8">
-                    <span class="text-dark">********</span> 
+                    <p class="form-control-plaintext">@Html.DisplayFor(model => model.SoDT)</p>
                 </div>
             </div>
+
+            <!-- Email -->
+            <div class="mb-3 row">
+                <label class="col-md-4 col-form-label font-weight-bold">
+                    <i class="fas fa-envelope"></i> Email:
+                </label>
+                <div class="col-md-8">
+                    <p class="form-control-plaintext">@Html.DisplayFor(model => model.Email)</p>
+                </div>
+            </div>
+
+            <!-- Trạng thái tài khoản -->
+            <div class="mb-3 row">
+                <label class="col-md-4 col-form-label font-weight-bold">
+                    <i class="fas fa-lock"></i> Trạng thái:
+                </label>
+                <div class="col-md-8">
+                    <p class="form-control-plaintext">@Html.DisplayFor(model => model.TrangThaiTaiKhoan)</p>
+                </div>
+            </div>
+
+            <!-- Tài khoản -->
+            <div class="mb-3 row">
+                <label class="col-md-4 col-form-label font-weight-bold">
+                    <i class="fas fa-user-circle"></i> Tài khoản:
+                </label>
+                <div class="col-md-8">
+                    <p class="form-control-plaintext">@Model.TKhoan.Substring(0, 2)****</p>
+                </div>
+            </div>
+
+            <!-- Mật khẩu -->
+            <div class="mb-3 row">
+                <label class="col-md-4 col-form-label font-weight-bold">
+                    <i class="fas fa-key"></i> Mật khẩu:
+                </label>
+                <div class="col-md-8">
+                    <p class="form-control-plaintext">********</p>
+                </div>
+            </div>
+
+            <!-- Cập nhật thông tin -->
             <div class="text-center mt-4">
-                @Html.ActionLink("Cập nhật", "Edit", new { id = Model.IDkh }, new { @class = "btn btn-success btn-lg px-5 rounded-sm shadow-sm" })
+                @Html.ActionLink("Cập nhật", "Edit", new { id = Model.IDkh }, new { @class = "btn btn-success btn-lg px-5 rounded-sm shadow-sm mb-4" })
             </div>
         </div>
     </div>
 </div>
 
+<!-- Add FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-DyZ88mC6Up2uqS4h/KrhmWx7HAOjfIS9ScYezeq5G6OnQ1pV2m4PaZwjhprp1Kk5" crossorigin="anonymous">
+
+
+
 <style>
-    .card {
-        border-radius: 15px;
+    .container {
+        max-width: 750px;
     }
 
     .card-header {
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
-        font-weight: bold;
-        padding: 20px;
-    }
-
-    .font-weight-bold {
         font-weight: 600;
+        font-size: 1.25rem;
+        background-color: #28a745;
     }
 
-    .container {
-        max-width: 700px;
+    .card-body {
+        padding: 1.5rem;
     }
 
     .row > .col-md-4 {
         color: #6c757d;
-    }
-
-    hr {
-        border-top: 1px solid #e0e0e0;
     }
 
     .btn-success {
@@ -91,4 +113,3 @@
             border-color: #1e7e34;
         }
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-DyZ88mC6Up2uqS4h/KrhmWx7HAOjfIS9ScYezeq5G6OnQ1pV2m4PaZwjhprp1Kk5" crossorigin="anonymous">

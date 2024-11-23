@@ -2,9 +2,10 @@
 @using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "Xin chào";
+    ViewBag.Title = "Quản lí Admin";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+
 <link href="~/Content/PagedList.css" rel="stylesheet" />
 
 <style>
@@ -39,6 +40,16 @@
         box-shadow: none;
         border-color: #343a40;
     }
+
+    .btn-role-admin {
+        background-color: #dc3545; /* Đỏ */
+        color: #fff;
+    }
+
+    .btn-role-staff {
+        background-color: #28a745; /* Xanh */
+        color: #fff;
+    }
 </style>
 
 <h2 class="tieude">Quản lí Admin</h2>
@@ -54,43 +65,64 @@
     }
 </div>
 
+<!-- Add New Admin Button -->
 <p>
     @Html.ActionLink("Thêm ", "Create", null, new { @class = "action-link btn btn-dark" })
 </p>
 
 @if (Model != null && Model.Count > 0)
 {
+    <!-- Admins Table -->
     <table class="table table-bordered table-hover">
         <thead class="bg-dark text-white">
             <tr>
                 <th>ID</th>
                 <th>Họ tên</th>
-                <th>Số điện thoại</th>
-                <th>Vai trò</th>
-                <th>Tài khoản</th>
-                <th>Mật khẩu</th>
-                <th class="text-center">Thao tác</th>
+                <th>Email</th>
+                <th>Địa Chỉ</th>
+                <th>Hotline</th>
+                <th style="width:120px;">Vai trò</th>
+                <th style="width:200px;">Thao tác</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="color:black;">
             @foreach (var item in Model)
             {
                 <tr>
                     <td>@item.ID</td>
-                    <td>@item.HoTen</td>
                     <td>
-                        @(item.SoDT != null && item.SoDT.Length >= 3 ? item.SoDT.Substring(0, 3) + new string('*', item.SoDT.Length - 7) : "")
+                        @Html.DisplayFor(modelItem => item.HoTen)
                     </td>
-                    <td>@item.VaiTro</td>
-                    <td>@item.TKhoan</td>
-                    <td>******</td>
+                    <td>
+                        @("*****" + item.Email.Substring(5))
+                    </td>
+                    <td>
+                        @(item.DiaChi.Length > 20 ? item.DiaChi.Substring(0, 20) + "..." : item.DiaChi)
+                    </td>
+                    <td>
+                        @("******" + item.SoDT.Substring(6))
+                    </td>
                     <td class="text-center">
+                        @{
+                            var role = item.VaiTro?.Trim().ToLower(); // Chuẩn hóa vai trò
+                            var buttonClass = role == "admin" ? "btn-role-admin" : "btn-role-staff"; // Xác định màu của nút
+                        }
+                        <span class="badge @buttonClass">@item.VaiTro</span>
+                    </td>
+                    <td style="width: 220px;">
+                        <!-- Chỉ cho phép sửa hoặc xóa nếu VaiTro không phải là Admin -->
                         @if (!string.Equals(item.VaiTro.Trim(), "Admin", StringComparison.OrdinalIgnoreCase))
                         {
-                            @Html.ActionLink("Sửa", "Edit", new { id = item.ID }, new { @class = "btn btn-warning btn-sm rounded-sm mx-1" })
-                            @Html.ActionLink("Xoá", "Delete", new { id = item.ID }, new { @class = "btn btn-danger btn-sm rounded-sm mx-1" })
+                            <a href="@Url.Action("Edit", new { id = item.ID })" class="btn btn-warning btn-group-sm rounded-sm mx-1" title="Sửa">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="@Url.Action("Delete", new { id = item.ID })" class="btn btn-danger btn-group-sm rounded-sm mx-1" title="Xoá" onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này không?');">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
                         }
-                        @Html.ActionLink("Chi tiết", "Details", new { id = item.ID }, new { @class = "btn btn-info btn-sm rounded-sm mx-1" })
+                        <a href="@Url.Action("Details", new { id = item.ID })" class="btn btn-info btn-group-sm rounded-sm mx-1" title="Chi tiết">
+                            <i class="fas fa-eye"></i>
+                        </a>
                     </td>
                 </tr>
             }

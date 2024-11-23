@@ -15,28 +15,32 @@
                     Họ và tên
                 </dt>
                 <dd class="col-sm-9 text-muted">
-                    @Html.DisplayFor(model => model.HoTen)
+                    @{
+                        var hoTenParts = Model.HoTen.Split(' ');
+                        var hoTenHienThi = $"{hoTenParts[0]} {(hoTenParts.Length > 2 ? hoTenParts[1][0] + "." : "")} {hoTenParts[1]}";
+                    }
+                    @hoTenHienThi
                 </dd>
 
                 <dt class="col-sm-3 font-weight-bold text-dark">
                     Email
                 </dt>
                 <dd class="col-sm-9 text-muted">
-                    @Html.DisplayFor(model => model.Email)
+                    @("*****" + Model.Email.Substring(5))
                 </dd>
 
                 <dt class="col-sm-3 font-weight-bold text-dark">
                     Địa chỉ
                 </dt>
                 <dd class="col-sm-9 text-muted">
-                    @Html.DisplayFor(model => model.DiaChi)
+                    @(Model.DiaChi.Length > 20 ? Model.DiaChi.Substring(0, 20) + "..." : Model.DiaChi)
                 </dd>
 
                 <dt class="col-sm-3 font-weight-bold text-dark">
                     Số điện thoại
                 </dt>
                 <dd class="col-sm-9 text-muted">
-                    @Html.DisplayFor(model => model.SoDT)
+                    @(Model.SoDT.Length > 3 ? new string('*', Model.SoDT.Length - 3) + Model.SoDT.Substring(Model.SoDT.Length - 3) : Model.SoDT)
                 </dd>
 
                 <dt class="col-sm-3 font-weight-bold text-dark">
@@ -50,21 +54,20 @@
                     Tài khoản
                 </dt>
                 <dd class="col-sm-9 text-muted">
-                    @Html.DisplayFor(model => model.TKhoan)
+                    ****** <!-- Ẩn tài khoản để bảo vệ thông tin -->
                 </dd>
 
                 <dt class="col-sm-3 font-weight-bold text-dark">
                     Mật khẩu
                 </dt>
                 <dd class="col-sm-9 text-muted">
-                    @Html.DisplayFor(model => model.MKhau)
+                    ****** <!-- Ẩn mật khẩu hoàn toàn -->
                 </dd>
             </dl>
         </div>
     </div>
 
     <div class="mt-4 text-center">
-        @Html.ActionLink("Sửa", "Edit", new { id = Model.ID }, new { @class = "btn btn-warning  shadow-sm rounded" })
-        @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-secondary  ml-3 shadow-sm rounded" })
+        @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-secondary ml-3 shadow-sm rounded" })
     </div>
 </div>

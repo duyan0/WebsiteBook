@@ -4,11 +4,13 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using BanSach.Models;
 using PagedList;
+using Rotativa;
 
 namespace BanSach.Controllers
 {
@@ -24,27 +26,32 @@ namespace BanSach.Controllers
         {
             _donHangService = donHangService;
         }
-        public ActionResult Index(string searchString, int? page)
+        public ActionResult Index(string searchString, DateTime? startDate, DateTime? endDate, int? page)
         {
-            // Get orders with customer information
             var donHangs = db.DonHang.Include(d => d.KhachHang).AsQueryable();
 
-            // Apply search filter if searchString is provided
             if (!String.IsNullOrEmpty(searchString))
             {
-                // Search by Order ID or Customer Name (you can customize this based on your needs)
                 donHangs = donHangs.Where(d => d.IDdh.ToString().Contains(searchString)
                                              || d.KhachHang.TenKH.Contains(searchString)
                                              || d.TrangThai.Contains(searchString));
             }
 
-            // Define page size and number
-            int pageSize = 10; // Number of items per page
-            int pageNumber = (page ?? 1); // Default to page 1 if no page is specified
+            if (startDate.HasValue)
+            {
+                donHangs = donHangs.Where(d => d.NgayDatHang >= startDate.Value);
+            }
 
-            // Return the paginated and filtered list to the view
-            return View(donHangs.OrderBy(d => d.IDdh).ToPagedList(pageNumber, pageSize));
+            if (endDate.HasValue)
+            {
+                donHangs = donHangs.Where(d => d.NgayDatHang <= endDate.Value);
+            }
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(donHangs.OrderBy(d => d.TrangThai).ToPagedList(pageNumber, pageSize));
         }
+
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -56,56 +63,6 @@ namespace BanSach.Controllers
             {
                 return HttpNotFound();
             }
-            return View(donHang);
-        }
-        public ActionResult Create()
-        {
-            ViewBag.IDkh = new SelectList(db.KhachHang, "IDkh", "TenKH");
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IDdh,NgayDatHang,IDkh,DiaChi,NgayNhanHang")] DonHang donHang)
-        {
-            if (ModelState.IsValid)
-            {
-                db.DonHang.Add(donHang);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.IDkh = new SelectList(db.KhachHang, "IDkh", "TenKH", donHang.IDkh);
-            return View(donHang);
-        }
-
-        // GET: DonHangs/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DonHang donHang = db.DonHang.Find(id);
-            if (donHang == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.IDkh = new SelectList(db.KhachHang, "IDkh", "TenKH", donHang.IDkh);
-            return View(donHang);
-        }
-
-        // POST: DonHangs/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IDdh,NgayDatHang,IDkh,DiaChi,NgayNhanHang")] DonHang donHang)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(donHang).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.IDkh = new SelectList(db.KhachHang, "IDkh", "TenKH", donHang.IDkh);
             return View(donHang);
         }
 
@@ -134,7 +91,7 @@ namespace BanSach.Controllers
 
                 if (donHang == null)
                 {
-                    TempData["ErrorMessage"] = "Order not found.";
+                    TempData["ErrorMessage"] = "Đơn đặt hàng không được tìm thấy.\r\n";
                     return RedirectToAction("Index");
                 }
 
@@ -146,12 +103,12 @@ namespace BanSach.Controllers
                 db.DonHang.Remove(donHang);
                 db.SaveChanges();
 
-                TempData["SuccessMessage"] = "Order and its related details deleted successfully.";
+                TempData["SuccessMessage"] = "Đơn đặt hàng và các chi tiết liên quan đã được xóa thành công.";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "An error occurred while trying to delete the order: " + ex.Message;
+                TempData["ErrorMessage"] = "Đã xảy ra lỗi khi cố gắng xóa đơn hàng: " + ex.Message;
                 return RedirectToAction("Index");
             }
         }
@@ -172,7 +129,6 @@ namespace BanSach.Controllers
 
             return RedirectToAction("Index"); // Chuyển hướng về trang danh sách đơn hàng
         }
-
         // GET: DonHangs/Cancel/5
         public ActionResult Cancel(int id)
         {
@@ -206,7 +162,66 @@ namespace BanSach.Controllers
             // Chuyển hướng về trang lịch sử đơn hàng sau khi cập nhật
             return RedirectToAction("LichSuDonHang", "KhachHangs");
         }
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public ActionResult ThongKeDonHang()
+        {
+            // Lấy danh sách tất cả đơn hàng đã nhận
+            var donHangsDaNhanHang = db.DonHang
+                .Include(dh => dh.DonHangCT) // Bao gồm các chi tiết đơn hàng
+                .Where(dh => dh.TrangThai == "Đã nhận hàng")
+                .ToList(); // Đưa tất cả dữ liệu vào bộ nhớ
 
+            // Tính tổng doanh thu từ các đơn hàng đã nhận
+            decimal tongDoanhThu = donHangsDaNhanHang.Sum(dh => dh.TongTien);
+
+            // Khởi tạo ViewModel
+            var thongKeViewModel = new ThongKeDonHangViewModel
+            {
+                TongSoDonHang = db.DonHang.Count(),
+                DonHangChoXuLy = db.DonHang.Count(dh => dh.TrangThai == "Chờ xử lý"),
+                DonHangDaXacNhan = db.DonHang.Count(dh => dh.TrangThai == "Đã xác nhận"),
+                DonHangDaNhanHang = donHangsDaNhanHang.Count(),
+                DonHangDaHuy = db.DonHang.Count(dh => dh.TrangThai == "Đã huỷ"),
+                TongDoanhThu = tongDoanhThu
+            };
+
+            return View(thongKeViewModel);
+        }
+
+        // GET: DonHangs/RequestReturn/5
+        public ActionResult RequestReturn(int id)
+        {
+            var donHang = db.DonHang.Find(id);
+            if (donHang == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Cập nhật trạng thái đơn hàng thành "Yêu cầu đổi trả"
+            donHang.TrangThai = "Yêu cầu đổi trả";
+            db.Entry(donHang).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+        public ActionResult PrintInvoice(int id)
+        {
+            // Tìm đơn hàng và thông tin khách hàng liên quan
+            var donHang = db.DonHang.Include(d => d.KhachHang).FirstOrDefault(d => d.IDdh == id);
+            if (donHang == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Sử dụng Rotativa để tạo tệp PDF từ view "Invoice"
+            return new Rotativa.ViewAsPdf("Inhoadon", donHang)
+            {
+                FileName = $"HoaDon_{donHang.IDdh}.pdf", // Tên tệp PDF
+                PageSize = Rotativa.Options.Size.A4,
+                PageOrientation = Rotativa.Options.Orientation.Portrait,
+                CustomSwitches = "--disable-smart-shrinking"
+            };
+        }
 
 
         protected override void Dispose(bool disposing)

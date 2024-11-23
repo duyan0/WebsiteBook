@@ -33,8 +33,6 @@
         width: 100%;
     }
 
-    
-
     /* Table customization */
     table {
         width: 100%;
@@ -60,13 +58,13 @@
     /* Make sure the row containing the search bar is centered */
     .row.mb-3 {
         display: flex;
-        justify-content: center; /* Centers the search bar horizontally */
+        justify-content: center;
     }
 
     /* Ensure the search bar takes an appropriate width */
     .search-bar {
-        max-width: 500px; /* Limit the maximum width to prevent it from being too large */
-        width: 100%; /* Allow the container to be flexible */
+        max-width: 500px;
+        width: 100%;
     }
 
         .search-bar .input-group {
@@ -85,8 +83,6 @@
                 background-color: #0056b3;
                 text-decoration: none;
             }
-
-
 
     .btn-container {
         text-align: left;
@@ -125,35 +121,78 @@
 
 <div class="btn-container">
     @Html.ActionLink("Thêm", "Create", null, new { @class = "btn-add" })
+    <div class="text-left mb-3 mt-3 text-dark font-weight-bold">
+        <p>Tổng số khách hàng: @Model.TotalItemCount</p>
+    </div>
 </div>
 
 @if (Model != null && Model.Count > 0)
 {
     <table class="table table-bordered table-hover">
-        <thead  >
-            <tr class="text-center" >
-                <th>ID</th>
-                <th>Tên KH</th>
-                <th>Số điện thoại</th>
-                <th>Tài khoản</th>
-                <th>Mật khẩu</th>
-                <th>Thao tác</th>
+        <thead>
+            <tr style="width:200px;">
+                <th style="width:100px;">ID</th>
+                <th style="width:200px;">Tên KH</th>
+                <th style="width:200px;">Hotline</th>
+                <th style="width:100px;">Email</th>
+                <th style="width:130px;">Trạng thái</th>
+                <th style="width:200px;">Thao tác</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="color:black;">
             @foreach (var item in Model)
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.IDkh)</td>
                     <td>@Html.DisplayFor(modelItem => item.TenKH)</td>
                     <td>@(item.SoDT != null && item.SoDT.Length >= 3 ? item.SoDT.Substring(0, 3) + new string('*', item.SoDT.Length - 3) : "")</td>
-                    <td>@Html.DisplayFor(modelItem => item.TKhoan)</td>
-                    <td>@Html.Raw("********")</td>
                     <td>
-                        @Html.ActionLink("Sửa", "EditAD", new { id = item.IDkh }, new { @class = "btn btn-warning btn-sm rounded-sm mx-1" })
-                        @Html.ActionLink("Xóa", "Delete", new { id = item.IDkh }, new { @class = "btn btn-danger btn-sm rounded-sm mx-1" })
-                        @Html.ActionLink("Chi tiết", "DetailsAD", new { id = item.IDkh }, new { @class = "btn btn-info btn-sm rounded-sm mx-1" })
+                        @{
+                            var email = item.Email;
+                            var atIndex = email.IndexOf('@');
+                            var emailHienThi = atIndex > 1
+                                ? email.Substring(0, 2) + "*****" + email.Substring(atIndex)
+                                : email;
+                        }
+                        @emailHienThi
                     </td>
+                    <td >
+                        @if (item.TrangThaiTaiKhoan != null && item.TrangThaiTaiKhoan.Equals("Hoạt động", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <span class="btn btn-success rounded-sm">Hoạt động</span>
+                        }
+                        else
+                        {
+                            <span class="btn btn-danger rounded-sm">Đã khóa</span>
+                        }
+                    </td>
+                    <td style="width:250px;">
+                        <a href="@Url.Action("EditAD", new { id = item.IDkh })" class="btn btn-warning btn-group-sm rounded-sm mx-1" title="Sửa">
+                            <i class="fas fa-edit"></i> <!-- Biểu tượng Sửa -->
+                        </a>
+
+                        <a href="@Url.Action("DetailsAD", new { id = item.IDkh })" class="btn btn-info btn-group-sm rounded-sm mx-1" title="Chi tiết">
+                            <i class="fas fa-eye"></i> <!-- Biểu tượng Chi tiết -->
+                        </a> 
+                        <a href="@Url.Action("Delete", new { id = item.IDkh })" class="btn btn-danger btn-group-sm rounded-sm mx-1" title="Xoá">
+                            <i class="fas fa-trash"></i> <!-- Biểu tượng Chi tiết -->
+                        </a>
+
+                        @if (item.TrangThaiTaiKhoan != null && item.TrangThaiTaiKhoan.Equals("Hoạt động", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <a href="@Url.Action("LockAccount", new { id = item.IDkh })" class="btn btn-outline-danger btn-group-sm rounded-sm mx-1" title="Khóa tài khoản" onclick="return confirm('Bạn có chắc chắn muốn khóa tài khoản này không?');">
+                                <i class="fas fa-lock"></i> <!-- Biểu tượng Khóa -->
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("UnlockAccount", new { id = item.IDkh })" class="btn btn-success btn-group-sm rounded-sm mx-1" title="Mở khóa tài khoản" onclick="return confirm('Bạn có chắc chắn muốn mở khóa tài khoản này không?');">
+                                <i class="fas fa-unlock"></i> <!-- Biểu tượng Mở khóa -->
+                            </a>
+                        }
+                    </td>
+
+
                 </tr>
             }
         </tbody>

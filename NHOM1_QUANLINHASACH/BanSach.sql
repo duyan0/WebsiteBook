@@ -41,6 +41,9 @@ CREATE TABLE KhachHang
     Email NVARCHAR(255) NULL,
     TKhoan NVARCHAR(50) NULL,
     MKhau NVARCHAR(50) NULL,
+	IsActive NVARCHAR(50) NOT NULL DEFAULT N'Hoạt động',
+	[OTP] NVARCHAR(6),        
+    [OTPExpiry] DATETIME
     PRIMARY KEY CLUSTERED (IDkh ASC)
 );
 go
@@ -127,7 +130,7 @@ CREATE TABLE DonHangCT
 	FOREIGN KEY (IDSanPham) REFERENCES SanPham (IDsp),
 	FOREIGN KEY (IDDonHang) REFERENCES DonHang (IDdh)
 );
--- Nhớ chạy cái này luôn
+go
 CREATE TRIGGER trg_UpdateTrangThaiSach
 ON [Sach].[dbo].[SanPham]
 AFTER INSERT, UPDATE
@@ -142,5 +145,17 @@ BEGIN
     SET [TrangThaiSach] = 'Còn hàng'
     WHERE [SoLuong] > 0
       AND [IDsp] IN (SELECT [IDsp] FROM inserted)
+END
+go
+CREATE TRIGGER trg_SetNgayTao
+ON [Sach].[dbo].[KhuyenMai]
+AFTER INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE [Sach].[dbo].[KhuyenMai]
+    SET NgayTao = GETDATE()
+    FROM [Sach].[dbo].[KhuyenMai] km
+    INNER JOIN inserted i ON km.IDkm = i.IDkm;
 END
 

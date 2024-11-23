@@ -34,18 +34,19 @@
         width: 100%;
     }
 
+    /* Cập nhật màu sắc giống trạng thái bên DonHangs */
     .status-waiting {
         color: orange;
         font-weight: bold;
     }
 
-    .status-processing {
-        color: blue;
+    .status-confirmed {
+        color: green;
         font-weight: bold;
     }
 
-    .status-confirmed {
-        color: green;
+    .status-received {
+        color: blue;
         font-weight: bold;
     }
 
@@ -82,6 +83,9 @@
         </div>
     }
 </div>
+<div class="text-left mb-3 mt-3 text-dark font-weight-bold">
+    <p>Tổng số Chi tiết đơn hàng: @Model.TotalItemCount</p>
+</div>
 
 @if (Model != null && Model.Any())
 {
@@ -95,7 +99,7 @@
                 <th>Tên sách</th>
                 <th>Số lượng</th>
                 <th>Đơn giá</th>
-                <th>Thành tiền</th>
+                <th>Tổng tiền</th>
                 <th>Trạng thái</th>
                 <th>Thao tác</th>
             </tr>
@@ -112,7 +116,7 @@
                     <td style="color: red;">
                         @string.Format("{0:N0} VND", item.Gia)
                     </td>
-                    <td style="color: red;">
+                    <td style="color: red;" class="font-weight-bold">
                         @item.TongTien.ToString("N0") VND
                     </td>
                     <td>
@@ -123,12 +127,11 @@
                                 case "Chờ xử lý":
                                     statusClass = "status-waiting";
                                     break;
-                                case "Xử lý":
-                                    statusClass = "status-processing";
-                                    break;
-                                case "Đã nhận hàng":
                                 case "Đã xác nhận":
                                     statusClass = "status-confirmed";
+                                    break;
+                                case "Đã nhận hàng":
+                                    statusClass = "status-received";
                                     break;
                                 case "Đã huỷ":
                                     statusClass = "status-cancelled";

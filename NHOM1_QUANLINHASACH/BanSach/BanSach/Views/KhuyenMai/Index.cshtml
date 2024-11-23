@@ -5,6 +5,7 @@
     ViewBag.Title = "Danh sách khuyến mãi";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+
 <link href="~/Content/PagedList.css" rel="stylesheet" />
 <h2 class="text-center font-weight-bold">Danh sách khuyến mãi</h2>
 
@@ -21,15 +22,21 @@
     }
 </div>
 
-<!-- Add New Promotion Button -->
+<!-- Add New Promotion and Bulk Delete Expired Promotions Button -->
 <p>
     @Html.ActionLink("Thêm", "Create", null, new { @class = "btn btn-dark rounded-sm" })
+    <a href="@Url.Action("XoaKhuyenMaiHetHan", "KhuyenMai")" class="btn btn-danger ml-3" onclick="return confirm('Bạn có chắc chắn muốn xóa tất cả các khuyến mãi đã hết hạn không?');">
+        Xóa khuyến mãi đã hết hạn
+    </a>
+    <div class="text-left mb-3 text-dark font-weight-bold">
+        <p>Tổng số khuyến mãi: @Model.TotalItemCount</p>
+    </div>
 </p>
 
 @if (Model != null && Model.Any())
 {
     <!-- Promotions Table -->
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover shadow-sm">
         <thead class="text-white" style="background-color:black;">
             <tr>
                 <th>ID</th>
@@ -41,25 +48,39 @@
                 <th class="text-center">Thao tác</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="color:black;">
             @foreach (var item in Model)
             {
                 <tr>
-                    <td class="font-weight-bold text-center">
-                        @Html.DisplayFor(modelItem => item.IDkm)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TenKhuyenMai)
-                    </td>
+                    <td class="font-weight-bold text-center">@Html.DisplayFor(modelItem => item.IDkm)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TenKhuyenMai)</td>
                     <td class="@(item.NgayBatDau.HasValue && item.NgayKetThuc.HasValue && item.NgayBatDau > item.NgayKetThuc ? "text-danger" : "") text-center">
                         @(item.NgayBatDau.HasValue ? item.NgayBatDau.Value.ToString("dd/MM/yyyy") : "")
                     </td>
                     <td class="@(item.NgayBatDau.HasValue && item.NgayKetThuc.HasValue && item.NgayBatDau > item.NgayKetThuc ? "text-danger" : "") text-center">
-                        @(item.NgayKetThuc.HasValue ? item.NgayKetThuc.Value.ToString("dd/MM/yyyy") : "")
+                        @if (item.NgayKetThuc.HasValue)
+                        {
+                            var ngayKetThuc = item.NgayKetThuc.Value;
+                            var ngayHomNay = DateTime.Now.Date;
+                            var soNgayConLai = (ngayKetThuc.Date - ngayHomNay).Days;
+
+                            @ngayKetThuc.ToString("dd/MM/yyyy")
+
+                            if (soNgayConLai == 2)
+                            {
+                                @:<span class="text-warning"> (Gần hết chương trình)</span>
+                            }
+                            else if (soNgayConLai < 0)
+                            {
+                                @:<span class="text-danger"> (Đã hết chương trình)</span>
+                            }
+                        }
+                        else
+                        {
+                            @:Không có ngày kết thúc
+                        }
                     </td>
-                    <td class="text-center">
-                        @Html.DisplayFor(modelItem => item.MucGiamGia)%
-                    </td>
+                    <td class="text-center">@Html.DisplayFor(modelItem => item.MucGiamGia)%</td>
                     <td class="text-center">
                         @{
                             string motangan = item.MoTa != null && item.MoTa.Length > 20
@@ -69,9 +90,15 @@
                         @motangan
                     </td>
                     <td class="text-center">
-                        @Html.ActionLink("Sửa", "Edit", new { id = item.IDkm }, new { @class = "btn btn-warning btn-sm" })
-                        @Html.ActionLink("Chi tiết", "Details", new { id = item.IDkm }, new { @class = "btn btn-info btn-sm" })
-                        @Html.ActionLink("Xóa", "Delete", new { id = item.IDkm }, new { @class = "btn btn-danger btn-sm" })
+                        <a href="@Url.Action("Edit", new { id = item.IDkm })" class="btn btn-warning btn-sm rounded-sm mx-1">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a href="@Url.Action("Details", new { id = item.IDkm })" class="btn btn-info btn-sm rounded-sm mx-1">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                        <a href="@Url.Action("Delete", new { id = item.IDkm })" class="btn btn-danger btn-sm rounded-sm mx-1" onclick="return confirm('Bạn có chắc chắn muốn xóa khuyến mãi này không?');">
+                            <i class="fa fa-trash"></i>
+                        </a>
                     </td>
                 </tr>
             }
@@ -119,5 +146,9 @@ else
         margin-top: 20px;
         display: flex;
         justify-content: center;
+    }
+
+    .btn-container {
+        margin-bottom: 20px;
     }
 </style>

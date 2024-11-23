@@ -17,7 +17,7 @@
 </style>
 
 <div class="container mt-4">
-    <h2 class="text-danger">Xoá danh mục</h2>
+    <h2 class="text-danger text-center">Xoá danh mục</h2>
 
     <hr />
     <table class="table table-bordered">
@@ -29,18 +29,22 @@
         </thead>
         <tbody>
             <tr>
-                <td><b>Danh mục:</b></td>
+                <td><b>ID</b></td>
+                <td>@Html.DisplayFor(model => model.ID)</td>
+            </tr>
+            <tr>
+                <td><b>Danh mục</b></td>
                 <td>@Html.DisplayFor(model => model.DanhMuc1)</td>
             </tr>
             <tr>
-                <td><b>Thể loại:</b></td>
+                <td><b>Thể loại</b></td>
                 <td>@Html.DisplayFor(model => model.TheLoai)</td>
             </tr>
         </tbody>
     </table>
 
     <p class="text-danger">Bạn có chắc chắn muốn xóa danh mục này không?</p>
-   
+
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()

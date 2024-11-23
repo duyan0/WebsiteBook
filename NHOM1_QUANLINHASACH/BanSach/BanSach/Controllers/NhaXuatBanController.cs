@@ -123,16 +123,25 @@ namespace BanSach.Controllers
 
             return View(nxb);
         }
-        // POST: TacGia/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             NhaXuatBan nxb = db.NhaXuatBan.Find(id);
+
+            // Kiểm tra xem có sản phẩm nào liên kết với nhà xuất bản không
+            if (db.SanPham.Any(s => s.IDnxb == id))
+            {
+                ModelState.AddModelError("", "Không thể xóa nhà xuất bản vì còn sản phẩm liên quan.");
+                return View(nxb); // Trả về view xóa với thông báo lỗi
+            }
+
             db.NhaXuatBan.Remove(nxb);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

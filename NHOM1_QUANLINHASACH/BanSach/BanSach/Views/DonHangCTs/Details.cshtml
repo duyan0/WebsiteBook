@@ -5,177 +5,151 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-
 <style>
-
-
-    table, h2 {
-        margin-left: auto;
-        margin-right: auto;
+    .container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
     }
 
     h2 {
         text-align: center;
         color: black;
         font-weight: bold;
+        margin-bottom: 20px;
     }
 
-    tr {
-        border: 1px solid black;
-        color: black;
-        width: 100%;
-    }
-
-    .thongtin {
-        color: black;
-    }
-
-    table {
+    .bang {
+        border: 1px solid #ccc;
+        padding: 20px;
+        width: 45%;
+        min-width: 300px;
         font-size: large;
-        width: 70%;
     }
 
     .tieude {
         padding: 10px;
+        font-weight: bold;
+        color:black;
+        width: 40%;
+    }
+
+    .value {
+        padding: 10px;
+        color: black;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    tr {
+        border: 1px solid black;
     }
 </style>
-<h2>Thông tin đơn hàng</h2>
 
-<table class="bang">
-    <tr>
-        <td class="tieude"> <b>Mã đơn hàng</b></td>
-        <td class="thongtin">
-            @Html.DisplayFor(model => model.IDdh)
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td class="tieude"><b>ID khách hàng  </b></td>
-        <td class="thongtin">
-            @Html.DisplayFor(model => model.DonHang.IDkh)
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td class="tieude">
-            <b>Tên khách hàng  </b>
+<h2 class="mt-5">Chi tiết đơn hàng</h2>
 
-        </td>
-        <td class="thongtin">
-            @Html.DisplayFor(model => model.DonHang.KhachHang.TenKH)
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td class="tieude">
-            <b>Số điện thoại  </b>
-        </td>
-        <td class="thongtin">
-            @Html.DisplayFor(model => model.DonHang.KhachHang.SoDT)
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td class="tieude">
-            <b>Địa chỉ  </b>
-        </td>
-        <td class="thongtin">
-            @Html.DisplayFor(model => model.DonHang.DiaChi)
-        </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td class="tieude">
-            <b>Ngày đặt hàng  </b>
-        <td class="thongtin">
-            @Html.DisplayFor(model => model.DonHang.NgayDatHang)
-        </td>
-    </tr>
+<div class="container">
+    <!-- Bảng thông tin đơn hàng -->
+    <table class="bang">
+        <tr>
+            <td class="tieude">Mã đơn hàng</td>
+            <td class="value">
+                @Html.DisplayFor(model => model.IDdh)
+            </td>
+        </tr>
+        <tr>
+            <td class="tieude">ID khách hàng</td>
+            <td class="value">
+                @Html.DisplayFor(model => model.DonHang.IDkh)
+            </td>
+        </tr>
+        <tr>
+            <td class="tieude">Tên khách hàng</td>
+            <td class="value">
+                @Html.DisplayFor(model => model.DonHang.KhachHang.TenKH)
+            </td>
+        </tr>
+        <tr>
+            <td class="tieude">Số điện thoại</td>
+            <td class="value">
+                @Html.DisplayFor(model => model.DonHang.KhachHang.SoDT)
+            </td>
+        </tr>
+        <tr>
+            <td class="tieude">Địa chỉ</td>
+            <td class="value">
+                @Html.DisplayFor(model => model.DonHang.DiaChi)
+            </td>
+        </tr>
+        <tr>
+            <td class="tieude">Ngày đặt hàng</td>
+            <td class="value">
+                @Html.DisplayFor(model => model.DonHang.NgayDatHang)
+            </td>
+        </tr>
+    </table>
 
-</table>
-<br />
-<h2>Chi tiết đơn hàng</h2>
+    <!-- Bảng chi tiết sản phẩm -->
+    <table class="bang">
+        <tr>
+            <td class="tieude">Sản phẩm</td>
+            <td class="value">
+                @Html.DisplayFor(model => model.SanPham.TenSP)
+            </td>
+        </tr>
+        <tr>
+            <td class="tieude">Số lượng</td>
+            <td class="value">
+                @Html.DisplayFor(model => model.SoLuong)
+            </td>
+        </tr>
+        <tr>
+            <td class="tieude">Giá</td>
+            <td class="value" style="color:red;">
+                @string.Format("{0:N0} VND", Model.Gia)
+            </td>
+        </tr>
+        <tr>
+            <td class="tieude">Tổng tiền</td>
+            <td class="value" style="color:red;">
+                @Model.TongTien.ToString("N0") VND
+            </td>
+        </tr>
+        <tr>
+            <td class="tieude">Trạng thái</td>
+            @{
+                var color = "black";
+                var trangThai = Model.DonHang.TrangThai?.Trim().ToLower();
 
-<table class="bang">
-    <tr>
-        <td class="tieude">
-            <b>Sản phẩm  </b>
-        <td class="thongtin">
-            @Html.DisplayFor(model => model.SanPham.TenSP)
-        </td>
-    </tr>
-    <tr>
-        <td class="tieude">
-            <b>Số lượng  </b>
-        <td class="thongtin">
-            @Html.DisplayFor(model => model.SoLuong)
-        </td>
-    </tr>
-    <tr>
-        <td class="tieude">
-            <b>Giá  </b>
-        <td class="thongtin"style="color:red;">
-            @string.Format("{0:N0} VND", Model.Gia)
-        </td>
-    </tr>
-    <tr>
-        <td class="tieude">
-            <b>Tổng tiền  </b>
-        <td class="thongtin" style="color:red;">
-            @Model.TongTien.ToString("N0") VND
-        </td>
-    </tr>
-    <tr>
-        <td class="tieude">
-            <b>Trạng thái</b>
-        </td>
-        @{
-            var color = "black";
-            var trangThai = Model.DonHang.TrangThai?.Trim().ToLower();
-
-            if (trangThai == "đã xác nhận")
-            {
-                color = "green";
+                if (trangThai == "chờ xử lý")
+                {
+                    color = "orange"; // Chờ xử lý - Màu cam
+                }
+                else if (trangThai == "đã xác nhận")
+                {
+                    color = "green"; // Đã xác nhận - Màu xanh lá
+                }
+                else if (trangThai == "đã nhận hàng")
+                {
+                    color = "blue"; // Đã nhận hàng - Màu xanh dương
+                }
+                else if (trangThai == "đã huỷ")
+                {
+                    color = "red"; // Đã huỷ - Màu đỏ
+                }
             }
-            else if (trangThai == "Đã hủy")
-            {
-                color = "blue";
-            }
-            else if (trangThai == "chờ xử lý")
-            {
-                color = "white";
-            }
-            else if (trangThai == "đã nhận hàng")
-            {
-                color = "gold";
-            }
-        }
+            <td class="value" style="font-weight:bold; color:@color;">
+                @Html.DisplayFor(model => model.DonHang.TrangThai)
+            </td>
+        </tr>
+    </table>
+</div>
 
-        <td class="thongtin" style="font-weight:bold; color:@color;">
-            @Html.DisplayFor(model => model.DonHang.TrangThai)
-        </td>
-
-    </tr>
-</table>
 <p>
-    <div class="form-actions">
-        <span class="mx-1"></span>
-        @Html.ActionLink("Quay về", "Index", null, new { @class = "btn btn-secondary btn-lg shadow-sm rounded-sm" })
+    <div class="form-actions text-center">
+        @Html.ActionLink("Quay về", "Index", null, new { @class = "btn btn-success btn-lg shadow-sm rounded-sm" })
     </div>
-
 </p>

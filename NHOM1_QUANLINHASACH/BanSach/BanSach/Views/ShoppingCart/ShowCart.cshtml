@@ -77,6 +77,14 @@
         .showcart a:hover {
             text-decoration: none;
         }
+    .full-width {
+        width: 100%;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
 </style>
 
 <div class="text-center ">
@@ -114,7 +122,7 @@ else
 
                 <tr class="text-center text-white">
                     <td width="40%">
-                        <img src="~/Content/img/@item._product.HinhAnh" width="140" height="160" style="float:left; border-radius: 15px;" />
+                        <img src="~/Content/img/@item._product.HinhAnh" alt="@item._product.TenSP" width="140" height="160" style="float:left; border-radius: 15px;" />
                         <p style="padding-top:40px;">
                             @Html.DisplayFor(model => item._product.TenSP)
                         </p>
@@ -134,13 +142,13 @@ else
                         {
                             <input type="hidden" value="@item._product.IDsp" name="idPro" />
                             <input type="number" min="1" max="@item._product.SoLuong" value="@item._quantity" name="carQuantity" style="width: 50px; text-align: center; border-radius:10px;" />
-                            <input type="submit" value="Cập nhật" class="capnhat bg-white" />
+                            <button type="submit" class="capnhat">Cập nhật</button>
                         }
                     </td>
                     <td style="color: #c92127;"><b>@total.ToString("#,##0").Replace(',', '.') VND</b></td>
                     <td class="xoa">
                         <form action="/ShoppingCart/RemoveCart/@item._product.IDsp" method="get">
-                            <button type="submit" class="xoa" style="background-color: red; color: white; border: none; outline: none;">Xóa</button>
+                            @Html.ActionLink("Xóa", "RemoveCart", "ShoppingCart", new { id = item._product.IDsp }, new { @class = "xoa" })
                         </form>
                     </td>
                 </tr>
@@ -167,7 +175,7 @@ else
                         Tên :
                     </td>
                     <td class="thongtinkh">
-                        <input style="width:100%" type="text" name="NameCustomer" placeholder="Điền họ và tên" value="@Session["TenKH"]" required />
+                        <input type="text" class="full-width" name="NameCustomer" placeholder="Điền họ và tên" value="@Session["TenKH"]" required />
                     </td>
                 </tr>
                 <tr>
@@ -180,12 +188,13 @@ else
                 </tr>
                 <tr>
                     <td class="thongtinkh">
-                        Địa chỉ giao hàng :
+                        Địa chỉ giao hàng:
                     </td>
                     <td class="thongtinkh">
-                        <input style="width:100%" type="text" name="AddressDeliverry" placeholder="Điền địa chỉ giao hàng" required />
+                        <input id="AddressDeliverry" style="width:100%" type="text" name="AddressDeliverry" placeholder="Điền địa chỉ giao hàng" required autocomplete="off" />
                     </td>
                 </tr>
+
 
                 @if (Session["IDkh"] != null || Session["IDQly"] != null)
                 {
@@ -209,3 +218,6 @@ else
         </form>
     </div>
 }
+
+
+

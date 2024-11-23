@@ -14,23 +14,6 @@
         margin-top: 20px;
     }
 
-    .them a {
-        border-radius: 10px;
-        background-color: #212121;
-        color: white;
-        font-size: large;
-        padding: 10px 10px;
-        margin: 20px 0;
-        display: inline-block;
-    }
-
-        .them a:hover {
-            text-decoration: none;
-            color: black;
-            outline:solid 1px black;
-            background-color: white;
-        }
-
     .table-striped {
         width: 100%;
     }
@@ -95,8 +78,6 @@
             word-wrap: break-word; /* Điều chỉnh nếu nội dung quá dài */
             font-size: 16px; /* Cân bằng kích thước chữ */
         }
-
-    
 </style>
 
 <h2 class="tieude">Danh sách sản phẩm</h2>
@@ -110,22 +91,33 @@
     }
 </div>
 
-<p class="them">
-    @Html.ActionLink("Thêm", "Create")
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-dark rounded-sm">
+        <i class="fas fa-plus text-white"></i> Thêm <!-- Icon màu trắng cho button tối -->
+    </a>
+    <a href="@Url.Action("ThongKeSanPham")" class="btn btn-warning rounded-sm text-dark">
+        <i class="fas fa-chart-bar text-dark"></i> Thống Kê Sản Phẩm <!-- Đổi icon thành biểu đồ cho "Thống Kê Sản Phẩm" và dùng màu trắng -->
+    </a>
+    <a href="@Url.Action("Import")" class="btn btn-success rounded-sm">
+        <i class="fas fa-file-import text-white"></i> Nhập sách <!-- Icon màu trắng cho button xanh lá -->
+    </a>
 </p>
+
+
 
 @if (Model != null && Model.Any())
 {
     <table class="table table-condensed table-bordered table-hover">
         <thead style="background-color: black; color: white;">
             <tr>
-                <th style="border-top-left-radius: 10px;">Mã sách</th>
-                <th>Tên Sách</th>
+                <th style="border-top-left-radius: 10px;width:50px;">ID</th>
+                <th style="width:170px;">Tên sách</th>
+                <th>Mô tả</th>
                 <th>Thể loại</th>
-                <th>Giá tiền</th>
-                <th>Số lượng</th>
-                <th>Ảnh sách</th>
+                <th style="width:150px;">Giá bán</th>
+                <th style="width:80px;">Số lượng</th>
                 <th>Khuyến mãi</th>
+                <th>Hình ảnh</th>
                 <th>Trạng thái</th>
                 <th style="border-top-right-radius: 10px;">Thao tác</th>
             </tr>
@@ -136,35 +128,54 @@
                 <tr style="color: #212121;">
                     <td>@Html.DisplayFor(modelItem => item.IDsp)</td>
                     <td>@Html.DisplayFor(modelItem => item.TenSP)</td>
+                    <td>
+                        @(item.MoTa.Length > 20 ? item.MoTa.Substring(0, 20) + "..." : item.MoTa)
+                    </td>
+
                     <td>@Html.DisplayFor(modelItem => item.DanhMuc.TheLoai)</td>
                     <td style="color:red;">@string.Format("{0:N0} VND", item.GiaBan)</td>
                     <td>
                         @if (item.SoLuong > 0)
                         {
-                            @Html.DisplayFor(modelItem => item.SoLuong)
+                            if (item.SoLuong < 10)
+                            {
+                                <span class="text-warning font-weight-bold">@item.SoLuong (Sắp hết hàng)</span>
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.SoLuong)
+                            }
                         }
                         else
                         {
-                            <span>0</span>
-                            item.TrangThaiSach = "Hết hàng";
+                            <span class="text-danger font-weight-bold">0 </span>
                         }
                     </td>
+
+                    <td>@Html.DisplayFor(modelItem => item.KhuyenMai.MucGiamGia)%</td>
                     <td>
                         <img src="@Url.Content("~/Content/img/" + System.Web.HttpUtility.UrlPathEncode(item.HinhAnh))" width="50" height="50" alt="Ảnh không hiển thị" />
                     </td>
-                    <td>@Html.DisplayFor(modelItem => item.KhuyenMai.MucGiamGia)%</td>
-                    <td>
+                    <td class="font-weight-bold">
                         @{
                             string className = item.TrangThaiSach == "Còn hàng" ? "text-success" :
                                                item.TrangThaiSach == "Hết hàng" ? "text-danger" : "";
                         }
                         <span class="@className">@Html.DisplayFor(modelItem => item.TrangThaiSach)</span>
                     </td>
-                    <td style="display: flex; gap: 3px; justify-content: center;">
-                        @Html.ActionLink("Sửa", "Edit", new { id = item.IDsp }, new { @class = "btn btn-warning btn-sm rounded-sm" })
-                        @Html.ActionLink("Xoá", "Delete", new { id = item.IDsp }, new { @class = "btn btn-danger btn-sm rounded-sm" })
-                        @Html.ActionLink("Chi tiết", "Details", new { id = item.IDsp }, new { @class = "btn btn-info btn-sm rounded-sm" })
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = item.IDsp })" class="btn btn-warning btn-sm rounded-sm" title="Sửa">
+                            <i class="fas fa-edit"></i> <!-- Biểu tượng bút chì (chỉnh sửa) -->
+                        </a>
+
+                        <a href="@Url.Action("Details", new { id = item.IDsp })" class="btn btn-info btn-sm rounded-sm" title="Chi tiết">
+                            <i class="fas fa-eye"></i> <!-- Biểu tượng con mắt (chi tiết) -->
+                        </a>
+                        <a href="@Url.Action("Delete", new { id = item.IDsp })" class="btn btn-danger btn-sm rounded-sm" title="Xoá">
+                            <i class="fas fa-trash-alt"></i> <!-- Biểu tượng thùng rác (xóa) -->
+                        </a>
                     </td>
+
                 </tr>
             }
         </tbody>

@@ -1,19 +1,16 @@
-﻿
-using BanSach.Models;
+﻿using BanSach.Models;
 using PagedList;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 
-
 namespace BanSach.Controllers
 {
-   
     public class AdminsController : Controller
     {
         private dbSach db = new dbSach();
-
         public ActionResult Index(int? page, string searchString)
         {
             int pageSize = 10; // Số bản ghi trên mỗi trang
@@ -38,7 +35,6 @@ namespace BanSach.Controllers
             return View(adminList);
         }
 
-
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -58,6 +54,7 @@ namespace BanSach.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,HoTen,Email,DiaChi,SoDT,VaiTro,TKhoan,MKhau")] Admin admin)
@@ -70,6 +67,7 @@ namespace BanSach.Controllers
             }
             return View(admin);
         }
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -83,6 +81,7 @@ namespace BanSach.Controllers
             }
             return View(admin);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,HoTen,Email,DiaChi,SoDT,VaiTro,TKhoan,MKhau")] Admin admin)
@@ -94,8 +93,9 @@ namespace BanSach.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index", "Admins");
             }
-            return View();
+            return View(admin);
         }
+
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -109,6 +109,7 @@ namespace BanSach.Controllers
             }
             return View(admin);
         }
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -118,6 +119,7 @@ namespace BanSach.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
