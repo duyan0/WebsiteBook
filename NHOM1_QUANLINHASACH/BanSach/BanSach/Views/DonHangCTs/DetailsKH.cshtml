@@ -1,154 +1,84 @@
-﻿@model BanSach.Models.DonHangCT
+﻿@model List<BanSach.Models.DonHangCT>
 
 @{
-    ViewBag.Title = "Chi tiết đơn hàng - " + Model.IDDonHang;
+    ViewBag.Title = "Chi tiết đơn hàng - " + ViewBag.OrderDetails.IDdh;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>
-    body {
-        background-color: #000; /* Đặt màu nền là màu đen để chữ trắng nổi bật */
-    }
+<div class="container mt-5">
+    <h2 class="text-center mb-4 text-white">Chi tiết đơn hàng</h2>
 
-    .container {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        flex-wrap: wrap;
-        margin-top: 20px;
-    }
+    <div class="d-flex justify-content-center mb-4">
+        <a href="~/KhachHangs/LichSuDonHang" class="btn btn-outline-success shadow-sm rounded-sm mx-2 me-2">Quay về</a>
+        <a href="@Url.Action("ExportOrderDetailsToExcel", "DonHangCTs", new { id = ViewBag.OrderDetails.IDdh })" class="btn btn-success shadow-sm rounded-sm">Xuất Excel</a>
+    </div>
 
-    h2 {
-        text-align: center;
-        color: white; /* Đổi màu chữ thành màu trắng */
-        font-weight: bold;
-        margin-bottom: 20px;
-    }
-
-    .bang {
-        border: 1px solid #ccc;
-        padding: 20px;
-        width: 45%;
-        min-width: 300px;
-        font-size: large;
-        background-color: #fff; /* Màu nền trắng để nổi bật chữ */
-        color: black; /* Màu chữ đen */
-    }
-
-    .tieude {
-        padding: 10px;
-        font-weight: bold;
-        color: black; /* Đổi màu tiêu đề thành màu đen */
-        width: 40%;
-    }
-
-    .value {
-        padding: 10px;
-        color: black;
-    }
-
-    table {
-        width: 100%;
-    }
-
-    tr {
-        border: 1px solid black; /* Đổi màu viền thành màu đen */
-    }
-
-    .form-actions {
-        margin-top: 20px;
-    }
-</style>
-
-<h2>Chi tiết đơn hàng</h2>
-
-<div class="form-actions text-center">
-    <a href="~/KhachHangs/LichSuDonHang" class="btn btn-outline-success shadow-sm rounded-sm">Quay về</a>
-    <a href="@Url.Action("ExportOrderDetailsToExcel", "DonHangCTs", new { id = Model.IDDonHang })" class="btn btn-primary shadow-sm rounded-sm ml-2">Xuất Excel</a>
-</div>
-
-<div class="container">
     <!-- Bảng thông tin đơn hàng -->
-    <table class="bang">
-        <tr>
-            <td class="tieude">Mã đơn hàng</td>
-            <td class="value">
-                @Html.DisplayFor(model => model.IDdh)
-            </td>
-        </tr>
-        <tr>
-            <td class="tieude">ID khách hàng</td>
-            <td class="value">
-                @Html.DisplayFor(model => model.DonHang.IDkh)
-            </td>
-        </tr>
-        <tr>
-            <td class="tieude">Tên khách hàng</td>
-            <td class="value">
-                @Html.DisplayFor(model => model.DonHang.KhachHang.TenKH)
-            </td>
-        </tr>
-        <tr>
-            <td class="tieude">Số điện thoại</td>
-            <td class="value">
-                @Html.DisplayFor(model => model.DonHang.KhachHang.SoDT)
-            </td>
-        </tr>
-        <tr>
-            <td class="tieude">Địa chỉ</td>
-            <td class="value">
-                @Html.DisplayFor(model => model.DonHang.DiaChi)
-            </td>
-        </tr>
-        <tr>
-            <td class="tieude">Ngày đặt hàng</td>
-            <td class="value">
-                @Html.DisplayFor(model => model.DonHang.NgayDatHang)
-            </td>
-        </tr>
-    </table>
+    <div class="card mb-4" style="background-color: #1f1f20; color: white;">
+        <div class="card-header bg-secondary font-weight-bold text-dark">
+            Thông tin đơn hàng
+        </div>
+        <div class="card-body">
+            <table class="table table-striped" style="color: white;">
+                <tbody>
+                    <tr>
+                        <th class="w-25">Mã đơn hàng:</th>
+                        <td>@ViewBag.OrderDetails.IDdh</td>
+                    </tr>
+                    <tr>
+                        <th>ID khách hàng:</th>
+                        <td>@ViewBag.OrderDetails.IDkh</td>
+                    </tr>
+                    <tr>
+                        <th>Tên khách hàng:</th>
+                        <td>@ViewBag.OrderDetails.KhachHang.TenKH</td>
+                    </tr>
+                    <tr>
+                        <th>Số điện thoại:</th>
+                        <td>@ViewBag.OrderDetails.KhachHang.SoDT</td>
+                    </tr>
+                    <tr>
+                        <th>Địa chỉ:</th>
+                        <td>@ViewBag.OrderDetails.DiaChi</td>
+                    </tr>
+                    <tr>
+                        <th>Ngày đặt hàng:</th>
+                        <td>@ViewBag.OrderDetails.NgayDatHang</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <!-- Bảng chi tiết sản phẩm -->
-    <table class="bang">
-        <tr>
-            <td class="tieude">Sản phẩm</td>
-            <td class="value">
-                @Html.DisplayFor(model => model.SanPham.TenSP)
-            </td>
-        </tr>
-        <tr>
-            <td class="tieude">Số lượng</td>
-            <td class="value">
-                @Html.DisplayFor(model => model.SoLuong)
-            </td>
-        </tr>
-        <tr>
-            <td class="tieude">Giá</td>
-            <td class="value" style="color:red;">
-                @string.Format("{0:N0} VND", Model.Gia)
-            </td>
-        </tr>
-        <tr>
-            <td class="tieude">Tổng tiền</td>
-            <td class="value" style="color:red;">
-                @Model.TongTien.ToString("N0") VND
-            </td>
-        </tr>
-        <tr>
-            <td class="tieude">Trạng thái</td>
-            <td class="value" style="font-weight:bold; color:@(Model.DonHang.TrangThai == "Đã xác nhận" ? "green"
-                    : Model.DonHang.TrangThai == "Đã hủy" ? "red"
-                    : Model.DonHang.TrangThai == "Đã nhận hàng" ? "blue"
-                    : Model.DonHang.TrangThai == "Chờ xử lý" ? "orange"
-                    : "black");">
-                @Html.DisplayFor(model => model.DonHang.TrangThai)
-            </td>
-        </tr>
-    </table>
-</div>
-
-<p>
-    <div class="form-actions text-center">
-        <a href="~/KhachHangs/LichSuDonHang" class="btn btn-outline-success shadow-sm rounded-sm">Quay về</a>
+    <h3 class="text-center mb-3 text-white">Danh sách sản phẩm</h3>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover" style="color: white;">
+            <thead class="bg-secondary text-dark">
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Giá</th>
+                    <th>Tổng tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.SanPham.TenSP</td>
+                        <td>@item.SoLuong</td>
+                        <td style="color: #FF6347;">@string.Format("{0:N0} VND", item.Gia)</td>
+                        <td style="color: #FF6347;">
+                            @(string.Format("{0:N0} VND", item.SoLuong * item.Gia))
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
-</p>
+
+    <div class="text-center mt-4">
+        <a href="~/KhachHangs/LichSuDonHang" class="btn btn-outline-light shadow-sm rounded-sm">Quay về</a>
+    </div>
+</div>

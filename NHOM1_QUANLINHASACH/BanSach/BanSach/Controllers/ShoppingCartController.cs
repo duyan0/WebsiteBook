@@ -111,32 +111,32 @@ namespace BanSach.Controllers
 
                 foreach (var item in cart.Items)
                 {
-                    // Lưu dòng sản phẩm vào chi tiết hóa đơn
+                    // Tạo chi tiết đơn hàng cho từng sản phẩm trong giỏ hàng
                     DonHangCT _order_detail = new DonHangCT();
-                    _order_detail.IDDonHang = _order.IDdh;
+                    _order_detail.IDDonHang = _order.IDdh;  // Sử dụng cùng ID đơn hàng cho tất cả sản phẩm
                     _order_detail.IDSanPham = item._product.IDsp;
 
-                    // Tính giá sau khi đã áp dụng khuyến mãi
+                    // Tính giá sau khi áp dụng khuyến mãi
                     decimal giaBan = item._product.GiaBan;
                     decimal mucGiamGia = item.MucGiamGia;
                     decimal giaSauKhuyenMai = giaBan * (1 - (mucGiamGia / 100));
 
-                    _order_detail.Gia = (double)giaSauKhuyenMai; // Lưu giá sau khi đã áp dụng khuyến mãi
+                    _order_detail.Gia = (double)giaSauKhuyenMai;
                     _order_detail.SoLuong = item._quantity;
 
-                    db.DonHangCT.Add(_order_detail);
+                    db.DonHangCT.Add(_order_detail); // Thêm mỗi sản phẩm vào đơn hàng
 
-                    // Xử lý cập nhật lại số lượng tồn trong bảng SanPham
+                    // Cập nhật lại số lượng tồn kho
                     var product = db.SanPham.SingleOrDefault(s => s.IDsp == item._product.IDsp);
                     if (product != null)
                     {
-                        product.SoLuong -= item._quantity; // Số lượng tồn mới = số lượng tồn - số lượng đã mua
+                        product.SoLuong -= item._quantity;  // Số lượng tồn = số lượng tồn - số lượng đã mua
                     }
                 }
-
                 db.SaveChanges();
                 cart.ClearCart();
                 return RedirectToAction("CheckOut_Success", "ShoppingCart");
+
             }
             catch
             {

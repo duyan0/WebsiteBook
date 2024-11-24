@@ -38,9 +38,6 @@ namespace BanSach.Models
                 item._quantity += _quan;
             }
         }
-
-
-
         // Phương thức tính tổng số lượng trong giỏ hàng
         public int Total_quantity()
         {

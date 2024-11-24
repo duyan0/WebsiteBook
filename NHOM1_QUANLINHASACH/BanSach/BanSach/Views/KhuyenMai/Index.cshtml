@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<BanSach.Models.KhuyenMai>
+﻿@model PagedList.IPagedList<BanSach.Models.PromotionViewModel>
 @using PagedList.Mvc;
 
 @{
@@ -41,11 +41,12 @@
             <tr>
                 <th>ID</th>
                 <th>Tên KM</th>
-                <th class="text-center">Ngày bắt đầu</th>
-                <th class="text-center">Ngày kết thúc</th>
-                <th class="text-center">Giá giảm</th>
-                <th class="text-center">Mô tả</th>
-                <th class="text-center">Thao tác</th>
+                <th style="width:150px;">Ngày bắt đầu</th>
+                <th style="width:140px;">Ngày kết thúc</th>
+                <th >Giá giảm</th>
+                <th style="width:140px;">Mô tả</th>
+                <th >SL SP áp dụng</th> <!-- Updated column header -->
+                <th >Thao tác</th>
             </tr>
         </thead>
         <tbody style="color:black;">
@@ -54,10 +55,11 @@
                 <tr>
                     <td class="font-weight-bold text-center">@Html.DisplayFor(modelItem => item.IDkm)</td>
                     <td>@Html.DisplayFor(modelItem => item.TenKhuyenMai)</td>
-                    <td class="@(item.NgayBatDau.HasValue && item.NgayKetThuc.HasValue && item.NgayBatDau > item.NgayKetThuc ? "text-danger" : "") text-center">
+                    <td class="text-center">
                         @(item.NgayBatDau.HasValue ? item.NgayBatDau.Value.ToString("dd/MM/yyyy") : "")
                     </td>
-                    <td class="@(item.NgayBatDau.HasValue && item.NgayKetThuc.HasValue && item.NgayBatDau > item.NgayKetThuc ? "text-danger" : "") text-center">
+
+                    <td class="text-center">
                         @if (item.NgayKetThuc.HasValue)
                         {
                             var ngayKetThuc = item.NgayKetThuc.Value;
@@ -89,6 +91,7 @@
                         }
                         @motangan
                     </td>
+                    <td class="text-center">@item.SanPhamCount</td> <!-- Displaying the count here -->
                     <td class="text-center">
                         <a href="@Url.Action("Edit", new { id = item.IDkm })" class="btn btn-warning btn-sm rounded-sm mx-1">
                             <i class="fa fa-edit"></i>

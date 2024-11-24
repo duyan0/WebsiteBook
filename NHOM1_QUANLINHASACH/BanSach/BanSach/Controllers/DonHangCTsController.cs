@@ -55,26 +55,56 @@ namespace BanSach.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DonHangCT donHangCT = db.DonHangCT.Find(id);
-            if (donHangCT == null)
+
+            // Lấy danh sách chi tiết đơn hàng với ID đơn hàng được cung cấp
+            var donHangCTs = db.DonHangCT
+                .Include(ct => ct.SanPham)
+                .Include(ct => ct.DonHang.KhachHang)
+                .Where(ct => ct.IDDonHang == id)
+                .ToList();
+
+            // Kiểm tra nếu không có chi tiết đơn hàng nào được tìm thấy
+            if (donHangCTs == null || !donHangCTs.Any())
             {
                 return HttpNotFound();
             }
-            return View(donHangCT);
+
+            // Lấy thông tin đơn hàng từ chi tiết đơn hàng đầu tiên
+            var orderDetails = donHangCTs.FirstOrDefault().DonHang;
+            ViewBag.OrderDetails = orderDetails;
+            ViewBag.TrangThai = orderDetails.TrangThai; // Thêm dòng này
+
+            // Trả về view với danh sách chi tiết đơn hàng
+            return View(donHangCTs);
         }
+
         public ActionResult DetailsKH(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DonHangCT donHangCT = db.DonHangCT.Find(id);
-            if (donHangCT == null)
+
+            // Lấy danh sách chi tiết đơn hàng với ID đơn hàng được cung cấp
+            var donHangCTs = db.DonHangCT
+                .Include(ct => ct.SanPham)
+                .Include(ct => ct.DonHang.KhachHang)
+                .Where(ct => ct.IDDonHang == id)
+                .ToList();
+
+            // Kiểm tra nếu không có chi tiết đơn hàng nào được tìm thấy
+            if (donHangCTs == null || !donHangCTs.Any())
             {
                 return HttpNotFound();
             }
-            return View(donHangCT);
+
+            // Lấy thông tin đơn hàng từ chi tiết đơn hàng đầu tiên
+            ViewBag.OrderDetails = donHangCTs.FirstOrDefault().DonHang;
+
+            // Trả về view với danh sách chi tiết đơn hàng
+            return View(donHangCTs);
         }
+
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -133,11 +163,12 @@ namespace BanSach.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var donHangCT = db.DonHangCT.Include(d => d.DonHang)
-                                         .Include(d => d.SanPham)
-                                         .FirstOrDefault(d => d.IDDonHang == id);
+            var donHangCTs = db.DonHangCT.Include(d => d.DonHang)
+                                          .Include(d => d.SanPham)
+                                          .Where(d => d.IDDonHang == id)
+                                          .ToList();
 
-            if (donHangCT == null)
+            if (donHangCTs == null || !donHangCTs.Any())
             {
                 return HttpNotFound();
             }
@@ -152,29 +183,31 @@ namespace BanSach.Controllers
                 worksheet.Cell(currentRow, 1).Style.Font.Bold = true;
                 currentRow++;
 
-                // Thông tin đơn hàng
+                // Thông tin đơn hàng (lấy từ chi tiết đơn hàng đầu tiên)
+                var donHang = donHangCTs.First().DonHang;
+
                 worksheet.Cell(currentRow, 1).Value = "Mã đơn hàng";
-                worksheet.Cell(currentRow, 2).Value = donHangCT.IDDonHang;
+                worksheet.Cell(currentRow, 2).Value = donHang.IDdh;
                 currentRow++;
 
                 worksheet.Cell(currentRow, 1).Value = "ID khách hàng";
-                worksheet.Cell(currentRow, 2).Value = donHangCT.DonHang.IDkh;
+                worksheet.Cell(currentRow, 2).Value = donHang.IDkh;
                 currentRow++;
 
                 worksheet.Cell(currentRow, 1).Value = "Tên khách hàng";
-                worksheet.Cell(currentRow, 2).Value = donHangCT.DonHang.KhachHang?.TenKH ?? "N/A"; // Kiểm tra null
+                worksheet.Cell(currentRow, 2).Value = donHang.KhachHang?.TenKH ?? "N/A"; // Kiểm tra null
                 currentRow++;
 
                 worksheet.Cell(currentRow, 1).Value = "Số điện thoại";
-                worksheet.Cell(currentRow, 2).Value = donHangCT.DonHang.KhachHang?.SoDT ?? "N/A"; // Kiểm tra null
+                worksheet.Cell(currentRow, 2).Value = donHang.KhachHang?.SoDT ?? "N/A"; // Kiểm tra null
                 currentRow++;
 
                 worksheet.Cell(currentRow, 1).Value = "Địa chỉ";
-                worksheet.Cell(currentRow, 2).Value = donHangCT.DonHang.DiaChi ?? "N/A"; // Kiểm tra null
+                worksheet.Cell(currentRow, 2).Value = donHang.DiaChi ?? "N/A"; // Kiểm tra null
                 currentRow++;
 
                 worksheet.Cell(currentRow, 1).Value = "Ngày đặt hàng";
-                worksheet.Cell(currentRow, 2).Value = donHangCT.DonHang.NgayDatHang?.ToString("dd/MM/yyyy HH:mm:ss") ?? "Chưa đặt hàng";
+                worksheet.Cell(currentRow, 2).Value = donHang.NgayDatHang?.ToString("dd/MM/yyyy HH:mm:ss") ?? "Chưa đặt hàng";
                 currentRow++;
 
                 // Dòng trống
@@ -185,26 +218,30 @@ namespace BanSach.Controllers
                 worksheet.Cell(currentRow, 1).Style.Font.Bold = true;
                 currentRow++;
 
-                // Chi tiết đơn hàng
+                // Tiêu đề cột
                 worksheet.Cell(currentRow, 1).Value = "Sản phẩm";
-                worksheet.Cell(currentRow, 2).Value = donHangCT.SanPham.TenSP;
+                worksheet.Cell(currentRow, 2).Value = "Số lượng";
+                worksheet.Cell(currentRow, 3).Value = "Giá";
+                worksheet.Cell(currentRow, 4).Value = "Tổng tiền";
+                worksheet.Row(currentRow).Style.Font.Bold = true; // Làm đậm dòng tiêu đề
                 currentRow++;
 
-                worksheet.Cell(currentRow, 1).Value = "Số lượng";
-                worksheet.Cell(currentRow, 2).Value = donHangCT.SoLuong;
+                // Chi tiết đơn hàng (lặp qua tất cả các sản phẩm trong đơn hàng)
+                foreach (var item in donHangCTs)
+                {
+                    worksheet.Cell(currentRow, 1).Value = item.SanPham.TenSP;
+                    worksheet.Cell(currentRow, 2).Value = item.SoLuong;
+                    worksheet.Cell(currentRow, 3).Value = $"{item.Gia:N0} VND";
+                    worksheet.Cell(currentRow, 4).Value = $"{(item.SoLuong * item.Gia):N0} VND";
+                    currentRow++;
+                }
+
+                // Trạng thái đơn hàng
                 currentRow++;
+                worksheet.Cell(currentRow, 1).Value = "Trạng thái đơn hàng";
+                worksheet.Cell(currentRow, 2).Value = donHang.TrangThai ?? "N/A";
 
-                worksheet.Cell(currentRow, 1).Value = "Giá";
-                worksheet.Cell(currentRow, 2).Value = $"{donHangCT.Gia:N0} VND";
-                currentRow++;
-
-                worksheet.Cell(currentRow, 1).Value = "Tổng tiền";
-                worksheet.Cell(currentRow, 2).Value = $"{donHangCT.TongTien:N0} VND";
-                currentRow++;
-
-                worksheet.Cell(currentRow, 1).Value = "Trạng thái";
-                worksheet.Cell(currentRow, 2).Value = donHangCT.DonHang.TrangThai ?? "N/A";
-
+                // Xuất file Excel
                 using (var stream = new MemoryStream())
                 {
                     workbook.SaveAs(stream);
@@ -214,7 +251,8 @@ namespace BanSach.Controllers
             }
         }
 
-        
+
+
 
 
         protected override void Dispose(bool disposing)

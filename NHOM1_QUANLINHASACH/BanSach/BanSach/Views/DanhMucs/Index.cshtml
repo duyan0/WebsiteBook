@@ -18,10 +18,10 @@
             <th>ID</th>
             <th>Danh mục</th>
             <th>Thể loại</th>
-            <th style="width: 200px;">Chỉnh sửa</th> <!-- Đặt chiều rộng để cân đối -->
+            <th style="width: 200px;">Chỉnh sửa</th> 
         </tr>
     </thead>
-    <tbody>
+    <tbody style="color:black;">
         @foreach (var item in Model)
         {
             <tr>
@@ -35,13 +35,13 @@
                     @Html.DisplayFor(modelItem => item.TheLoai)
                 </td>
                 <td class="text-center align-middle" style="width: 200px;">
-                    <a href="@Url.Action("Edit", new { id = item.ID })" class="btn btn-warning btn-sm rounded-sm" title="Sửa">
+                    <a href="@Url.Action("Edit", new { id = item.ID })" class="btn btn-warning btn-sm rounded-sm mx-1" title="Sửa">
                         <i class="fas fa-edit text-white"></i> 
                     </a>
-                    <a href="@Url.Action("Details", new { id = item.ID })" class="btn btn-info btn-sm rounded-sm" title="Xem">
+                    <a href="@Url.Action("Details", new { id = item.ID })" class="btn btn-info btn-sm rounded-sm mx-1" title="Xem">
                         <i class="fas fa-eye text-white"></i> 
                     </a>
-                    <a href="@Url.Action("Delete", new { id = item.ID })" class="btn btn-danger btn-sm rounded-sm delete-link" title="Xoá">
+                    <a href="@Url.Action("Delete", new { id = item.ID })" class="btn btn-danger btn-sm rounded-sm delete-link mx-1" title="Xoá">
                         <i class="fas fa-trash-alt text-white"></i> 
                     </a>
                 </td>

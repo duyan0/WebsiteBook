@@ -1,7 +1,7 @@
-﻿@model BanSach.Models.DonHangCT
+﻿@model List<BanSach.Models.DonHangCT>
 
 @{
-    ViewBag.Title = "Chi tiết đơn hàng - " + Model.IDDonHang;
+    ViewBag.Title = "Chi tiết đơn hàng - " + ViewBag.OrderDetails?.IDdh;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -31,7 +31,7 @@
     .tieude {
         padding: 10px;
         font-weight: bold;
-        color:black;
+        color: black;
         width: 40%;
     }
 
@@ -47,6 +47,28 @@
     tr {
         border: 1px solid black;
     }
+
+    .sanpham-table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+
+        .sanpham-table th,
+        .sanpham-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .sanpham-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+
+        .sanpham-table td {
+            color: #212121;
+        }
 </style>
 
 <h2 class="mt-5">Chi tiết đơn hàng</h2>
@@ -57,96 +79,97 @@
         <tr>
             <td class="tieude">Mã đơn hàng</td>
             <td class="value">
-                @Html.DisplayFor(model => model.IDdh)
+                @ViewBag.OrderDetails.IDdh
             </td>
         </tr>
         <tr>
             <td class="tieude">ID khách hàng</td>
             <td class="value">
-                @Html.DisplayFor(model => model.DonHang.IDkh)
+                @ViewBag.OrderDetails.IDkh
             </td>
         </tr>
         <tr>
             <td class="tieude">Tên khách hàng</td>
             <td class="value">
-                @Html.DisplayFor(model => model.DonHang.KhachHang.TenKH)
+                @ViewBag.OrderDetails.KhachHang.TenKH
             </td>
         </tr>
         <tr>
             <td class="tieude">Số điện thoại</td>
             <td class="value">
-                @Html.DisplayFor(model => model.DonHang.KhachHang.SoDT)
+                @ViewBag.OrderDetails.KhachHang.SoDT
             </td>
         </tr>
         <tr>
             <td class="tieude">Địa chỉ</td>
             <td class="value">
-                @Html.DisplayFor(model => model.DonHang.DiaChi)
+                @ViewBag.OrderDetails.DiaChi
             </td>
         </tr>
         <tr>
             <td class="tieude">Ngày đặt hàng</td>
             <td class="value">
-                @Html.DisplayFor(model => model.DonHang.NgayDatHang)
-            </td>
-        </tr>
-    </table>
-
-    <!-- Bảng chi tiết sản phẩm -->
-    <table class="bang">
-        <tr>
-            <td class="tieude">Sản phẩm</td>
-            <td class="value">
-                @Html.DisplayFor(model => model.SanPham.TenSP)
-            </td>
-        </tr>
-        <tr>
-            <td class="tieude">Số lượng</td>
-            <td class="value">
-                @Html.DisplayFor(model => model.SoLuong)
-            </td>
-        </tr>
-        <tr>
-            <td class="tieude">Giá</td>
-            <td class="value" style="color:red;">
-                @string.Format("{0:N0} VND", Model.Gia)
-            </td>
-        </tr>
-        <tr>
-            <td class="tieude">Tổng tiền</td>
-            <td class="value" style="color:red;">
-                @Model.TongTien.ToString("N0") VND
+                @ViewBag.OrderDetails.NgayDatHang.ToString("dd/MM/yyyy HH:mm:ss")
             </td>
         </tr>
         <tr>
             <td class="tieude">Trạng thái</td>
-            @{
-                var color = "black";
-                var trangThai = Model.DonHang.TrangThai?.Trim().ToLower();
+            <td class="value" style="
+    @{
+        string trangThai = ViewBag.TrangThai.Trim().ToLower();
+        var color = "black";
 
-                if (trangThai == "chờ xử lý")
-                {
-                    color = "orange"; // Chờ xử lý - Màu cam
-                }
-                else if (trangThai == "đã xác nhận")
-                {
-                    color = "green"; // Đã xác nhận - Màu xanh lá
-                }
-                else if (trangThai == "đã nhận hàng")
-                {
-                    color = "blue"; // Đã nhận hàng - Màu xanh dương
-                }
-                else if (trangThai == "đã huỷ")
-                {
-                    color = "red"; // Đã huỷ - Màu đỏ
-                }
-            }
-            <td class="value" style="font-weight:bold; color:@color;">
-                @Html.DisplayFor(model => model.DonHang.TrangThai)
+        if (trangThai == "chờ xử lý")
+        {
+            color = "orange";
+        }
+        else if (trangThai == "đã xác nhận")
+        {
+            color = "green";
+        }
+        else if (trangThai == "đã nhận hàng")
+        {
+            color = "blue";
+        }
+        else if (trangThai == "đã huỷ")
+        {
+            color = "red";
+        }
+        @:color: @color;
+    }">
+                @ViewBag.TrangThai
             </td>
         </tr>
+
+
+
+    </table>
+
+    <!-- Bảng chi tiết sản phẩm -->
+    <table class="sanpham-table">
+        <thead>
+            <tr>
+                <th>Tên sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Giá</th>
+                <th>Tổng tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.SanPham.TenSP</td>
+                    <td>@item.SoLuong</td>
+                    <td style="color:red;">@string.Format("{0:N0} VND", item.Gia)</td>
+                    <td style="color:red;">@string.Format("{0:N0} VND", item.TongTien)</td>
+                </tr>
+            }
+        </tbody>
     </table>
 </div>
+
+
 
 <p>
     <div class="form-actions text-center">

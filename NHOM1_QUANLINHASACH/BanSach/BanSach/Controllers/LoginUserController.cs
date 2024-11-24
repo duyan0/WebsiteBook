@@ -173,9 +173,10 @@ namespace BanSach.Controllers
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public ActionResult LoginAccountCus(KhachHang _cus)
         {
-            // Kiểm tra thông tin đăng nhập của khách hàng
+            
             if (_cus.TKhoan == null)
             {
+                
                 return View();
             }
 
@@ -229,8 +230,6 @@ namespace BanSach.Controllers
             return RedirectToAction("SignInSuccess");
         }
 
-        // Thêm thuộc tính này vào lớp KhachHang nếu chưa có
-        public string TrangThaiTaiKhoan { get; set; }
 
 
         [HttpGet]

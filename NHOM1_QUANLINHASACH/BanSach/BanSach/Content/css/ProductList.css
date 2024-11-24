@@ -1,129 +1,228 @@
-﻿/* Bảo đảm card sản phẩm có thể co giãn khi màn hình nhỏ hơn */
+﻿/* CSS chung cho thẻ sản phẩm */
 .card-pro {
     text-decoration: none;
-    border-radius: 10px;
-    padding: 15px;
-    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 8px;
+    padding: 10px;
     background-color: #ffffff;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden; /* Đảm bảo nội dung không vượt quá chiều cao */
+    margin-top: 10px; /* Khoảng cách 10px phía trên mỗi thẻ sản phẩm */
 }
 
-    /* Cải thiện ảnh sản phẩm */
+    .card-pro:hover {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-pro a {
+        text-decoration: none;
+        color: inherit;
+        width: 100%;
+        flex-grow: 1; /* Đảm bảo thẻ chiếm đủ không gian còn lại */
+    }
+
     .card-pro img {
-        border-radius: 10px;
-        width: 100%; /* Cho phép ảnh co giãn */
-        height: auto; /* Duy trì tỷ lệ ảnh */
+        border-radius: 8px;
+        width: 100%;
+        height: auto; /* Cho phép hình ảnh linh hoạt hơn */
+        max-height: 180px; /* Đặt chiều cao tối đa */
         object-fit: cover;
         transition: opacity 0.3s;
     }
 
-/* Cải thiện phân bố cho các sản phẩm */
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px; /* Khoảng cách giữa các sản phẩm */
-}
-
-/* Phân chia 4 cột cho màn hình lớn */
-.col-sm-12.col-md-6.col-lg-4.col-xl-3 {
-    flex: 1 1 calc(25% - 15px); /* 4 cột trên màn hình lớn */
-}
-
-/* Cải thiện độ rộng cho các cột khi màn hình nhỏ */
-@media (max-width: 1200px) {
-    .col-sm-12.col-md-6.col-lg-4.col-xl-3 {
-        flex: 1 1 calc(33.33% - 15px); /* 3 cột trên màn hình medium */
-    }
-}
-
-@media (max-width: 992px) {
-    .col-sm-12.col-md-6.col-lg-4.col-xl-3 {
-        flex: 1 1 calc(50% - 15px); /* 2 cột trên màn hình tablet */
-    }
-}
-
-@media (max-width: 576px) {
-    .col-sm-12.col-md-6.col-lg-4.col-xl-3 {
-        flex: 1 1 100%; /* 1 cột trên màn hình nhỏ */
-    }
-
-    .price {
-        font-size: 1em; /* Giảm kích thước chữ giá khi màn hình nhỏ */
-    }
-}
-
-/* Cải thiện các phần tử khác trong card */
-.availability, .product-name, .price, .discount-badge {
-    width: 100%;
+/* Trạng thái sẵn có của sản phẩm */
+.availability {
+    font-weight: bold;
+    font-size: 0.8rem;
     text-align: left;
+    width: 100%;
+    margin-top: 5px;
+    height: auto; /* Cho phép trạng thái điều chỉnh chiều cao tự nhiên */
 }
 
-/* Điều chỉnh kiểu lọc khi trên thiết bị di động */
-.price-filter {
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px; /* Thêm khoảng cách dưới cho lọc */
+/* Tên sản phẩm */
+.product-name {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    width: 100%;
+    margin-top: 8px;
+    height: auto;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-@media (max-width: 768px) {
-    .price-filter {
-        margin-left: 0;
-    }
+/* Giá sản phẩm và khuyến mãi */
+.price-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: 5px;
 }
 
-.sotrang a {
+.price {
+    font-weight: bold;
+    color: #e74c3c;
+    font-size: 1rem;
+    text-align: left;
+    width: auto; /* Cho phép chiều rộng thay đổi theo nội dung */
+}
+
+.old-price {
+    font-size: 0.8rem;
+    color: #999;
+    text-decoration: line-through;
+    margin-right: 5px;
+}
+
+.discount-badge {
+    padding: 3px 5px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 3px;
+    background-color: red;
+    color: white;
+    margin-left: 5px;
+}
+
+/* Nút thêm vào giỏ hàng */
+.btn-add-to-cart {
+    margin-top: auto; /* Đẩy nút thêm vào giỏ hàng xuống cuối */
     padding: 8px;
-    border-radius: 5px;
-    transition: background-color 0.2s;
-    color: #007bff;
-    text-decoration: none;
+    background-color: white;
+    color: red;
+    font-family: sans-serif;
+    border: solid 1px red;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    width: 100%;
+    font-size: 0.9rem;
 }
 
-    .sotrang a:hover {
-        background-color: #f0f0f0;
+    .btn-add-to-cart:hover {
+        background-color: red;
+        transform: scale(1.05);
+        color: white;
     }
 
-/* Cải thiện kiểu trang trong phần phân trang */
+/* Bộ lọc giá */
+.price-filter {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filter-title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.form-check-label {
+    font-size: 0.9rem;
+}
+
+.btn-filter {
+    margin-top: 15px;
+    padding: 8px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    font-size: 0.9rem;
+}
+
+    .btn-filter:hover {
+        background-color: #218838;
+    }
+
 .sotrang {
     text-align: center;
     margin: 20px 0;
 }
 
     .sotrang a {
-        margin: 0 5px;
+        padding: 8px 12px;
+        border-radius: 5px;
+        color: #007bff;
+        text-decoration: none;
+        margin: 0 3px;
     }
 
-/* Đảm bảo tiêu đề trang đẹp hơn trên màn hình nhỏ */
+        .sotrang a:hover {
+            background-color: #f0f0f0;
+        }
+
 h3.page-title {
     color: #343a40;
-    margin: 30px auto;
     font-weight: bold;
     text-align: center;
-    font-size: 1.75em;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
 }
 
+.out-of-stock {
+    color: red;
+    font-weight: bold;
+}
+
+.in-stock {
+    color: #28a745;
+    font-weight: bold;
+}
+
+/* Media queries cho điện thoại di động */
 @media (max-width: 576px) {
-    h3.page-title {
-        font-size: 1.5em; /* Giảm kích thước font tiêu đề trên màn hình nhỏ */
-    }
-}
-/* Responsive layout */
-@media (max-width: 767px) {
-    .card-pro img {
-        height: 150px;
+    .card-pro {
+        height: auto; /* Điều chỉnh chiều cao để phù hợp với nội dung */
+        padding: 8px;
+        margin-top: 10px;
     }
 
-    .product-name {
-        font-size: 1em;
+        .card-pro img {
+            height: auto; /* Cho phép hình ảnh linh hoạt để tránh co giãn không cần thiết */
+            max-height: 120px; /* Chiều cao tối đa cho hình ảnh trên di động */
+        }
+
+    .availability, .product-name, .price {
+        font-size: 0.8rem; /* Giảm kích thước văn bản cho phù hợp */
     }
 
-    .price {
-        font-size: 1em;
+    .btn-add-to-cart {
+        font-size: 0.8rem; /* Giảm kích thước nút thêm vào giỏ hàng */
+        padding: 6px;
+    }
+
+    .price-wrapper {
+        height: auto; /* Điều chỉnh chiều cao để phù hợp */
+    }
+
+    .price-filter {
+        padding: 10px; /* Giảm kích thước bộ lọc */
+    }
+
+    .btn-filter {
+        padding: 6px;
+        font-size: 0.8rem;
+    }
+
+    /* Điều chỉnh khoảng cách các thẻ sản phẩm */
+    .col-12.col-sm-6.col-md-4.col-lg-3 {
+        margin-bottom: 15px; /* Thêm khoảng cách giữa các thẻ trên màn hình di động */
     }
 }

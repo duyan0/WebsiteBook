@@ -175,7 +175,7 @@
         {
             <div class="nut mt-4">
                 <a href="/ShoppingCart/AddToCart/@Model.IDsp" id="nut1" onclick="themthanhcong(event, '@Model.IDsp')">
-                    <i class="fas fa-cart-plus"></i> Thêm 
+                    <i class="fas fa-cart-plus"></i> Thêm
                 </a>
                 <a href="/ShoppingCart/MuaNgay/@Model.IDsp" id="nut2">
                     <i class="fas fa-bolt"></i> Mua ngay
@@ -268,3 +268,4 @@
         }, 1000); // Hiển thị thông báo trong 3 giây
     }
 </script>
+@Html.Action("TopBanChay", "DonHangCTs")

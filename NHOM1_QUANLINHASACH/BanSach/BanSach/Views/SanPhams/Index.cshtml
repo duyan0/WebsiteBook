@@ -14,10 +14,6 @@
         margin-top: 20px;
     }
 
-    .table-striped {
-        width: 100%;
-    }
-
     .search-bar {
         display: flex;
         justify-content: center;
@@ -78,6 +74,14 @@
             word-wrap: break-word; /* Điều chỉnh nếu nội dung quá dài */
             font-size: 16px; /* Cân bằng kích thước chữ */
         }
+
+    .btn-group-sm > .btn {
+        font-size: 0.9rem;
+    }
+
+    .pagination-container {
+        margin-top: 20px;
+    }
 </style>
 
 <h2 class="tieude">Danh sách sản phẩm</h2>
@@ -86,7 +90,7 @@
 <div class="search-bar">
     @using (Html.BeginForm("Index", "SanPhams", FormMethod.Get))
     {
-        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @placeholder = "Nhập từ khóa tìm kiếm..." })
+        @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { @placeholder = "Nhập từ khóa tìm kiếm..." })
         <button type="submit">Tìm kiếm</button>
     }
 </div>
@@ -103,83 +107,108 @@
     </a>
 </p>
 
-
-
 @if (Model != null && Model.Any())
 {
-    <table class="table table-condensed table-bordered table-hover">
-        <thead style="background-color: black; color: white;">
-            <tr>
-                <th style="border-top-left-radius: 10px;width:50px;">ID</th>
-                <th style="width:170px;">Tên sách</th>
-                <th>Mô tả</th>
-                <th>Thể loại</th>
-                <th style="width:150px;">Giá bán</th>
-                <th style="width:80px;">Số lượng</th>
-                <th>Khuyến mãi</th>
-                <th>Hình ảnh</th>
-                <th>Trạng thái</th>
-                <th style="border-top-right-radius: 10px;">Thao tác</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr style="color: #212121;">
-                    <td>@Html.DisplayFor(modelItem => item.IDsp)</td>
-                    <td>@Html.DisplayFor(modelItem => item.TenSP)</td>
-                    <td>
-                        @(item.MoTa.Length > 20 ? item.MoTa.Substring(0, 20) + "..." : item.MoTa)
-                    </td>
+    <div class="table-responsive">
+        <table class="table table-condensed table-bordered table-hover">
+            <thead style="background-color: black; color: white;">
+                <tr>
+                    <th style="border-top-left-radius: 10px; width:60px;">
+                        <a href="@Url.Action("Index", new { sortOrder = ViewBag.NameSortParam, searchString = ViewBag.CurrentFilter })" style="color: white;">
+                            ID
+                            <i class="fas @(ViewBag.CurrentSort == "name_desc" ? "fa-sort-down text-warning" : "fa-sort-up text-secondary")"></i>
+                        </a>
+                    </th>
+                    <th style="width:170px;">
+                        <a href="@Url.Action("Index", new { sortOrder = ViewBag.NameSortParam, searchString = ViewBag.CurrentFilter })" style="color: white;">
+                            Tên sách
+                            <i class="fas @(ViewBag.CurrentSort == "name_desc" ? "fa-sort-down text-warning" : "fa-sort-up text-secondary")"></i>
+                        </a>
+                    </th>
+                    <th>Thể loại</th>
+                    <th style="width:150px;">
+                        <a href="@Url.Action("Index", new { sortOrder = ViewBag.PriceSortParam, searchString = ViewBag.CurrentFilter })" style="color: white;">
+                            Giá bán
+                            <i class="fas @(ViewBag.CurrentSort == "price_desc" ? "fa-sort-down text-warning" : "fa-sort-up text-secondary")"></i>
+                        </a>
+                    </th>
+                    <th style="width:120px;">
+                        <a href="@Url.Action("Index", new { sortOrder =  ViewBag.AuthorSortParam, searchString = ViewBag.CurrentFilter })" style="color: white;">
+                            Số lượng
+                            <i class="fas @(ViewBag.CurrentSort == "author_desc" ? "fa-sort-down text-warning" : "fa-sort-up text-secondary")"></i>
+                        </a>
+                    </th>
 
-                    <td>@Html.DisplayFor(modelItem => item.DanhMuc.TheLoai)</td>
-                    <td style="color:red;">@string.Format("{0:N0} VND", item.GiaBan)</td>
-                    <td>
-                        @if (item.SoLuong > 0)
-                        {
-                            if (item.SoLuong < 10)
+                    <th>Khuyến mãi</th>
+                    <th>Hình ảnh</th>
+                    <th style="width:150px;">
+                        <a href="@Url.Action("Index", new { sortOrder = ViewBag.StatusSortParam, searchString = ViewBag.CurrentFilter })" style="color: white;">
+                            Trạng thái
+                            <i class="fas @(ViewBag.CurrentSort == "status_desc" ? "fa-sort-down text-warning" : "fa-sort-up text-secondary")"></i>
+                        </a>
+                    </th>
+                    <th style="border-top-right-radius: 10px;">Thao tác</th>
+                </tr>
+            </thead>
+
+
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr style="color: #212121;">
+                        <td>@Html.DisplayFor(modelItem => item.IDsp)</td>
+                        <td>@Html.DisplayFor(modelItem => item.TenSP)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DanhMuc.TheLoai)</td>
+                        <td style="color:red;">@string.Format("{0:N0} VND", item.GiaBan)</td>
+                        <td>
+                            @if (item.SoLuong > 0)
                             {
-                                <span class="text-warning font-weight-bold">@item.SoLuong (Sắp hết hàng)</span>
+                                if (item.SoLuong < 10)
+                                {
+                                    <span class="text-warning font-weight-bold">@item.SoLuong (Sắp hết hàng)</span>
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => item.SoLuong)
+                                }
                             }
                             else
                             {
-                                @Html.DisplayFor(modelItem => item.SoLuong)
+                                <span class="text-danger font-weight-bold">0 </span>
                             }
-                        }
-                        else
-                        {
-                            <span class="text-danger font-weight-bold">0 </span>
-                        }
-                    </td>
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.KhuyenMai.MucGiamGia)%</td>
+                        <td>
+                            <img src="@Url.Content("~/Content/img/" + System.Web.HttpUtility.UrlPathEncode(item.HinhAnh))" width="50" height="50" alt="Ảnh không hiển thị" />
+                        </td>
+                        <td class="font-weight-bold">
+                            @{
+                                string className = item.TrangThaiSach == "Còn hàng" ? "text-success" :
+                                                   item.TrangThaiSach == "Hết hàng" ? "text-danger" : "";
+                            }
+                            <span class="@className">@Html.DisplayFor(modelItem => item.TrangThaiSach)</span>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm ">
+                                <a href="@Url.Action("Edit", new { id = item.IDsp })" class="btn btn-warning mx-1 rounded-sm " title="Sửa">
+                                    <i class="fas fa-edit text-white"></i>
+                                </a>
 
-                    <td>@Html.DisplayFor(modelItem => item.KhuyenMai.MucGiamGia)%</td>
-                    <td>
-                        <img src="@Url.Content("~/Content/img/" + System.Web.HttpUtility.UrlPathEncode(item.HinhAnh))" width="50" height="50" alt="Ảnh không hiển thị" />
-                    </td>
-                    <td class="font-weight-bold">
-                        @{
-                            string className = item.TrangThaiSach == "Còn hàng" ? "text-success" :
-                                               item.TrangThaiSach == "Hết hàng" ? "text-danger" : "";
-                        }
-                        <span class="@className">@Html.DisplayFor(modelItem => item.TrangThaiSach)</span>
-                    </td>
-                    <td>
-                        <a href="@Url.Action("Edit", new { id = item.IDsp })" class="btn btn-warning btn-sm rounded-sm" title="Sửa">
-                            <i class="fas fa-edit"></i> <!-- Biểu tượng bút chì (chỉnh sửa) -->
-                        </a>
+                                <a href="@Url.Action("Details", new { id = item.IDsp })" class="btn btn-info mx-1 rounded-sm" title="Chi tiết">
+                                    <i class="fas fa-eye"></i>
+                                </a>
 
-                        <a href="@Url.Action("Details", new { id = item.IDsp })" class="btn btn-info btn-sm rounded-sm" title="Chi tiết">
-                            <i class="fas fa-eye"></i> <!-- Biểu tượng con mắt (chi tiết) -->
-                        </a>
-                        <a href="@Url.Action("Delete", new { id = item.IDsp })" class="btn btn-danger btn-sm rounded-sm" title="Xoá">
-                            <i class="fas fa-trash-alt"></i> <!-- Biểu tượng thùng rác (xóa) -->
-                        </a>
-                    </td>
-
-                </tr>
-            }
-        </tbody>
-    </table>
+                                <a href="@Url.Action("Delete", new { id = item.IDsp })" class="btn btn-danger mx-1 rounded-sm" title="Xoá">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 else
 {
@@ -187,7 +216,7 @@ else
 }
 
 <div class="pagination-container text-center">
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, searchString = ViewBag.CurrentFilter }),
         new PagedListRenderOptions
         {
             DisplayLinkToFirstPage = PagedListDisplayMode.Always,
@@ -199,4 +228,3 @@ else
             MaximumPageNumbersToDisplay = 5
         })
 </div>
-

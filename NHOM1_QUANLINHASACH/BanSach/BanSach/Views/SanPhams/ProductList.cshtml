@@ -7,167 +7,10 @@
 }
 
 <link href="~/Content/PagedList.css" rel="stylesheet" />
+<link href="~/Content/css/ProductList.css" rel="stylesheet" />
 
-<style>
-    .card-pro {
-        text-decoration: none;
-        border-radius: 8px;
-        padding: 10px;
-        background-color: #ffffff;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        transition: transform 0.3s, box-shadow 0.3s;
-    }
 
-    .card-pro:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
 
-    .card-pro a {
-        text-decoration: none;
-        color: inherit;
-        width: 100%;
-    }
-
-    .card-pro img {
-        border-radius: 8px;
-        width: 100%;
-        height: 180px;
-        object-fit: cover;
-        transition: opacity 0.3s;
-    }
-
-    .availability {
-        font-weight: bold;
-        font-size: 0.9em;
-        text-align: left;
-        width: 100%;
-    }
-
-    .product-name {
-        font-weight: bold;
-        font-size: 1.1em;
-        color: #212529;
-        text-align: left;
-        width: 100%;
-        margin-top: 8px;
-        min-height: 35px;
-    }
-
-    .price {
-        font-weight: bold;
-        color: #e74c3c;
-        font-size: 1.1em;
-        text-align: left;
-        width: 100%;
-        margin-top: 8px;
-    }
-
-    .old-price {
-        font-size: 0.9em;
-        color: #999;
-        text-decoration: line-through;
-        margin-right: 5px;
-    }
-
-    .discount-badge {
-        background-color: #ff6f61;
-        color: #fff;
-        font-weight: bold;
-        padding: 5px 10px;
-        border-radius: 3px;
-        margin-top: 10px;
-    }
-
-    .sotrang {
-        text-align: center;
-        margin: 20px 0;
-    }
-
-    .sotrang a {
-        padding: 8px 12px;
-        border-radius: 5px;
-        color: #007bff;
-        text-decoration: none;
-        margin: 0 3px;
-    }
-
-    .sotrang a:hover {
-        background-color: #f0f0f0;
-    }
-
-    h3.page-title {
-        color: #343a40;
-        font-weight: bold;
-        text-align: center;
-        font-size: 1.75em;
-        margin-bottom: 20px;
-    }
-
-    .out-of-stock {
-        color: red;
-        font-weight: bold;
-    }
-
-    .in-stock {
-        color: #28a745;
-        font-weight: bold;
-    }
-
-    .price-filter {
-        padding: 15px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        background-color: #fff;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .filter-title {
-        font-size: 1.1em;
-        font-weight: bold;
-        margin-bottom: 10px;
-        color: #333;
-    }
-
-    .filter-option {
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-    }
-
-    .filter-option input[type="checkbox"] {
-        margin-right: 10px;
-        width: 20px;
-        height: 20px;
-        accent-color: orange;
-    }
-
-    .filter-option label {
-        font-size: 0.95em;
-        color: #333;
-    }
-
-    .btn-filter {
-        margin-top: 15px;
-        padding: 8px 16px;
-        background-color: #f39c12;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        font-weight: bold;
-    }
-
-    .btn-filter:hover {
-        background-color: #e67e22;
-    }
-
-    
-</style>
 
 <h3 class="page-title text-white">Danh sách sản phẩm</h3>
 
@@ -175,74 +18,85 @@
     <div class="row">
         <!-- Bộ lọc giá -->
         <div class="col-12 col-md-3 mb-4">
-            <div class="price-filter">
-                <h4 class="filter-title">GIÁ</h4>
+            <div class="price-filter p-3 shadow-sm rounded bg-white">
+                <h4 class="filter-title mb-3 text-primary text-dark">GIÁ</h4>
                 <form method="get" action="/SanPhams/FilterByPrice">
-                    <div class="filter-option">
-                        <input type="checkbox" id="price1" name="priceRange" value="0-150000">
-                        <label for="price1">0₫ - 150,000₫</label>
+                    <div class="form-check mb-2">
+                        <input type="checkbox" class="form-check-input" id="price1" name="priceRange" value="0-150000">
+                        <label class="form-check-label" for="price1">0₫ - 150,000₫</label>
                     </div>
-                    <div class="filter-option">
-                        <input type="checkbox" id="price2" name="priceRange" value="150000-300000">
-                        <label for="price2">150,000₫ - 300,000₫</label>
+                    <div class="form-check mb-2">
+                        <input type="checkbox" class="form-check-input" id="price2" name="priceRange" value="150000-300000">
+                        <label class="form-check-label" for="price2">150,000₫ - 300,000₫</label>
                     </div>
-                    <div class="filter-option">
-                        <input type="checkbox" id="price3" name="priceRange" value="300000-500000">
-                        <label for="price3">300,000₫ - 500,000₫</label>
+                    <div class="form-check mb-2">
+                        <input type="checkbox" class="form-check-input" id="price3" name="priceRange" value="300000-500000">
+                        <label class="form-check-label" for="price3">300,000₫ - 500,000₫</label>
                     </div>
-                    <div class="filter-option">
-                        <input type="checkbox" id="price4" name="priceRange" value="500000-700000">
-                        <label for="price4">500,000₫ - 700,000₫</label>
+                    <div class="form-check mb-2">
+                        <input type="checkbox" class="form-check-input" id="price4" name="priceRange" value="500000-700000">
+                        <label class="form-check-label" for="price4">500,000₫ - 700,000₫</label>
                     </div>
-                    <div class="filter-option">
-                        <input type="checkbox" id="price5" name="priceRange" value="700000-up">
-                        <label for="price5">700,000₫ - Trở Lên</label>
+                    <div class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input" id="price5" name="priceRange" value="700000-up">
+                        <label class="form-check-label" for="price5">700,000₫ - Trở Lên</label>
                     </div>
-                    <button type="submit" class="btn-filter">Áp dụng</button>
+                    <button type="submit" class="btn btn-success rounded-sm w-100 fw-bold">Áp dụng</button>
                 </form>
             </div>
         </div>
 
+
         <!-- Danh sách sản phẩm -->
-        <div class="col-12 col-md-9">
+        <div class="col-12 col-md-9 mb-1">
             <div class="row">
                 @if (Model != null && Model.Any())
                 {
                     foreach (var item in Model)
                     {
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch mb-4">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch mb-1 ">
                             <div class="card-pro">
                                 <a href="@Url.Action("TrangSP", "SanPhams", new { id = item.IDsp })">
                                     <img src="~/Content/img/@item.HinhAnh" class="img-fluid" alt="@item.TenSP" />
-                                    <p class="availability @(item.TrangThaiSach == "Hết hàng" ? "out-of-stock" : "in-stock")">
+                                    <p class="availability mb-1 @(item.TrangThaiSach == "Hết hàng" ? "out-of-stock" : "in-stock")">
                                         @item.TrangThaiSach
                                     </p>
-                                    <p class="product-name">@item.TenSP</p>
-
-                                    @if (item.KhuyenMai != null && item.KhuyenMai.MucGiamGia > 0)
-                                    {
-                                        var giaBan = item.GiaBan;
-                                        var mucGiamGia = item.KhuyenMai?.MucGiamGia ?? 0;
-                                        var giaSauGiam = giaBan * (1 - (decimal)mucGiamGia / 100.0m);
-
-                                        <p class="price">
-                                            <span class="old-price">
-                                                @string.Format("{0:N0} VND", giaBan)
-                                            </span>
-                                            <br />
-                                            <span class="price">
-                                                @string.Format("{0:N0} VND", giaSauGiam)
-                                            </span>
-                                        </p>
-                                        <div class="discount-badge">-@mucGiamGia% OFF</div>
-                                    }
-                                    else
-                                    {
-                                        <p class="price">
-                                            @string.Format("{0:N0} VND", item.GiaBan)
-                                        </p>
-                                    }
+                                    <p class="product-name mb-1">@item.TenSP</p>
                                 </a>
+
+                                @if (item.KhuyenMai != null && item.KhuyenMai.MucGiamGia > 0)
+                                {
+                                    var giaBan = item.GiaBan;
+                                    var mucGiamGia = item.KhuyenMai?.MucGiamGia ?? 0;
+                                    var giaSauGiam = giaBan * (1 - (decimal)mucGiamGia / 100.0m);
+
+                                    <p class="price-wrapper">
+                                        <span class="old-price me-2">
+                                            @string.Format("{0:N0} VND", giaBan)
+                                        </span>
+                                        <span class="discount-badge" disabled>
+                                            -@mucGiamGia%
+                                        </span>
+                                    </p>
+                                    <p class="price mt-1">
+                                        @string.Format("{0:N0} VND", giaSauGiam)
+                                    </p>
+
+
+
+
+                                }
+                                else
+                                {
+                                    <p class="price">
+                                        @string.Format("{0:N0} VND", item.GiaBan)
+                                    </p>
+                                }
+
+                                <!-- Nút thêm vào giỏ hàng -->
+                                <button class="btn-add-to-cart" onclick="themthanhcong(event, '@item.IDsp')">
+                                    <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
+                                </button>
                             </div>
                         </div>
                     }
@@ -267,3 +121,27 @@
         </div>
     </div>
 </div>
+
+<script>
+    function themthanhcong(event, productId) {
+        event.preventDefault();
+        fetch(`/ShoppingCart/AddToCart/${productId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('Sản phẩm đã được thêm vào giỏ hàng thành công!');
+                } else {
+                    alert('Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng. Vui lòng thử lại.');
+                }
+            })
+            .catch(error => {
+                alert('Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng. Vui lòng thử lại.');
+            });
+    }
+</script>
+
+@Html.Action("TopBanChay", "DonHangCTs")

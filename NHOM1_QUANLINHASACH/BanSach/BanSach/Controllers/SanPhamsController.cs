@@ -18,9 +18,17 @@ namespace BanSach.Controllers
         private dbSach db = new dbSach();
 
         // GET: SanPhams
-        public ActionResult Index(string searchString, int? page)
+        public ActionResult Index(string searchString, string sortOrder, int? page)
         {
+            // Để lưu trữ thông tin tìm kiếm và sắp xếp vào ViewBag, dùng để duy trì giá trị khi phân trang hoặc thay đổi trang
             ViewBag.CurrentFilter = searchString;
+            ViewBag.CurrentSort = sortOrder;
+
+            // Thêm các tùy chọn sắp xếp vào ViewBag để sử dụng trong View
+            ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.PriceSortParam = sortOrder == "Price" ? "price_desc" : "Price";
+            ViewBag.AuthorSortParam = sortOrder == "Author" ? "author_desc" : "Author";
+            ViewBag.StatusSortParam = sortOrder == "Status" ? "status_desc" : "Status";
 
             // Lấy danh sách tất cả sản phẩm từ cơ sở dữ liệu
             var sanPhams = db.SanPham.Include(s => s.DanhMuc).Include(s => s.TacGia).Include(s => s.NhaXuatBan);
@@ -35,12 +43,42 @@ namespace BanSach.Controllers
                                              || s.NhaXuatBan.Tennxb.Contains(searchString));
             }
 
+            // Sắp xếp theo tiêu chí
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    sanPhams = sanPhams.OrderByDescending(s => s.TenSP);
+                    break;
+                case "Price":
+                    sanPhams = sanPhams.OrderBy(s => s.GiaBan);
+                    break;
+                case "price_desc":
+                    sanPhams = sanPhams.OrderByDescending(s => s.GiaBan);
+                    break;
+                case "Author":
+                    sanPhams = sanPhams.OrderBy(s => s.SoLuong);
+                    break;
+                case "author_desc":
+                    sanPhams = sanPhams.OrderByDescending(s => s.SoLuong);
+                    break;
+                case "Status":
+                    sanPhams = sanPhams.OrderBy(s => s.TrangThaiSach);
+                    break;
+                case "status_desc":
+                    sanPhams = sanPhams.OrderByDescending(s => s.TrangThaiSach);
+                    break;
+                default:
+                    sanPhams = sanPhams.OrderBy(s => s.IDsp); // Sắp xếp mặc định theo ID sản phẩm
+                    break;
+            }
+
             int pageSize = 10;
             int pageNumber = (page ?? 1);
 
             // Trả về kết quả đã được phân trang
-            return View(sanPhams.OrderBy(s => s.IDsp).ToPagedList(pageNumber, pageSize));
+            return View(sanPhams.ToPagedList(pageNumber, pageSize));
         }
+
 
 
         public ActionResult TrangChu()

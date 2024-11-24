@@ -11,14 +11,27 @@ namespace BanSach.Controllers
 {
     public class KhuyenMaiController : Controller
     {
-        // GET: KhuyenMai
-        // GET: NhaXuatBan
+        
         dbSach db = new dbSach();
+
+
         public ActionResult Index(string searchString, int? page)
         {
-            var sanPham = db.SanPham.Include(s => s.KhuyenMai).FirstOrDefault(s => s.IDsp == s.IDkm);
+            ViewBag.CurrentFilter = searchString;
+
             // Fetch all KhuyenMai records from the database
-            var promotions = db.KhuyenMai.AsQueryable();
+            var promotions = db.KhuyenMai
+                               .Include(km => km.SanPham) // Include related products
+                               .Select(km => new PromotionViewModel
+                               {
+                                   IDkm = km.IDkm,
+                                   TenKhuyenMai = km.TenKhuyenMai,
+                                   NgayBatDau = km.NgayBatDau,
+                                   NgayKetThuc = km.NgayKetThuc,
+                                   MucGiamGia = (int)km.MucGiamGia,
+                                   MoTa = km.MoTa,
+                                   SanPhamCount = km.SanPham.Count() // Calculate the number of products using the promotion
+                               });
 
             // Apply search filter if searchString is provided
             if (!String.IsNullOrEmpty(searchString))
@@ -26,13 +39,15 @@ namespace BanSach.Controllers
                 promotions = promotions.Where(k => k.TenKhuyenMai.Contains(searchString));
             }
 
-            // Define the page size and number
             int pageSize = 10; // Number of items per page
             int pageNumber = (page ?? 1); // Default to page 1 if no page is specified
 
             // Return the paginated list to the view
             return View(promotions.OrderBy(k => k.IDkm).ToPagedList(pageNumber, pageSize));
         }
+
+
+
         public ActionResult Create()
         {
             var km = db.KhuyenMai.Select(k => new { k.IDkm, k.MucGiamGia }).ToList();
