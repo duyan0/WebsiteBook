@@ -147,7 +147,7 @@
 
     <!-- Bảng chi tiết sản phẩm -->
     <table class="sanpham-table">
-        <thead>
+        <thead class="text-dark">
             <tr>
                 <th>Tên sản phẩm</th>
                 <th>Số lượng</th>
@@ -155,7 +155,7 @@
                 <th>Tổng tiền</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody >
             @foreach (var item in Model)
             {
                 <tr>
@@ -173,6 +173,6 @@
 
 <p>
     <div class="form-actions text-center">
-        @Html.ActionLink("Quay về", "Index", null, new { @class = "btn btn-success btn-lg shadow-sm rounded-sm" })
+        @Html.ActionLink("Quay về", "Index", null, new { @class = "btn btn-success shadow-sm rounded-sm" })
     </div>
 </p>

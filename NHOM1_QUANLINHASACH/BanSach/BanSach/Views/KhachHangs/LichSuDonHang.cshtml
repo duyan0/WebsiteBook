@@ -1,6 +1,6 @@
 ﻿@model PagedList.IPagedList<BanSach.Models.DonHang>
-@using PagedList.Mvc; 
-@using PagedList; 
+@using PagedList.Mvc;
+@using PagedList;
 @{
     ViewBag.Title = "LichSuDonHang";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -41,10 +41,10 @@
                             <td class="font-weight-bold text-white">@order.IDdh</td>
                             <td class="text-white">
                                 @(
-                                    order.NgayDatHang.HasValue
-                                    ? order.NgayDatHang.Value.ToString("dd/MM/yyyy HH:mm:ss")
-                                    : "Chưa đặt hàng"
-                                )
+                    order.NgayDatHang.HasValue
+                    ? order.NgayDatHang.Value.ToString("dd/MM/yyyy HH:mm:ss")
+                    : "Chưa đặt hàng"
+                )
                             </td>
                             <td class="text-white">
                                 @if (order.TrangThai == "Đã nhận hàng" && order.NgayNhanHang.HasValue)
@@ -65,15 +65,18 @@
                             </td>
                             <td class="text-center">
                                 <button class="btn @(order.TrangThai == "Chờ xử lý" ? "btn-secondary rounded-sm"
-                             : order.TrangThai == "Đã xác nhận" ? "btn-success rounded-sm"
-                             : order.TrangThai == "Đã hủy" ? "btn-danger rounded-sm"
-                             : order.TrangThai == "Đã nhận hàng" ? "btn-warning rounded-sm"
-                             : "btn-secondary")  btn-fixed-size rounded-sm" disabled>
+             : order.TrangThai == "Đã xác nhận" ? "btn-success rounded-sm"
+             : order.TrangThai == "Đã hủy" ? "btn-danger rounded-sm"
+             : order.TrangThai == "Đã nhận hàng" ? "btn-warning rounded-sm"
+             : "btn-secondary") btn-fixed-size rounded-sm" disabled>
                                     @order.TrangThai
                                 </button>
                             </td>
                             <td>
-                                <a href="@Url.Action("DetailsKH", "DonHangCTs", new { id = order.IDdh })" class="btn btn-success btn-sm rounded-sm btn-fixed-sizee">Xem chi tiết</a>
+                                @if (order.GetTongSoTien() > 0)
+                                {
+                                    <a href="@Url.Action("DetailsKH", "DonHangCTs", new { id = order.IDdh })" class="btn btn-success btn-sm rounded-sm btn-fixed-sizee">Xem chi tiết</a>
+                                }
                                 @if (order.TrangThai == "Đã xác nhận")
                                 {
                                     <a href="@Url.Action("DaNhanHang", "DonHangs", new { id = order.IDdh })" class="btn btn-danger btn-sm rounded-sm ml-2 btn-fixed-sizee">Đã nhận hàng</a>
@@ -89,6 +92,7 @@
                         </tr>
                     }
                 </tbody>
+
             </table>
         </div>
 
@@ -118,6 +122,7 @@
         width: 150px;
         height: 40px;
     }
+
     .pagination-container {
         text-align: center; /* Căn giữa phân trang */
         margin-top: 20px; /* Tùy chọn: tạo khoảng cách phía trên */
@@ -156,6 +161,4 @@
                 background-color: #f0f0f0; /* Màu nền khi rê chuột vào */
                 color: #5a5a5a; /* Màu chữ khi rê chuột vào */
             }
-
-
 </style>

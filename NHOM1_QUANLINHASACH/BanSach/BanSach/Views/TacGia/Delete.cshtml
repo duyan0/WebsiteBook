@@ -53,7 +53,12 @@
             </table>
         </div>
     </div>
-
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger mt-4 rounded-sm">
+            @ViewBag.ErrorMessage
+        </div>
+    }
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()

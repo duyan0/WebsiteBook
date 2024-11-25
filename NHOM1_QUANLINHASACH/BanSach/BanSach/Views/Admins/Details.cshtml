@@ -8,66 +8,62 @@
 <h2 class="text-center mb-5 font-weight-bold ">Chi tiết tài khoản Admin</h2>
 
 <div class="container">
-    <div class="card shadow-sm justify-content-center border-0 rounded-lg">
-        <div class="card-body justify-content-center p-4">
-            <dl class="row justify-content-center">
-                <dt class="col-sm-3 font-weight-bold text-dark">
+    <div class="card shadow-sm justify-content-center border-0 rounded-lg ">
+        <div class="card-body justify-content-center p-4 ">
+            <dl class="row justify-content-start  ">
+                <dt class="col-sm-4 font-weight-bold text-dark">
                     Họ và tên
                 </dt>
-                <dd class="col-sm-9 text-muted">
-                    @{
-                        var hoTenParts = Model.HoTen.Split(' ');
-                        var hoTenHienThi = $"{hoTenParts[0]} {(hoTenParts.Length > 2 ? hoTenParts[1][0] + "." : "")} {hoTenParts[1]}";
-                    }
-                    @hoTenHienThi
+                <dd class="col-sm-8 text-muted">
+                    @Model.HoTen  <!-- Hiển thị đầy đủ họ tên -->
                 </dd>
 
-                <dt class="col-sm-3 font-weight-bold text-dark">
+                <dt class="col-sm-4 font-weight-bold text-dark">
                     Email
                 </dt>
-                <dd class="col-sm-9 text-muted">
-                    @("*****" + Model.Email.Substring(5))
+                <dd class="col-sm-8 text-muted">
+                    @Model.Email  <!-- Hiển thị đầy đủ email -->
                 </dd>
 
-                <dt class="col-sm-3 font-weight-bold text-dark">
+                <dt class="col-sm-4 font-weight-bold text-dark">
                     Địa chỉ
                 </dt>
-                <dd class="col-sm-9 text-muted">
-                    @(Model.DiaChi.Length > 20 ? Model.DiaChi.Substring(0, 20) + "..." : Model.DiaChi)
+                <dd class="col-sm-8 text-muted">
+                    @Model.DiaChi  <!-- Hiển thị đầy đủ địa chỉ -->
                 </dd>
 
-                <dt class="col-sm-3 font-weight-bold text-dark">
+                <dt class="col-sm-4 font-weight-bold text-dark">
                     Số điện thoại
                 </dt>
-                <dd class="col-sm-9 text-muted">
-                    @(Model.SoDT.Length > 3 ? new string('*', Model.SoDT.Length - 3) + Model.SoDT.Substring(Model.SoDT.Length - 3) : Model.SoDT)
+                <dd class="col-sm-8 text-muted">
+                    @Model.SoDT  <!-- Hiển thị đầy đủ số điện thoại -->
                 </dd>
 
-                <dt class="col-sm-3 font-weight-bold text-dark">
+                <dt class="col-sm-4 font-weight-bold text-dark">
                     Vai trò
                 </dt>
-                <dd class="col-sm-9 text-muted">
-                    @Html.DisplayFor(model => model.VaiTro)
+                <dd class="col-sm-8 text-muted">
+                    @Html.DisplayFor(model => model.VaiTro)  <!-- Hiển thị đầy đủ vai trò -->
                 </dd>
 
-                <dt class="col-sm-3 font-weight-bold text-dark">
+                <dt class="col-sm-4 font-weight-bold text-dark">
                     Tài khoản
                 </dt>
-                <dd class="col-sm-9 text-muted">
-                    ****** <!-- Ẩn tài khoản để bảo vệ thông tin -->
+                <dd class="col-sm-8 text-muted">
+                    @Model.TKhoan  <!-- Hiển thị đầy đủ tài khoản -->
                 </dd>
 
-                <dt class="col-sm-3 font-weight-bold text-dark">
+                <dt class="col-sm-4 font-weight-bold text-dark">
                     Mật khẩu
                 </dt>
-                <dd class="col-sm-9 text-muted">
-                    ****** <!-- Ẩn mật khẩu hoàn toàn -->
+                <dd class="col-sm-8 text-muted">
+                    @Model.MKhau  <!-- Hiển thị đầy đủ mật khẩu -->
                 </dd>
             </dl>
         </div>
     </div>
 
     <div class="mt-4 text-center">
-        @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-secondary ml-3 shadow-sm rounded" })
+        @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-success ml-3 shadow-sm rounded" })
     </div>
 </div>

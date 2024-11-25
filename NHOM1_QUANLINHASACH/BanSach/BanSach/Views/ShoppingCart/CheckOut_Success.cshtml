@@ -1,19 +1,41 @@
 ﻿@{
-    ViewBag.Title = "CheckOut_Success";
+    ViewBag.Title = "Thanh Toán Thành Công";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container text-center mt-5">
+<div class="container text-center mt-5 mb-5">
     <img src="~/Content/img/icon_thanhcong.png" alt="Icon thành công" class="img-fluid" style="max-width: 150px;" />
-    <h2 class="text-success mt-3">Thanh toán thành công</h2>
-    <p class="text-white">Cảm ơn bạn đã mua hàng! Đơn hàng của bạn đang được xử lý.</p>
 
-    <a href="@Url.Action("TrangChu", "SanPhams")" class="btn btn-outline-secondary mt-4 rounded-sm">Quay về trang chủ</a>
-    <a href="@Url.Action("LichSuDonHang", "KhachHangs")" class="btn btn-outline-success mt-4 ml-2 rounded-sm">Xem đơn hàng</a>
+    <h2 class="text-success mt-3" style="font-weight: bold;">Thanh toán thành công</h2>
+
+    <p class="text-success">Cảm ơn bạn đã mua hàng! Đơn hàng của bạn đang được xử lý.</p>
+
+    <p class="mt-3">
+        <strong style="color:white;">Mã đơn hàng: @ViewBag.OrderId </strong> 
+    </p>
+    
+
+    <!-- Các nút liên kết -->
+    <div class="mt-4">
+        <a href="@Url.Action("TrangChu", "SanPhams")" class="btn btn-outline-secondary rounded-sm">Quay về trang chủ</a>
+        <a href="@Url.Action("LichSuDonHang", "KhachHangs")" class="btn btn-success rounded-sm ml-2">Xem đơn hàng</a>
+    </div>
 </div>
 
 <style>
     h2 {
         font-weight: bold;
+    }
+
+    .btn {
+        font-size: 16px;
+    }
+
+    .container {
+        max-width: 800px;
+    }
+
+    .text-success {
+        color: #28a745 !important;
     }
 </style>

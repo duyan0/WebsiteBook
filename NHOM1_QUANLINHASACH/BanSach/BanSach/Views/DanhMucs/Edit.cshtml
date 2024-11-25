@@ -36,14 +36,15 @@
                         </div>
 
                         <div class="form-group text-center">
-                            <button type="submit" class="btn btn-success btn-lg rounded-lg px-5">
+                            <button type="submit" class="btn btn-success  rounded-lg px-5">
                                 <i class="fas fa-save mr-2"></i>Lưu
                             </button>
+                            <div class="text-center mt-3">
+                                @Html.ActionLink("Quay về ", "Index", null, new { @class = "btn btn-secondary  rounded-lg px-4" })
+                            </div>
                         </div>
                     }
-                    <div class="text-center mt-3">
-                        @Html.ActionLink("Quay về quản lý danh mục", "Index", null, new { @class = "btn btn-secondary btn-lg rounded-lg px-4" })
-                    </div>
+                    
                 </div>
             </div>
         </div>

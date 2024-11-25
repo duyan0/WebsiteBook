@@ -43,16 +43,22 @@
         </tbody>
     </table>
 
-    <p class="text-danger">Bạn có chắc chắn muốn xóa danh mục này không?</p>
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger mt-4 rounded-sm">
+            @ViewBag.ErrorMessage
+        </div>
+    }
 
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
         <div class="form-actions">
-            @Html.ActionLink("Quay về quản lý danh mục", "Index", null, new { @class = "btn btn-secondary me-2" })
-            <input type="submit" value="Xoá" class="btn btn-danger" />
+            @Html.ActionLink("Quay về quản lý danh mục", "Index", null, new { @class = "btn btn-secondary me-2 rounded-sm" })
+            <input type="submit" value="Xoá" class="btn btn-danger rounded-sm" />
         </div>
 
     }
 </div>
+

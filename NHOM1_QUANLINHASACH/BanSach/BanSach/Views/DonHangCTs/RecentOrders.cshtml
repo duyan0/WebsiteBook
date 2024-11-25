@@ -1,13 +1,14 @@
-﻿@model IEnumerable<BanSach.Models.ViewModel>
+﻿@model IEnumerable<BanSach.Models.RecentOrderViewModel>
+
 <style>
     .card a:hover {
         text-decoration: none;
     }
 </style>
-<div class="container-fluid py-5 mb-3 ">
+<div class="container-fluid py-5 ">
     <div class="text-center mb-4">
         <h2 class="px-5">
-            <span class="px-2" style="font-weight:bold;color:white;">Sản phẩm bán chạy</span>
+            <span class="px-2" style="font-weight:bold;color:white;">Đã bán gần nhất</span>
         </h2>
     </div>
     <div class="row px-xl-5 ">
@@ -16,15 +17,16 @@
                 @foreach (var i in Model)
                 {
                     <div class="card product-item" style="border-radius:20px;outline:0;">
-                        <a href="~/SanPhams/TrangSP/@i.IdPro">
+                        <a href="~/SanPhams/TrangSP/@i.Id">
                             <div class="card-header product-img position-relative overflow-hidden bg-transparent rounded-circle ">
-                                <img class="img-fluid w-100 " src="~/Content/img/@i.ImgPro" alt="">
+                                <img class="img-fluid w-100 " src="~/Content/img/@i.HinhAnh" alt="">
                             </div>
                             <div class="card-body  text-center p-0 pt-4 pb-3">
-                                <h6 class="text-truncate mb-3">@Html.DisplayFor(model => i.NamePro)</h6>
+                                <h6 class="text-truncate mb-3 ml-4">@Html.DisplayFor(model => i.TenSanPham)</h6>
+                                <h6 class="text-truncate mb-3">@Html.DisplayFor(model => i.NgayDatHang)</h6>
                                 <div class="d-flex justify-content-center">
                                     <p class="font-weight-bold" style="color:red;">
-                                        @($"{i.price:#,##0} VND")
+                                        @($"{i.Gia:#,##0} VND")
                                     </p>
                                     <h6 class="text-muted ml-2"></h6>
                                 </div>
@@ -55,7 +57,7 @@
 
         .product-item:hover {
             transform: scale(1.05) !important; /* Slight zoom effect on hover */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
         }
 
     .product-img {
@@ -69,10 +71,9 @@
     }
 
         .product-img img {
-            width: 200px !important; /* Match the fixed width of the container */
+            width: 200px; /* Match the fixed width of the container */
             height: 200px !important; /* Match the fixed height of the container */
-            object-fit: cover !important; /* Crop the image to fit without distortion */
-            border-radius: 10px !important; /* Rounded corners for the image */
+            object-fit: cover !important;
+            border-radius: 10px !important;
         }
-
 </style>

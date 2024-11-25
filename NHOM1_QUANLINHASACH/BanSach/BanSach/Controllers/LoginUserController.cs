@@ -226,8 +226,8 @@ namespace BanSach.Controllers
             Session["TenKH"] = checkCustomer.TenKH;
             Session["SoDT"] = checkCustomer.SoDT;
 
-            // Chuyển hướng tới trang sau khi đăng nhập thành công
-            return RedirectToAction("SignInSuccess");
+            return RedirectToAction("TrangChu", "SanPhams");
+
         }
 
 

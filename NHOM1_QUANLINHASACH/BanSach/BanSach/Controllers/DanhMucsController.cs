@@ -104,19 +104,24 @@ namespace BanSach.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            // Tìm tất cả sản phẩm liên quan và xóa chúng
-            var relatedProducts = db.SanPham.Where(sp => sp.TheLoai == id);
-            foreach (var product in relatedProducts)
+            // Kiểm tra nếu có sản phẩm liên quan đến danh mục này
+            var relatedProducts = db.SanPham.Where(sp => sp.TheLoai == id).ToList();
+
+            if (relatedProducts.Any()) // Nếu có sản phẩm liên quan
             {
-                db.SanPham.Remove(product);
+                // Thêm thông báo lỗi vào ViewBag
+                ViewBag.ErrorMessage = "Danh mục này đang được sử dụng và không thể xóa vì có sản phẩm liên quan.";
+                return View("Delete", db.DanhMuc.Find(id)); // Trả lại view Delete với thông báo lỗi
             }
 
-            // Xóa danh mục sau khi sản phẩm liên quan đã được xóa
+            // Nếu không có sản phẩm hoặc đơn hàng liên quan, thực hiện xóa danh mục
             DanhMuc danhMuc = db.DanhMuc.Find(id);
             db.DanhMuc.Remove(danhMuc);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return RedirectToAction("Index"); // Chuyển hướng về trang danh sách
         }
+
         public ActionResult ThongKeDanhMuc()
         {
             // Tạo ViewModel và gán giá trị

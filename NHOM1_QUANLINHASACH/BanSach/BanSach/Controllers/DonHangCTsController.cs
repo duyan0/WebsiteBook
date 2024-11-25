@@ -17,7 +17,7 @@ namespace BanSach.Controllers
 {
     public class DonHangCTsController : Controller
     {
-        private dbSach db = new dbSach();
+        private readonly dbSach db = new dbSach();
         public ActionResult Index(string searchString, int? page)
         {
             // Lấy chi tiết đơn hàng cùng với thông tin đơn hàng và sản phẩm liên quan
@@ -55,7 +55,6 @@ namespace BanSach.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
             // Lấy danh sách chi tiết đơn hàng với ID đơn hàng được cung cấp
             var donHangCTs = db.DonHangCT
                 .Include(ct => ct.SanPham)
@@ -89,7 +88,7 @@ namespace BanSach.Controllers
             var donHangCTs = db.DonHangCT
                 .Include(ct => ct.SanPham)
                 .Include(ct => ct.DonHang.KhachHang)
-                .Where(ct => ct.IDDonHang == id)
+                .Where(ct => ct.DonHang.IDdh == id)
                 .ToList();
 
             // Kiểm tra nếu không có chi tiết đơn hàng nào được tìm thấy
@@ -101,9 +100,15 @@ namespace BanSach.Controllers
             // Lấy thông tin đơn hàng từ chi tiết đơn hàng đầu tiên
             ViewBag.OrderDetails = donHangCTs.FirstOrDefault().DonHang;
 
+            // Tính tổng giá trị của đơn hàng
+            // Tính tổng giá trị của đơn hàng
+            decimal totalAmount = donHangCTs.Sum(ct => ct.SoLuong * (decimal?)(ct.Gia ?? 0.0) ?? 0m);
+            ViewBag.TotalAmount = totalAmount;
+
             // Trả về view với danh sách chi tiết đơn hàng
             return View(donHangCTs);
         }
+
 
         public ActionResult Delete(int? id)
         {
@@ -250,11 +255,27 @@ namespace BanSach.Controllers
                 }
             }
         }
+        public ActionResult RecentOrders()
+        {
+            var recentOrders = db.DonHangCT
+                .Include(d => d.SanPham)
+                .Include(d => d.DonHang)
+                .Where(d => d.DonHang.TrangThai == "Đã nhận hàng" || d.DonHang.TrangThai == "Đã xác nhận")
+                .OrderByDescending(d => d.DonHang.NgayDatHang)
+                .Take(10) // Lấy 100 đơn hàng mới nhất
+                .Select(d => new RecentOrderViewModel
+                {
+                    Id = d.SanPham.IDsp,
+                    TenSanPham = d.SanPham.TenSP,
+                    Gia = (int)d.Gia,
+                    NgayDatHang = d.DonHang.NgayDatHang ?? DateTime.Now,
+                    TrangThai = d.DonHang.TrangThai,
+                    HinhAnh = d.SanPham.HinhAnh // Lấy đường dẫn của hình ảnh sản phẩm
+                })
+                .ToList();
 
-
-
-
-
+            return PartialView("RecentOrders", recentOrders);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

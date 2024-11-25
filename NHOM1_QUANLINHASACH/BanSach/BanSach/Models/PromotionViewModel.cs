@@ -11,7 +11,7 @@ namespace BanSach.Models
         public string TenKhuyenMai { get; set; }
         public DateTime? NgayBatDau { get; set; }
         public DateTime? NgayKetThuc { get; set; }
-        public int MucGiamGia { get; set; }
+        public int? MucGiamGia { get; set; }
         public string MoTa { get; set; }
         public int SanPhamCount { get; set; }  // Custom field for product count
     }

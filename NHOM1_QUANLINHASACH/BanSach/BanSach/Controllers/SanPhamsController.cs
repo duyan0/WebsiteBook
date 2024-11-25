@@ -15,7 +15,7 @@ namespace BanSach.Controllers
 {
     public class SanPhamsController : Controller
     {
-        private dbSach db = new dbSach();
+        private readonly dbSach db = new dbSach();
 
         // GET: SanPhams
         public ActionResult Index(string searchString, string sortOrder, int? page)
@@ -87,6 +87,7 @@ namespace BanSach.Controllers
         }
         public ActionResult ProductList(int? category, int? page, string SearchString )
         {
+            SetAvailablePublishers();
             var products = db.SanPham.Include(p => p.DanhMuc);
             
             int pageSize = 12;           
@@ -152,10 +153,10 @@ namespace BanSach.Controllers
             ViewBag.KM = new SelectList(
                 db.KhuyenMai.ToList().Select(km => new
                 {
-                    IDkm = km.IDkm,
+                    IDKM = km.IDkm,
                     MucGiamGiaTenKm = $"{km.MucGiamGia}% - {km.TenKhuyenMai}"
                 }),
-                "IDkm",
+                "IDKM",
                 "MucGiamGiaTenKm"
             );
 
@@ -179,10 +180,10 @@ namespace BanSach.Controllers
             ViewBag.KM = new SelectList(
                 db.KhuyenMai.ToList().Select(km => new
                 {
-                    IDkm = km.IDkm,
+                    IDKM = km.IDkm,
                     MucGiamGiaTenKm = $"{km.MucGiamGia}% - {km.TenKhuyenMai}"
                 }),
-                "IDkm",
+                "IDKM",
                 "MucGiamGiaTenKm",
                 sanPham.IDkm
             );
@@ -212,10 +213,10 @@ namespace BanSach.Controllers
             ViewBag.KM = new SelectList(
                 db.KhuyenMai.ToList().Select(km => new
                 {
-                    IDkm = km.IDkm,
+                    IDKM = km.IDkm,
                     MucGiamGiaTenKm = $"{km.MucGiamGia}% - {km.TenKhuyenMai}"
                 }),
-                "IDkm",
+                "IDKM",
                 "MucGiamGiaTenKm",
                 product.IDkm
             );
@@ -240,10 +241,10 @@ namespace BanSach.Controllers
             ViewBag.KM = new SelectList(
                 db.KhuyenMai.ToList().Select(km => new
                 {
-                    IDkm = km.IDkm,
+                    IDKM = km.IDkm,
                     MucGiamGiaTenKm = $"{km.MucGiamGia}% - {km.TenKhuyenMai}"
                 }),
-                "IDkm",
+                "IDKM",
                 "MucGiamGiaTenKm",
                 sanPham.IDkm
             );
@@ -332,12 +333,45 @@ namespace BanSach.Controllers
                 sanPhams = filteredProducts.Distinct().AsQueryable();
             }
 
-            int pageSize = 10;
+            int pageSize = 24;
             int pageNumber = (page ?? 1);
 
             // Trả về kết quả đã được phân trang
             return View("ProductList", sanPhams.OrderBy(s => s.IDsp).ToPagedList(pageNumber, pageSize));
         }
+
+        public ActionResult FilterByPublisher(List<string> publisherFilters, int? page)
+        {
+            // Thiết lập danh sách nhà xuất bản cho View
+            SetAvailablePublishers();
+
+            // Lấy danh sách tất cả sản phẩm
+            var sanPhams = db.SanPham.AsQueryable();
+
+            // Nếu có nhà xuất bản được chọn, áp dụng điều kiện lọc
+            if (publisherFilters != null && publisherFilters.Any())
+            {
+                // Lọc những sản phẩm có nhà xuất bản nằm trong danh sách được chọn
+                sanPhams = sanPhams.Where(sp => publisherFilters.Contains(sp.NhaXuatBan.Tennxb));
+            }
+
+            // Phân trang
+            int pageSize = 24; // Số lượng sản phẩm mỗi trang
+            int pageNumber = (page ?? 1); // Nếu không có trang được chỉ định, mặc định là trang 1
+
+            // Trả về kết quả đã phân trang
+            return View("ProductList", sanPhams.OrderBy(s => s.IDsp).ToPagedList(pageNumber, pageSize));
+        }
+
+        private void SetAvailablePublishers()
+        {
+            // Lấy danh sách tất cả nhà xuất bản và lưu vào ViewBag
+            ViewBag.AvailablePublishers = db.NhaXuatBan.Select(nxb => nxb.Tennxb).ToList();
+        }
+
+
+
+
         // GET: SanPhams/Import
         public ActionResult Import()
         {
@@ -412,14 +446,11 @@ namespace BanSach.Controllers
 
             // Tổng giá trị tồn kho (tổng giá bán * số lượng cho tất cả sản phẩm còn hàng)
             decimal tongGiaTriTonKho = sanPhams.Where(sp => sp.SoLuong > 0).Sum(sp => sp.GiaBan * sp.SoLuong);
-
-            
-
             // Số lượng các sản phẩm có khuyến mãi
-            int tongSanPhamKhuyenMai = sanPhams.Count(sp => sp.IDkm != null);
+            int tongSanPhamKhuyenMai = sanPhams.Count(sp => sp.IDkm > 0);
 
             // Số lượng các sản phẩm không có khuyến mãi
-            int tongSanPhamKhongKhuyenMai = sanPhams.Count(sp => sp.IDkm == null);
+            int tongSanPhamKhongKhuyenMai = sanPhams.Count(sp => sp.IDkm > 0);
 
             // Tạo đối tượng ViewBag để truyền thông tin sang View
             ViewBag.TongSachHetHang = tongSachHetHang;

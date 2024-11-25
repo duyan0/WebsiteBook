@@ -35,38 +35,38 @@
 
     <!-- Topbar Start -->
     <div class="row align-items-center py-3 px-xl-5" id="topbar" style="background-color: #1f1f20;">
-    <div class="col-lg-3 d-none d-lg-block">
-        <a href="~/SanPhams/TrangChu" class="text-decoration-none">
-            <h2 class="m-0 display-5 font-weight-semi-bold" style="color: white;">
-                <img src="~/Content/img/logosach.png" style="width:40px;">
-                Sách
-            </h2>
-        </a>
-    </div>
+        <div class="col-lg-3 d-none d-lg-block">
+            <a href="~/SanPhams/TrangChu" class="text-decoration-none">
+                <h2 class="m-0 display-5 font-weight-semi-bold" style="color: white;">
+                    <img src="~/Content/img/logosach.png" style="width:40px;">
+                    Sách
+                </h2>
+            </a>
+        </div>
 
-    <!-- Cột giữa: Tìm kiếm -->
-    <div class="col-lg-6 col-6 text-right">
-        @using (Html.BeginForm("ProductList", "SanPhams", FormMethod.Get))
-        {
-            <div class="input-group" style="margin-left:10px;">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" style="border-radius:10px 0 0 10px;">
-                        <i class="fas fa-search"></i>
-                    </span>
+        <!-- Cột giữa: Tìm kiếm -->
+        <div class="col-lg-6 col-6 text-right">
+            @using (Html.BeginForm("ProductList", "SanPhams", FormMethod.Get))
+            {
+                <div class="input-group" style="margin-left:10px;">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="border-radius:10px 0 0 10px;">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Nhập tên sách bạn muốn tìm" name="SearchString" style="border-radius:0 10px 10px 0;">
                 </div>
-                <input type="text" class="form-control" placeholder="Nhập tên sách bạn muốn tìm" name="SearchString" style="border-radius:0 10px 10px 0;">
-            </div>
-        }
-    </div>
+            }
+        </div>
 
-    <!-- Cột phải: Giỏ hàng và sản phẩm bán chạy -->
-    <div class="col-lg-3 col-6 text-right">
-        <a href="~/ShoppingCart/ShowCart" class="btn border" style="border-radius:10px;">
-            <i class="fas fa-shopping-cart" style="color:white;">Giỏ hàng</i>
-            @Html.Action("BagCart", "ShoppingCart")
-        </a>
+        <!-- Cột phải: Giỏ hàng và sản phẩm bán chạy -->
+        <div class="col-lg-3 col-6 text-right">
+            <a href="~/ShoppingCart/ShowCart" class="btn border" style="border-radius:10px;">
+                <i class="fas fa-shopping-cart" style="color:white;">Giỏ hàng</i>
+                @Html.Action("BagCart", "ShoppingCart")
+            </a>
+        </div>
     </div>
-</div>
 
     <!-- Topbar End -->
     <!-- Navbar Start -->

@@ -154,6 +154,14 @@ namespace BanSach.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            var relatedProducts = db.SanPham.Where(sp => sp.IDtg == id).ToList();
+
+            if (relatedProducts.Any()) // Nếu có sản phẩm liên quan
+            {
+                // Thêm thông báo lỗi vào ViewBag
+                ViewBag.ErrorMessage = "Tác giả này đang được sử dụng và không thể xóa vì có sản phẩm liên quan.";
+                return View("Delete", db.TacGia.Find(id)); // Trả lại view Delete với thông báo lỗi
+            }
             TacGia tg = db.TacGia.Find(id);
             db.TacGia.Remove(tg);
             db.SaveChanges();

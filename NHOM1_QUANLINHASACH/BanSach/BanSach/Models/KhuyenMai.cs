@@ -14,16 +14,13 @@ namespace BanSach.Models
         }
         public int IDkm { get; set; }
 
-
         public string TenKhuyenMai { get; set; }
 
 
         public Nullable<System.DateTime> NgayBatDau { get; set; }
 
-
         [CustomValidation(typeof(KhuyenMai), "ValidateNgayKetThuc")]
         public Nullable<System.DateTime> NgayKetThuc { get; set; }
-
 
         public Nullable<int> MucGiamGia { get; set; }
 

@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -11,6 +13,7 @@ namespace BanSach.Controllers
     public class ShoppingCartController : Controller
     {
         private dbSach db = new dbSach();
+
         // Tính tổng tiền đơn hàng
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public PartialViewResult BagCart()
@@ -111,12 +114,10 @@ namespace BanSach.Controllers
 
                 foreach (var item in cart.Items)
                 {
-                    // Tạo chi tiết đơn hàng cho từng sản phẩm trong giỏ hàng
                     DonHangCT _order_detail = new DonHangCT();
-                    _order_detail.IDDonHang = _order.IDdh;  // Sử dụng cùng ID đơn hàng cho tất cả sản phẩm
+                    _order_detail.IDDonHang = _order.IDdh;
                     _order_detail.IDSanPham = item._product.IDsp;
 
-                    // Tính giá sau khi áp dụng khuyến mãi
                     decimal giaBan = item._product.GiaBan;
                     decimal mucGiamGia = item.MucGiamGia;
                     decimal giaSauKhuyenMai = giaBan * (1 - (mucGiamGia / 100));
@@ -124,16 +125,19 @@ namespace BanSach.Controllers
                     _order_detail.Gia = (double)giaSauKhuyenMai;
                     _order_detail.SoLuong = item._quantity;
 
-                    db.DonHangCT.Add(_order_detail); // Thêm mỗi sản phẩm vào đơn hàng
+                    db.DonHangCT.Add(_order_detail);
 
-                    // Cập nhật lại số lượng tồn kho
                     var product = db.SanPham.SingleOrDefault(s => s.IDsp == item._product.IDsp);
                     if (product != null)
                     {
-                        product.SoLuong -= item._quantity;  // Số lượng tồn = số lượng tồn - số lượng đã mua
+                        product.SoLuong -= item._quantity;
                     }
                 }
                 db.SaveChanges();
+
+                // Lưu OrderId vào Session sau khi tạo đơn hàng thành công
+                Session["OrderId"] = _order.IDdh;
+
                 cart.ClearCart();
                 return RedirectToAction("CheckOut_Success", "ShoppingCart");
 
@@ -144,11 +148,83 @@ namespace BanSach.Controllers
             }
         }
 
+
         // Thông báo thanh toán thành công
         public ActionResult CheckOut_Success()
         {
+            if (Session["OrderId"] == null)
+            {
+                return RedirectToAction("ShowCart", "ShoppingCart");
+            }
+
+            var orderId = (int)Session["OrderId"];
+            var order = db.DonHang.Find(orderId);
+            if (order != null)
+            {
+                ViewBag.OrderId = order.IDdh;
+                ViewBag.TotalAmount = order.TongTien;
+            }
+
             return View();
         }
-     
+
+
+        public ActionResult VNPAYPayment(int orderId)
+        {
+            var order = db.DonHang.Find(orderId);  // Lấy đơn hàng từ cơ sở dữ liệu
+            if (order == null)
+            {
+                return RedirectToAction("ShowCart", "ShoppingCart");
+            }
+
+            var vnp = new VNPAYClient();  // Tạo đối tượng VNPAYClient
+            string vnpayUrl = vnp.CreatePaymentRequest(order);
+            Console.WriteLine("VNPAY URL: " + vnpayUrl);  // Kiểm tra URL tạo ra có đúng không
+            if (string.IsNullOrEmpty(vnpayUrl))
+            {
+                return Content("Có lỗi khi tạo URL thanh toán VNPAY.");
+            }
+            return Redirect(vnpayUrl);
+        }
+
+
+
+        public ActionResult VNPAYCallback(FormCollection form)
+        {
+            string vnp_SecureHash = form["vnp_SecureHash"];
+            string vnp_SecureHashValidate = VNPAYClient.GetSecureHash(form.ToString());
+
+            if (vnp_SecureHash == vnp_SecureHashValidate)
+            {
+                // Kiểm tra trạng thái thanh toán từ VNPAY
+                if (form["vnp_ResponseCode"] == "00")
+                {
+                    // Thanh toán thành công
+                    int orderId = int.Parse(form["vnp_TxnRef"]);
+                    var order = db.DonHang.Find(orderId);
+                    if (order != null)
+                    {
+                        order.TrangThai = "Paid";  // Cập nhật trạng thái thanh toán
+                        db.SaveChanges();
+                    }
+
+                    // Truyền thông tin đơn hàng đến View
+                    ViewBag.OrderId = form["vnp_TxnRef"];
+                    ViewBag.TotalAmount = (decimal.Parse(form["vnp_Amount"]) / 100);  // VNPAY trả lại số tiền tính bằng đồng
+
+                    return View("CheckOut_Success");
+                }
+                else
+                {
+                    // Thanh toán thất bại
+                    return RedirectToAction("CheckOut_Failed", "ShoppingCart");
+                }
+            }
+            else
+            {
+                // Mã bảo mật không hợp lệ
+                return RedirectToAction("CheckOut_Failed", "ShoppingCart");
+            }
+        }
     }
 }

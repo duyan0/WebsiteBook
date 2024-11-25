@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Chi tiết đơn hàng - " + ViewBag.OrderDetails.IDdh;
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Tính tổng giá trị của tất cả các sản phẩm trong đơn hàng
 }
 
 <div class="container mt-5">
@@ -53,7 +55,7 @@
     <!-- Bảng chi tiết sản phẩm -->
     <h3 class="text-center mb-3 text-white">Danh sách sản phẩm</h3>
     <div class="table-responsive">
-        <table class="table table-striped table-hover" style="color: white;">
+        <table class="table table-striped " style="color: white;">
             <thead class="bg-secondary text-dark">
                 <tr>
                     <th>Sản phẩm</th>
@@ -74,6 +76,14 @@
                         </td>
                     </tr>
                 }
+                <!-- Tổng tiền của toàn bộ đơn hàng -->
+                <tr class="font-weight-bold">
+                    <td colspan="3" class="text-end" style="font-weight:bold;">Tổng cộng:</td>
+                    <td style="color: #FF4500; font-weight:bold;">
+                        @string.Format("{0:N0} VND", ViewBag.TotalAmount)
+                    </td>
+                </tr>
+
             </tbody>
         </table>
     </div>

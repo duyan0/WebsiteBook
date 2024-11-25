@@ -229,6 +229,7 @@
     <Compile Include="Controllers\SanPhamsController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\TacGiaController.cs" />
+    <Compile Include="Controllers\VNPAYClient.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -274,6 +275,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PromotionViewModel.cs" />
+    <Compile Include="Models\RecentOrderViewModel.cs" />
     <Compile Include="Models\SanPham.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -314,9 +316,11 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\css\admin.css" />
     <Content Include="Content\css\duyan.css" />
+    <Content Include="Content\css\JavaScript.js" />
     <Content Include="Content\css\khachhang.css" />
     <Content Include="Content\css\layout.css" />
     <Content Include="Content\css\ProductList.css" />
+    <Content Include="Content\css\Shoppingcart.css" />
     <Content Include="Content\css\style.min.css" />
     <Content Include="Content\css\topbanchay.css" />
     <Content Include="Content\img\1 %281%29.jpg" />
@@ -590,6 +594,7 @@
     <Content Include="Views\DonHangs\Inhoadon.cshtml" />
     <Content Include="Views\LoginUser\VerifyOtp.cshtml" />
     <Content Include="Views\KhuyenMai\ThongKe.cshtml" />
+    <Content Include="Views\DonHangCTs\RecentOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
