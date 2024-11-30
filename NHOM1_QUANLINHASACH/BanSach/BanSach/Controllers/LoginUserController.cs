@@ -54,12 +54,31 @@ namespace BanSach.Controllers
             }
 
             // Kiểm tra trùng lặp tài khoản, số điện thoại, và email
-            var existingUserOrAdmin = db.KhachHang.Any(s => s.TKhoan == _user.TKhoan || s.SoDT == _user.SoDT || s.Email == _user.Email) ||
-                                       db.Admin.Any(s => s.TKhoan == _user.TKhoan);
+            // Kiểm tra tài khoản đã tồn tại trong bảng KhachHang hoặc Admin
+            bool isAccountExist = db.KhachHang.Any(s => s.TKhoan == _user.TKhoan);
 
-            if (existingUserOrAdmin)
+            // Kiểm tra số điện thoại đã tồn tại trong bảng KhachHang
+            bool isPhoneExist = db.KhachHang.Any(s => s.SoDT == _user.SoDT);
+
+            // Kiểm tra email đã tồn tại trong bảng KhachHang
+            bool isEmailExist = db.KhachHang.Any(s => s.Email == _user.Email);
+
+            // Nếu có bất kỳ thông tin nào tồn tại thì báo lỗi
+            if (isAccountExist || isPhoneExist || isEmailExist)
             {
-                ViewBag.ErrorRegister = "Thông tin tài khoản hoặc liên hệ đã tồn tại!";
+                if (isAccountExist)
+                {
+                    ViewBag.ErrorRegister = "Tài khoản đã tồn tại!";
+                }
+                else if (isPhoneExist)
+                {
+                    ViewBag.ErrorRegister = "Số điện thoại đã tồn tại!";
+                }
+                else if (isEmailExist)
+                {
+                    ViewBag.ErrorRegister = "Email đã tồn tại!";
+                }
+
                 return View();
             }
 
@@ -173,10 +192,10 @@ namespace BanSach.Controllers
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public ActionResult LoginAccountCus(KhachHang _cus)
         {
-            
+
             if (_cus.TKhoan == null)
             {
-                
+
                 return View();
             }
 
@@ -194,24 +213,36 @@ namespace BanSach.Controllers
             }
 
             // Tìm kiếm trong bảng KhachHang
-            var checkCustomer = db.KhachHang.FirstOrDefault(s => s.TKhoan == _cus.TKhoan && s.MKhau == _cus.MKhau);
-
-            if (checkCustomer == null)
+            // Kiểm tra tài khoản khách hàng
+            var checkAccount = db.KhachHang.FirstOrDefault(s => s.TKhoan == _cus.TKhoan);
+            if (checkAccount == null)
             {
-                // Nếu không tìm thấy tài khoản khách hàng
-                ViewBag.ErrorInfo = "Sai tài khoản hoặc mật khẩu";
+                // Nếu không tìm thấy tài khoản
+                ViewBag.ErrorInfo = "Tài khoản không tồn tại";
                 return View();
             }
 
-            // Kiểm tra nếu tài khoản khách hàng bị khóa
-            if (checkCustomer.TrangThaiTaiKhoan != null)
+            // Kiểm tra mật khẩu khách hàng
+            var checkPassword = db.KhachHang.FirstOrDefault(s => s.TKhoan == _cus.TKhoan && s.MKhau == _cus.MKhau);
+            if (checkPassword == null)
             {
-                if (checkCustomer.TrangThaiTaiKhoan.Equals("Bị khoá", StringComparison.OrdinalIgnoreCase))
+                // Nếu mật khẩu sai
+                ViewBag.ErrorInfo = "Sai mật khẩu";
+                return View();
+            }
+
+            // Nếu tài khoản và mật khẩu đều hợp lệ, tiếp tục xử lý
+
+
+            // Kiểm tra nếu tài khoản khách hàng bị khóa
+            if (checkAccount.TrangThaiTaiKhoan != null)
+            {
+                if (checkAccount.TrangThaiTaiKhoan.Equals("Bị khoá", StringComparison.OrdinalIgnoreCase))
                 {
                     ViewBag.ErrorInfo = "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ với quản trị viên.";
                     return View();
                 }
-                else if (checkCustomer.TrangThaiTaiKhoan.Equals("Chưa xác nhận", StringComparison.OrdinalIgnoreCase))
+                else if (checkAccount.TrangThaiTaiKhoan.Equals("Chưa xác nhận", StringComparison.OrdinalIgnoreCase))
                 {
                     ViewBag.ErrorInfo = "Tài khoản của bạn chưa được xác nhận. Vui lòng kiểm tra email để xác nhận tài khoản.";
                     return View();
@@ -221,10 +252,10 @@ namespace BanSach.Controllers
 
             // Nếu tài khoản khách hàng hợp lệ và không bị khóa, thiết lập session
             db.Configuration.ValidateOnSaveEnabled = false;
-            Session["IDkh"] = checkCustomer.IDkh;
-            Session["MKhau"] = checkCustomer.MKhau;
-            Session["TenKH"] = checkCustomer.TenKH;
-            Session["SoDT"] = checkCustomer.SoDT;
+            Session["IDkh"] = checkAccount.IDkh;
+            Session["MKhau"] = checkAccount.MKhau;
+            Session["TenKH"] = checkAccount.TenKH;
+            Session["SoDT"] = checkAccount.SoDT;
 
             return RedirectToAction("TrangChu", "SanPhams");
 

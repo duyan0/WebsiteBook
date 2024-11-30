@@ -4,29 +4,28 @@
         text-decoration: none;
     }
 </style>
-<div class="container-fluid py-5 mb-3 ">
+<div class="container-fluid py-5 mb-3">
     <div class="text-center mb-4">
         <h2 class="px-5">
             <span class="px-2" style="font-weight:bold;color:white;">Sản phẩm bán chạy</span>
         </h2>
     </div>
-    <div class="row px-xl-5 ">
+    <div class="row px-xl-5">
         <div class="col">
-            <div class="owl-carousel related-carousel ">
+            <div class="owl-carousel related-carousel">
                 @foreach (var i in Model)
                 {
                     <div class="card product-item" style="border-radius:20px;outline:0;">
                         <a href="~/SanPhams/TrangSP/@i.IdPro">
-                            <div class="card-header product-img position-relative overflow-hidden bg-transparent rounded-circle ">
-                                <img class="img-fluid w-100 " src="~/Content/img/@i.ImgPro" alt="">
+                            <div class="card-header product-img position-relative overflow-hidden bg-transparent rounded-circle">
+                                <img class="img-fluid w-100" src="~/Content/img/@i.ImgPro" alt="">
                             </div>
-                            <div class="card-body  text-center p-0 pt-4 pb-3">
-                                <h6 class="text-truncate mb-3">@Html.DisplayFor(model => i.NamePro)</h6>
+                            <div class="card-body text-center p-0 pt-4 pb-3">
+                                <h6 class="text-truncate mb-3" style="max-width: 150px;" title="@i.NamePro">@Html.DisplayFor(model => i.NamePro)</h6>
                                 <div class="d-flex justify-content-center">
                                     <p class="font-weight-bold" style="color:red;">
                                         @($"{i.price:#,##0} VND")
                                     </p>
-                                    <h6 class="text-muted ml-2"></h6>
                                 </div>
                             </div>
                         </a>
@@ -36,6 +35,7 @@
         </div>
     </div>
 </div>
+
 
 <style>
     .card a:hover {
@@ -53,9 +53,9 @@
         padding: 20px; /* Add some padding to ensure content is not touching edges */
     }
 
-        .product-item:hover {
-            transform: scale(1.05) !important; /* Slight zoom effect on hover */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important; 
+        .product-item:hover { /* Slight zoom effect on hover */
+            transform: scale(1.05) !important; /* Zoom effect */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
         }
 
     .product-img {
@@ -66,6 +66,7 @@
         display: flex; /* Use flexbox to center image */
         align-items: center; /* Center image vertically */
         justify-content: center; /* Center image horizontally */
+        border: none;
     }
 
         .product-img img {
@@ -73,6 +74,24 @@
             height: 200px !important; /* Match the fixed height of the container */
             object-fit: cover !important; /* Crop the image to fit without distortion */
             border-radius: 10px !important; /* Rounded corners for the image */
+        }
+
+    .card-body {
+        text-align: left; /* Căn lề trái cho toàn bộ card-body */
+        padding-left: 10px; /* Thêm một ít khoảng cách từ lề trái nếu cần thiết */
+    }
+
+        .card-body h6 {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px; /* Điều chỉnh chiều rộng tối đa của văn bản */
+        }
+
+        .card-body p {
+            margin: 0; /* Đảm bảo không có khoảng cách giữa các phần tử */
+            padding-left: 10px;
+            font-size: 1.2rem; /* Kích thước font chữ cho giá */
         }
 
 </style>

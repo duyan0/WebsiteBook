@@ -57,18 +57,18 @@
                                 }
                                 else
                                 {
-                                    <button class="btn btn-success rounded-sm btn-fixed-sizee" disabled>Chưa có thông tin</button>
+                                    <button class="btn btn-success rounded-sm btn-fixed-sizee" disabled>Dự kiến là...</button>
                                 }
                             </td>
                             <td class="text-danger font-weight-bold">
                                 @order.GetTongSoTien().ToString("C0", new System.Globalization.CultureInfo("vi-VN"))
                             </td>
                             <td class="text-center">
-                                <button class="btn @(order.TrangThai == "Chờ xử lý" ? "btn-secondary rounded-sm"
+                                <button class="btn @(order.TrangThai == "Chờ xử lý" ? "btn-info rounded-sm"
              : order.TrangThai == "Đã xác nhận" ? "btn-success rounded-sm"
              : order.TrangThai == "Đã hủy" ? "btn-danger rounded-sm"
              : order.TrangThai == "Đã nhận hàng" ? "btn-warning rounded-sm"
-             : "btn-secondary") btn-fixed-size rounded-sm" disabled>
+             : "btn-secondary") btn-fixed-size rounded-sm text-dark" disabled>
                                     @order.TrangThai
                                 </button>
                             </td>
@@ -85,7 +85,7 @@
                                 {
                                     <form action="@Url.Action("HuyDonHang", "KhachHangs")" method="post" class="d-inline">
                                         <input type="hidden" name="orderId" value="@order.IDdh" />
-                                        <button type="submit" class="btn btn-warning btn-sm rounded-sm ml-2 btn-fixed-sizee">Hủy đơn</button>
+                                        <button type="submit" class="btn btn-danger btn-sm rounded-sm ml-2 btn-fixed-sizee">Hủy đơn</button>
                                     </form>
                                 }
                             </td>
@@ -119,8 +119,9 @@
 
 <style>
     .btn-fixed-size {
-        width: 150px;
+        width: 140px;
         height: 40px;
+        color:white;
     }
 
     .pagination-container {

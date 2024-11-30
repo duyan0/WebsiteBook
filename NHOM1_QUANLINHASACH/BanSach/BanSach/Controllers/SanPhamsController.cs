@@ -42,8 +42,6 @@ namespace BanSach.Controllers
                                              || s.TrangThaiSach.Contains(searchString)
                                              || s.NhaXuatBan.Tennxb.Contains(searchString));
             }
-
-            // Sắp xếp theo tiêu chí
             switch (sortOrder)
             {
                 case "name_desc":
@@ -368,10 +366,6 @@ namespace BanSach.Controllers
             // Lấy danh sách tất cả nhà xuất bản và lưu vào ViewBag
             ViewBag.AvailablePublishers = db.NhaXuatBan.Select(nxb => nxb.Tennxb).ToList();
         }
-
-
-
-
         // GET: SanPhams/Import
         public ActionResult Import()
         {

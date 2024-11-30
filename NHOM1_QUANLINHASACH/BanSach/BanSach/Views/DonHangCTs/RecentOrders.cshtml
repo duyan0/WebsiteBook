@@ -2,33 +2,86 @@
 
 <style>
     .card a:hover {
-        text-decoration: none;
+        text-decoration: none !important;
+        border-radius: 5rem;
     }
+
+    .product-item {
+        border-radius: 20px !important;
+        transition: transform 0.2s !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+        .product-item:hover {
+            transform: scale(1.05) !important;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+        }
+
+    .product-img {
+        text-align: center;
+        width: 200px !important;
+        height: 200px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+    }
+
+        .product-img img {
+            width: 200px;
+            height: 200px !important;
+            object-fit: cover !important;
+            border-radius: 10px !important;
+        }
+
+    .card-body {
+        text-align: left;
+        padding-left: 10px;
+    }
+
+        .card-body h6 {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+        }
+
+        .card-body p {
+            margin: 0;
+            padding-left: 0px;
+            font-size: 1.2rem;
+        }
 </style>
-<div class="container-fluid py-5 ">
+
+<div class="container-fluid py-5">
     <div class="text-center mb-4">
         <h2 class="px-5">
             <span class="px-2" style="font-weight:bold;color:white;">Đã bán gần nhất</span>
         </h2>
     </div>
-    <div class="row px-xl-5 ">
+    <div class="row px-xl-5">
         <div class="col">
-            <div class="owl-carousel related-carousel ">
+            <div class="owl-carousel related-carousel">
                 @foreach (var i in Model)
                 {
                     <div class="card product-item" style="border-radius:20px;outline:0;">
                         <a href="~/SanPhams/TrangSP/@i.Id">
-                            <div class="card-header product-img position-relative overflow-hidden bg-transparent rounded-circle ">
-                                <img class="img-fluid w-100 " src="~/Content/img/@i.HinhAnh" alt="">
+                            <div class="card-header product-img position-relative overflow-hidden bg-transparent rounded-circle">
+                                <img class="img-fluid w-100" src="~/Content/img/@i.HinhAnh" alt="">
                             </div>
-                            <div class="card-body  text-center p-0 pt-4 pb-3">
-                                <h6 class="text-truncate mb-3 ml-4">@Html.DisplayFor(model => i.TenSanPham)</h6>
-                                <h6 class="text-truncate mb-3">@Html.DisplayFor(model => i.NgayDatHang)</h6>
-                                <div class="d-flex justify-content-center">
+                            <div class="card-body text-left p-0 pt-4 pb-3">
+                                <h6 class="text-truncate mb-3" style="max-width: 180px;" title="@i.TenSanPham">@Html.DisplayFor(model => i.TenSanPham)</h6>
+                                <h6 class="text-truncate mb-3" style="max-width: 180px;" title="@i.NgayDatHang.ToString("dd/MM/yyyy HH:mm:ss")">
+                                    @i.NgayDatHang.ToString("dd/MM/yyyy HH:mm:ss")
+                                </h6>
+                                <div class="d-flex justify-content-start">
                                     <p class="font-weight-bold" style="color:red;">
                                         @($"{i.Gia:#,##0} VND")
                                     </p>
-                                    <h6 class="text-muted ml-2"></h6>
                                 </div>
                             </div>
                         </a>
@@ -38,42 +91,3 @@
         </div>
     </div>
 </div>
-
-<style>
-    .card a:hover {
-        text-decoration: none !important;
-        border-radius: 5rem;
-    }
-
-    .product-item {
-        border-radius: 20px !important; /* Rounded corners for the product card */
-        transition: transform 0.2s !important; /* Add smooth transition for hover */
-        display: flex; /* Use flexbox to center content */
-        flex-direction: column; /* Arrange content vertically */
-        align-items: center; /* Center horizontally */
-        justify-content: center; /* Center vertically */
-        padding: 20px; /* Add some padding to ensure content is not touching edges */
-    }
-
-        .product-item:hover {
-            transform: scale(1.05) !important; /* Slight zoom effect on hover */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
-        }
-
-    .product-img {
-        text-align: center;
-        /* Ensure the image is centered within the container */
-        width: 200px !important; /* Set a fixed width for the container */
-        height: 200px !important; /* Set a fixed height for the container */
-        display: flex; /* Use flexbox to center image */
-        align-items: center; /* Center image vertically */
-        justify-content: center; /* Center image horizontally */
-    }
-
-        .product-img img {
-            width: 200px; /* Match the fixed width of the container */
-            height: 200px !important; /* Match the fixed height of the container */
-            object-fit: cover !important;
-            border-radius: 10px !important;
-        }
-</style>

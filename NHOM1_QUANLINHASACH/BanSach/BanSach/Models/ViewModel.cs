@@ -24,7 +24,5 @@ namespace BanSach.Models
         public IEnumerable<SanPham> ListProduct { get; set; }
         public int? Top5_Quantity { get; set; }
         public int? Sum_Quantity { get; set; }
-        
-
     }
 }
