@@ -12,7 +12,6 @@ namespace BanSach
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
-
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
@@ -21,10 +20,18 @@ namespace BanSach
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-    name: "DaNhanHang",
-    url: "DonHang/DaNhanHang/{id}",
-    defaults: new { controller = "DonHang", action = "DaNhanHang", id = UrlParameter.Optional }
-);
+                name: "DaNhanHang",
+                url: "DonHang/DaNhanHang/{id}",
+                defaults: new { controller = "DonHang", action = "DaNhanHang", id = UrlParameter.Optional }
+            );
+
+            // Thêm route cho trang bảo trì
+            routes.MapRoute(
+                name: "Maintenance",
+                url: "Home/Maintenance",
+                defaults: new { controller = "Home", action = "Maintenance" }
+            );
         }
+
     }
 }

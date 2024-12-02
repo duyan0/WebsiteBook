@@ -7,23 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="Free HTML Templates">
     <meta name="description" content="Free HTML Templates">
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.0/css/all.css">
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.0/css/sharp-solid.css">
+
     <!-- Favicon -->
     <link href="~/Content/img/logo-icon.png" rel="icon">
-
     <!-- Google Web Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
     <link href="~/Content/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/Content/css/duyan.css" rel="stylesheet">
-    <link href="~/Content/css/admin.css" rel="stylesheet">
     <link href="~/Content/css/layout.css" rel="stylesheet">
     <script src="~/Scripts/changeimg.js"></script>
 </head>
@@ -34,55 +30,54 @@
     </div>
 
     <!-- Topbar Start -->
-    <div class="row align-items-center py-3 px-xl-5" id="topbar" style="background-color: #1f1f20;">
-        <div class="col-lg-3 d-none d-lg-block">
-            <a href="~/SanPhams/TrangChu" class="text-decoration-none">
-                <h2 class="m-0 display-5 font-weight-semi-bold" style="color: white;">
-                    <img src="~/Content/img/logosach.png" style="width:40px;">
-                    Sách
-                </h2>
-            </a>
-        </div>
+    <div class="container-fluid " id="topbar" style="background-color: #1f1f20; z-index: 10000;">
+        <div class="row align-items-center py-3 px-xl-5">
+            <!-- Logo -->
+            <div class="col-lg-3 col-12 text-lg-left text-center mb-3 mb-lg-0">
+                <a href="~/SanPhams/TrangChu" class="text-decoration-none">
+                    <h2 class="m-0 display-5 font-weight-semi-bold" style="color: white;">
+                        <img src="~/Content/img/logosach.png" style="width:40px;">
+                        Sách
+                    </h2>
+                </a>
+            </div>
 
-        <!-- Cột giữa: Tìm kiếm -->
-        <div class="col-lg-6 col-6 text-right">
-            @using (Html.BeginForm("ProductList", "SanPhams", FormMethod.Get))
-            {
-                <div class="input-group" style="margin-left:10px;">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" style="border-radius:10px 0 0 10px;">
-                            <i class="fas fa-search"></i>
-                        </span>
+            <!-- Cột giữa: Tìm kiếm -->
+            <div class="col-lg-6 col-12 text-center mb-3 mb-lg-0">
+                @using (Html.BeginForm("ProductList", "SanPhams", FormMethod.Get))
+                {
+                    <div class="input-group" style="margin-left:10px;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="border-radius:10px 0 0 10px;">
+                                <i class="fas fa-search"></i>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control fs-5" placeholder="Nhập tên sách bạn muốn tìm" name="SearchString" style="border-radius:0 10px 10px 0;">
                     </div>
-                    <input type="text" class="form-control" placeholder="Nhập tên sách bạn muốn tìm" name="SearchString" style="border-radius:0 10px 10px 0;">
-                </div>
-            }
+                }
+            </div>
+
+            <!-- Cột phải: Giỏ hàng và sản phẩm bán chạy -->
+            <div class="col-lg-3 col-12 text-lg-right text-center mb-3 mb-lg-0">
+                <a href="~/ShoppingCart/ShowCart" class="btn border" style="border-radius:10px;">
+                    <i class="bi bi-bag-check" style="color:white;"></i> <span style="font-size:1rem;" class="text-white">Giỏ hàng</span>
+                    @Html.Action("BagCart", "ShoppingCart")
+                </a>
+            </div>
         </div>
 
-        <!-- Cột phải: Giỏ hàng và sản phẩm bán chạy -->
-        <div class="col-lg-3 col-6 text-right">
-            <a href="~/ShoppingCart/ShowCart" class="btn border" style="border-radius:10px;">
-                <i class="fas fa-shopping-cart" style="color:white;">Giỏ hàng</i>
-                @Html.Action("BagCart", "ShoppingCart")
-            </a>
-        </div>
-    </div>
-
-    <!-- Topbar End -->
-    <!-- Navbar Start -->
-    <div class="container-fluid" id="navbar" style="background-color:#1f1f20;">
+        <!-- Navbar -->
         <div class="row border-top px-xl-5">
             <div class="col-lg-3 d-none d-lg-inline-block">
                 <a class="btn shadow-none d-inline-flex align-items-center justify-content-between text-white w-50" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 20px; background-color:white;">
-                    <h6 class="m-0">Danh mục</h6>
-                    <i class="fa fa-angle-down text-dark"></i>
+                    <h6 class="m-0 fs-5">Danh mục</h6>
+                    <i class="bi bi-caret-down text-dark"></i>
                 </a>
                 <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start bg-light" id="navbar-vertical" style="min-width: 250px;">
                     @Html.Action("PhanDanhMuc", "DanhMucs")
                 </nav>
-
-
             </div>
+
             <div class="col-lg-9">
                 <nav class="navbar navbar-expand-lg navbar-light py-3 py-lg-0 px-0">
                     <a href="~/SanPhams/ProductList" class="text-decoration-none d-block d-lg-none">
@@ -100,7 +95,6 @@
                                     <a href="#" class="nav-item nav-link text-white">@Session["TenKH"]</a>
                                     <div class="dropdown-content">
                                         <a href="@Url.Action("InfoCustomer", "LoginUser")">Thông tin cá nhân</a>
-
                                         <a href="~/KhachHangs/LichSuDonHang">Lịch sử đơn hàng</a>
                                         <a href="@Url.Action("Logout", "LoginUser")">Đăng xuất</a>
                                     </div>
@@ -113,8 +107,8 @@
                             }
                             else
                             {
-                                <a href="~/LoginUser/LoginAccountCus" class="nav-item nav-link">Đăng nhập</a>
-                                <a href="~/LoginUser/RegisterCus" class="nav-item nav-link">Đăng ký</a>
+                                <a href="~/LoginUser/LoginAccountCus" class="nav-item nav-link fs-5">Đăng nhập</a>
+                                <a href="~/LoginUser/RegisterCus" class="nav-item nav-link fs-5">Đăng ký</a>
                             }
                         </div>
                     </div>
@@ -122,10 +116,13 @@
             </div>
         </div>
     </div>
+
+
+
     <!-- Navbar End -->
     <!-- Main Start -->
-    <div class="container-fluid pt-4" style="width: 100%; background-color: black;">
-        <div class="container-fluid" style="background-color: #1f1f20; border-radius: 15px; padding: 10px; margin: 0 7%; width: 86%; height: 100%;">
+    <div class="container-fluid pt-4 " style="width: 100%; background-color: black;">
+        <div class="container-fluid " style="background-color: #1f1f20; border-radius: 15px; padding: 1rem; margin: 0 7%; width: 86%; height: 100%;">
             @RenderBody()
         </div>
     </div>
@@ -191,6 +188,17 @@
 
     <!-- Custom CSS -->
     <style>
+
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa; /* Màu nền để dễ nhìn */
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', Arial, sans-serif;
+        }
 
 
         .dropdown {
@@ -283,6 +291,9 @@
 
             .zalo-contact:hover {
                 transform: scale(1.1); /* Tăng kích thước khi hover */
+            }
+            .fs-6{
+                font-size:15px;
             }
     </style>
     <!-- FT nè -->

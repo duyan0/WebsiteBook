@@ -11,10 +11,10 @@
 
 <h3 class="page-title text-white">Danh sách sản phẩm</h3>
 
-<div class="container">
+<div class="container ">
     <div class="row">
         <!-- Bộ lọc giá và Nhà xuất bản -->
-        <div class="col-12 col-md-3 mb-4">
+        <div class="col-12 col-md-6 col-lg-3 mb-2">
             <!-- Bộ lọc giá -->
             <div class="filter p-3 shadow-sm rounded bg-white mb-4 mt-2">
                 <form method="get" action="/SanPhams/FilterByPrice">
@@ -88,13 +88,13 @@
                     foreach (var item in Model)
                     {
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch mb-1">
-                            <div class="card-pro">
+                            <div class="card-pro @(item.TrangThaiSach == "Hết hàng" ? "out-of-stock" : "")">
                                 <a href="@Url.Action("TrangSP", "SanPhams", new { id = item.IDsp })">
-                                    <img src="~/Content/img/@item.HinhAnh" class="img-fluid" alt="@item.TenSP" />
-                                    <p class="availability mb-1 @(item.TrangThaiSach == "Hết hàng" ? "out-of-stock" : "in-stock")">
+                                    <img src="https://placehold.co/190x190" class="img-fluid" alt="@item.TenSP" />
+                                    <p class="availability @(item.TrangThaiSach == "Hết hàng" ? "out-of-stock" : "in-stock")">
                                         @item.TrangThaiSach
                                     </p>
-                                    <p class="product-name mb-1">@item.TenSP</p>
+                                    <p class="product-name ">@item.TenSP</p>
                                 </a>
 
                                 @if (item.KhuyenMai != null && item.KhuyenMai.MucGiamGia > 0)
@@ -111,7 +111,7 @@
                                             -@mucGiamGia%
                                         </span>
                                     </p>
-                                    <p class="price mt-1">
+                                    <p class="price">
                                         @string.Format("{0:N0} VND", giaSauGiam)
                                     </p>
                                 }
@@ -120,17 +120,26 @@
                                     <p class="price">
                                         @string.Format("{0:N0} VND", item.GiaBan)
                                     </p>
+
                                 }
 
-                                <!-- Nút thêm vào giỏ hàng: Chỉ hiển thị khi sản phẩm còn hàng -->
                                 @if (item.TrangThaiSach != "Hết hàng")
                                 {
                                     <button class="btn-add-to-cart" onclick="themthanhcong(event, '@item.IDsp')">
                                         <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
                                     </button>
+                                    
+                                }
+                                else
+                                {
+                                    <button class="btn-add-to-cart-hethang" disabled>
+                                        <i class=""></i> Hết hàng
+                                    </button>
+
                                 }
                             </div>
                         </div>
+
                     }
                 }
                 else

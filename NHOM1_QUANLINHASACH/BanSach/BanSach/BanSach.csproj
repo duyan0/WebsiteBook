@@ -222,6 +222,7 @@
     <Compile Include="Controllers\DanhMucsController.cs" />
     <Compile Include="Controllers\DonHangCTsController.cs" />
     <Compile Include="Controllers\DonHangsController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KhachHangsController.cs" />
     <Compile Include="Controllers\KhuyenMaiController.cs" />
     <Compile Include="Controllers\LoginUserController.cs" />
@@ -314,7 +315,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
-    <Content Include="Content\css\admin.css" />
     <Content Include="Content\css\duyan.css" />
     <Content Include="Content\css\JavaScript.js" />
     <Content Include="Content\css\khachhang.css" />
@@ -349,7 +349,6 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Content\lib\owlcarousel\LICENSE" />
     <Content Include="Content\scss\bootstrap\scss\bootstrap-grid.scss" />
     <Content Include="Content\scss\bootstrap\scss\bootstrap-reboot.scss" />
@@ -595,6 +594,8 @@
     <Content Include="Views\LoginUser\VerifyOtp.cshtml" />
     <Content Include="Views\KhuyenMai\ThongKe.cshtml" />
     <Content Include="Views\DonHangCTs\RecentOrders.cshtml" />
+    <Content Include="Views\Shared\Maintenance.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
