@@ -4,167 +4,8 @@
     ViewBag.Title = "Sách - " + Model.TenSP;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link href="~/Content/css/admin.css" rel="stylesheet" />
-<style>
-    .container-fluid {
-        /* Không thay đổi */
-    }
 
-    .left, .right {
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
-
-    .left {
-        flex: 1;
-        max-width: 30%;
-        min-width: 280px;
-        transition: transform 0.3s;
-    }
-
-        .left:hover {
-            transform: scale(1.02);
-        }
-
-    .right {
-        flex: 2;
-        color: #333;
-        margin-left: 20px;
-        max-width: 65%;
-    }
-
-    .anh img {
-        width: 100%;
-        height: auto;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .price-container {
-        margin-top: 15px;
-    }
-
-    .price {
-        color: #c92127;
-        letter-spacing: 2px;
-        font-size: 1.5em;
-        font-weight: bold;
-        margin-top: 10px;
-    }
-
-    .old-price {
-        text-decoration: line-through;
-        color: #999;
-        font-weight: normal;
-        font-size: 1em;
-    }
-
-    .discount-price {
-        color: #e74c3c;
-        font-size: 1.5em;
-        font-weight: bold;
-        margin-top: 5px;
-        display: inline-block;
-    }
-
-    .nut {
-        text-align: center;
-        margin-top: 20px;
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        flex-wrap: nowrap; /* Không cho phép xuống dòng để các nút nằm cùng một hàng */
-        align-items: center; /* Căn giữa theo chiều dọc */
-    }
-
-        .nut a {
-            border: 2px solid #c92127;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s, transform 0.3s ease;
-            padding: 15px 30px;
-            font-size: 1rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            white-space: nowrap; /* Đảm bảo nội dung không bị ngắt dòng */
-        }
-
-    #nut1 {
-        color: #c92127;
-        background-color: white;
-    }
-
-        #nut1:hover {
-            background-color: #c92127;
-            color: white;
-            transform: translateY(-3px);
-        }
-
-    #nut2 {
-        background-color: #c92127;
-        color: white;
-    }
-
-        #nut2:hover {
-            background-color: #a81d22;
-            transform: translateY(-3px);
-        }
-
-
-    #notification {
-        display: none;
-        position: fixed;
-        top: 10%;
-        right: 5%;
-        background-color: #4caf50;
-        color: white;
-        padding: 15px;
-        border-radius: 5px;
-        font-size: 16px;
-        z-index: 1000;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        opacity: 0;
-        transition: opacity 0.5s ease-in-out;
-    }
-
-        #notification.show {
-            display: block;
-            opacity: 1;
-        }
-
-        #notification.hide {
-            opacity: 0;
-        }
-
-    .product-details {
-        margin-top: 20px;
-    }
-
-    .product-details-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-        .product-details-table td {
-            padding: 10px 5px;
-            font-size: 1.1em;
-            vertical-align: top;
-            border-bottom: 1px solid #ddd; /* Thêm đường gạch dưới cho từng hàng để dễ phân biệt */
-        }
-
-        .product-details-table .label {
-            font-weight: bold;
-            width: 30%;
-            color: white;
-        }
-
-        .product-details-table .value {
-            color: white;
-        }
-</style>
+<link href="~/Content/css/trangsp.css" rel="stylesheet" />
 
 <div class="container-fluid d-flex flex-wrap" id="productdetails">
     <div class="left">
@@ -175,10 +16,10 @@
         {
             <div class="nut mt-4">
                 <a href="/ShoppingCart/AddToCart/@Model.IDsp" id="nut1" onclick="themthanhcong(event, '@Model.IDsp')">
-                    <i class="fas fa-cart-plus"></i> Thêm
+                    <i class="bi bi-plus-square"></i> Thêm
                 </a>
                 <a href="/ShoppingCart/MuaNgay/@Model.IDsp" id="nut2">
-                    <i class="fas fa-bolt"></i> Mua ngay
+                    <i class="bi bi-bag"></i> Mua ngay
                 </a>
             </div>
         }

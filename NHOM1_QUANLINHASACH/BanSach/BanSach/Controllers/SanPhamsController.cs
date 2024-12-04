@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BanSach.Models;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using OfficeOpenXml;
 using PagedList;
 
@@ -81,8 +82,10 @@ namespace BanSach.Controllers
 
         public ActionResult TrangChu()
         {
-            return View();
+            var danhMucList = db.DanhMuc.ToList();
+            return View(danhMucList);  // Passing a list of categories to the view
         }
+
         public ActionResult ProductList(int? category, int? page, string SearchString )
         {
             SetAvailablePublishers();
@@ -457,6 +460,51 @@ namespace BanSach.Controllers
 
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RemoveAll()
+        {
+            try
+            {
+                // Lấy danh sách tất cả các sản phẩm có trạng thái "Hết hàng"
+                var pdhethang = db.SanPham.Where(dh => dh.TrangThaiSach == "Hết hàng").ToList();
+
+                if (pdhethang.Count == 0)
+                {
+                    TempData["ErrorMessage"] = "Không có sản phẩm nào có trạng thái 'Hết hàng'.";
+                    return RedirectToAction("Index");
+                }
+
+                foreach (var donHang in pdhethang)
+                {
+                    db.SanPham.Remove(donHang); // Xóa các sản phẩm hết hàng
+                }
+
+                int changes = db.SaveChanges();
+                if (changes > 0)
+                {
+                    TempData["SuccessMessage"] = "Tất cả các sản phẩm hết hàng đã được xóa.";
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Không có thay đổi nào được thực hiện khi xóa.";
+                }
+            }
+            catch (Exception ex)
+            {
+                // In ra chi tiết lỗi
+                TempData["ErrorMessage"] = "Đã xảy ra lỗi khi xóa các sản phẩm hết hàng: " + ex.Message;
+
+                // Kiểm tra InnerException (nếu có) để có thông tin chi tiết hơn
+                if (ex.InnerException != null)
+                {
+                    TempData["ErrorMessage"] += "<br/>Chi tiết lỗi: " + ex.InnerException.Message;
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

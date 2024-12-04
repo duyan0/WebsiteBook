@@ -86,17 +86,28 @@
                 <button class="btn btn-dark" type="submit">Tìm kiếm</button>
             </div>
         </div>
+
     }
+
 </div>
 
 <div class="text-left mb-3 mt-3 text-dark font-weight-bold">
     <p>Tổng đơn hàng: @Model.TotalItemCount</p>
 </div>
 <!-- Thêm liên kết tới trang Thống kê đơn hàng -->
-<p>
-    @Html.ActionLink("Xem thống kê đơn hàng", "ThongKeDonHang", "DonHangs", null, new { @class = "btn btn-info mb-3 rounded-sm" })
-</p>
 
+@using (Html.BeginForm("ConfirmAll", "DonHangs", FormMethod.Post))
+{
+    <div class="d-flex ">
+        <p>
+            @Html.ActionLink("Xem thống kê đơn hàng", "ThongKeDonHang", "DonHangs", null, new { @class = "btn btn-info mb-3 rounded-sm mx-1" })
+        </p>
+        @Html.AntiForgeryToken()
+        <p class="form-group">
+            <button type="submit" class="btn btn-info mb-3 rounded-sm" onclick="return confirm('Bạn có chắc chắn muốn xác nhận tất cả đơn hàng?');">Xác nhận tất cả đơn hàng</button>
+        </p>
+    </div>
+}
 @if (Model != null && Model.Any())
 {
     <!-- Orders Table -->

@@ -6,6 +6,7 @@
     ViewBag.Title = "Danh sách sản phẩm";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+
 <link href="~/Content/PagedList.css" rel="stylesheet" />
 <style>
     .tieude {
@@ -86,6 +87,26 @@
 
 <h2 class="tieude">Danh sách sản phẩm</h2>
 
+<!-- Hiển thị TempData thông báo -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
 <!-- Search Form -->
 <div class="search-bar">
     @using (Html.BeginForm("Index", "SanPhams", FormMethod.Get))
@@ -95,7 +116,7 @@
     }
 </div>
 
-<p>
+<div>
     <a href="@Url.Action("Create")" class="btn btn-dark rounded-sm">
         <i class="fas fa-plus text-white"></i> Thêm <!-- Icon màu trắng cho button tối -->
     </a>
@@ -105,7 +126,15 @@
     <a href="@Url.Action("Import")" class="btn btn-success rounded-sm">
         <i class="fas fa-file-import text-white"></i> Nhập sách <!-- Icon màu trắng cho button xanh lá -->
     </a>
-</p>
+    @using (Html.BeginForm("RemoveAll", "SanPhams", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <p class="form-group">
+            <button type="submit" class="btn btn-info mb-3 rounded-sm" onclick="return confirm('Bạn có muốn xoá tất cả xác hết hàng không?');">Xác nhận</button>
+        </p>
+    }
+</div>
+
 
 @if (Model != null && Model.Any())
 {

@@ -222,6 +222,35 @@ namespace BanSach.Controllers
                 CustomSwitches = "--disable-smart-shrinking"
             };
         }
+        // Action xác nhận tất cả các đơn hàng có trạng thái "Chờ xử lý"
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ConfirmAll()
+        {
+            try
+            {
+                // Lấy danh sách tất cả các đơn hàng có trạng thái "Chờ xử lý"
+                var donHangsToConfirm = db.DonHang.Where(dh => dh.TrangThai == "Chờ xử lý").ToList();
+
+                foreach (var donHang in donHangsToConfirm)
+                {
+                    // Cập nhật trạng thái đơn hàng
+                    donHang.TrangThai = "Đã xác nhận";
+                    db.Entry(donHang).State = EntityState.Modified;
+                }
+
+                // Lưu thay đổi vào cơ sở dữ liệu
+                db.SaveChanges();
+
+                TempData["SuccessMessage"] = "Tất cả các đơn hàng đã được xác nhận.";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Đã xảy ra lỗi khi xác nhận tất cả đơn hàng: " + ex.Message;
+            }
+
+            return RedirectToAction("Index");
+        }
 
 
         protected override void Dispose(bool disposing)

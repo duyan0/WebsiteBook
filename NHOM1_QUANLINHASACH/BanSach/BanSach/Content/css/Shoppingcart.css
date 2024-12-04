@@ -61,3 +61,80 @@
     .suggestion-item:hover:after {
         transform: scaleY(1);
     }
+
+.showcart {
+    text-align: center;
+    padding: 5px;
+    border-radius: 15px;
+    margin: 40px;
+}
+
+    .showcart h5 {
+        padding: 20px 0 0 10px;
+    }
+
+#carQuantity {
+    width: 50px;
+    padding-left: 10px;
+    border-radius: 10px;
+}
+
+.thanhtien {
+    bottom: 0;
+    border: solid 1px double;
+    border-radius: 15px;
+    padding: 15px;
+    -moz-box-shadow: 0 4px 8px 0 grey;
+    -webkit-box-shadow: 0 4px 8px 0 grey;
+}
+
+.nutthanhtoan {
+    border-radius: 15px;
+    color: white;
+    background-color: crimson;
+    border: none;
+    padding: 5px;
+    float: right;
+}
+
+.tb tr td {
+    padding-top: 20px;
+    color: white;
+}
+
+.xoa {
+    color: white;
+    border-radius: 5px;
+}
+
+    .xoa:hover {
+        color: black;
+        text-decoration: none;
+    }
+
+.thongtinkh input {
+    border-radius: 15px;
+    padding-left: 15px;
+    height: 50px;
+    outline: none;
+}
+
+
+
+.showcart a {
+    background-color: crimson;
+    border-radius: 15px;
+    color: white;
+}
+
+    .showcart a:hover {
+        text-decoration: none;
+    }
+
+.full-width {
+    width: 100%;
+}
+
+.text-center {
+    text-align: center;
+}

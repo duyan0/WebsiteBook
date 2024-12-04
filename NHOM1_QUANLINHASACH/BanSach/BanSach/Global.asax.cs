@@ -24,7 +24,7 @@ namespace BanSach
         {
             // Kiểm tra chế độ bảo trì
             string maintenanceModeSetting = ConfigurationManager.AppSettings["IsMaintenanceMode"];
-            bool isMaintenanceMode = true;//false and true
+            bool isMaintenanceMode = false;//false and true
 
             if (!string.IsNullOrEmpty(maintenanceModeSetting))
             {

@@ -20,6 +20,7 @@ namespace BanSach.Models
         {
             get { return items; }
         }
+        public int OrderId { get; set; }
         // Phương thức lấy sản phẩm bỏ vào giỏ hàng
         public void Add_Product_Cart(SanPham _pro, decimal mucGiamGia, int _quan = 1)
         {

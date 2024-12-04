@@ -1,93 +1,81 @@
 ﻿@model IEnumerable<BanSach.Models.RecentOrderViewModel>
 
-<style>
-    .card a:hover {
-        text-decoration: none !important;
-        border-radius: 5rem;
-    }
 
-    .product-item {
-        border-radius: 20px !important;
-        transition: transform 0.2s !important;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-    }
-
-        .product-item:hover {
-            transform: scale(1.05) !important;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
-        }
-
-    .product-img {
-        text-align: center;
-        width: 200px !important;
-        height: 200px !important;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: none;
-    }
-
-        .product-img img {
-            width: 200px;
-            height: 200px !important;
-            object-fit: cover !important;
-            border-radius: 10px !important;
-        }
-
-    .card-body {
-        text-align: left;
-        padding-left: 10px;
-    }
-
-        .card-body h6 {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 200px;
-        }
-
-        .card-body p {
-            margin: 0;
-            padding-left: 0px;
-            font-size: 1.2rem;
-        }
-</style>
-
-<div class="container-fluid py-5">
-    <div class="text-center mb-4">
-        <h2 class="px-5">
-            <span class="px-2" style="font-weight:bold;color:white;">Đã bán gần nhất</span>
-        </h2>
-    </div>
-    <div class="row px-xl-5">
-        <div class="col">
-            <div class="owl-carousel related-carousel">
-                @foreach (var i in Model)
-                {
-                    <div class="card product-item" style="border-radius:20px;outline:0;">
-                        <a href="~/SanPhams/TrangSP/@i.Id">
-                            <div class="card-header product-img position-relative overflow-hidden bg-transparent rounded-circle">
-                                <img class="img-fluid w-100" src="~/Content/img/@i.HinhAnh" alt="">
-                            </div>
-                            <div class="card-body text-left p-0 pt-4 pb-3">
-                                <h6 class="text-truncate mb-3" style="max-width: 180px;" title="@i.TenSanPham">@Html.DisplayFor(model => i.TenSanPham)</h6>
-                                <h6 class="text-truncate mb-3" style="max-width: 180px;" title="@i.NgayDatHang.ToString("dd/MM/yyyy HH:mm:ss")">
-                                    @i.NgayDatHang.ToString("dd/MM/yyyy HH:mm:ss")
-                                </h6>
-                                <div class="d-flex justify-content-start">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<body>
+   
+    <div class="container-fluid">
+        <p class="text-center text-white font-weight-bold mb-3"style="font-size: 26px;">Sản phẩm bán chạy</p>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="owl-carousel related-carousel owl-theme">
+                    @foreach (var i in Model)
+                    {
+                        <div class="card product-item w-100 ">
+                            <a href="~/SanPhams/TrangSP/@i.Id" class="text-decoration-none">
+                                <div class="card-body ">
+                                    <img src="https://placehold.co/250x200" alt="Ảnh sản phẩm @i.TenSanPham" class="rounded-3">
+                                    <p class="text-truncate text-dark  w-100 text-left" title="@i.TenSanPham">@i.TenSanPham</p>
+                                    <p class="text-truncate text-dark  w-100 text-left date" title="@i.NgayDatHang.ToString("dd/MM/yyyy HH:mm:ss")">
+                                        @i.NgayDatHang.ToString("dd/MM/yyyy HH:mm:ss") 
+                                    </p>
                                     <p class="font-weight-bold" style="color:red;">
                                         @($"{i.Gia:#,##0} VND")
                                     </p>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
-                }
+                            </a>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
-</div>
+</body>
+</html>
+<style>
+
+    /* Cấu hình cho owl-carousel */
+    .owl-carousel .item {
+        width: 100%; /* Mỗi item chiếm 1/6 chiều rộng của container (6 items trên 1 hàng) */
+        padding: 5px; /* Thêm khoảng cách giữa các item */
+        box-sizing: border-box; /* Đảm bảo padding không làm ảnh hưởng đến chiều rộng */
+    }
+
+    /* Cố định chiều cao cho các hình ảnh */
+    #img {
+        max-height: 200px; /* Cố định chiều cao cho hình ảnh */
+        max-width: 250px; /* Đảm bảo hình ảnh không bị méo */
+        border-radius: 8px; /* Làm mượt các góc của ảnh */
+    }
+
+    /* Cố định chiều cao cho các card */
+    .owl-carousel .card {
+        height: 330px; /* Chiều cao cố định cho mỗi card */
+        border: 1px solid #ddd; /* Viền nhẹ cho card */
+        border-radius: 8px; /* Làm mượt các góc của card */
+    }
+
+    /* Đảm bảo khoảng cách giữa các thẻ p trong card */
+    .owl-carousel .card-body p {
+        text-align: left;
+        margin-top: 5px;
+        font-size: 16px;
+    }
+
+    /* Cấu hình cho carousel */
+    .related-carousel .owl-stage {
+        display: flex; /* Sử dụng Flexbox để các item nằm ngang */
+        flex-wrap: nowrap; /* Không cho phép các item xuống dòng */
+    }
+
+    .related-carousel .owl-nav {
+        display: none;
+    }
+
+    #topbanchay {
+        padding: 10px;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+

@@ -67,7 +67,7 @@
 
 <!-- Add New Admin Button -->
 <p>
-    @Html.ActionLink("Thêm ", "Create", null, new { @class = "action-link btn btn-dark" })
+    @Html.ActionLink("Thêm ", "Create", null, new { @class = " btn btn-dark rounded-sm" })
 </p>
 
 @if (Model != null && Model.Count > 0)
@@ -149,7 +149,6 @@ else
         Không có Admin nào trong hệ thống.
     </div>
 }
-
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
     $(document).ready(function () {

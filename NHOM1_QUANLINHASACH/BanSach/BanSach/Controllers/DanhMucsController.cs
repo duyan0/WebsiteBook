@@ -13,7 +13,7 @@ namespace BanSach.Controllers
 {
     public class DanhMucsController : Controller
     {
-        private dbSach db = new dbSach();
+        private readonly dbSach db = new dbSach();
 
         // Action PartialViewResult
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
@@ -24,8 +24,16 @@ namespace BanSach.Controllers
         }
         public ActionResult Index()
         {
-            return View(db.DanhMuc.ToList());
+            // Kiểm tra xem có dữ liệu trong danh mục không
+            var danhMucList = db.DanhMuc.ToList();
+            if (danhMucList == null || !danhMucList.Any())
+            {
+                // Nếu không có dữ liệu, log hoặc thông báo rõ ràng
+                ViewBag.Message = "Không có danh mục sản phẩm nào.";
+            }
+            return View(danhMucList);
         }
+
 
         // GET: DanhMucs/Details/5
         public ActionResult Details(int? id)

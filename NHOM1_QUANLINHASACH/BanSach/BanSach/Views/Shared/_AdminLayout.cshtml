@@ -43,8 +43,8 @@
                         <div class="navbar-nav ml-auto" id="admin">
                             @if (Session["IDkh"] != null)
                             {
-                                <a href="@Url.Action("InfoCustomer", "LoginUser")" class="nav-item nav-link text-white">Xin chào @Session["TenKH"]</a>
-                                <a href="@Url.Action("Logout", "LoginUser")" class="nav-item nav-link text-white">Đăng xuất</a>
+                                // Chuyển hướng đến trang đăng nhập nếu không đăng nhập
+                                Response.Redirect(Url.Action("LoginAccountCus", "LoginUser"));
                             }
                             else if (Session["IdQly"] != null)
                             {
@@ -72,7 +72,7 @@
                     @if (!string.IsNullOrEmpty(Session["Vaitro"] as string) &&
                         (Session["Vaitro"].ToString().Contains("Admin") || Session["Vaitro"].ToString().Contains("Quản lý chính")))
                     {
-                        <h2 class="font-weight-semi-bold text-center">Thư mục ADMIN</h2>
+                        <h2 class="font-weight-semi-bold text-center">Admin</h2>
                         <nav id="concard">
                             <a href="~/LoginUser/QuanTri" class="nav-item nav-link">Trang Chủ</a>
                             <a href="~/Admins/Index" class="nav-item nav-link">Quản lý nhân sự</a>
@@ -88,7 +88,7 @@
                     }
                     else
                     {
-                        <h2 class="font-weight-semi-bold text-center">Thư mục Nhân viên</h2>
+                        <h2 class="font-weight-semi-bold text-center">Nhân viên</h2>
                         <nav id="concard">
                             <a href="~/LoginUser/QuanTri" class="nav-item nav-link">Trang Chủ</a>
                             <a href="~/KhachHangs/Index" class="nav-item nav-link">Quản lý Khách hàng</a>

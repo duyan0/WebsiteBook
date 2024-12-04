@@ -1,9 +1,13 @@
-﻿@{
+﻿@model IEnumerable<BanSach.Models.DanhMuc>
+
+@{
     ViewBag.Title = "Quản lý Nhà Sách";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var temp = new BanSach.Models.DanhMuc();
+    var processedCategories = new HashSet<string>();
 }
 <style>
-    .carousel-inner, .carousel-inner a, .col-lg-3 .d-flex, #prv, #nxt {
+    .carousel-inner, .carousel-inner a, .col-lg-3 .d-flex {
         border-radius: 8px;
     }
 
@@ -18,6 +22,11 @@
     .img-fluid {
         border-radius: 10px;
     }
+
+    #nxt, #prv {
+        border-radius: 50%;
+        border: none;
+    }
 </style>
 
 <div id="header-carousel" class="carousel slide rounded-1" data-ride="carousel">
@@ -27,8 +36,6 @@
             <img class="img-fluid " src="https://placehold.co/1200x300" alt="Slide 1 - Giảm giá sách">
             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                 <div class="p-3" style="max-width: 700px;">
-                    <h4 class="text-light text-uppercase font-weight-medium mb-3">Siêu giảm giá</h4>
-                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Giá cả hợp lý</h3>
                     <a href="~/SanPhams/ProductList" class="btn btn-light py-2 px-3">Mua ngay</a>
                 </div>
             </div>
@@ -39,8 +46,6 @@
             <img class="img-fluid" src="https://placehold.co/1200x300" alt="Slide 2 - Giảm 100% cho sách chọn lọc">
             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                 <div class="p-3" style="max-width: 700px;">
-                    <h4 class="text-light text-uppercase font-weight-medium mb-3">Giảm 50% tặng miễn phí</h4>
-                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Giá cả hợp lý</h3>
                     <a href="~/SanPhams/ProductList" class="btn btn-light py-2 px-3">Mua ngay</a>
                 </div>
             </div>
@@ -49,8 +54,7 @@
             <img class="img-fluid" src="https://placehold.co/1200x300" alt="Slide 3 - Giảm 100% cho sách chọn lọc">
             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                 <div class="p-3" style="max-width: 700px;">
-                    <h4 class="text-light text-uppercase font-weight-medium mb-3">Giảm 50% tặng miễn phí</h4>
-                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Giá cả hợp lý</h3>
+
                     <a href="~/SanPhams/ProductList" class="btn btn-light py-2 px-3">Mua ngay</a>
                 </div>
             </div>
@@ -58,16 +62,16 @@
     </div>
 
     <!-- Carousel Controls -->
-    <a class="carousel-control-prev" href="#header-carousel" role="button" data-slide="prev">
+    <a class="carousel-control-prev justify-content-start" href="#header-carousel" role="button" data-slide="prev">
         <div class="btn btn-dark" style="width: 45px; height: 45px;" id="prv">
-            <span class="carousel-control-prev-icon mb-n2 justify-content-start" aria-hidden="true"></span>
+            <span class="carousel-control-prev-icon mb-n2 " aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
         </div>
     </a>
-    <a class="carousel-control-next" href="#header-carousel" role="button" data-slide="next">
-        <div class="btn btn-dark" style="width: 45px; height: 45px;" id="nxt">
-            <span class="carousel-control-next-icon mb-n2 justify-content-end" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
+    <a class="carousel-control-next justify-content-end" href="#header-carousel" role="button" data-slide="next">
+        <div class="btn btn-dark " style="width: 45px; height: 45px;" id="nxt">
+            <span class="carousel-control-next-icon mb-n2" aria-hidden="true"></span>
+            <span class="sr-only ">Next</span>
         </div>
     </a>
 </div>
@@ -109,60 +113,38 @@
 <div class="bg-success">
     <hr />
 </div>
-<div class="container-fluid  mt-2">
+@*----------------------------------------*@
+<div class="container-fluid mt-2">
     <h4 class="text-white">Danh mục sản phẩm</h4>
-    <div class="row">
-        <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2 mt-1 ">
-            <div class="card border-0 bg-dark ">
-                <a href="https://your-link.com">
-                    <img src="https://placehold.co/290x210" class="d-block rounded-1 img-fluid" alt="Slide 1">
-                </a>
-            </div>
-        </div>
 
-        <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2 mt-1 ">
-            <div class="card border-0 bg-dark ">
-                <a href="https://your-link.com">
-                    <img src="https://placehold.co/290x210" class="d-block rounded-1 img-fluid" alt="Slide 1">
-                </a>
-            </div>
-        </div>
-        <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2 mt-1 ">
-            <div class="card border-0 bg-dark ">
-                <a href="https://your-link.com">
-                    <img src="https://placehold.co/290x210" class="d-block rounded-1 img-fluid" alt="Slide 1">
-                </a>
-            </div>
-        </div>
-        <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2 mt-1 ">
-            <div class="card border-0 bg-dark ">
-                <a href="https://your-link.com">
-                    <img src="https://placehold.co/290x210" class="d-block rounded-1 img-fluid" alt="Slide 1">
-                </a>
-            </div>
-        </div>
-        <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2 mt-1 ">
-            <div class="card border-0 bg-dark ">
-                <a href="https://your-link.com">
-                    <img src="https://placehold.co/290x210" class="d-block rounded-1 img-fluid" alt="Slide 1">
-                </a>
-            </div>
-        </div>
-        <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2 mt-1 ">
-            <div class="card border-0 bg-dark ">
-                <a href="https://your-link.com">
-                    <img src="https://placehold.co/290x210" class="d-block rounded-1 img-fluid" alt="Slide 1">
-                </a>
-            </div>
-        </div>
+    <div class="row product-category-container  ">
+        @foreach (var item in Model.Take(8))
+        {
+            // Kiểm tra nếu danh mục chưa được xử lý và chưa có trong session
+            if (!processedCategories.Contains(item.DanhMuc1) && Session[item.DanhMuc1] == null)
+            {
+                // Thêm danh mục vào HashSet để tránh trùng lặp
+                processedCategories.Add(item.DanhMuc1);
+
+                <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2 mt-1">
+                    <div class="card border-0 bg-dark">
+                        <a href="~/SanPhams/Productlist/@item.TheLoai">
+                            <img src="https://placehold.co/290x210" class="d-block rounded-1 img-fluid" alt="Slide 1">
+                            <p class=" text-white text-center mt-1" style="font-size:14px;">@item.DanhMuc1</p>
+                        </a>
+                    </div>
+                </div>
+            }
+        }
     </div>
 </div>
-
-
-@Html.Action("TopBanChay", "DonHangCTs")
-<div>
-    @Html.Action("RecentOrders", "DonHangCTs")
+<div class="bg-success">
+    <hr />
 </div>
+@Html.Action("TopBanChay", "DonHangCTs")
+
+@Html.Action("RecentOrders", "DonHangCTs")
+
 
 
 

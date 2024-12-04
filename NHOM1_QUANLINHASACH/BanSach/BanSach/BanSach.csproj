@@ -230,7 +230,6 @@
     <Compile Include="Controllers\SanPhamsController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\TacGiaController.cs" />
-    <Compile Include="Controllers\VNPAYClient.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -320,9 +319,11 @@
     <Content Include="Content\css\khachhang.css" />
     <Content Include="Content\css\layout.css" />
     <Content Include="Content\css\ProductList.css" />
+    <Content Include="Content\css\Recent.css" />
     <Content Include="Content\css\Shoppingcart.css" />
     <Content Include="Content\css\style.min.css" />
     <Content Include="Content\css\topbanchay.css" />
+    <Content Include="Content\css\trangsp.css" />
     <Content Include="Content\img\1 %281%29.jpg" />
     <Content Include="Content\img\1 %282%29.jpg" />
     <Content Include="Content\img\cobanc#.jpg" />
@@ -596,6 +597,7 @@
     <Content Include="Views\DonHangCTs\RecentOrders.cshtml" />
     <Content Include="Views\Shared\Maintenance.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\ShoppingCart\CheckOut_Failed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

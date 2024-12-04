@@ -154,12 +154,13 @@ namespace BanSach.Controllers
                                 NamePro = gr.Key.namePro,
                                 ImgPro = gr.Key.imgPro,
                                 price = (decimal)gr.Key.price,
-                                Sum_Quantity = gr.Sum(d => d.SoLuong)
+                                Sum_Quantity = gr.Sum(d => d.SoLuong) // Tổng số lượng bán của sản phẩm
                             })
                             .ToList();
 
             return PartialView(query);
         }
+
 
         public ActionResult ExportOrderDetailsToExcel(int? id)
         {
@@ -276,6 +277,39 @@ namespace BanSach.Controllers
 
             return PartialView("RecentOrders", recentOrders);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RemoveAll()
+        {
+            try
+            {
+                // Lấy danh sách tất cả các sản phẩm có trạng thái "Hết hàng"
+                var pdhethang = db.SanPham.Where(dh => dh.TrangThaiSach == "Hết hàng").ToList();
+
+                foreach (var donHang in pdhethang)
+                {
+                    // Xóa các chi tiết đơn hàng có liên quan
+                    var chiTietDonHangs = db.DonHangCT.Where(ct => ct.IDSanPham == donHang.IDsp).ToList();
+                    foreach (var chiTiet in chiTietDonHangs)
+                    {
+                        db.DonHangCT.Remove(chiTiet);  // Xóa chi tiết đơn hàng
+                    }
+
+                    // Sau khi xóa chi tiết đơn hàng, xóa sản phẩm
+                    db.SanPham.Remove(donHang);
+                }
+
+                db.SaveChanges();
+                TempData["SuccessMessage"] = "Tất cả các sản phẩm hết hàng đã được xóa.";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Đã xảy ra lỗi khi xóa các sản phẩm hết hàng: " + ex.Message;
+            }
+
+            return RedirectToAction("Index");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

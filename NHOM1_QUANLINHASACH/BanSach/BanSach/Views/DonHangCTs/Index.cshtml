@@ -82,6 +82,13 @@
             </div>
         </div>
     }
+    @using (Html.BeginForm("RemoveAll", "DonHangCTs", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <button type="submit" class="btn btn-danger">Xóa tất cả sản phẩm hết hàng</button>
+    }
+
 </div>
 <div class="text-left mb-3 mt-3 text-dark font-weight-bold">
     <p>Tổng số Chi tiết đơn hàng: @Model.TotalItemCount</p>

@@ -223,6 +223,7 @@ namespace BanSach.Controllers
         }
         public ActionResult LichSuDonHang(int? page)
         {
+            // Lấy ID khách hàng từ session
             int? currentCustomerId = Session["IDkh"] as int?;
 
             if (!currentCustomerId.HasValue)
@@ -230,21 +231,36 @@ namespace BanSach.Controllers
                 return RedirectToAction("LoginAccountCus", "LoginUser");
             }
 
-            // Truy vấn đơn hàng và sắp xếp theo ngày đặt hàng giảm dần
+            // Truy vấn các đơn hàng của khách hàng và phân loại theo trạng thái
             var orders = db.DonHang
                 .Where(dh => dh.IDkh == currentCustomerId.Value)
                 .OrderByDescending(dh => dh.NgayDatHang) // Sắp xếp theo ngày đặt hàng giảm dần
-                .Include(dh => dh.DonHangCT)
+                .Include(dh => dh.DonHangCT) // Bao gồm các chi tiết đơn hàng
                 .ToList();
 
+            // Phân loại đơn hàng theo trạng thái
+            var confirmedOrders = orders.Where(dh => dh.TrangThai == "Đã xác nhận").ToList();
+            var pendingOrders = orders.Where(dh => dh.TrangThai == "Chờ xử lý").ToList();
+            var canceledOrders = orders.Where(dh => dh.TrangThai == "Đã huỷ").ToList();
+            var receivedOrders = orders.Where(dh => dh.TrangThai == "Đã nhận hàng").ToList();
+
+            // Gộp lại theo trạng thái và sắp xếp theo ngày đặt hàng giảm dần
+            var allOrders = confirmedOrders.Concat(pendingOrders)
+                                            .Concat(canceledOrders)
+                                            .Concat(receivedOrders)
+                                            .OrderByDescending(dh => dh.NgayDatHang)
+                                            .ToList();
+
+            // Phân trang
             int pageSize = 10; // Số đơn hàng mỗi trang
             int pageNumber = (page ?? 1);
 
             // Chuyển đổi từ List sang IPagedList
-            var pagedOrders = orders.ToPagedList(pageNumber, pageSize);
+            var pagedOrders = allOrders.ToPagedList(pageNumber, pageSize);
 
             return View(pagedOrders);
         }
+
 
 
 

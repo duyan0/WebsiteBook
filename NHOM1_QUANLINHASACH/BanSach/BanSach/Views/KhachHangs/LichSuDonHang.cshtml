@@ -75,17 +75,17 @@
                             <td>
                                 @if (order.GetTongSoTien() > 0)
                                 {
-                                    <a href="@Url.Action("DetailsKH", "DonHangCTs", new { id = order.IDdh })" class="btn btn-success btn-sm rounded-sm btn-fixed-sizee">Xem chi tiết</a>
+                                    <a href="@Url.Action("DetailsKH", "DonHangCTs", new { id = order.IDdh })" class="btn btn-success btn-sm rounded-sm btn-fixed-sizee">Xem</a>
                                 }
                                 @if (order.TrangThai == "Đã xác nhận")
                                 {
-                                    <a href="@Url.Action("DaNhanHang", "DonHangs", new { id = order.IDdh })" class="btn btn-danger btn-sm rounded-sm ml-2 btn-fixed-sizee">Đã nhận hàng</a>
+                                    <a href="@Url.Action("DaNhanHang", "DonHangs", new { id = order.IDdh })" class="btn btn-warning btn-sm rounded-sm ml-2 btn-fixed-sizee">Đã nhận</a>
                                 }
                                 @if (order.TrangThai == "Chờ xử lý")
                                 {
                                     <form action="@Url.Action("HuyDonHang", "KhachHangs")" method="post" class="d-inline">
                                         <input type="hidden" name="orderId" value="@order.IDdh" />
-                                        <button type="submit" class="btn btn-danger btn-sm rounded-sm ml-2 btn-fixed-sizee">Hủy đơn</button>
+                                        <button type="submit" class="btn btn-danger btn-sm rounded-sm ml-2 btn-fixed-sizee">Hủy</button>
                                     </form>
                                 }
                             </td>

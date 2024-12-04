@@ -1,97 +1,79 @@
 ﻿@model IEnumerable<BanSach.Models.ViewModel>
-<style>
-    .card a:hover {
-        text-decoration: none;
-    }
-</style>
-<div class="container-fluid py-5 mb-3">
-    <div class="text-center mb-4">
-        <h2 class="px-5">
-            <span class="px-2" style="font-weight:bold;color:white;">Sản phẩm bán chạy</span>
-        </h2>
-    </div>
-    <div class="row px-xl-5">
-        <div class="col">
-            <div class="owl-carousel related-carousel">
+
+<div class="container-fluid">
+    <p class="text-center text-white font-weight-bold mb-3"style="font-size: 26px;">Sản phẩm bán chạy</p>
+
+    <!-- Cấu trúc để chia carousel thành 6 cột -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="owl-carousel related-carousel owl-theme">
                 @foreach (var i in Model)
                 {
-                    <div class="card product-item" style="border-radius:20px;outline:0;">
-                        <a href="~/SanPhams/TrangSP/@i.IdPro">
-                            <div class="card-header product-img position-relative overflow-hidden bg-transparent rounded-circle">
-                                <img class="img-fluid w-100" src="~/Content/img/@i.ImgPro" alt="">
-                            </div>
-                            <div class="card-body text-center p-0 pt-4 pb-3">
-                                <h6 class="text-truncate mb-3" style="max-width: 150px;" title="@i.NamePro">@Html.DisplayFor(model => i.NamePro)</h6>
-                                <div class="d-flex justify-content-center">
-                                    <p class="font-weight-bold" style="color:red;">
-                                        @($"{i.price:#,##0} VND")
+                    <div class="item">
+                        <div class="card bg-white" style="max-height: 330px; min-height: 300px; max-width: 300px; ">
+                            <a href="~/SanPhams/TrangSP/@i.IdPro" style="text-decoration:none;">
+                                <div class="card-body" id="topbanchay">
+                                    <img src="https://placehold.co/250x200" alt="@Html.DisplayFor(model => i.NamePro)" id="img" class="text-center">
+                                    <p class="text-left text-dark text-truncate"title="@i.NamePro">@i.NamePro</p>
+                                    <p style="color:red;" class="font-weight-bold text-left"title="@i.price">
+                                        @string.Format("{0:N0} VND", i.price)
                                     </p>
+                                    <p class="text-center mt-2 text-white text-truncate bg-danger" style="border-radius:10px;font-size:14px;"title="@i.Sum_Quantity">Đã bán: @i.Sum_Quantity</p>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                     </div>
                 }
             </div>
         </div>
     </div>
 </div>
-
+<div class="bg-secondary">
+    <hr />
+</div>
 
 <style>
-    .card a:hover {
-        text-decoration: none !important;
-        border-radius: 5rem;
+    
+    /* Cấu hình cho owl-carousel */
+    .owl-carousel .item {
+        width: 100%; /* Mỗi item chiếm 1/6 chiều rộng của container (6 items trên 1 hàng) */
+        padding: 5px; /* Thêm khoảng cách giữa các item */
+        box-sizing: border-box; /* Đảm bảo padding không làm ảnh hưởng đến chiều rộng */
     }
 
-    .product-item {
-        border-radius: 20px !important; /* Rounded corners for the product card */
-        transition: transform 0.2s !important; /* Add smooth transition for hover */
-        display: flex; /* Use flexbox to center content */
-        flex-direction: column; /* Arrange content vertically */
-        align-items: center; /* Center horizontally */
-        justify-content: center; /* Center vertically */
-        padding: 20px; /* Add some padding to ensure content is not touching edges */
+    /* Cố định chiều cao cho các hình ảnh */
+    #img {
+        max-height: 200px; /* Cố định chiều cao cho hình ảnh */
+        max-width: 250px;  /* Đảm bảo hình ảnh không bị méo */
+        border-radius: 8px; /* Làm mượt các góc của ảnh */
     }
 
-        .product-item:hover { /* Slight zoom effect on hover */
-            transform: scale(1.05) !important; /* Zoom effect */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
-        }
-
-    .product-img {
-        text-align: center;
-        /* Ensure the image is centered within the container */
-        width: 200px !important; /* Set a fixed width for the container */
-        height: 200px !important; /* Set a fixed height for the container */
-        display: flex; /* Use flexbox to center image */
-        align-items: center; /* Center image vertically */
-        justify-content: center; /* Center image horizontally */
-        border: none;
+    /* Cố định chiều cao cho các card */
+    .owl-carousel .card {
+        height: 330px; /* Chiều cao cố định cho mỗi card */
+        border: 1px solid #ddd; /* Viền nhẹ cho card */
+        border-radius: 8px; /* Làm mượt các góc của card */
     }
 
-        .product-img img {
-            width: 200px !important; /* Match the fixed width of the container */
-            height: 200px !important; /* Match the fixed height of the container */
-            object-fit: cover !important; /* Crop the image to fit without distortion */
-            border-radius: 10px !important; /* Rounded corners for the image */
-        }
-
-    .card-body {
-        text-align: left; /* Căn lề trái cho toàn bộ card-body */
-        padding-left: 10px; /* Thêm một ít khoảng cách từ lề trái nếu cần thiết */
+    /* Đảm bảo khoảng cách giữa các thẻ p trong card */
+    .owl-carousel .card-body p {
+        text-align: left;
+        margin-top: 5px;
+        font-size: 16px;
     }
 
-        .card-body h6 {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 150px; /* Điều chỉnh chiều rộng tối đa của văn bản */
-        }
+    /* Cấu hình cho carousel */
+    .related-carousel .owl-stage {
+        display: flex; /* Sử dụng Flexbox để các item nằm ngang */
+        flex-wrap: nowrap; /* Không cho phép các item xuống dòng */
+    }
 
-        .card-body p {
-            margin: 0; /* Đảm bảo không có khoảng cách giữa các phần tử */
-            padding-left: 10px;
-            font-size: 1.2rem; /* Kích thước font chữ cho giá */
-        }
-
+    .related-carousel .owl-nav {
+        display: none; 
+    }
+    #topbanchay{
+        padding:10px;
+        width:100%;
+        height:100%;
+    }
 </style>

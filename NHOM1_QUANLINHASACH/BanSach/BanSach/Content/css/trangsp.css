@@ -1,0 +1,246 @@
+﻿/* Cấu hình cho .left và .right */
+.left, .right {
+    padding: 20px 0;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column; /* Đảm bảo các phần tử nằm theo chiều dọc */
+}
+
+.left {
+    flex: 0;
+    max-height: 100%;
+    max-width: 100%;
+    transition: transform 0.3s;
+    margin-right: 10px; /* Thêm khoảng cách 10px giữa .left và .right */
+}
+
+.right {
+    flex: 2;
+    color: #333;
+    max-width: 100%;
+}
+
+
+/* Cấu hình cho ảnh sản phẩm */
+.anh img {
+    width: 400px; /* Đảm bảo ảnh có kích thước cố định */
+    height: 480px;
+    object-fit: cover; /* Đảm bảo ảnh không bị méo và nằm đúng vị trí */
+    align-self: center; /* Căn giữa ảnh */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Cấu hình cho các nút */
+.nut {
+    text-align: left;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    flex-wrap: nowrap; /* Không cho phép xuống dòng để các nút nằm cùng một hàng */
+    align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+    .nut a {
+        border: 2px solid #c92127;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s, transform 0.3s ease;
+        padding: 15px 30px;
+        font-size: 1rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        white-space: nowrap; /* Đảm bảo nội dung không bị ngắt dòng */
+        flex: 1; /* Đảm bảo các nút có chiều rộng bằng nhau */
+        justify-content: center; /* Căn giữa nội dung nút */
+    }
+
+/* Cấu hình cho nút "Thêm" */
+#nut1 {
+    color: #c92127;
+    background-color: white;
+}
+
+    #nut1:hover {
+        background-color: #c92127;
+        color: white;
+    }
+
+/* Cấu hình cho nút "Mua ngay" */
+#nut2 {
+    background-color: #c92127;
+    color: white;
+}
+
+    #nut2:hover {
+        background-color: #a81d22;
+    }
+
+/* Cấu hình cho thông báo */
+#notification {
+    display: none;
+    position: fixed;
+    top: 10%;
+    right: 5%;
+    background-color: #4caf50;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+    #notification.show {
+        display: block;
+        opacity: 1;
+    }
+
+    #notification.hide {
+        opacity: 0;
+    }
+
+/* Cấu hình chi tiết sản phẩm */
+.product-details {
+    margin-top: 20px;
+}
+
+.product-details-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .product-details-table td {
+        padding: 10px 5px;
+        font-size: 1.1em;
+        vertical-align: top;
+        border-bottom: 1px solid #ddd; /* Thêm đường gạch dưới cho từng hàng để dễ phân biệt */
+    }
+
+    .product-details-table .label {
+        font-weight: bold;
+        width: 30%;
+        color: white;
+    }
+
+    .product-details-table .value {
+        color: white;
+    }
+
+/* Cấu hình giá sản phẩm */
+.price-container {
+    margin-top: 15px;
+}
+
+.price {
+    color: #c92127;
+    letter-spacing: 2px;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: #999;
+    font-weight: normal;
+    font-size: 1em;
+}
+
+.discount-price {
+    color: #e74c3c;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 992px) {
+    /* Khi màn hình nhỏ hơn 992px (ví dụ tablet) */
+    .left, .right {
+        padding: 15px;
+        gap: 5px;
+    }
+
+    .anh img {
+        width: 100%;
+        height: auto;
+        max-width: 400px; /* Giới hạn chiều rộng ảnh */
+    }
+
+    .nut {
+        flex-direction: column; /* Đặt các nút dưới nhau trên màn hình nhỏ */
+        justify-content: center;
+    }
+
+        .nut a {
+            width: 100%; /* Các nút sẽ chiếm toàn bộ chiều rộng */
+            margin-bottom: 10px;
+        }
+}
+
+@media (max-width: 768px) {
+    /* Khi màn hình nhỏ hơn 768px (ví dụ smartphone) */
+    .left, .right {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .anh img {
+        width: 100%;
+        height: 300px; /* Điều chỉnh chiều cao của ảnh cho phù hợp với màn hình nhỏ */
+    }
+
+    .nut a {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+
+    .product-details-table td {
+        font-size: 0.9em;
+        padding: 8px 4px;
+    }
+
+    .price {
+        font-size: 1.3em;
+    }
+
+    .old-price {
+        font-size: 0.9em;
+    }
+
+    .discount-price {
+        font-size: 1.3em;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Khi màn hình nhỏ hơn 480px (ví dụ điện thoại nhỏ) */
+    .anh img {
+        width: 100%;
+        height: 250px; /* Điều chỉnh chiều cao ảnh cho các màn hình điện thoại nhỏ */
+    }
+
+    .nut a {
+        padding: 10px 15px;
+        font-size: 0.8rem;
+    }
+
+    .price {
+        font-size: 1.2em;
+    }
+
+    .product-details-table td {
+        font-size: 0.8em;
+        padding: 6px 3px;
+    }
+}
