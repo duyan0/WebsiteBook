@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Đăng ký thành công";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: #1f1f20;
+        color: #fff;
+    }
+
+    .success-container {
+        background-color: #2a2a2c;
+        border-radius: 15px;
+        padding: 50px;
+        max-width: 700px;
+        margin: 60px auto;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+
+    h2.text-success {
+        color: #fff;
+        margin-bottom: 25px;
+        font-size: 2em;
+    }
+
+    .mmm {
+        padding: 25px 0;
+    }
+
+        .mmm a {
+            margin: 20px;
+            background-color: green;
+            padding: 18px 30px;
+            color: white;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1em;
+        }
+
+            .mmm a:hover {
+                background-color: #138496;
+                text-decoration: none;
+                transform: translateY(-5px);
+                box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+            }
+</style>
+
+<div class="success-container">
+    <h2 class="text-white">🎉 Đăng ký tài khoản thành công 🎉</h2>
+    <div class="mmm">
+        @Html.ActionLink("🛍 Tiếp tục mua hàng", "ProductList", "SanPhams", null, new { @class = "btn btn-success" })
+        @Html.ActionLink("🛒 Đi đến giỏ hàng", "ShowCart", "ShoppingCart", null, new { @class = "btn btn-success" })
+    </div>
+</div>

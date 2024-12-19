@@ -7,6 +7,8 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -16,7 +18,7 @@ namespace BanSach.Controllers
 
     public class KhachHangsController : Controller
     {
-        private dbSach db = new dbSach();
+        private readonly db_book1 db = new db_book1();
         public ActionResult LoginCus()
         {
             return View();
@@ -231,7 +233,7 @@ namespace BanSach.Controllers
                 return RedirectToAction("LoginAccountCus", "LoginUser");
             }
 
-            // Truy vấn các đơn hàng của khách hàng và phân loại theo trạng thái
+            // Truy vấn các đơn hàng của khách hàng
             var orders = db.DonHang
                 .Where(dh => dh.IDkh == currentCustomerId.Value)
                 .OrderByDescending(dh => dh.NgayDatHang) // Sắp xếp theo ngày đặt hàng giảm dần
@@ -244,12 +246,15 @@ namespace BanSach.Controllers
             var canceledOrders = orders.Where(dh => dh.TrangThai == "Đã huỷ").ToList();
             var receivedOrders = orders.Where(dh => dh.TrangThai == "Đã nhận hàng").ToList();
 
-            // Gộp lại theo trạng thái và sắp xếp theo ngày đặt hàng giảm dần
-            var allOrders = confirmedOrders.Concat(pendingOrders)
-                                            .Concat(canceledOrders)
-                                            .Concat(receivedOrders)
-                                            .OrderByDescending(dh => dh.NgayDatHang)
-                                            .ToList();
+            // Gộp lại theo trạng thái đã phân loại
+            var allOrders = confirmedOrders
+                .Concat(pendingOrders)
+                .Concat(canceledOrders)
+                .Concat(receivedOrders)
+                .ToList();
+
+            // Sắp xếp theo ngày đặt hàng giảm dần
+            allOrders = allOrders.OrderByDescending(dh => dh.NgayDatHang).ToList();
 
             // Phân trang
             int pageSize = 10; // Số đơn hàng mỗi trang
@@ -261,36 +266,28 @@ namespace BanSach.Controllers
             return View(pagedOrders);
         }
 
-
-
-
         [HttpPost]
-        public async Task<ActionResult> HuyDonHang(int orderId)
+        public ActionResult Cancel(int? id)  // Thay thế kiểu Int32 bằng kiểu nullable Int32
         {
-            int? currentCustomerId = Session["IDkh"] as int?;
-
-            if (!currentCustomerId.HasValue)
+            if (!id.HasValue)  // Kiểm tra nếu id không được truyền
             {
-                return RedirectToAction("LoginAccountCus", "LoginUser");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Invalid order ID.");
             }
 
-            // Tìm đơn hàng theo ID và kiểm tra quyền sở hữu
-            var order = await db.DonHang.FirstOrDefaultAsync(dh => dh.IDdh == orderId && dh.IDkh == currentCustomerId.Value);
-
-            if (order == null)
+            var donHang = db.DonHang.Find(id.Value);
+            if (donHang == null)
             {
-                return HttpNotFound(); // Hoặc hiển thị thông báo lỗi phù hợp
+                return HttpNotFound();
             }
 
-            // Cập nhật trạng thái đơn hàng thành "Canceled"
-            order.TrangThai = "Đã hủy";
+            donHang.TrangThai = "Đã huỷ"; // Cập nhật trạng thái đơn hàng
+            db.Entry(donHang).State = EntityState.Modified; // Đánh dấu đơn hàng là đã sửa đổi
+            db.SaveChanges(); // Lưu thay đổi
 
-            // Lưu thay đổi vào cơ sở dữ liệu
-            await db.SaveChangesAsync();
-
-            // Quay lại lịch sử đơn hàng
-            return RedirectToAction("LichSuDonHang");
+            return RedirectToAction("LichSuDonHang"); // Chuyển hướng về trang danh sách đơn hàng
         }
+
+
         public async Task<ActionResult> ExportToExcel()
         {
             int? currentCustomerId = Session["IDkh"] as int?;
@@ -385,6 +382,72 @@ namespace BanSach.Controllers
 
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        // Action để xử lý việc đổi mật khẩu
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Kiểm tra xem UserId có tồn tại trong Session không
+                if (Session["IDkh"] == null)
+                {
+                    // Nếu không có UserId trong session, chuyển hướng đến trang đăng nhập
+                    return RedirectToAction("LoginAccountCus", "LoginUser");
+                }
+
+                int userId = (int)Session["IDkh"];
+                var user = db.KhachHang.SingleOrDefault(kh => kh.IDkh == userId);
+
+
+                if (user != null)
+                {
+                    // Kiểm tra mật khẩu hiện tại
+                    if (user.MKhau != model.CurrentPassword)
+                    {
+                        ModelState.AddModelError("CurrentPassword", "Mật khẩu hiện tại không đúng.");
+                        return View(model);
+                    }
+
+                    // Kiểm tra mật khẩu mới và xác nhận mật khẩu mới
+                    if (model.NewPassword != model.ConfirmNewPassword)
+                    {
+                        ModelState.AddModelError("ConfirmNewPassword", "Mật khẩu mới và xác nhận mật khẩu không khớp.");
+                        return View(model);
+                    }
+
+                    // Cập nhật mật khẩu mới
+                    // Cập nhật mật khẩu mới
+                    user.MKhau = model.NewPassword;
+                    // Lưu thay đổi vào cơ sở dữ liệu
+                    db.SaveChanges();
+
+                    TempData["SuccessMessage"] = "Mật khẩu đã được thay đổi thành công!";
+                    return RedirectToAction("Profile"); // Chuyển hướng đến trang thông tin cá nhân của người dùng
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Không tìm thấy người dùng.");
+                }
+            }
+
+            return View(model);
+        }
+        public static string HashPassword(string password)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

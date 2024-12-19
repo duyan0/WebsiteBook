@@ -17,7 +17,7 @@ namespace BanSach.Controllers
 {
     public class DonHangCTsController : Controller
     {
-        private readonly dbSach db = new dbSach();
+        private readonly db_book1 db = new db_book1();
         public ActionResult Index(string searchString, int? page)
         {
             // Lấy chi tiết đơn hàng cùng với thông tin đơn hàng và sản phẩm liên quan
@@ -101,13 +101,13 @@ namespace BanSach.Controllers
             ViewBag.OrderDetails = donHangCTs.FirstOrDefault().DonHang;
 
             // Tính tổng giá trị của đơn hàng
-            // Tính tổng giá trị của đơn hàng
             decimal totalAmount = donHangCTs.Sum(ct => ct.SoLuong * (decimal?)(ct.Gia ?? 0.0) ?? 0m);
             ViewBag.TotalAmount = totalAmount;
 
             // Trả về view với danh sách chi tiết đơn hàng
             return View(donHangCTs);
         }
+
 
 
         public ActionResult Delete(int? id)
@@ -134,11 +134,12 @@ namespace BanSach.Controllers
         }
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         [ChildActionOnly]
-        public PartialViewResult TopBanChay()
+        public PartialViewResult TopBanChay(int categoryId)
         {
-            // Lọc và nhóm sản phẩm theo ID và thông tin liên quan
+            // Lọc và nhóm sản phẩm theo ID, nhưng chỉ lấy sản phẩm thuộc một loại cụ thể
             var query = db.DonHangCT
                             .Include(d => d.SanPham)
+                            .Where(d => d.SanPham.TheLoai == categoryId) // Lọc theo loại sản phẩm
                             .GroupBy(d => new
                             {
                                 idPro = d.IDSanPham,
@@ -160,6 +161,7 @@ namespace BanSach.Controllers
 
             return PartialView(query);
         }
+
 
 
         public ActionResult ExportOrderDetailsToExcel(int? id)
@@ -263,7 +265,7 @@ namespace BanSach.Controllers
                 .Include(d => d.DonHang)
                 .Where(d => d.DonHang.TrangThai == "Đã nhận hàng" || d.DonHang.TrangThai == "Đã xác nhận")
                 .OrderByDescending(d => d.DonHang.NgayDatHang)
-                .Take(10) // Lấy 100 đơn hàng mới nhất
+                .Take(1) // Lấy 100 đơn hàng mới nhất
                 .Select(d => new RecentOrderViewModel
                 {
                     Id = d.SanPham.IDsp,
@@ -308,6 +310,29 @@ namespace BanSach.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddDanhGia(int id, int idSanPham, string danhgia)
+        {
+            // Tìm chi tiết đơn hàng theo ID đơn hàng và sản phẩm
+            var donHangCT = db.DonHangCT
+                .FirstOrDefault(d => d.IDDonHang == id && d.IDSanPham == idSanPham);
+
+            if (donHangCT == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Cập nhật đánh giá cho chi tiết đơn hàng
+            donHangCT.DanhGia = danhgia;
+            db.SaveChanges();
+
+            // Thêm thông báo thành công
+            TempData["SuccessMessage"] = "Đánh giá của bạn đã được cập nhật.";
+
+            // Quay lại trang chi tiết đơn hàng
+            return RedirectToAction("DetailsKH", new { ID = id });
         }
 
         protected override void Dispose(bool disposing)

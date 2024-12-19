@@ -1,438 +1,3 @@
-E:\LTW\BanSach\BanSach\BanSach\bin\BanSach.dll.config
-E:\LTW\BanSach\BanSach\BanSach\bin\BanSach.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\BanSach.pdb
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\csc.exe
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\csc.exe.config
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\csc.rsp
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\csi.exe
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\csi.exe.config
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\csi.rsp
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\Microsoft.CSharp.Core.targets
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\Microsoft.Managed.Core.targets
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\Microsoft.VisualBasic.Core.targets
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\Microsoft.Win32.Primitives.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.AppContext.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.Collections.Immutable.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.Console.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.Diagnostics.StackTrace.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.Globalization.Calendars.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.IO.Compression.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.IO.Compression.ZipFile.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.IO.FileSystem.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.IO.FileSystem.Primitives.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.Net.Http.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.Net.Sockets.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.Reflection.Metadata.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.Encoding.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.Primitives.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.Text.Encoding.CodePages.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.Threading.Tasks.Extensions.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.ValueTuple.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.Xml.ReaderWriter.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.Xml.XmlDocument.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.Xml.XPath.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\System.Xml.XPath.XDocument.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\vbc.exe
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\vbc.exe.config
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\vbc.rsp
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\VBCSCompiler.exe
-E:\LTW\BanSach\BanSach\BanSach\bin\roslyn\VBCSCompiler.exe.config
-E:\LTW\BanSach\BanSach\BanSach\bin\Antlr3.Runtime.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\Microsoft.Web.Infrastructure.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\Newtonsoft.Json.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\System.Web.Helpers.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\System.Web.Mvc.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\System.Web.Optimization.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\System.Web.Razor.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\System.Web.WebPages.Deployment.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\System.Web.WebPages.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\System.Web.WebPages.Razor.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\WebGrease.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\System.Web.Helpers.xml
-E:\LTW\BanSach\BanSach\BanSach\bin\System.Web.Mvc.xml
-E:\LTW\BanSach\BanSach\BanSach\bin\System.Web.Optimization.xml
-E:\LTW\BanSach\BanSach\BanSach\bin\System.Web.Razor.xml
-E:\LTW\BanSach\BanSach\BanSach\bin\System.Web.WebPages.xml
-E:\LTW\BanSach\BanSach\BanSach\bin\System.Web.WebPages.Deployment.xml
-E:\LTW\BanSach\BanSach\BanSach\bin\System.Web.WebPages.Razor.xml
-E:\LTW\BanSach\BanSach\BanSach\bin\Newtonsoft.Json.xml
-E:\LTW\BanSach\BanSach\BanSach\bin\Antlr3.Runtime.pdb
-E:\LTW\BanSach\BanSach\BanSach\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-E:\LTW\BanSach\BanSach\BanSach\obj\Debug\BanSach.csproj.AssemblyReference.cache
-E:\LTW\BanSach\BanSach\BanSach\obj\Debug\BanSach.csproj.CoreCompileInputs.cache
-E:\LTW\BanSach\BanSach\BanSach\obj\Debug\BanSach.csproj.CopyComplete
-E:\LTW\BanSach\BanSach\BanSach\obj\Debug\BanSach.dll
-E:\LTW\BanSach\BanSach\BanSach\obj\Debug\BanSach.pdb
-E:\LTW\BanSach\BanSach\BanSach\bin\EntityFramework.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\EntityFramework.SqlServer.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\EntityFramework.xml
-E:\LTW\BanSach\BanSach\BanSach\bin\EntityFramework.SqlServer.xml
-E:\LTW\BanSach\BanSach\BanSach\bin\PagedList.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\PagedList.Mvc.dll
-E:\LTW\BanSach\BanSach\BanSach\bin\PagedList.xml
-E:\LTW\BanSach\BanSach\BanSach\bin\PagedList.Mvc.xml
-D:\BanSach\BanSach\obj\Debug\BanSach.csproj.AssemblyReference.cache
-D:\BanSach\BanSach\obj\Debug\BanSach.csproj.CoreCompileInputs.cache
-D:\BanSach\BanSach\obj\Debug\BanSach.dll
-D:\BanSach\BanSach\obj\Debug\BanSach.pdb
-D:\BanSach\BanSach\bin\BanSach.dll.config
-D:\BanSach\BanSach\bin\BanSach.dll
-D:\BanSach\BanSach\bin\BanSach.pdb
-D:\BanSach\BanSach\bin\roslyn\csc.exe
-D:\BanSach\BanSach\bin\roslyn\csc.exe.config
-D:\BanSach\BanSach\bin\roslyn\csc.rsp
-D:\BanSach\BanSach\bin\roslyn\csi.exe
-D:\BanSach\BanSach\bin\roslyn\csi.exe.config
-D:\BanSach\BanSach\bin\roslyn\csi.rsp
-D:\BanSach\BanSach\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-D:\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-D:\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-D:\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.dll
-D:\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-D:\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-D:\BanSach\BanSach\bin\roslyn\Microsoft.CSharp.Core.targets
-D:\BanSach\BanSach\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-D:\BanSach\BanSach\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-D:\BanSach\BanSach\bin\roslyn\Microsoft.Managed.Core.targets
-D:\BanSach\BanSach\bin\roslyn\Microsoft.VisualBasic.Core.targets
-D:\BanSach\BanSach\bin\roslyn\Microsoft.Win32.Primitives.dll
-D:\BanSach\BanSach\bin\roslyn\System.AppContext.dll
-D:\BanSach\BanSach\bin\roslyn\System.Collections.Immutable.dll
-D:\BanSach\BanSach\bin\roslyn\System.Console.dll
-D:\BanSach\BanSach\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
-D:\BanSach\BanSach\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-D:\BanSach\BanSach\bin\roslyn\System.Diagnostics.StackTrace.dll
-D:\BanSach\BanSach\bin\roslyn\System.Globalization.Calendars.dll
-D:\BanSach\BanSach\bin\roslyn\System.IO.Compression.dll
-D:\BanSach\BanSach\bin\roslyn\System.IO.Compression.ZipFile.dll
-D:\BanSach\BanSach\bin\roslyn\System.IO.FileSystem.dll
-D:\BanSach\BanSach\bin\roslyn\System.IO.FileSystem.Primitives.dll
-D:\BanSach\BanSach\bin\roslyn\System.Net.Http.dll
-D:\BanSach\BanSach\bin\roslyn\System.Net.Sockets.dll
-D:\BanSach\BanSach\bin\roslyn\System.Reflection.Metadata.dll
-D:\BanSach\BanSach\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
-D:\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-D:\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.Encoding.dll
-D:\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.Primitives.dll
-D:\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-D:\BanSach\BanSach\bin\roslyn\System.Text.Encoding.CodePages.dll
-D:\BanSach\BanSach\bin\roslyn\System.Threading.Tasks.Extensions.dll
-D:\BanSach\BanSach\bin\roslyn\System.ValueTuple.dll
-D:\BanSach\BanSach\bin\roslyn\System.Xml.ReaderWriter.dll
-D:\BanSach\BanSach\bin\roslyn\System.Xml.XmlDocument.dll
-D:\BanSach\BanSach\bin\roslyn\System.Xml.XPath.dll
-D:\BanSach\BanSach\bin\roslyn\System.Xml.XPath.XDocument.dll
-D:\BanSach\BanSach\bin\roslyn\vbc.exe
-D:\BanSach\BanSach\bin\roslyn\vbc.exe.config
-D:\BanSach\BanSach\bin\roslyn\vbc.rsp
-D:\BanSach\BanSach\bin\roslyn\VBCSCompiler.exe
-D:\BanSach\BanSach\bin\roslyn\VBCSCompiler.exe.config
-D:\BanSach\BanSach\bin\Antlr3.Runtime.dll
-D:\BanSach\BanSach\bin\EntityFramework.dll
-D:\BanSach\BanSach\bin\EntityFramework.SqlServer.dll
-D:\BanSach\BanSach\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
-D:\BanSach\BanSach\bin\Microsoft.Web.Infrastructure.dll
-D:\BanSach\BanSach\bin\Newtonsoft.Json.dll
-D:\BanSach\BanSach\bin\PagedList.dll
-D:\BanSach\BanSach\bin\PagedList.Mvc.dll
-D:\BanSach\BanSach\bin\System.Web.Helpers.dll
-D:\BanSach\BanSach\bin\System.Web.Mvc.dll
-D:\BanSach\BanSach\bin\System.Web.Optimization.dll
-D:\BanSach\BanSach\bin\System.Web.Razor.dll
-D:\BanSach\BanSach\bin\System.Web.WebPages.Deployment.dll
-D:\BanSach\BanSach\bin\System.Web.WebPages.dll
-D:\BanSach\BanSach\bin\System.Web.WebPages.Razor.dll
-D:\BanSach\BanSach\bin\WebGrease.dll
-D:\BanSach\BanSach\bin\EntityFramework.xml
-D:\BanSach\BanSach\bin\EntityFramework.SqlServer.xml
-D:\BanSach\BanSach\bin\PagedList.xml
-D:\BanSach\BanSach\bin\PagedList.Mvc.xml
-D:\BanSach\BanSach\bin\System.Web.Helpers.xml
-D:\BanSach\BanSach\bin\System.Web.Mvc.xml
-D:\BanSach\BanSach\bin\System.Web.Optimization.xml
-D:\BanSach\BanSach\bin\System.Web.Razor.xml
-D:\BanSach\BanSach\bin\System.Web.WebPages.xml
-D:\BanSach\BanSach\bin\System.Web.WebPages.Deployment.xml
-D:\BanSach\BanSach\bin\System.Web.WebPages.Razor.xml
-D:\BanSach\BanSach\bin\Newtonsoft.Json.xml
-D:\BanSach\BanSach\bin\Antlr3.Runtime.pdb
-D:\BanSach\BanSach\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\BanSach\BanSach\obj\Debug\BanSach.csproj.CopyComplete
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\obj\Debug\BanSach.csproj.AssemblyReference.cache
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\obj\Debug\BanSach.csproj.CoreCompileInputs.cache
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\obj\Debug\BanSach.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\obj\Debug\BanSach.pdb
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\BanSach.dll.config
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\BanSach.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\BanSach.pdb
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\csc.exe
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\csc.exe.config
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\csc.rsp
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\csi.exe
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\csi.exe.config
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\csi.rsp
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\Microsoft.CSharp.Core.targets
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\Microsoft.Managed.Core.targets
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\Microsoft.VisualBasic.Core.targets
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\Microsoft.Win32.Primitives.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.AppContext.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.Collections.Immutable.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.Console.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.Diagnostics.StackTrace.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.Globalization.Calendars.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.IO.Compression.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.IO.Compression.ZipFile.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.IO.FileSystem.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.IO.FileSystem.Primitives.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.Net.Http.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.Net.Sockets.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.Reflection.Metadata.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.Encoding.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.Primitives.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.Text.Encoding.CodePages.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.Threading.Tasks.Extensions.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.ValueTuple.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.Xml.ReaderWriter.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.Xml.XmlDocument.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.Xml.XPath.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\System.Xml.XPath.XDocument.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\vbc.exe
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\vbc.exe.config
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\vbc.rsp
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\VBCSCompiler.exe
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\roslyn\VBCSCompiler.exe.config
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\Antlr3.Runtime.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\EntityFramework.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\EntityFramework.SqlServer.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\Microsoft.Web.Infrastructure.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\Newtonsoft.Json.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\PagedList.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\PagedList.Mvc.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\System.Web.Helpers.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\System.Web.Mvc.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\System.Web.Optimization.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\System.Web.Razor.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\System.Web.WebPages.Deployment.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\System.Web.WebPages.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\System.Web.WebPages.Razor.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\WebGrease.dll
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\EntityFramework.xml
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\EntityFramework.SqlServer.xml
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\PagedList.xml
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\PagedList.Mvc.xml
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\System.Web.Helpers.xml
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\System.Web.Mvc.xml
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\System.Web.Optimization.xml
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\System.Web.Razor.xml
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\System.Web.WebPages.xml
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\System.Web.WebPages.Deployment.xml
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\System.Web.WebPages.Razor.xml
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\Newtonsoft.Json.xml
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\Antlr3.Runtime.pdb
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\nguye\OneDrive\Desktop\BanSach\BanSach\obj\Debug\BanSach.csproj.Up2Date
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\BanSach.dll.config
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\BanSach.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\BanSach.pdb
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\Antlr3.Runtime.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\EntityFramework.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\EntityFramework.SqlServer.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\Microsoft.Web.Infrastructure.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\Newtonsoft.Json.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\PagedList.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\PagedList.Mvc.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\System.Web.Helpers.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\System.Web.Mvc.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\System.Web.Optimization.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\System.Web.Razor.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\System.Web.WebPages.Deployment.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\System.Web.WebPages.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\System.Web.WebPages.Razor.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\WebGrease.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\EntityFramework.xml
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\EntityFramework.SqlServer.xml
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\PagedList.xml
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\PagedList.Mvc.xml
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\System.Web.Helpers.xml
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\System.Web.Mvc.xml
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\System.Web.Optimization.xml
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\System.Web.Razor.xml
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\System.Web.WebPages.xml
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\System.Web.WebPages.Deployment.xml
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\System.Web.WebPages.Razor.xml
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\Newtonsoft.Json.xml
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\Antlr3.Runtime.pdb
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\obj\Debug\BanSach.csproj.AssemblyReference.cache
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\obj\Debug\BanSach.csproj.CoreCompileInputs.cache
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\obj\Debug\BanSach.csproj.Up2Date
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\obj\Debug\BanSach.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\obj\Debug\BanSach.pdb
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\csc.exe
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\csc.exe.config
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\csc.rsp
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\csi.exe
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\csi.exe.config
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\csi.rsp
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\Microsoft.CSharp.Core.targets
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\Microsoft.Managed.Core.targets
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\Microsoft.VisualBasic.Core.targets
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\Microsoft.Win32.Primitives.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.AppContext.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.Collections.Immutable.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.Console.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.Diagnostics.StackTrace.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.Globalization.Calendars.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.IO.Compression.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.IO.Compression.ZipFile.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.IO.FileSystem.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.IO.FileSystem.Primitives.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.Net.Http.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.Net.Sockets.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.Reflection.Metadata.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.Encoding.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.Primitives.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.Text.Encoding.CodePages.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.Threading.Tasks.Extensions.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.ValueTuple.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.Xml.ReaderWriter.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.Xml.XmlDocument.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.Xml.XPath.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\System.Xml.XPath.XDocument.dll
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\vbc.exe
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\vbc.exe.config
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\vbc.rsp
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\VBCSCompiler.exe
-D:\Tổng quát\HUFLIT\HK3 - NĂM 2\CƠ SỞ DỮ LIỆU NÂNG CAO - HK3\BanSach\BanSach\bin\roslyn\VBCSCompiler.exe.config
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\BanSach.dll.config
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\BanSach.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\BanSach.pdb
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\csc.exe
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\csc.exe.config
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\csc.rsp
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\csi.exe
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\csi.exe.config
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\csi.rsp
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.CSharp.Core.targets
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.Managed.Core.targets
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.VisualBasic.Core.targets
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.Win32.Primitives.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.AppContext.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Collections.Immutable.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Console.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Diagnostics.StackTrace.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Globalization.Calendars.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.IO.Compression.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.IO.Compression.ZipFile.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.IO.FileSystem.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.IO.FileSystem.Primitives.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Net.Http.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Net.Sockets.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Reflection.Metadata.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.Encoding.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.Primitives.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Text.Encoding.CodePages.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Threading.Tasks.Extensions.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.ValueTuple.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Xml.ReaderWriter.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Xml.XmlDocument.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Xml.XPath.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Xml.XPath.XDocument.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\vbc.exe
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\vbc.exe.config
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\vbc.rsp
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\VBCSCompiler.exe
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\VBCSCompiler.exe.config
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Antlr3.Runtime.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EntityFramework.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EntityFramework.SqlServer.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Web.Infrastructure.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Newtonsoft.Json.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\PagedList.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\PagedList.Mvc.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Helpers.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Mvc.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Optimization.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Razor.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.WebPages.Deployment.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.WebPages.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.WebPages.Razor.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\WebGrease.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EntityFramework.xml
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EntityFramework.SqlServer.xml
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\PagedList.xml
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\PagedList.Mvc.xml
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Helpers.xml
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Mvc.xml
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Optimization.xml
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Razor.xml
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.WebPages.xml
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.WebPages.Deployment.xml
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.WebPages.Razor.xml
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Newtonsoft.Json.xml
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Antlr3.Runtime.pdb
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Debug\BanSach.csproj.AssemblyReference.cache
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Debug\BanSach.csproj.CoreCompileInputs.cache
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Debug\BanSach.csproj.Up2Date
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Debug\BanSach.dll
-D:\CNPMNC\NHOM1_QUANLINHASACH\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Debug\BanSach.pdb
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\BanSach.dll.config
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\BanSach.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\BanSach.pdb
@@ -451,49 +16,62 @@ D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.CodeAnalysis
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.CSharp.Core.targets
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.Managed.Core.CurrentVersions.targets
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.Managed.Core.targets
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.VisualBasic.Core.targets
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.Win32.Primitives.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.AppContext.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Buffers.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Collections.Immutable.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Console.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Diagnostics.StackTrace.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Globalization.Calendars.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.IO.Compression.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.IO.Compression.ZipFile.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.IO.FileSystem.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.IO.FileSystem.Primitives.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Net.Http.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Net.Sockets.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Memory.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Numerics.Vectors.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Reflection.Metadata.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.Encoding.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.Primitives.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Runtime.CompilerServices.Unsafe.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Text.Encoding.CodePages.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Threading.Tasks.Extensions.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.ValueTuple.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Xml.ReaderWriter.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Xml.XmlDocument.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Xml.XPath.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Xml.XPath.XDocument.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\vbc.exe
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\vbc.exe.config
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\vbc.rsp
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\VBCSCompiler.exe
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\VBCSCompiler.exe.config
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Antlr3.Runtime.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\ClosedXML.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\ClosedXML.Parser.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\DocumentFormat.OpenXml.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\DocumentFormat.OpenXml.Framework.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EntityFramework.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EntityFramework.SqlServer.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EPPlus.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EPPlus.Interfaces.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EPPlus.System.Drawing.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\ExcelNumberFormat.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Bcl.HashCode.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Configuration.ConfigurationBuilders.Base.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.IO.RecyclableMemoryStream.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Owin.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Owin.Security.Cookies.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Owin.Security.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Owin.Security.Google.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Web.Infrastructure.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Newtonsoft.Json.Bson.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Newtonsoft.Json.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Owin.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\PagedList.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\PagedList.Mvc.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\RBush.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Rotativa.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\SixLabors.Fonts.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Buffers.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.ComponentModel.Annotations.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Drawing.Common.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Memory.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Net.Http.Formatting.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Numerics.Vectors.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Runtime.CompilerServices.Unsafe.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Threading.Tasks.Extensions.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Helpers.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Http.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Http.WebHost.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Mvc.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Optimization.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Razor.dll
@@ -501,83 +79,51 @@ D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.WebPages.Deploymen
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.WebPages.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.WebPages.Razor.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\WebGrease.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EntityFramework.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EntityFramework.SqlServer.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\PagedList.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\PagedList.Mvc.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Helpers.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Mvc.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Optimization.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Razor.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.WebPages.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.WebPages.Deployment.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.WebPages.Razor.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Newtonsoft.Json.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Antlr3.Runtime.pdb
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Debug\BanSach.csproj.AssemblyReference.cache
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Debug\BanSach.csproj.CoreCompileInputs.cache
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Debug\BanSach.csproj.Up2Date
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Debug\BanSach.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Debug\BanSach.pdb
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\Microsoft.Managed.Core.CurrentVersions.targets
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Buffers.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Memory.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Numerics.Vectors.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\roslyn\System.Runtime.CompilerServices.Unsafe.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Newtonsoft.Json.Bson.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Buffers.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Memory.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Net.Http.Formatting.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Numerics.Vectors.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Runtime.CompilerServices.Unsafe.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Threading.Tasks.Extensions.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Http.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Http.WebHost.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Newtonsoft.Json.Bson.pdb
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Newtonsoft.Json.Bson.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Buffers.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Memory.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Net.Http.Formatting.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Numerics.Vectors.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Runtime.CompilerServices.Unsafe.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Threading.Tasks.Extensions.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Http.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Http.WebHost.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\ClosedXML.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\ClosedXML.Parser.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\DocumentFormat.OpenXml.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\DocumentFormat.OpenXml.Framework.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\ExcelNumberFormat.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Bcl.HashCode.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\RBush.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\SixLabors.Fonts.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\ClosedXML.pdb
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\ClosedXML.xml
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\ClosedXML.Parser.xml
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\DocumentFormat.OpenXml.xml
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\DocumentFormat.OpenXml.Framework.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EntityFramework.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EntityFramework.SqlServer.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EPPlus.xml
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\ExcelNumberFormat.xml
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Bcl.HashCode.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\RBush.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\SixLabors.Fonts.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Owin.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Owin.Security.Cookies.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Owin.Security.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Owin.Security.Google.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Owin.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Configuration.ConfigurationBuilders.Base.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.IO.RecyclableMemoryStream.xml
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Owin.xml
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Owin.Security.xml
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Owin.Security.Cookies.xml
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Owin.Security.Google.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EPPlus.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EPPlus.Interfaces.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EPPlus.System.Drawing.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.IO.RecyclableMemoryStream.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.ComponentModel.Annotations.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Drawing.Common.dll
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\EPPlus.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.IO.RecyclableMemoryStream.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Newtonsoft.Json.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Newtonsoft.Json.Bson.pdb
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Newtonsoft.Json.Bson.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\PagedList.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\PagedList.Mvc.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\RBush.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\SixLabors.Fonts.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Buffers.xml
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Drawing.Common.pdb
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Drawing.Common.xml
-D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Rotativa.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Memory.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Net.Http.Formatting.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Numerics.Vectors.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Runtime.CompilerServices.Unsafe.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Threading.Tasks.Extensions.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Helpers.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Http.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Http.WebHost.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Mvc.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Razor.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.WebPages.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.WebPages.Deployment.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.WebPages.Razor.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\System.Web.Optimization.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Antlr3.Runtime.pdb
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Debug\BanSach.csproj.AssemblyReference.cache
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Debug\BanSach.csproj.CoreCompileInputs.cache
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Debug\BanSach.csproj.Up2Date
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Debug\BanSach.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Debug\BanSach.pdb

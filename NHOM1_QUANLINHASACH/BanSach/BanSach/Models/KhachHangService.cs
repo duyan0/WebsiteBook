@@ -8,9 +8,9 @@ namespace BanSach.Models
 {
     public class KhachHangService
     {
-        private readonly dbSach db;
+        private readonly db_book1 db;
 
-        public KhachHangService(dbSach context)
+        public KhachHangService(db_book1 context)
         {
             db = context;
         }

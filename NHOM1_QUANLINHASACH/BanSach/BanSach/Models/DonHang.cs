@@ -24,6 +24,8 @@
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime? NgayNhanHang { get; set; }
         public string TrangThai { get; set; } = "Chờ xử lý";
+        public Nullable<int> TongSoLuong { get; set; }
+        public Nullable<decimal> TongTien { get; set; }
         public virtual KhachHang KhachHang { get; set; }
         public virtual ICollection<DonHangCT> DonHangCT { get; set; }
 
@@ -36,7 +38,7 @@
         }
 
         // Phương thức này tính tổng tiền cho đơn hàng
-        public decimal TongTien
+        public decimal Total_DH
         {
             get
             {

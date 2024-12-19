@@ -11,12 +11,12 @@
 
 <h3 class="page-title text-white">Danh sách sản phẩm</h3>
 
-<div class="container ">
+<div class="container">
     <div class="row">
         <!-- Bộ lọc giá và Nhà xuất bản -->
         <div class="col-12 col-md-6 col-lg-3 mb-2">
             <!-- Bộ lọc giá -->
-            <div class="filter p-3 shadow-sm rounded bg-white mb-4 mt-2">
+            <div class="price-filter p-2 shadow-sm rounded bg-white mb-4 mt-2">
                 <form method="get" action="/SanPhams/FilterByPrice">
                     <h4 class="filter-title mb-3 text-primary text-dark">GIÁ</h4>
                     <div class="form-check mb-2">
@@ -50,7 +50,7 @@
             </div>
 
             <!-- Bộ lọc nhà xuất bản -->
-            <div class="filter p-3 shadow-sm rounded bg-white">
+            <div class="price-filter p-3 shadow-sm rounded bg-white">
                 <form method="get" action="/SanPhams/FilterByPublisher">
                     <h4 class="filter-title mb-3 text-primary text-dark">Nhà Xuất Bản</h4>
                     @{
@@ -87,10 +87,10 @@
                 {
                     foreach (var item in Model)
                     {
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch mb-1">
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-3 d-flex align-items-stretch mb-1">
                             <div class="card-pro @(item.TrangThaiSach == "Hết hàng" ? "out-of-stock" : "")">
                                 <a href="@Url.Action("TrangSP", "SanPhams", new { id = item.IDsp })">
-                                    <img src="https://placehold.co/190x190" class="img-fluid" alt="@item.TenSP" />
+                                    <img src="~/Content/img/@item.HinhAnh" class="img-fluid" alt="@item.TenSP" />
                                     <p class="availability @(item.TrangThaiSach == "Hết hàng" ? "out-of-stock" : "in-stock")">
                                         @item.TrangThaiSach
                                     </p>
@@ -127,8 +127,9 @@
                                 {
                                     <button class="btn-add-to-cart" onclick="themthanhcong(event, '@item.IDsp')">
                                         <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
+
                                     </button>
-                                    
+
                                 }
                                 else
                                 {
@@ -144,7 +145,7 @@
                 }
                 else
                 {
-                    <p>Không có sản phẩm nào hiển thị.</p>
+                    <p class="text-secondary">Không có sản phẩm nào hiển thị.</p>
                 }
             </div>
         </div>
@@ -165,6 +166,10 @@
         LinkToIndividualPageFormat = "{0}"
     })
 </div>
+<div id="notification-container" style="position: fixed; bottom: 10px; left: 10px; display: flex; flex-direction: column; gap: 10px; z-index: 1000;">
+    <!-- Các thông báo sẽ được thêm vào đây -->
+</div>
+
 <script>
     function themthanhcong(event, productId) {
         // Ngăn chặn hành vi mặc định của nút
@@ -178,17 +183,92 @@
             }
         })
             .then(response => {
+                // Tạo thông báo mới
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+
                 if (response.ok) {
-                    alert('Sản phẩm đã được thêm vào giỏ hàng thành công!');
+                    notification.textContent = 'Thêm sản phẩm thành công';
+                    notification.style.backgroundColor = '#4CAF50'; // Màu xanh cho thông báo thành công
                 } else {
-                    alert('Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng. Vui lòng thử lại.');
+                    notification.textContent = 'Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng. Vui lòng thử lại.';
+                    notification.style.backgroundColor = '#f44336'; // Màu đỏ cho thông báo lỗi
                 }
+
+                // Thêm thông báo vào container
+                document.getElementById('notification-container').appendChild(notification);
+
+                // Kích hoạt hiệu ứng hiển thị
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 10); // Trì hoãn một chút để transition hoạt động
+
+                // Ẩn thông báo sau 3 giây
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    notification.classList.add('hide');
+
+                    // Xóa thông báo sau khi hiệu ứng ẩn hoàn tất
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 500); // Thời gian khớp với transition
+                }, 3000);
             })
             .catch(error => {
-                alert('Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng. Vui lòng thử lại.');
+                // Tạo thông báo lỗi
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.textContent = 'Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng. Vui lòng thử lại.';
+                notification.style.backgroundColor = '#f44336'; // Màu đỏ cho thông báo lỗi
+
+                // Thêm thông báo vào container
+                document.getElementById('notification-container').appendChild(notification);
+
+                // Kích hoạt hiệu ứng hiển thị
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 10);
+
+                // Ẩn thông báo sau 3 giây
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    notification.classList.add('hide');
+
+                    // Xóa thông báo sau khi hiệu ứng ẩn hoàn tất
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 500); // Thời gian khớp với transition
+                }, 3000);
             });
     }
 </script>
 
+<style>
+    .notification {
+        padding: 20px;
+        border-radius: 5px;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0; /* Bắt đầu ẩn */
+        transform: translateY(20px); /* Dịch chuyển xuống */
+        transition: opacity 0.5s ease, transform 0.5s ease; /* Hiệu ứng mượt */
+    }
 
-@Html.Action("TopBanChay", "DonHangCTs")
+        .notification.show {
+            opacity: 1; /* Hiển thị */
+            transform: translateY(0);
+            transition: opacity 0.5s ease, transform 0.5s ease; /* Quay lại vị trí ban đầu */
+        }
+
+        .notification.hide {
+            opacity: 0; /* Ẩn */
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease; /* Dịch chuyển xuống khi ẩn */
+        }
+</style>
+
+
+
+

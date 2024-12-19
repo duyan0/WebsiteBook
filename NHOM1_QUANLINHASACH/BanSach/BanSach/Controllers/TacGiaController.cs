@@ -12,7 +12,7 @@ namespace BanSach.Controllers
     public class TacGiaController : Controller
     {
         // GET: TacGia
-        dbSach db = new dbSach();
+        private readonly db_book1 db = new db_book1();
         public ActionResult Index(string searchString, int? page)
         {
             // Query to get authors from the database

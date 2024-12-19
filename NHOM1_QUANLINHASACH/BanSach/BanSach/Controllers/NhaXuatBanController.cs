@@ -13,7 +13,7 @@ namespace BanSach.Controllers
     public class NhaXuatBanController : Controller
     {
         // GET: NhaXuatBan
-        dbSach db = new dbSach();
+        private readonly db_book1 db = new db_book1();
         public ActionResult Index(string searchString, int? page)
         {
             // Get all publishers from the database

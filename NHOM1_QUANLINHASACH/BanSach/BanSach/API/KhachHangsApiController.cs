@@ -7,7 +7,7 @@ namespace BanSach.API
     [RoutePrefix("api/KhachHangs")]
     public class KhachHangsApiController : ApiController
     {
-        private dbSach db = new dbSach();
+        private readonly db_book1 db = new db_book1();
 
         public KhachHangsApiController()
         {

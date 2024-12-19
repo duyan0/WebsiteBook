@@ -13,7 +13,7 @@ namespace BanSach.Controllers
 {
     public class DanhMucsController : Controller
     {
-        private readonly dbSach db = new dbSach();
+        private readonly db_book1 db = new db_book1();
 
         // Action PartialViewResult
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]

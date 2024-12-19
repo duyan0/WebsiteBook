@@ -8,11 +8,11 @@ namespace BanSach.Models
     public class DanhMucService
     {
         // Các trường readonly cho cơ sở dữ liệu (db) và Factory để tạo đối tượng DanhMuc
-        private readonly dbSach db;  // Kết nối đến cơ sở dữ liệu dbSach
+        private readonly db_book1 db;  // Kết nối đến cơ sở dữ liệu dbSach
         private readonly DanhMucFactory danhMucFactory;  // Factory để tạo đối tượng DanhMuc
 
         // Constructor khởi tạo với hai tham số db context và Factory
-        public DanhMucService(dbSach context, DanhMucFactory factory)
+        public DanhMucService(db_book1 context, DanhMucFactory factory)
         {
             db = context;
             danhMucFactory = factory;

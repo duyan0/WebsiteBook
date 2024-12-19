@@ -159,3 +159,6 @@ BEGIN
     INNER JOIN inserted i ON km.IDkm = i.IDkm;
 END
 
+
+SELECT * FROM Sach
+

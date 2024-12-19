@@ -16,25 +16,23 @@ namespace BanSach.Controllers
 {
     public class SanPhamsController : Controller
     {
-        private readonly dbSach db = new dbSach();
+        private readonly db_book1 db = new db_book1();
 
         // GET: SanPhams
         public ActionResult Index(string searchString, string sortOrder, int? page)
         {
-            // Để lưu trữ thông tin tìm kiếm và sắp xếp vào ViewBag, dùng để duy trì giá trị khi phân trang hoặc thay đổi trang
             ViewBag.CurrentFilter = searchString;
             ViewBag.CurrentSort = sortOrder;
 
-            // Thêm các tùy chọn sắp xếp vào ViewBag để sử dụng trong View
+            // Các tùy chọn sắp xếp
             ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.PriceSortParam = sortOrder == "Price" ? "price_desc" : "Price";
             ViewBag.AuthorSortParam = sortOrder == "Author" ? "author_desc" : "Author";
             ViewBag.StatusSortParam = sortOrder == "Status" ? "status_desc" : "Status";
 
-            // Lấy danh sách tất cả sản phẩm từ cơ sở dữ liệu
             var sanPhams = db.SanPham.Include(s => s.DanhMuc).Include(s => s.TacGia).Include(s => s.NhaXuatBan);
 
-            // Nếu có từ khóa tìm kiếm, lọc sản phẩm theo tên
+            // Tìm kiếm theo từ khóa
             if (!String.IsNullOrEmpty(searchString))
             {
                 sanPhams = sanPhams.Where(s => s.TenSP.Contains(searchString)
@@ -43,6 +41,8 @@ namespace BanSach.Controllers
                                              || s.TrangThaiSach.Contains(searchString)
                                              || s.NhaXuatBan.Tennxb.Contains(searchString));
             }
+
+            // Sắp xếp theo các tiêu chí
             switch (sortOrder)
             {
                 case "name_desc":
@@ -67,15 +67,15 @@ namespace BanSach.Controllers
                     sanPhams = sanPhams.OrderByDescending(s => s.TrangThaiSach);
                     break;
                 default:
-                    sanPhams = sanPhams.OrderBy(s => s.IDsp); // Sắp xếp mặc định theo ID sản phẩm
+                    sanPhams = sanPhams.OrderBy(s => s.IDsp);
                     break;
             }
 
             int pageSize = 10;
             int pageNumber = (page ?? 1);
 
-            // Trả về kết quả đã được phân trang
-            return View(sanPhams.ToPagedList(pageNumber, pageSize));
+            // Trả về danh sách sản phẩm đã phân trang dưới dạng PartialView
+            return PartialView("Index", sanPhams.ToPagedList(pageNumber, pageSize));
         }
 
 
@@ -86,16 +86,16 @@ namespace BanSach.Controllers
             return View(danhMucList);  // Passing a list of categories to the view
         }
 
-        public ActionResult ProductList(int? category, int? page, string SearchString )
+        public ActionResult ProductList(int? category, int? page, string SearchString)
         {
             SetAvailablePublishers();
             var products = db.SanPham.Include(p => p.DanhMuc);
-            
-            int pageSize = 12;           
+
+            int pageSize = 12;
             int pageNumber = (page ?? 1);
             if (page == null) page = 1;
 
-            
+
             // Tìm kiếm chuỗi truy vấn theo category
             if (category == null)
             {
@@ -111,7 +111,7 @@ namespace BanSach.Controllers
             {
                 products = db.SanPham.OrderByDescending(x => x.TheLoai).Where(s => s.TenSP.Contains(SearchString));
             }
-          
+
             // Trả về các product được phân trang theo kích thước và số trang.
             return View(products.ToPagedList(pageNumber, pageSize));
 
@@ -258,18 +258,18 @@ namespace BanSach.Controllers
 
         // GET: SanPhams/Delete/5
         public ActionResult Delete(int? id)
+        {
+            if (id == null)
             {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                SanPham sanPham = db.SanPham.Find(id);
-                if (sanPham == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(sanPham);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            SanPham sanPham = db.SanPham.Find(id);
+            if (sanPham == null)
+            {
+                return HttpNotFound();
+            }
+            return View(sanPham);
+        }
 
         // POST: SanPhams/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -503,6 +503,30 @@ namespace BanSach.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public ActionResult SearchSuggestions(string query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                return Json(new List<object>(), JsonRequestBehavior.AllowGet); // Trả về một mảng rỗng nếu không có query
+            }
+
+            // Loại bỏ khoảng trắng thừa từ chuỗi nhập vào
+            query = query.Trim().ToLower();  // Chuyển thành chữ thường để so sánh không phân biệt hoa/thường
+
+            // Tìm kiếm sản phẩm theo tên sách, so sánh không phân biệt chữ hoa chữ thường và bao gồm khoảng trắng
+            var suggestionsBox = db.SanPham
+                .Where(s => s.TenSP.ToLower().Contains(query))  // Kiểm tra xem tên sản phẩm có chứa chuỗi tìm kiếm
+                .Take(10)  // Giới hạn số lượng gợi ý
+                .Select(s => new { TenSP = s.TenSP })  // Chọn chỉ tên sách với đúng tên thuộc tính
+                .ToList();
+
+            return Json(suggestionsBox, JsonRequestBehavior.AllowGet);  // Trả về danh sách gợi ý
+        }
+
+
+
+
 
 
         protected override void Dispose(bool disposing)

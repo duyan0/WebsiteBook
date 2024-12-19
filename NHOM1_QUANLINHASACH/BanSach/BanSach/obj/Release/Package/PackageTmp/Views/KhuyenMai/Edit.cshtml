@@ -1,0 +1,79 @@
+﻿@model BanSach.Models.KhuyenMai
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="mb-4 text-center">Cập nhật khuyến mãi</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Thông tin khuyến mãi</h4>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.IDkm)
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        @Html.LabelFor(model => model.TenKhuyenMai, "Tên khuyến mãi")
+                        @Html.EditorFor(model => model.TenKhuyenMai, new { htmlAttributes = new { @class = "form-control", placeholder = "Tên khuyến mãi" } })
+                        @Html.ValidationMessageFor(model => model.TenKhuyenMai, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        @Html.LabelFor(model => model.MucGiamGia, "Mức giảm giá (%)")
+                        @Html.EditorFor(model => model.MucGiamGia, new { htmlAttributes = new { @class = "form-control", placeholder = "Mức giảm giá" } })
+                        @Html.ValidationMessageFor(model => model.MucGiamGia, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        @Html.LabelFor(model => model.NgayBatDau, "Ngày bắt đầu")
+
+                        @Html.TextBoxFor(model => model.NgayBatDau, new { @class = "form-control", @type = "datetime-local", placeholder = "Ngày bắt đầu", @Value = (Model.NgayBatDau.HasValue ? Model.NgayBatDau.Value.ToString("yyyy-MM-ddTHH:mm") : "") })
+                        @Html.ValidationMessageFor(model => model.NgayBatDau, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        @Html.LabelFor(model => model.NgayKetThuc, "Ngày kết thúc")
+
+                        @Html.TextBoxFor(model => model.NgayKetThuc, new { @class = "form-control", @type = "datetime-local", placeholder = "Ngày kết thúc", @Value = (Model.NgayKetThuc.HasValue ? Model.NgayKetThuc.Value.ToString("yyyy-MM-ddTHH:mm") : "") })
+                        @Html.ValidationMessageFor(model => model.NgayKetThuc, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        @Html.LabelFor(model => model.MoTa, "Mô tả")
+                        @Html.EditorFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control", placeholder = "Mô tả" } })
+
+                        @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="d-flex justify-content-center mt-4">
+                <input type="submit" value="Lưu" class="btn btn-success me-2 rounded-sm mx-1" />
+                @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary rounded-sm mx-1" })
+            </div>
+        </div>
+    </div>
+}
+

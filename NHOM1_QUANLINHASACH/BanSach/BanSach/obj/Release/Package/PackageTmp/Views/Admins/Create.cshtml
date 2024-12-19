@@ -1,0 +1,88 @@
+﻿@model BanSach.Models.Admin
+
+@{
+    ViewBag.Title = "Thêm nhân sự";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Thêm quản lí</h2>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group row mb-3">
+            <label class="col-md-2 col-form-label">Họ tên</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control border border-dark rounded-sm", placeholder = "Nhập họ tên" } })
+                @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row mb-3">
+            <label class="col-md-2 col-form-label">Email</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control border border-dark rounded-sm", placeholder = "Nhập email" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row mb-3">
+            <label class="col-md-2 col-form-label">Địa chỉ</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control border border-dark rounded-sm", placeholder = "Nhập địa chỉ" } })
+                @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row mb-3">
+            <label class="col-md-2 col-form-label">Số điện thoại</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SoDT, new { htmlAttributes = new { @class = "form-control border border-dark rounded-sm", placeholder = "Nhập số điện thoại", maxlength = "11" } })
+                @Html.ValidationMessageFor(model => model.SoDT, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group row mb-3">
+            <label class="col-md-2 col-form-label">Vai trò</label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.VaiTro, new SelectList(new[]
+                {
+                    new { Value = "Nhân viên", Text = "Nhân viên" },
+                    new { Value = "Admin", Text = "Admin" }
+                }, "Value", "Text"), "Chọn vai trò", new { @class = "form-control border border-dark rounded-sm" })
+                @Html.ValidationMessageFor(model => model.VaiTro, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row mb-3">
+            <label class="col-md-2 col-form-label">Tài khoản</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TKhoan, new { htmlAttributes = new { @class = "form-control border border-dark rounded-sm", placeholder = "Nhập tài khoản" } })
+                @Html.ValidationMessageFor(model => model.TKhoan, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row mb-3">
+            <label class="col-md-2 col-form-label">Mật khẩu</label>
+            <div class="col-md-10 ">
+                @Html.EditorFor(model => model.MKhau, new { htmlAttributes = new { @class = "form-control border border-dark rounded-sm", placeholder = "Nhập mật khẩu" } })
+                @Html.ValidationMessageFor(model => model.MKhau, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row ">
+            <div class="col-md-10 offset-md-2 ">
+                <input type="submit" value="Thêm" class="btn btn-success text-white rounded-sm" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

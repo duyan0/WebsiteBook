@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="aa7108962a934255952aca06c8390c17" Name="Diagram1" ZoomLevel="38">
+        <EntityTypeShape EntityType="dbsachModel.Admin" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbsachModel.DanhMuc" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbsachModel.DonHang" Width="1.5" PointX="3" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbsachModel.DonHangCT" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbsachModel.KhachHang" Width="1.5" PointX="0.75" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbsachModel.KhuyenMai" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbsachModel.NhaXuatBan" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbsachModel.SanPham" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbsachModel.TacGia" Width="1.5" PointX="0.75" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbsachModel.database_firewall_rules" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
+        <AssociationConnector Association="dbsachModel.FK_SanPham_DanhMuc" ManuallyRouted="false" />
+        <AssociationConnector Association="dbsachModel.FK__DonHang__IDkh__6EF57B66" ManuallyRouted="false" />
+        <AssociationConnector Association="dbsachModel.FK__DonHangCT__IDDon__72C60C4A" ManuallyRouted="false" />
+        <AssociationConnector Association="dbsachModel.FK__DonHangCT__IDSan__71D1E811" ManuallyRouted="false" />
+        <AssociationConnector Association="dbsachModel.FK_SanPham_KhuyenMai" ManuallyRouted="false" />
+        <AssociationConnector Association="dbsachModel.FK_SanPham_NhaXuatBan" ManuallyRouted="false" />
+        <AssociationConnector Association="dbsachModel.FK_SanPham_TacGia" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

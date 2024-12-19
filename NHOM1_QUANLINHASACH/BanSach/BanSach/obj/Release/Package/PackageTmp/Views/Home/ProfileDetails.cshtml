@@ -1,0 +1,8 @@
+﻿@model  Models.UserProfile
+
+<div class="profile-details">
+    <h3>Thông tin cá nhân</h3>
+    <p><strong>Tên:</strong> @Model</p>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Ngày sinh:</strong> @Model.DateOfBirth.ToString("dd/MM/yyyy")</p>
+</div>

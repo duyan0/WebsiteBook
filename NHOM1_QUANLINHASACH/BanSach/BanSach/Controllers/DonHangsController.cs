@@ -17,7 +17,7 @@ namespace BanSach.Controllers
     public class DonHangsController : Controller
     {
         private readonly DonHang _donHangService; // Dịch vụ đơn hàng
-        private readonly dbSach db = new dbSach(); // DbContext
+        private readonly db_book1 db = new db_book1();
         public DonHangsController()
         {
             _donHangService = new DonHang(); // Hoặc khởi tạo một dịch vụ mặc định
@@ -30,6 +30,7 @@ namespace BanSach.Controllers
         {
             var donHangs = db.DonHang.Include(d => d.KhachHang).AsQueryable();
 
+            // Tìm kiếm theo các tiêu chí
             if (!String.IsNullOrEmpty(searchString))
             {
                 donHangs = donHangs.Where(d => d.IDdh.ToString().Contains(searchString)
@@ -47,9 +48,14 @@ namespace BanSach.Controllers
                 donHangs = donHangs.Where(d => d.NgayDatHang <= endDate.Value);
             }
 
+            // Phân trang
             int pageSize = 10;
             int pageNumber = (page ?? 1);
-            return View(donHangs.OrderBy(d => d.TrangThai).ToPagedList(pageNumber, pageSize));
+
+            var pagedDonHangs = donHangs.OrderBy(d => d.TrangThai).ToPagedList(pageNumber, pageSize);
+
+            // Trả về View với kiểu IPagedList<DonHang>
+            return View(pagedDonHangs);
         }
 
         public ActionResult Details(int? id)
@@ -172,7 +178,7 @@ namespace BanSach.Controllers
                 .ToList(); // Đưa tất cả dữ liệu vào bộ nhớ
 
             // Tính tổng doanh thu từ các đơn hàng đã nhận
-            decimal tongDoanhThu = donHangsDaNhanHang.Sum(dh => dh.TongTien);
+            decimal tongDoanhThu = donHangsDaNhanHang.Sum(dh => dh.Total_DH);
 
             // Khởi tạo ViewModel
             var thongKeViewModel = new ThongKeDonHangViewModel

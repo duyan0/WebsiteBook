@@ -4,47 +4,47 @@
     .danhmuc a {
         color: black;
         text-decoration: none;
-        z-index: 1000;
-        width: auto; /* Thay đổi từ 100% sang tự động để phần tử chỉ chiếm không gian cần thiết */
-        display: flex; /* Hiển thị danh mục theo chiều ngang */
+        z-index: 100000;
+        width: 100%; /* Thay đổi từ 100% sang tự động để phần tử chỉ chiếm không gian cần thiết */
+        display: flex;
+        align-items: center;
+        justify-content: space-between; /* Hiển thị danh mục theo chiều ngang */
     }
 
         .danhmuc a:hover {
-            color: green;
+            color: black;
             transition: color 0.25s ease-in-out;
-            z-index: 1000;
+            z-index: 100000;
         }
 
     .container-danhmuc {
         border-radius: 10px;
         background-color: white;
-        padding: 10px;
-        z-index: 1000;
-        display: flex;
+        z-index: 100000;
         flex-wrap: nowrap; /* Hiển thị các phần tử theo chiều ngang */
-        justify-content: center; /* Sắp xếp các phần tử theo chiều ngang */
-        gap: 5px; /* Khoảng cách giữa các phần tử */
+        justify-content: space-between; /* Sắp xếp các phần tử theo chiều ngang */
+        gap: 2px; /* Khoảng cách giữa các phần tử */
     }
 
     .tentheloai {
         list-style-type: none;
         padding: 5px;
+        max-width: 100%;
         margin: 5px;
-        z-index: 1000;
+        z-index: 100000;
         display: inline-block; /* Hiển thị danh mục con theo chiều ngang */
     }
 
         .tentheloai:hover {
-            background-color: #c8c1c1;
+            background-color: #c2c2c2;
             border-radius: 5px;
         }
 
     .collapse {
         position: relative;
-        z-index: 1000;
+        z-index: 100000;
         display: none; /* Giữ collapse ẩn mặc định */
     }
-
 </style>
 
 <div class="container-danhmuc">
@@ -61,7 +61,9 @@
                         <div class="list-group-item danhmuc">
                             <a href="javascript:void(0)" role="button">
                                 <strong>@item.DanhMuc1</strong>
+                                <i class="bi bi-chevron-down ml-2"></i>
                             </a>
+
 
                             <div class="collapse" id="collapse-@item.DanhMuc1.Replace(" ", "-")">
                                 <ul class="list-unstyled mt-2 ml-3">
@@ -69,8 +71,8 @@
                                     {
                                         if (item2.DanhMuc1 == item.DanhMuc1 && !string.IsNullOrEmpty(item2.TheLoai))
                                         {
-                                            <li class="tentheloai">
-                                                @Html.ActionLink(item2.TheLoai, "ProductList", "SanPhams", new { category = item2.ID }, new { @class = "tentheloai-link text-dark" })
+                                            <li class="tentheloai text-truncate">
+                                                @Html.ActionLink(item2.TheLoai, "ProductList", "SanPhams", new { category = item2.ID }, new { @class = "tentheloai-link text-dark text-truncate" })
                                             </li>
                                         }
                                     }
@@ -100,11 +102,11 @@
         $('.danhmuc').hover(
             function () {
                 // Khi hover vào, phần collapse sẽ mở ra
-                $(this).find('.collapse').stop(true, true).slideDown(0);
+                $(this).find('.collapse').stop(true, true).slideDown(300);
             },
             function () {
                 // Khi rời chuột, phần collapse sẽ đóng lại
-                $(this).find('.collapse').stop(true, true).slideUp(0);
+                $(this).find('.collapse').stop(true, true).slideUp(300);
             }
         );
 
@@ -112,7 +114,7 @@
         $('[data-toggle="collapse"]').click(function (e) {
             e.preventDefault();
             var target = $(this).attr('href');
-            $(target).stop(true, true).slideToggle(100);
+            $(target).stop(true, true).slideToggle(300);
         });
     });
 </script>

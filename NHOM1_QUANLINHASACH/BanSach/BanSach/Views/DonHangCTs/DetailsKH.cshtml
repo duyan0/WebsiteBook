@@ -3,92 +3,118 @@
 @{
     ViewBag.Title = "Chi tiết đơn hàng - " + ViewBag.OrderDetails.IDdh;
     Layout = "~/Views/Shared/_Layout.cshtml";
-
-    // Tính tổng giá trị của tất cả các sản phẩm trong đơn hàng
 }
 
-<div class="container mt-5">
+<div class="container mt-2">
     <h2 class="text-center mb-4 text-white">Chi tiết đơn hàng</h2>
 
-    <div class="d-flex justify-content-center mb-4">
-        <a href="~/KhachHangs/LichSuDonHang" class="btn btn-outline-success shadow-sm rounded-sm mx-2 me-2">Quay về</a>
-        <a href="@Url.Action("ExportOrderDetailsToExcel", "DonHangCTs", new { id = ViewBag.OrderDetails.IDdh })" class="btn btn-success shadow-sm rounded-sm">Xuất Excel</a>
+    <div class="d-flex justify-content-end mb-4">
+        <a href="@Url.Action("ExportOrderDetailsToExcel", "DonHangCTs", new { id = ViewBag.OrderDetails.IDdh })"
+           class="btn btn-success shadow-sm rounded-sm"
+           title="Xuất chi tiết đơn hàng sang Excel">
+            Xuất Excel
+        </a>
     </div>
 
-    <!-- Bảng thông tin đơn hàng -->
-    <div class="card mb-4" style="background-color: #1f1f20; color: white;">
-        <div class="card-header bg-secondary font-weight-bold text-dark">
-            Thông tin đơn hàng
-        </div>
-        <div class="card-body">
-            <table class="table table-striped" style="color: white;">
-                <tbody>
-                    <tr>
-                        <th class="w-25">Mã đơn hàng:</th>
-                        <td>@ViewBag.OrderDetails.IDdh</td>
-                    </tr>
-                    <tr>
-                        <th>ID khách hàng:</th>
-                        <td>@ViewBag.OrderDetails.IDkh</td>
-                    </tr>
-                    <tr>
-                        <th>Tên khách hàng:</th>
-                        <td>@ViewBag.OrderDetails.KhachHang.TenKH</td>
-                    </tr>
-                    <tr>
-                        <th>Số điện thoại:</th>
-                        <td>@ViewBag.OrderDetails.KhachHang.SoDT</td>
-                    </tr>
-                    <tr>
-                        <th>Địa chỉ:</th>
-                        <td>@ViewBag.OrderDetails.DiaChi</td>
-                    </tr>
-                    <tr>
-                        <th>Ngày đặt hàng:</th>
-                        <td>@ViewBag.OrderDetails.NgayDatHang</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Bảng chi tiết sản phẩm -->
+    <table class="table table-striped text-white">
+        <thead>
+            <tr>
+                <th class="text-white">Mã đơn hàng</th>
+                <th class="text-white">Tên khách hàng</th>
+                <th class="text-white">Số điện thoại</th>
+                <th class="text-white">Địa chỉ</th>
+                <th class="text-white">Ngày đặt hàng</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="text-white">@ViewBag.OrderDetails.IDdh</td>
+                <td class="text-white">@ViewBag.OrderDetails.KhachHang.TenKH</td>
+                <td class="text-white">@ViewBag.OrderDetails.KhachHang.SoDT</td>
+                <td class="text-white">@ViewBag.OrderDetails.DiaChi</td>
+                <td class="text-white">@ViewBag.OrderDetails.NgayDatHang</td>
+            </tr>
+        </tbody>
+    </table>
+    
     <h3 class="text-center mb-3 text-white">Danh sách sản phẩm</h3>
     <div class="table-responsive">
-        <table class="table table-striped " style="color: white;">
-            <thead class="bg-secondary text-dark">
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <th>Sản phẩm</th>
-                    <th>Số lượng</th>
-                    <th>Giá</th>
-                    <th>Tổng tiền</th>
+                    <th class="text-white">Sản phẩm</th>
+                    <th class="text-white">Số lượng</th>
+                    <th class="text-white">Giá</th>
+                    <th class="text-white">Tổng tiền</th>
+                    <th class="text-white">Đánh giá</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.SanPham.TenSP</td>
-                        <td>@item.SoLuong</td>
-                        <td style="color: #FF6347;">@string.Format("{0:N0} VND", item.Gia)</td>
-                        <td style="color: #FF6347;">
+                        <td class="text-white">@item.SanPham.TenSP</td>
+                        <td class="text-white">@item.SoLuong</td>
+                        <td class="text-danger">@string.Format("{0:N0} VND", item.Gia)</td>
+                        <td class="text-danger">
                             @(string.Format("{0:N0} VND", item.SoLuong * item.Gia))
+                        </td>
+                        <td>
+                            @if (string.IsNullOrEmpty(item.DanhGia))
+                            {
+                                <!-- Hiển thị form đánh giá -->
+                                using (Html.BeginForm("AddDanhGia", "DonHangCTs", FormMethod.Post, new { @class = "d-inline" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@item.IDDonHang" />
+                                    <input type="hidden" name="idSanPham" value="@item.SanPham.IDsp" />
+
+                                    <select name="danhgia" class="form-select d-inline-block w-auto" required>
+                                        <option value="1">1 sao</option>
+                                        <option value="2">2 sao</option>
+                                        <option value="3">3 sao</option>
+                                        <option value="4">4 sao</option>
+                                        <option value="5">5 sao</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary btn-sm">Gửi</button>
+                                }
+                            }
+                            else
+                            {
+                                <!-- Hiển thị đánh giá -->
+                                @Html.Raw(RenderRating(item.DanhGia))
+                            }
                         </td>
                     </tr>
                 }
                 <!-- Tổng tiền của toàn bộ đơn hàng -->
                 <tr class="font-weight-bold">
-                    <td colspan="3" class="text-end" style="font-weight:bold;">Tổng cộng:</td>
-                    <td style="color: #FF4500; font-weight:bold;">
+                    <td colspan="4" class="text-end text-white">Tổng cộng:</td>
+                    <td class="text-danger fw-bold">
                         @string.Format("{0:N0} VND", ViewBag.TotalAmount)
                     </td>
                 </tr>
-
             </tbody>
         </table>
     </div>
-
-    <div class="text-center mt-4">
-        <a href="~/KhachHangs/LichSuDonHang" class="btn btn-outline-light shadow-sm rounded-sm">Quay về</a>
-    </div>
 </div>
+
+<div class="text-center">
+    <a href="~/KhachHangs/LichSuDonHang" class="btn btn-success shadow-lg rounded-sm mx-2 me-2">Quay về</a>
+</div>
+
+@helper RenderRating(string danhGia)
+{
+    int rating = int.Parse(danhGia);
+    for (int i = 1; i <= 5; i++)
+    {
+        if (i <= rating)
+        {
+            <span style="color: gold;">★</span> <!-- Filled star -->
+        }
+        else
+        {
+            <span class="text-white">☆</span> <!-- Empty star -->
+        }
+    }
+}

@@ -2,12 +2,13 @@
 @using PagedList.Mvc;
 @using PagedList;
 @{
-    ViewBag.Title = "LichSuDonHang";
+    ViewBag.Title = "Lịch sử Đơn Hàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container-fluid mt-5">
-    <h2 class="text-white text-center font-weight-bold">Lịch sử Đơn Hàng</h2>
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<div class="container mt-2 col-xl-12">
+    <h2 class="text-white text-center fw-semibold">Lịch sử Đơn Hàng</h2>
 
     @if (!Model.Any())
     {
@@ -18,26 +19,26 @@
     }
     else
     {
-        <div class="text-right mb-3">
-            <a href="@Url.Action("ExportToExcel", "KhachHangs")" class="btn btn-success ml-2 rounded-sm ">Xuất Excel</a>
+        <div class="mb-3 d-flex justify-content-end">
+            <a href="@Url.Action("ExportToExcel", "KhachHangs")" class="btn btn-success rounded-sm">Xuất Excel</a>
         </div>
 
-        <div class="table-responsive mt-4">
-            <table class="table table-bordered table-hover">
+        <div class="table-responsive mt-4 ">
+            <table class="table table-dark">
                 <thead>
-                    <tr class="text-white text-center">
-                        <th style="width:134px;">Mã đơn hàng</th>
+                    <tr class="text-white text-left ">
+                        <th style="width:134px;">Mã DH</th>
                         <th>Ngày đặt hàng</th>
                         <th>Ngày nhận hàng</th>
                         <th>Tổng số tiền</th>
                         <th>Trạng thái</th>
-                        <th>Chi tiết</th>
+                        <th style="width: 158px;">Chi tiết</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var order in Model)
                     {
-                        <tr class="text-center">
+                        <tr class="text-white text-left">
                             <td class="font-weight-bold text-white">@order.IDdh</td>
                             <td class="text-white">
                                 @(
@@ -57,37 +58,46 @@
                                 }
                                 else
                                 {
-                                    <button class="btn btn-success rounded-sm btn-fixed-sizee" disabled>Dự kiến là...</button>
+                                    <span class="d-inline-flex text-info">Dự kiến 2 ngày</span>
                                 }
                             </td>
                             <td class="text-danger font-weight-bold">
                                 @order.GetTongSoTien().ToString("C0", new System.Globalization.CultureInfo("vi-VN"))
                             </td>
-                            <td class="text-center">
+                            <td class="text-left">
                                 <button class="btn @(order.TrangThai == "Chờ xử lý" ? "btn-info rounded-sm"
-             : order.TrangThai == "Đã xác nhận" ? "btn-success rounded-sm"
-             : order.TrangThai == "Đã hủy" ? "btn-danger rounded-sm"
-             : order.TrangThai == "Đã nhận hàng" ? "btn-warning rounded-sm"
-             : "btn-secondary") btn-fixed-size rounded-sm text-dark" disabled>
+                                 : order.TrangThai == "Đã xác nhận" ? "btn-success rounded-sm"
+                                 : order.TrangThai == "Đã hủy" ? "btn-danger rounded-sm"
+                                 : order.TrangThai == "Đã nhận hàng" ? "btn-warning rounded-sm"
+                                 : "btn-secondary") btn-fixed-size rounded-sm text-dark" disabled>
                                     @order.TrangThai
                                 </button>
                             </td>
                             <td>
-                                @if (order.GetTongSoTien() > 0)
-                                {
-                                    <a href="@Url.Action("DetailsKH", "DonHangCTs", new { id = order.IDdh })" class="btn btn-success btn-sm rounded-sm btn-fixed-sizee">Xem</a>
-                                }
-                                @if (order.TrangThai == "Đã xác nhận")
-                                {
-                                    <a href="@Url.Action("DaNhanHang", "DonHangs", new { id = order.IDdh })" class="btn btn-warning btn-sm rounded-sm ml-2 btn-fixed-sizee">Đã nhận</a>
-                                }
-                                @if (order.TrangThai == "Chờ xử lý")
-                                {
-                                    <form action="@Url.Action("HuyDonHang", "KhachHangs")" method="post" class="d-inline">
-                                        <input type="hidden" name="orderId" value="@order.IDdh" />
-                                        <button type="submit" class="btn btn-danger btn-sm rounded-sm ml-2 btn-fixed-sizee">Hủy</button>
-                                    </form>
-                                }
+                                <div class="d-flex justify-content-start">
+                                    <!-- Sử dụng Flexbox để đặt các nút trên cùng một hàng -->
+                                    @* Kiểm tra xem tổng số tiền của đơn hàng có lớn hơn 0 *@
+                                    @if (order.GetTongSoTien() > 0)
+                                    {
+                                        <a href="@Url.Action("DetailsKH", "DonHangCTs", new { id = order.IDdh })" class="btn btn-success mx-1 btn-sm rounded-sm btn-fixed-sizee">Xem</a>
+                                    }
+
+                                    @* Kiểm tra trạng thái đơn hàng "Đã xác nhận" *@
+                                    @if (order.TrangThai == "Đã xác nhận")
+                                    {
+                                        <a href="@Url.Action("DaNhanHang", "DonHangs", new { id = order.IDdh })" class="btn btn-warning mx-1 btn-sm rounded-sm ml-2 btn-fixed-sizee">Đã nhận</a>
+                                    }
+
+                                    @* Kiểm tra trạng thái đơn hàng "Chờ xử lý" để hiển thị nút hủy *@
+                                    @if (order.TrangThai == "Chờ xử lý")
+                                    {
+                                        @* Sử dụng Html.BeginForm để tạo form hủy đơn hàng *@
+                                        using (Html.BeginForm("Cancel", "KhachHangs", new { id = order.IDdh }, FormMethod.Post))
+                                        {
+                                            <input type="submit" value="Hủy" class="btn btn-danger btn-sm rounded-sm mx-1 ml-2" />
+                                        }
+                                    }
+                                </div>
                             </td>
                         </tr>
                     }
@@ -96,7 +106,7 @@
             </table>
         </div>
 
-        <div class="pagination-container">
+        <div class="pagination-container text-center mx-2">
             @Html.PagedListPager(Model, page => Url.Action("LichSuDonHang", new { page }), new PagedListRenderOptions
             {
                 DisplayLinkToFirstPage = PagedListDisplayMode.Always,
@@ -111,55 +121,6 @@
                 UlElementClasses = new[] { "pagination" }
             })
         </div>
-
-
-
     }
 </div>
 
-<style>
-    .btn-fixed-size {
-        width: 140px;
-        height: 40px;
-        color:white;
-    }
-
-    .pagination-container {
-        text-align: center; /* Căn giữa phân trang */
-        margin-top: 20px; /* Tùy chọn: tạo khoảng cách phía trên */
-    }
-
-    .pagination {
-        display: inline-flex; /* Sử dụng inline-flex để đảm bảo các item căn đều nhau theo chiều ngang */
-        padding-left: 0; /* Loại bỏ khoảng cách mặc định bên trái của ul */
-        list-style: none; /* Bỏ dấu chấm mặc định của ul */
-    }
-
-        .pagination > li {
-            display: inline-block; /* Đảm bảo các item hiển thị theo dạng hàng ngang */
-            margin-right: 5px; /* Tạo khoảng cách giữa các item */
-        }
-
-            .pagination > li > a,
-            .pagination > li > span {
-                color: white; /* Màu sắc cho các liên kết phân trang */
-                padding: 10px 15px; /* Khoảng cách bên trong của liên kết */
-                text-decoration: none; /* Bỏ gạch chân */
-                border-radius: 5px; /* Bo tròn các góc */
-                background-color: #5a5a5a; /* Màu nền của liên kết phân trang */
-            }
-
-            .pagination > li.active > a,
-            .pagination > li.active > span,
-            .pagination > li.active > a:hover,
-            .pagination > li.active > span:hover {
-                background-color: #007bff; /* Màu nền cho trang hiện tại */
-                color: white; /* Màu chữ cho trang hiện tại */
-            }
-
-            .pagination > li > a:hover,
-            .pagination > li > span:hover {
-                background-color: #f0f0f0; /* Màu nền khi rê chuột vào */
-                color: #5a5a5a; /* Màu chữ khi rê chuột vào */
-            }
-</style>

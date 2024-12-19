@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbsachModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HoTen" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nchar" MaxLength="50" />
+    <Property Name="DiaChi" Type="nvarchar(max)" />
+    <Property Name="SoDT" Type="nchar" MaxLength="15" Nullable="false" />
+    <Property Name="VaiTro" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="TKhoan" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="MKhau" Type="nchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DanhMuc">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DanhMuc" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="TheLoai" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DonHang">
+    <Key>
+      <PropertyRef Name="IDdh" />
+    </Key>
+    <Property Name="IDdh" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NgayDatHang" Type="date" />
+    <Property Name="IDkh" Type="int" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="255" />
+    <Property Name="NgayNhanHang" Type="date" />
+    <Property Name="TrangThai" Type="nvarchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="DonHangCT">
+    <Key>
+      <PropertyRef Name="IDdh" />
+    </Key>
+    <Property Name="IDdh" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDSanPham" Type="int" />
+    <Property Name="IDDonHang" Type="int" />
+    <Property Name="SoLuong" Type="int" />
+    <Property Name="Gia" Type="float" />
+    <Property Name="DanhGia" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="KhachHang">
+    <Key>
+      <PropertyRef Name="IDkh" />
+    </Key>
+    <Property Name="IDkh" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenKH" Type="nvarchar" MaxLength="50" />
+    <Property Name="SoDT" Type="nvarchar" MaxLength="11" />
+    <Property Name="Email" Type="nvarchar" MaxLength="255" />
+    <Property Name="TKhoan" Type="nvarchar" MaxLength="50" />
+    <Property Name="MKhau" Type="nvarchar" MaxLength="50" />
+    <Property Name="TrangThaiTaiKhoan" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="OTP" Type="nvarchar" MaxLength="6" />
+    <Property Name="OTPExpiry" Type="datetime" />
+  </EntityType>
+  <EntityType Name="KhuyenMai">
+    <Key>
+      <PropertyRef Name="IDkm" />
+    </Key>
+    <Property Name="IDkm" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenKhuyenMai" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="NgayBatDau" Type="date" />
+    <Property Name="NgayKetThuc" Type="date" />
+    <Property Name="MucGiamGia" Type="int" />
+    <Property Name="MoTa" Type="nvarchar(max)" />
+    <Property Name="NgayTao" Type="datetime" />
+  </EntityType>
+  <EntityType Name="NhaXuatBan">
+    <Key>
+      <PropertyRef Name="IDnxb" />
+    </Key>
+    <Property Name="IDnxb" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Tennxb" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="DiaChi" Type="nvarchar(max)" />
+    <Property Name="SoDienThoai" Type="nvarchar" MaxLength="11" />
+    <Property Name="Email" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="SanPham">
+    <Key>
+      <PropertyRef Name="IDsp" />
+    </Key>
+    <Property Name="IDsp" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenSP" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="MoTa" Type="nvarchar(max)" />
+    <Property Name="TheLoai" Type="int" Nullable="false" />
+    <Property Name="GiaBan" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="HinhAnh" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="IDtg" Type="int" Nullable="false" />
+    <Property Name="IDnxb" Type="int" Nullable="false" />
+    <Property Name="IDkm" Type="int" Nullable="false" />
+    <Property Name="SoLuong" Type="int" Nullable="false" />
+    <Property Name="TrangThaiSach" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TacGia">
+    <Key>
+      <PropertyRef Name="IDtg" />
+    </Key>
+    <Property Name="IDtg" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenTacGia" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="NgaySinh" Type="date" />
+    <Property Name="QuocGia" Type="nvarchar" MaxLength="50" />
+    <Property Name="TieuSu" Type="nvarchar(max)" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'dbsach.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="database_firewall_rules">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="start_ip_address" />
+      <PropertyRef Name="end_ip_address" />
+      <PropertyRef Name="create_date" />
+      <PropertyRef Name="modify_date" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="create_date" Type="datetime" Nullable="false" />
+    <Property Name="modify_date" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__DonHang__IDkh__6EF57B66">
+    <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="0..1" />
+    <End Role="DonHang" Type="Self.DonHang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KhachHang">
+        <PropertyRef Name="IDkh" />
+      </Principal>
+      <Dependent Role="DonHang">
+        <PropertyRef Name="IDkh" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DonHangCT__IDDon__72C60C4A">
+    <End Role="DonHang" Type="Self.DonHang" Multiplicity="0..1" />
+    <End Role="DonHangCT" Type="Self.DonHangCT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DonHang">
+        <PropertyRef Name="IDdh" />
+      </Principal>
+      <Dependent Role="DonHangCT">
+        <PropertyRef Name="IDDonHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DonHangCT__IDSan__71D1E811">
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="0..1" />
+    <End Role="DonHangCT" Type="Self.DonHangCT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SanPham">
+        <PropertyRef Name="IDsp" />
+      </Principal>
+      <Dependent Role="DonHangCT">
+        <PropertyRef Name="IDSanPham" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SanPham_DanhMuc">
+    <End Role="DanhMuc" Type="Self.DanhMuc" Multiplicity="1" />
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DanhMuc">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SanPham">
+        <PropertyRef Name="TheLoai" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SanPham_KhuyenMai">
+    <End Role="KhuyenMai" Type="Self.KhuyenMai" Multiplicity="1" />
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KhuyenMai">
+        <PropertyRef Name="IDkm" />
+      </Principal>
+      <Dependent Role="SanPham">
+        <PropertyRef Name="IDkm" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SanPham_NhaXuatBan">
+    <End Role="NhaXuatBan" Type="Self.NhaXuatBan" Multiplicity="1" />
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NhaXuatBan">
+        <PropertyRef Name="IDnxb" />
+      </Principal>
+      <Dependent Role="SanPham">
+        <PropertyRef Name="IDnxb" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SanPham_TacGia">
+    <End Role="TacGia" Type="Self.TacGia" Multiplicity="1" />
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TacGia">
+        <PropertyRef Name="IDtg" />
+      </Principal>
+      <Dependent Role="SanPham">
+        <PropertyRef Name="IDtg" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dbsachModelStoreContainer">
+    <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DanhMuc" EntityType="Self.DanhMuc" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DonHang" EntityType="Self.DonHang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DonHangCT" EntityType="Self.DonHangCT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KhachHang" EntityType="Self.KhachHang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KhuyenMai" EntityType="Self.KhuyenMai" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NhaXuatBan" EntityType="Self.NhaXuatBan" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TacGia" EntityType="Self.TacGia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
+      <DefiningQuery>SELECT 
+    [database_firewall_rules].[id] AS [id], 
+    [database_firewall_rules].[name] AS [name], 
+    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
+    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
+    [database_firewall_rules].[create_date] AS [create_date], 
+    [database_firewall_rules].[modify_date] AS [modify_date]
+    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__DonHang__IDkh__6EF57B66" Association="Self.FK__DonHang__IDkh__6EF57B66">
+      <End Role="KhachHang" EntitySet="KhachHang" />
+      <End Role="DonHang" EntitySet="DonHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DonHangCT__IDDon__72C60C4A" Association="Self.FK__DonHangCT__IDDon__72C60C4A">
+      <End Role="DonHang" EntitySet="DonHang" />
+      <End Role="DonHangCT" EntitySet="DonHangCT" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DonHangCT__IDSan__71D1E811" Association="Self.FK__DonHangCT__IDSan__71D1E811">
+      <End Role="SanPham" EntitySet="SanPham" />
+      <End Role="DonHangCT" EntitySet="DonHangCT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SanPham_DanhMuc" Association="Self.FK_SanPham_DanhMuc">
+      <End Role="DanhMuc" EntitySet="DanhMuc" />
+      <End Role="SanPham" EntitySet="SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SanPham_KhuyenMai" Association="Self.FK_SanPham_KhuyenMai">
+      <End Role="KhuyenMai" EntitySet="KhuyenMai" />
+      <End Role="SanPham" EntitySet="SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SanPham_NhaXuatBan" Association="Self.FK_SanPham_NhaXuatBan">
+      <End Role="NhaXuatBan" EntitySet="NhaXuatBan" />
+      <End Role="SanPham" EntitySet="SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SanPham_TacGia" Association="Self.FK_SanPham_TacGia">
+      <End Role="TacGia" EntitySet="TacGia" />
+      <End Role="SanPham" EntitySet="SanPham" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

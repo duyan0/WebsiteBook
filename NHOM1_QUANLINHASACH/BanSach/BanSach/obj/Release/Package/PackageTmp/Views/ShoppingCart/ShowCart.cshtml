@@ -1,0 +1,287 @@
+﻿@model BanSach.Models.Cart
+
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/css/Shoppingcart.css" rel="stylesheet" />
+<style>
+    .showcart {
+        text-align: center;
+        padding: 5px;
+        border-radius: 15px;
+        margin: 40px;
+    }
+
+        .showcart h5 {
+            padding: 20px 0 0 10px;
+        }
+
+    #carQuantity {
+        width: 50px;
+        padding-left: 10px;
+        border-radius: 10px;
+    }
+
+    .thanhtien {
+        bottom: 0;
+        border: solid 1px double;
+        border-radius: 15px;
+        padding: 15px;
+        -moz-box-shadow: 0 4px 8px 0 grey;
+        -webkit-box-shadow: 0 4px 8px 0 grey;
+    }
+
+    .nutthanhtoan {
+        border-radius: 15px;
+        color: white;
+        background-color: crimson;
+        border: none;
+        padding: 5px;
+        float: right;
+    }
+
+    .tb tr td {
+        padding-top: 20px;
+        color: white;
+    }
+
+    .xoa {
+        color: white;
+        border-radius: 5px;
+    }
+
+        .xoa:hover {
+            color: black;
+            text-decoration: none;
+        }
+
+    .thongtinkh input {
+        border-radius: 15px;
+        padding-left: 15px;
+        height: 50px;
+        outline: none;
+    }
+
+    .capnhat {
+        border-radius: 5px;
+        max-width: 50px;
+        text-align: center;
+        border: none;
+    }
+
+    .showcart a {
+        background-color: crimson;
+        border-radius: 15px;
+        padding: 10px;
+        color: white;
+    }
+
+        .showcart a:hover {
+            text-decoration: none;
+        }
+</style>
+
+<div class="text-center ">
+    <h5 class="text-white fw-semibold fs-2">Giỏ hàng</h5>
+</div>
+
+@if (Model == null || Model.Total_quantity() == 0)
+{
+    <div class="text-center">
+        <h5 class="text-white">
+            Chưa có sản phẩm trong giỏ hàng của bạn.
+        </h5><br />
+        <div class="btn btn-danger">
+            @Html.ActionLink("Tiếp tục mua hàng", "ProductList", "SanPhams", null, new { @class = "text-decoration-none text-white fs-6" })
+        </div>
+
+    </div>
+}
+else
+{
+    <table class="table-bordered table-hover w-100" style="border-radius: 15px;">
+        <thead>
+            <tr class="text-center font-weight-semi-bold display-0 text-white">
+                <th>Thông tin</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+                <th>Lựa chọn</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                // Sử dụng toán tử ?? để gán giá trị mặc định là 0 nếu GiaBan là null
+                decimal giaBan = item._product.GiaBan;
+                decimal mucGiamGia = item.MucGiamGia; // Lấy mức giảm giá từ CartItem
+                decimal giaSauKhuyenMai = giaBan * (1 - mucGiamGia / 100);
+                decimal total = item._quantity * giaSauKhuyenMai;
+
+                <tr class="text-center text-white">
+                    <td width="40%">
+                        <img src="~/Content/img/@item._product.HinhAnh" width="140" height="160" style="float:left; border-radius: 15px;" />
+                        <p style="padding-top:40px;">
+                            @Html.DisplayFor(model => item._product.TenSP)
+                        </p>
+                        <p>
+                            <b style="color:red">@giaSauKhuyenMai.ToString("#,##0").Replace(',', '.') VND</b>
+                        </p>
+                        @if (mucGiamGia > 0)
+                        {
+                            <p>
+                                <del style="color:grey">@giaBan.ToString("#,##0").Replace(',', '.') VND</del> <!-- Giá gốc -->
+                                <span style="color:green;">(@mucGiamGia% Off)</span> <!-- Mức khuyến mãi -->
+                            </p>
+                        }
+                    </td>
+                    <td class="text-center">
+                        @using (Html.BeginForm("Update_Cart_Quantity", "ShoppingCart"))
+                        {
+                            <input type="hidden" value="@item._product.IDsp" name="idPro" />
+                            <input type="number" class="capnhat" min="1" max="@item._product.SoLuong" value="@item._quantity" name="carQuantity" />
+                            <input type="submit" value="Ok" class="capnhat bg-white" />
+                        }
+                    </td>
+                    <td style="color: #c92127;"><b>@total.ToString("#,##0").Replace(',', '.') VND</b></td>
+                    <td class="xoa">
+                        <form action="/ShoppingCart/RemoveCart/@item._product.IDsp" method="get">
+                            <button type="submit" class="xoa" style="background-color: red; color: white; border: none; outline: none;">Xóa</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6" style="text-align: right; font-size: x-large; color: white;">
+                    Tổng tiền: <b style="color: #c92127;">@Model.Total_money().ToString("#,##0").Replace(',', '.') VND</b>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="container">
+        <form class="col-12 py-4 px-3" action="/ShoppingCart/CheckOut" method="post">
+            <input type="hidden" name="CodeCustomer" value="@Session["IDkh"]" required />
+
+            <h2 class="text-center text-white">Thông tin</h2>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <tr class="text-white">
+                        <td><label for="NameCustomer" class="form-label">Tên :</label></td>
+                        <td><label for="PhoneCustomer" class="form-label">Số điện thoại :</label></td>
+                        <td><label for="AddressDeliverry" class="form-label">Địa chỉ giao hàng :</label></td>
+                    </tr>
+                    <tr class="text-white ">
+                        <td>
+                            <input style="width:100%" type="text" name="NameCustomer" id="NameCustomer" class="form-control" placeholder="Điền họ và tên" value="@Session["TenKH"]" required />
+                        </td>
+                        <td>
+                            <input style="width:100%" type="text" name="PhoneCustomer" id="PhoneCustomer" class="form-control" placeholder="Điền số điện thoại" value="@Session["SoDT"]" required />
+                        </td>
+                        <td>
+                            <input style="width:100%" type="text" name="AddressDeliverry" id="AddressDeliverry" class="form-control" placeholder="Điền địa chỉ giao hàng" required />
+                            <div id="suggestions" class="suggestions" style="display:none;"></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-end py-3">
+                @if (Session["IDkh"] != null || Session["IDQly"] != null)
+                {
+                    <button type="submit" class="btn btn-danger">Thanh toán</button>
+                }
+                else
+                {
+                    <span class="text-danger font-weight-bold">Hãy đăng nhập trước</span>
+                    <a href="@Url.Action("LoginAccountCus", "LoginUser")" class="btn btn-danger ms-3">Đăng nhập</a>
+                }
+            </div>
+        </form>
+    </div>
+
+}
+
+@section Scripts {
+    <script>
+        const apiKey = 'cNNqPnwuPiecDAb0midTWtf8NJkrIXhh3qws63ns';
+        const addressInput = document.getElementById('AddressDeliverry');
+        const suggestionsContainer = document.getElementById('suggestions');
+        const cityInput = document.getElementById('city');
+        const districtInput = document.getElementById('district');
+        const wardInput = document.getElementById('ward');
+        let sessionToken = crypto.randomUUID() || 'default-session-token'; // Ensure there's always a session token
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        const debouncedSearch = debounce((query) => {
+            if (!query || query.length < 2) { // If query is empty or too short, hide suggestions
+                suggestionsContainer.style.display = 'none';
+                return;
+            }
+
+            console.log('Fetching API with query:', query);
+
+            fetch(`https://rsapi.goong.io/Place/AutoComplete?api_key=${apiKey}&input=${encodeURIComponent(query)}&sessiontoken=${sessionToken}`)
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status === 'OK') {
+                        suggestionsContainer.innerHTML = '';  // Clear previous suggestions
+                        suggestionsContainer.style.display = 'block';
+
+                        console.log('API Data:', data);
+
+                        data.predictions.forEach(prediction => {
+                            const div = document.createElement('div');
+                            div.className = 'suggestion-item';
+                            div.textContent = prediction.description;
+                            div.addEventListener('click', () => {
+                                addressInput.value = prediction.description;
+                                suggestionsContainer.style.display = 'none';
+
+                                // Check if compound exists before filling data
+                                if (prediction.compound) {
+                                    cityInput.value = prediction.compound.province || '';
+                                    districtInput.value = prediction.compound.district || '';
+                                    wardInput.value = prediction.compound.commune || '';
+                                }
+                            });
+                            suggestionsContainer.appendChild(div);
+                        });
+                    } else {
+                        suggestionsContainer.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error calling API:', error);
+                    suggestionsContainer.style.display = 'none';
+                });
+        }, 300);
+
+        addressInput.addEventListener('input', (e) => debouncedSearch(e.target.value));
+
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', function (e) {
+            // Check if the click is outside of the input field or suggestions container
+            if (!suggestionsContainer.contains(e.target) && e.target !== addressInput) {
+                suggestionsContainer.style.display = 'none';
+            }
+        });
+    </script>
+}

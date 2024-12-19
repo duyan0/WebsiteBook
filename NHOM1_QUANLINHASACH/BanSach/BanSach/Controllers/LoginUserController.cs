@@ -14,7 +14,7 @@ namespace BanSach.Controllers
 {
     public class LoginUserController : Controller
     {
-        dbSach db = new dbSach();
+        private readonly db_book1 db = new db_book1();
         // GET: LoginUser
         public ActionResult Index()
         {

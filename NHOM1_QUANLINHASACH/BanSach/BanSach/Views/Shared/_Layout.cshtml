@@ -3,13 +3,15 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Quản lý nhà sách - Võ Duy Ân</title>
+    <title>@ViewBag.Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="Free HTML Templates">
     <meta name="description" content="Free HTML Templates">
-
-    <!-- Favicon -->
-    <link href="~/Content/img/logo-icon.png" rel="icon">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>  <!-- jQuery FIRST -->
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <!-- Or the path to your local copy --><!-- jQuery UI SECOND -->
+    <link href="~/Content/img/LOGO_book.png" rel="icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
     <!-- Google Web Fonts -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Font Awesome -->
@@ -20,167 +22,157 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/Content/css/duyan.css" rel="stylesheet">
-    <link href="~/Content/css/layout.css" rel="stylesheet">
     <script src="~/Scripts/changeimg.js"></script>
 </head>
 
 <body>
-    <div id="loading">
-        <div class="spinner"></div>
+
+    <div id="loadingOverlay" class="loading-overlay text-center">
+        <div class="spinner-grow">
+            <i class="fas fa-spinner fa-spin"></i>
+        </div>
     </div>
 
-    <!-- Topbar Start -->
-    <div class="container-fluid " id="topbar" style="background-color: #1f1f20; z-index: 10000;">
-        <div class="row align-items-center py-3 px-xl-5">
+    <nav class="container fixed-top mb-5 bg-custom" id="topbar" style=" z-index: 10000; border-radius:0 0 3px 3px">
+        <div class="row align-items-center mt-1 position-relative d-flex">
             <!-- Logo -->
-            <div class="col-lg-3 col-12 text-lg-left text-center mb-3 mb-lg-0">
+            <div class="col-4 col-sm-4 text-center text-sm-start">
+                <!-- Logo -->
                 <a href="~/SanPhams/TrangChu" class="text-decoration-none">
-                    <h2 class="m-0 display-5 font-weight-semi-bold" style="color: white;">
-                        <img src="~/Content/img/logosach.png" style="width:40px;">
-                        Sách
-                    </h2>
+                    <h3 class="fw-semibold mb-0text-white d-inline">
+                        <img src="~/Content/img/LOGO_book.png" style="width:50px;height:50px;" alt="Logo sách">
+                    </h3>
                 </a>
+                <!-- Danh mục dropdown -->
+                <div class="d-inline-flex align-items-center justify-content-betweentext-white w-auto d-none d-sm-inline-flex" style="height: 65px; padding: 0 10px;">
+                    <a class="shadow-none d-inline-flex text-decoration-none" data-toggle="collapse" href="#navbar-vertical">
+                        <h6 class="m-0 fs-6 text-white mb-0 me-2">Danh mục</h6>
+                        <i class="bi bi-caret-down text-white"></i>
+                    </a>
+                </div>
+                <div class="collapse position-absolute navbar navbar-vertical navbar-light align-items-center bg-light " id="navbar-vertical" style="min-width: 250px; margin-left:4rem; margin-top:0;">
+                    @Html.Action("PhanDanhMuc", "DanhMucs")
+                </div>
             </div>
-
             <!-- Cột giữa: Tìm kiếm -->
-            <div class="col-lg-6 col-12 text-center mb-3 mb-lg-0">
+            <div class="col-4 col-sm-4">
                 @using (Html.BeginForm("ProductList", "SanPhams", FormMethod.Get))
                 {
                     <div class="input-group" style="margin-left:10px;">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" style="border-radius:10px 0 0 10px;">
-                                <i class="fas fa-search"></i>
-                            </span>
-                        </div>
-                        <input type="text" class="form-control fs-5" placeholder="Nhập tên sách bạn muốn tìm" name="SearchString" style="border-radius:0 10px 10px 0;">
+                        <span class="input-group-text" style="border-radius:5px 0 0 0;">
+                            <i class="bi bi-search-heart"></i>
+                        </span>
+                        <input type="text" class="form-control fs-6" id="searchInput" autocomplete="off" placeholder="Nhập tên sách" name="SearchString" style="border-radius: 0 5px 0 0; position:relative;" value="@ViewBag.CurrentFilter" />
                     </div>
+                    <div id="suggestionsBox" class="suggestions-box"></div>
                 }
             </div>
+            <div class="col-4 col-sm-4 d-inline-flex justify-content-end" id="user">
+                @if (Session["IDkh"] != null)
+                {
+                    <div class="dropdown">
+                        <a href="#" class="nav-link text-white">@Session["TenKH"]</a>
+                        <div class="dropdown-content fw-bold">
+                            <a href="@Url.Action("InfoCustomer", "LoginUser")">Thông tin</a>
+                            <a href="~/KhachHangs/LichSuDonHang">Đơn hàng</a>
+                            <a href="~/KhachHangs/ChangePassword">Đổi mật khẩu</a>
+                            <a href="@Url.Action("Logout", "LoginUser")">LogOut</a>
 
-            <!-- Cột phải: Giỏ hàng và sản phẩm bán chạy -->
-            <div class="col-lg-3 col-12 text-lg-right text-center mb-3 mb-lg-0">
-                <a href="~/ShoppingCart/ShowCart" class="btn border" style="border-radius:10px;">
-                    <i class="bi bi-bag-check" style="color:white;"></i> <span style="font-size:1rem;" class="text-white">Giỏ hàng</span>
-                    @Html.Action("BagCart", "ShoppingCart")
-                </a>
-            </div>
-        </div>
-
-        <!-- Navbar -->
-        <div class="row border-top px-xl-5">
-            <div class="col-lg-3 d-none d-lg-inline-block">
-                <a class="btn shadow-none d-inline-flex align-items-center justify-content-between text-white w-50" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 20px; background-color:white;">
-                    <h6 class="m-0 fs-5">Danh mục</h6>
-                    <i class="bi bi-caret-down text-dark"></i>
-                </a>
-                <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start bg-light" id="navbar-vertical" style="min-width: 250px;">
-                    @Html.Action("PhanDanhMuc", "DanhMucs")
-                </nav>
-            </div>
-
-            <div class="col-lg-9">
-                <nav class="navbar navbar-expand-lg navbar-light py-3 py-lg-0 px-0">
-                    <a href="~/SanPhams/ProductList" class="text-decoration-none d-block d-lg-none">
-                        <img src="~/Content/img/logosach.png" style="width:40px; height: 40px; margin-right: 10px;">
-                        <h1 class="m-0 display-5 font-weight-semi-bold text-white">Sách</h1>
-                    </a>
-                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse" style="background-color:#1f1f20;">
-                        <div class="navbar-nav ml-auto py-0" id="user">
-                            @if (Session["IDkh"] != null)
-                            {
-                                <div class="dropdown">
-                                    <a href="#" class="nav-item nav-link text-white">@Session["TenKH"]</a>
-                                    <div class="dropdown-content">
-                                        <a href="@Url.Action("InfoCustomer", "LoginUser")">Thông tin cá nhân</a>
-                                        <a href="~/KhachHangs/LichSuDonHang">Lịch sử đơn hàng</a>
-                                        <a href="@Url.Action("Logout", "LoginUser")">Đăng xuất</a>
-                                    </div>
-                                </div>
-                            }
-                            else if (Session["IdQly"] != null)
-                            {
-                                <a href="@Url.Action("QuanTri", "LoginUser")" class="nav-item nav-link">Trang ADMIN</a>
-                                <a href="@Url.Action("Logout", "LoginUser")" class="nav-item nav-link">Đăng xuất</a>
-                            }
-                            else
-                            {
-                                <a href="~/LoginUser/LoginAccountCus" class="nav-item nav-link fs-5 popover-body">Đăng nhập</a>
-                                <a href="~/LoginUser/RegisterCus" class="nav-item nav-link fs-5">Đăng ký</a>
-                            }
                         </div>
                     </div>
-                </nav>
+                }
+                else if (Session["IdQly"] != null)
+                {
+                    <a href="@Url.Action("QuanTri", "LoginUser")" class="nav-item nav-link fs-6">Trang ADMIN</a>
+                    <a href="@Url.Action("Logout", "LoginUser")" class="nav-item nav-link fs-6">Đăng xuất</a>
+                }
+                else
+                {
+                    <div class="d-inline-flex gap-3">
+                        <a href="~/LoginUser/LoginAccountCus" class="page-link text-white fs-6">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            <span class="d-none d-sm-inline">Đăng nhập</span>
+                        </a>
+                        <a href="~/LoginUser/RegisterCus" class="nav-item nav-link text-white fs-6">
+                            <i class="bi bi-person-plus"></i>
+                            <span class="d-none d-sm-inline">Đăng ký</span>
+                        </a>
+                    </div>
+
+                }
             </div>
         </div>
-    </div>
-
+    </nav>
 
 
     <!-- Navbar End -->
     <!-- Main Start -->
-    <div class="container-fluid pt-4 " style="width: 100%; background-color: black;">
-        <div class="container-fluid " style="background-color: #1f1f20; border-radius: 15px; padding: 1rem; margin: 0 7%; width: 86%; height: 100%;">
+    <div class="container p-0 mt-5 pt-5" style="width: 100%; background-color: black;">
+        <div class="container mt-0" style="background-color: #1f1f20; border-radius: 5px; padding: 1rem; margin: 0; width: 100%; height: 100%;">
             @RenderBody()
         </div>
     </div>
-    <footer class="card-body " style="background-color:black;">
-        <div class="ft">
-            <div class="kt p text-center">
-                <div class="pk ">
-                    <div class="pk-1 ">Võ Duy Ân</div>
-                    <div class="pk-2"><a href="#">Giới thiệu</a></div>
-                    <div class="pk-2"><a href="#">Chính sách đổi trả</a></div>
-                    <div class="pk-2"><a href="#">Chính sách bảo mật</a></div>
-                    <div class="pk-2"><a href="https://paca25.com/"><i class="fa-brands fa-twitter"></i> LOGO COPY TRÊN ĐÂY</a></div>
-                </div>
-                <div class="pk">
-                    <div class="pk-1">Hướng dẫn</div>
-                    <div class="pk-2"><a href="#">Hướng dẫn mua sách</a></div>
-                    <div class="pk-2"><a href="#">Hướng dẫn đổi trả</a></div>
-                    <div class="pk-2"><a href="https://paca25.com/"><i class="fa-brands fa-twitter"></i> LOGO COPY TRÊN ĐÂY</a></div>
-                </div>
-                <div class="pk">
-                    <div class="pk-1">Hỗ trợ</div>
-                    <div class="pk-2"><a href="https://www.facebook.com/VDuyA555/"><i class="fa-brands fa-facebook-f"></i> Facebook ( 7:00 - 22:00 )</a></div>
-                    <div class="pk-2"><a href="#"><i class="fa-brands fa-discord"></i> Discord</a></div>
-                    <div class="pk-2"><a href="https://paca25.com/"><i class="fa-brands fa-twitter"></i> LOGO COPY TRÊN ĐÂY</a></div>
-                </div>
-                <div class="pk">
-                    <div class="pk-1">Follow US</div>
-                    <div class="pk-2 "><a href="https://www.facebook.com/VDuyA555/"><i class="fa-brands fa-square-facebook" style="color: #046ee5;"></i> Facebook</a></div>
-                    <div class="pk-2"><a href="https://paca25.com/"><i class="fa-brands fa-twitter"></i> LOGO COPY TRÊN ĐÂY</a></div>
+    @*<footer class="container-fluid mt-2" style="background-color:black;">
+            <div class="ft">
+                <div class="kt p text-center">
+                    <div class="pk ">
+                        <div class="pk-1 ">Võ Duy Ân</div>
+                        <div class="pk-2"><a href="#">Giới thiệu</a></div>
+                        <div class="pk-2"><a href="#">Chính sách đổi trả</a></div>
+                        <div class="pk-2"><a href="#">Chính sách bảo mật</a></div>
+                        <div class="pk-2"><a href="https://paca25.com/"><i class="fa-brands fa-twitter"></i> LOGO COPY TRÊN ĐÂY</a></div>
+                    </div>
+                    <div class="pk">
+                        <div class="pk-1">Hướng dẫn</div>
+                        <div class="pk-2"><a href="#">Hướng dẫn mua sách</a></div>
+                        <div class="pk-2"><a href="#">Hướng dẫn đổi trả</a></div>
+                        <div class="pk-2"><a href="https://paca25.com/"><i class="fa-brands fa-twitter"></i> LOGO COPY TRÊN ĐÂY</a></div>
+                    </div>
+                    <div class="pk">
+                        <div class="pk-1">Hỗ trợ</div>
+                        <div class="pk-2"><a href="https://www.facebook.com/VDuyA555/"><i class="fa-brands fa-facebook-f"></i> Facebook ( 7:00 - 22:00 )</a></div>
+                        <div class="pk-2"><a href="#"><i class="fa-brands fa-discord"></i> Discord</a></div>
+                        <div class="pk-2"><a href="https://paca25.com/"><i class="fa-brands fa-twitter"></i> LOGO COPY TRÊN ĐÂY</a></div>
+                    </div>
+                    <div class="pk">
+                        <div class="pk-1">Follow US</div>
+                        <div class="pk-2 "><a href="https://www.facebook.com/VDuyA555/"><i class="fa-brands fa-square-facebook" style="color: #046ee5;"></i> Facebook</a></div>
+                        <div class="pk-2"><a href="https://paca25.com/"><i class="fa-brands fa-twitter"></i> LOGO COPY TRÊN ĐÂY</a></div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="copyright text-center text-success font-weight-bold " style="margin-top: 20px; color: #777;">
-            &copy; 2024 Võ Duy Ân. All rights reserved. Thời gian hiện tại: <span id="time" class="text-danger"></span>
-        </div>
+            <div class="copyright text-center text-success font-weight-bold " style="margin-top: 20px; color: #777;">
+                &copy; 2024 Võ Duy Ân. All rights reserved. Thời gian hiện tại: <span id="time" class="text-danger"></span>
+            </div>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                function updateTime() {
-                    var currentTime = new Date().toLocaleString();
-                    document.getElementById('time').textContent = currentTime;
-                }
-                updateTime();
-                setInterval(updateTime, 1000);
-            });
-        </script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    function updateTime() {
+                        var currentTime = new Date().toLocaleString();
+                        document.getElementById('time').textContent = currentTime;
+                    }
+                    updateTime();
+                    setInterval(updateTime, 1000);
+                });
+            </script>
 
-    </footer>
+        </footer>*@
     <!-- Footer End -->
-    <a href="https://zalo.me/0355079864" target="_blank" class="zalo-contact">
-        <img src="~/Content/img/zalo.png" alt="Liên hệ qua Zalo" />
-    </a>
+    <div class="d-inline-flex">
+        <a href="~/ShoppingCart/ShowCart" class="btn border cart1" style="border-radius:50%;">
+            <i class="bi bi-bag-check" style="color:black;"></i>
+            <div class="text-center">
+                @Html.Action("BagCart", "ShoppingCart")
+            </div>
+        </a>
+    </div>
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="~/Content/lib/easing/easing.min.js"></script>
     <script src="~/Content/lib/owlcarousel/owl.carousel.min.js"></script>
+    <link href="~/Content/css/layout.css" rel="stylesheet" />
     <script src="~/Scripts/main.js"></script>
     @Scripts.Render("~/bundles/jquery")
     <script src="~/Scripts/bootstrap.bundle.js"></script>
@@ -193,7 +185,7 @@
             font-family: 'Poppins', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f9fa; /* Màu nền để dễ nhìn */
+            background-color: black; /* Màu nền để dễ nhìn */
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -205,7 +197,7 @@
             position: relative;
             display: inline-block;
             border-radius: 1rem;
-            font-weight: bold;
+            font-size:12px;
         }
 
         .dropdown-content {
@@ -215,7 +207,9 @@
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
             z-index: 2;
-            border-radius: 1rem;
+            font-size: 12px;
+            border-radius: 5px;
+            margin-left: -64px;
         }
 
             .dropdown-content a {
@@ -226,8 +220,7 @@
             }
 
                 .dropdown-content a:hover {
-                    background-color: #252222;
-                    border-radius: 1rem;
+                    background-color: black;
                     color: white;
                 }
 
@@ -235,40 +228,9 @@
             display: block;
         }
 
-        .navbar-light .navbar-nav .nav-link {
-            padding: 20px 10px;
-            outline: none;
-            color: white;
-            border-radius: 5px;
-        }
 
-            .navbar-light .navbar-nav .nav-link:hover,
-            .navbar-light .navbar-nav .nav-link.active {
-                color: white;
-                background-color: #313030;
-            }
 
-        #loading {
-            position: fixed; /* Đặt vị trí cố định */
-            width: 100%; /* Chiếm toàn bộ chiều rộng */
-            height: 100%; /* Chiếm toàn bộ chiều cao */
-            top: 0; /* Vị trí trên cùng */
-            left: 0; /* Vị trí bên trái */
-            background: rgba(255, 255, 255, 0.8); /* Nền trắng trong suốt */
-            z-index: 9999; /* Đảm bảo hiển thị trên các phần tử khác */
-            display: flex; /* Sử dụng flexbox */
-            align-items: center; /* Căn giữa theo chiều dọc */
-            justify-content: center; /* Căn giữa theo chiều ngang */
-        }
 
-        .spinner {
-            width: 50px; /* Đường kính vòng tròn */
-            height: 50px; /* Đường kính vòng tròn */
-            border: 6px solid rgba(255, 0, 0, 0.5); /* Màu nền cho vòng tròn với độ trong suốt */
-            border-top: 6px solid red; /* Màu cho phần trên */
-            border-radius: 50%; /* Bo góc thành hình tròn */
-            animation: spin 1s linear infinite; /* Áp dụng hiệu ứng quay */
-        }
 
         .zalo-contact {
             position: fixed;
@@ -292,38 +254,160 @@
             .zalo-contact:hover {
                 transform: scale(1.1); /* Tăng kích thước khi hover */
             }
-            .fs-6{
-                font-size:18px;
-            }
-          
-    </style>
-    <!-- FT nè -->
-    <!-- Custom JavaScript -->
-    <script>
 
-        window.addEventListener("load", function () {
-            const loadingElement = document.getElementById("loading");
-            loadingElement.style.display = "none";
-        });
-
-        function updateCurrentTime() {
-            const now = new Date();
-            const formattedTime = now.toLocaleString('vi-VN', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
+        .cart1 {
+            position: fixed;
+            bottom: 40px;
+            background-color: white;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            z-index: 1000;
+            border-radius: 100%;
+            border: none;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
         }
 
-        // Cập nhật thời gian mỗi giây
-        setInterval(updateCurrentTime, 1000);
+            .cart1:hover {
+                background-color: rgba(255, 255, 255, 0.8);
+                color: black;
+                transition: 1s;
+            }
 
-        // Cập nhật khi trang được tải lần đầu
-        window.addEventListener("load", updateCurrentTime);
+        .fs-12 {
+            font-size: 12px;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 255);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999999;
+        }
+
+        .spinner-grow {
+            color: green;
+        }
+
+        
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script>
+            $(document).ready(function() {
+        $("#searchInput").on("input", function() {
+            var searchTerm = $(this).val().trim();  // Loại bỏ khoảng trắng thừa
+
+            if (searchTerm.length >= 2) {  // Chỉ tìm kiếm khi người dùng nhập từ 2 ký tự trở lên
+                $.ajax({
+                    url: '@Url.Action("SearchSuggestions", "SanPhams")', // Gọi đến action SearchSuggestions
+                    data: { query: searchTerm },
+                    success: function(data) {
+                        console.log(data);  // In dữ liệu ra để kiểm tra
+
+                        if (data && data.length > 0) {
+                            var suggestionsHtml = "<ul>";
+                            $.each(data, function(index, item) {
+                                console.log(item);  // Kiểm tra từng item trong data
+                                suggestionsHtml += "<li class='suggestion-item'>" + item.TenSP + "</li>";  // Đảm bảo tên thuộc tính đúng
+                            });
+                            suggestionsHtml += "</ul>";
+                            $("#suggestionsBox").html(suggestionsHtml).show();
+                        } else {
+                            $("#suggestionsBox").empty().hide();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Lỗi:", error);  // In lỗi nếu có
+                    }
+                });
+            } else {
+                $("#suggestionsBox").empty().hide();
+            }
+        });
+
+        $(document).on("click", ".suggestion-item", function() {
+            var selectedText = $(this).text();
+            $("#searchInput").val(selectedText);
+            $("#suggestionsBox").empty().hide();
+        });
+
+        $(document).on("click", function(event) {
+            if (!$(event.target).closest("#searchInput").length) {
+                $("#suggestionsBox").empty().hide();
+            }
+        });
+    });
+
     </script>
+    <script>
+        // Hiển thị loading khi người dùng chuyển trang
+        document.addEventListener('click', function (event) {
+            // Kiểm tra nếu người dùng click vào một liên kết
+            if (event.target.tagName === 'A') {
+                // Hiển thị màn hình loading
+                document.getElementById("loadingOverlay").style.display = "flex";
+            }
+        });
+
+        // Ẩn loading khi trang đã hoàn tất tải
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                document.getElementById("loadingOverlay").style.display = "none";
+            }, 500);  // Thời gian delay để đảm bảo loading có thời gian hiển thị
+        });
+    </script>
+
+    <style>
+        .suggestions-box {
+            position: absolute;
+            max-height: 200px;
+            overflow-y: scroll; /* Giữ khả năng cuộn nhưng ẩn thanh cuộn */
+            background-color: white;
+            width: 416px;
+            margin-left: 10px;
+            z-index: 1000000;
+            /* Viền của suggestions box */
+            border-radius: 0 0 5px 5px; /* Bo tròn góc */
+        }
+
+            /* Ẩn thanh cuộn */
+            .suggestions-box::-webkit-scrollbar {
+                width: 0; /* Ẩn thanh cuộn ngang */
+                height: 0; /* Ẩn thanh cuộn dọc */
+            }
+
+            /* Phần tử danh sách */
+            .suggestions-box ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .suggestions-box li {
+                padding: 10px;
+                cursor: pointer;
+            }
+
+                /* Hover effect khi di chuột lên item */
+                .suggestions-box li:hover {
+                    background-color: #f0f0f0;
+                }
+
+        .bg-custom {
+            background-color: #1f1f20;
+        }
+    </style>
+
 </body>
 
 </html>
+
+

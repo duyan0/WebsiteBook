@@ -11,8 +11,8 @@ namespace BanSach.Controllers
 {
     public class KhuyenMaiController : Controller
     {
-        
-        dbSach db = new dbSach();
+
+        private readonly db_book1 db = new db_book1();
 
 
         public ActionResult Index(string searchString, int? page)

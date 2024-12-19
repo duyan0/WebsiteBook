@@ -10,7 +10,7 @@ namespace BanSach.Controllers
 {
     public class AdminsController : Controller
     {
-        private dbSach db = new dbSach();
+        private readonly db_book1 db = new db_book1();
         public ActionResult Index(int? page, string searchString)
         {
             int pageSize = 10; // Số bản ghi trên mỗi trang
@@ -70,31 +70,27 @@ namespace BanSach.Controllers
 
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            if (!id.HasValue) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             Admin admin = db.Admin.Find(id);
-            if (admin == null)
-            {
-                return HttpNotFound();
-            }
+            if (admin == null) return HttpNotFound();
+
             return View(admin);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,HoTen,Email,DiaChi,SoDT,VaiTro,TKhoan,MKhau")] Admin admin)
+        public ActionResult Edit(Admin admin)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(admin).State = EntityState.Modified;
-                db.Configuration.ValidateOnSaveEnabled = false;
                 db.SaveChanges();
                 return RedirectToAction("Index", "Admins");
             }
             return View(admin);
         }
+
 
         public ActionResult Delete(int? id)
         {
