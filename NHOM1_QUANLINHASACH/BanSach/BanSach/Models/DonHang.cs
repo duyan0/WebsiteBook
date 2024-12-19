@@ -24,8 +24,13 @@
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime? NgayNhanHang { get; set; }
         public string TrangThai { get; set; } = "Chờ xử lý";
+<<<<<<< HEAD
         public Nullable<int> TongSoLuong { get; set; }
         public Nullable<decimal> TongTien { get; set; }
+=======
+         public Nullable<int> TongSoLuong { get; set; }
+ public Nullable<decimal> TongTien { get; set; }
+>>>>>>> a5ede79634dc6acf1f7e55ee57263068f380f135
         public virtual KhachHang KhachHang { get; set; }
         public virtual ICollection<DonHangCT> DonHangCT { get; set; }
 
