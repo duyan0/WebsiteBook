@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en" data-bs-theme="light">
 
-<head>
+<head >
     <meta charset="utf-8">
     <title>@ViewBag.Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,15 +32,15 @@
             <i class="fas fa-spinner fa-spin"></i>
         </div>
     </div>
-    
-    <nav class="container fixed-top mb-5 bg-custom" id="topbar" style=" z-index: 10000; border-radius:0 0 3px 3px">
+
+    <nav class="container fixed-top mb-5 bg-dark" id="topbar" style=" z-index: 10000; border-radius:0 0 3px 3px">
         <div class="row align-items-center mt-1 position-relative d-flex">
             <!-- Logo -->
             <div class="col-4 col-sm-4 text-center text-sm-start">
                 <!-- Logo -->
                 <a href="~/SanPhams/TrangChu" class="text-decoration-none">
                     <h3 class="fw-semibold mb-0text-white d-inline">
-                        <img src="~/Content/img/LOGO_book.png" style="width:50px;height:50px;" alt="Logo sách">
+                        <img srcset="~/Content/img/LOGO_book.png 2x" style="width:50px;height:50px;" alt="Logo sách">
                     </h3>
                 </a>
                 <!-- Danh mục dropdown -->
@@ -53,6 +53,7 @@
                 <div class="collapse position-absolute navbar navbar-vertical navbar-light align-items-center bg-light " id="navbar-vertical" style="min-width: 250px; margin-left:4rem; margin-top:0;">
                     @Html.Action("PhanDanhMuc", "DanhMucs")
                 </div>
+                @*<button id="themeToggle" class="btn btn-light">Chưa có</button>*@
             </div>
             <!-- Cột giữa: Tìm kiếm -->
             <div class="col-4 col-sm-4">
@@ -77,14 +78,15 @@
                             <a href="~/KhachHangs/LichSuDonHang">Đơn hàng</a>
                             <a href="~/KhachHangs/ChangePassword">Đổi mật khẩu</a>
                             <a href="@Url.Action("Logout", "LoginUser")">LogOut</a>
-
                         </div>
                     </div>
                 }
                 else if (Session["IdQly"] != null)
                 {
-                    <a href="@Url.Action("QuanTri", "LoginUser")" class="nav-item text-white nav-link fs-6">Trang ADMIN</a>
-                    <a href="@Url.Action("Logout", "LoginUser")" class="nav-item text-white nav-link fs-6">Đăng xuất</a>
+                    <div class="d-inline-flex gap-3">
+                        <a href="@Url.Action("QuanTri", "LoginUser")" class="nav-item text-white nav-link fs-6 ">Trang ADMIN</a>
+                        <a href="@Url.Action("Logout", "LoginUser")" class="nav-item text-white nav-link fs-6">Đăng xuất</a>
+                    </div>
                 }
                 else
                 {
@@ -108,7 +110,7 @@
     <!-- Navbar End -->
     <!-- Main Start -->
     <div class="container p-0 mt-5 pt-5" style="width: 100%; background-color: black;">
-        <div class="container mt-0" style="background-color: #1f1f20; border-radius: 5px; padding: 1rem; margin: 0; width: 100%; height: 100%;">
+        <div class="container mt-0 bg-dark" style=" border-radius: 5px; padding: 1rem; margin: 0; width: 100%; height: 100%;">
             @RenderBody()
         </div>
     </div>
@@ -180,7 +182,7 @@
 
     <!-- Custom CSS -->
     <style>
-        
+
 
         body {
             font-family: 'Poppins', Arial, sans-serif;
@@ -362,8 +364,20 @@
                 document.getElementById("loadingOverlay").style.display = "none";
             }, 500);  // Thời gian delay để đảm bảo loading có thời gian hiển thị
         });
-    </script>
 
+
+    </script>
+    <script>
+        document.getElementById('themeToggle').addEventListener('click', function () {
+            // Kiểm tra chủ đề hiện tại và thay đổi nó
+            var currentTheme = document.documentElement.getAttribute('data-bs-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.setAttribute('data-bs-theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-bs-theme', 'dark');
+            }
+        });
+    </script>
     <style>
         .suggestions-box {
             position: absolute;

@@ -57,7 +57,7 @@ namespace BanSach.Controllers
         //Thêm danh mục POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,DanhMuc1,TheLoai")] DanhMuc danhMuc)
+        public ActionResult Create([Bind(Include = "ID,DanhMuc1,TheLoai,HinhAnh_DM")] DanhMuc danhMuc)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace BanSach.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,DanhMuc1,TheLoai")] DanhMuc danhMuc)
+        public ActionResult Edit([Bind(Include = "ID,DanhMuc1,TheLoai,HinhAnh_DM")] DanhMuc danhMuc)
         {
             if (ModelState.IsValid)
             {

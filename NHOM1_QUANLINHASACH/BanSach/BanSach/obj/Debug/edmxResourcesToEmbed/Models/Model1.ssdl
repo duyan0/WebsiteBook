@@ -13,6 +13,16 @@
     <Property Name="TKhoan" Type="nchar" MaxLength="50" Nullable="false" />
     <Property Name="MKhau" Type="nchar" MaxLength="50" Nullable="false" />
   </EntityType>
+  <EntityType Name="Banner">
+    <Key>
+      <PropertyRef Name="BannerID" />
+    </Key>
+    <Property Name="BannerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HinhAnh" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="MoTa" Type="nvarchar(max)" />
+    <Property Name="Link" Type="nvarchar" MaxLength="100" />
+    <Property Name="ThuTu" Type="int" />
+  </EntityType>
   <EntityType Name="DanhMuc">
     <Key>
       <PropertyRef Name="ID" />
@@ -20,6 +30,7 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="DanhMuc" Type="nchar" MaxLength="50" Nullable="false" />
     <Property Name="TheLoai" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="HinhAnh_DM" Type="nvarchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="DonHang">
     <Key>
@@ -96,6 +107,16 @@
     <Property Name="IDkm" Type="int" Nullable="false" />
     <Property Name="SoLuong" Type="int" Nullable="false" />
     <Property Name="TrangThaiSach" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Slide">
+    <Key>
+      <PropertyRef Name="SlideID" />
+    </Key>
+    <Property Name="SlideID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HinhAnh" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="MoTa" Type="nvarchar(max)" />
+    <Property Name="Link" Type="nvarchar" MaxLength="100" />
+    <Property Name="ThuTu" Type="int" />
   </EntityType>
   <EntityType Name="TacGia">
     <Key>
@@ -211,6 +232,7 @@ warning 6002: The table/view 'dbsach.sys.database_firewall_rules' does not have 
   </Association>
   <EntityContainer Name="dbsachModelStoreContainer">
     <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Banner" EntityType="Self.Banner" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DanhMuc" EntityType="Self.DanhMuc" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DonHang" EntityType="Self.DonHang" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DonHangCT" EntityType="Self.DonHangCT" Schema="dbo" store:Type="Tables" />
@@ -218,6 +240,7 @@ warning 6002: The table/view 'dbsach.sys.database_firewall_rules' does not have 
     <EntitySet Name="KhuyenMai" EntityType="Self.KhuyenMai" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="NhaXuatBan" EntityType="Self.NhaXuatBan" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Slide" EntityType="Self.Slide" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TacGia" EntityType="Self.TacGia" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
       <DefiningQuery>SELECT 

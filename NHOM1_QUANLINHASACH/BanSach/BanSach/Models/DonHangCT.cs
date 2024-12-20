@@ -11,19 +11,18 @@ namespace BanSach.Models
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class DonHangCT
     {
         public int IDdh { get; set; }
         public Nullable<int> IDSanPham { get; set; }
-        public int IDDonHang { get; set; }
+        public Nullable<int> IDDonHang { get; set; }
         public Nullable<int> SoLuong { get; set; }
         public Nullable<double> Gia { get; set; }
         public string DanhGia { get; set; }
-
+    
         public virtual DonHang DonHang { get; set; }
         public virtual SanPham SanPham { get; set; }
-
         public double TongTien
         {
             get

@@ -37,7 +37,7 @@
 
                 <dt class="col-sm-4">Hình ảnh:</dt>
                 <dd class="col-sm-8">
-                    <img src="~/Content/img/@Model.HinhAnh" class="img-fluid rounded-5" width="100" alt="Hình ảnh sách">
+                    <img src="~/Content/img/@Model.HinhAnh" class="img-fluid rounded-1" width="50" alt="Hình ảnh sách">
                 </dd>
 
                 <dt class="col-sm-4">Tác giả:</dt>
@@ -76,11 +76,11 @@
                 <dd class="col-sm-8 font-weight-bold">
                     @if (Model.TrangThaiSach == "Còn hàng")
                     {
-                        <span style="color: green;">@Html.DisplayFor(model => model.TrangThaiSach)</span>
+                        <span class="badge badge-success">@Html.DisplayFor(model => model.TrangThaiSach)</span>
                     }
                     else if (Model.TrangThaiSach == "Hết hàng")
                     {
-                        <span style="color: red;">@Html.DisplayFor(model => model.TrangThaiSach)</span>
+                        <span class="badge badge-danger">@Html.DisplayFor(model => model.TrangThaiSach)</span>
                     }
                     else
                     {

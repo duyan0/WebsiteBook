@@ -35,5 +35,7 @@ namespace BanSach.Models
         public virtual DbSet<SanPham> SanPham { get; set; }
         public virtual DbSet<TacGia> TacGia { get; set; }
         public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
+        public virtual DbSet<Banner> Banners { get; set; }
+        public virtual DbSet<Slide> Slides { get; set; }
     }
 }

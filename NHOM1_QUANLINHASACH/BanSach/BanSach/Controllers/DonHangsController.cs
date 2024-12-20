@@ -178,7 +178,7 @@ namespace BanSach.Controllers
                 .ToList(); // Đưa tất cả dữ liệu vào bộ nhớ
 
             // Tính tổng doanh thu từ các đơn hàng đã nhận
-            decimal tongDoanhThu = donHangsDaNhanHang.Sum(dh => dh.Total_DH);
+            decimal tongDoanhThu = donHangsDaNhanHang.Sum(dh => dh.TongTien ?? 0);
 
             // Khởi tạo ViewModel
             var thongKeViewModel = new ThongKeDonHangViewModel

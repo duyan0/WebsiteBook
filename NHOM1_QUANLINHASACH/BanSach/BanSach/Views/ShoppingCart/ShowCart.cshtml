@@ -23,7 +23,7 @@
 }
 else
 {
-    <table class="table-custom table-striped table-dark w-100">
+    <table class="table table-dark w-100">
         <thead>
             <tr class="text-left font-weight-semi-bold display-0 text-white px-2">
                 <th></th>
@@ -123,7 +123,7 @@ else
                            required
                            minlength="10"
                            maxlength="11"
-                           pattern="0\d{10,11}"
+                           pattern="\d{10,11}"
                            title="Bắt đầu từ 0 - Min 10 max 11" />
                 </div>
 
@@ -257,15 +257,5 @@ else
         border-radius: 4px;
         text-align: center;
         width: 40px;
-    }
-
-    body > div.container.p-0.mt-5.pt-5 > div > table > tbody > tr {
-        border-bottom: 1px solid black;
-        border-top: 1px solid black;
-    }
-    #Customer-Form {
-        border-radius: 4px;
-        border: none;
-        font-size: 16px;
     }
 </style>

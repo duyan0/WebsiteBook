@@ -1,8 +1,6 @@
 ﻿using BanSach.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Net;
 using System.Net.Mail;
@@ -45,7 +43,7 @@ namespace BanSach.Controllers
         }
 
         [HttpPost]
-        public ActionResult RegisterCus(KhachHang _user)
+        public ActionResult RegisterCus(KhachHang _user, string ConfirmPass)
         {
             if (!ModelState.IsValid)
             {
@@ -83,7 +81,7 @@ namespace BanSach.Controllers
             }
 
             // Kiểm tra mật khẩu khớp nhau
-            if (_user.MKhau != _user.ConfirmPass)
+            if (_user.MKhau != ConfirmPass)
             {
                 ViewBag.ErrorRegister = "Mật khẩu nhập lại không đúng!";
                 return View();
@@ -374,6 +372,5 @@ namespace BanSach.Controllers
             SendEmail("crandi21112004@gmail.com", "Test Email", "This is a test email.");
             return Content("Email sent!");
         }
-
     }
 }

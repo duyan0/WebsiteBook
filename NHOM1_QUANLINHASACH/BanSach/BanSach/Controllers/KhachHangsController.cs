@@ -353,7 +353,7 @@ namespace BanSach.Controllers
                         : (order.TrangThai == "Đã xác nhận" && order.NgayDatHang.HasValue
                             ? "Dự kiến: " + order.NgayDatHang.Value.AddDays(2).ToString("dd/MM/yyyy")
                             : "Chưa có thông tin");
-                    worksheet.Cell(currentRow, 4).Value = order.GetTongSoTien().ToString("C0", new System.Globalization.CultureInfo("vi-VN"));
+                    worksheet.Cell(currentRow, 4).Value = order.TongTien;
                     worksheet.Cell(currentRow, 5).Value = order.TrangThai;
                 }
 

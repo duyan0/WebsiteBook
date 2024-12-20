@@ -7,7 +7,7 @@
 }
 
 <link href="~/Content/PagedList.css" rel="stylesheet" />
-
+<script src="~/Content/js/ThongBao.js"></script>
 <style>
     .tieude {
         text-align: center;
@@ -75,7 +75,24 @@
 </style>
 
 <h2 class="tieude">Quản lý đơn hàng</h2>
-
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="successAlert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="errorAlert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
 <!-- Search Form -->
 <div class="search-bar mb-0">
     @using (Html.BeginForm("Index", "DonHangs", FormMethod.Get, new { id = "searchForm" }))

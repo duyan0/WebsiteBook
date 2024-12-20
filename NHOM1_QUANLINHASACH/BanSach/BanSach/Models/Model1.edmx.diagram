@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="aa7108962a934255952aca06c8390c17" Name="Diagram1" ZoomLevel="83">
+      <Diagram DiagramId="aa7108962a934255952aca06c8390c17" Name="Diagram1" ZoomLevel="79">
         <EntityTypeShape EntityType="dbsachModel.Admin" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="dbsachModel.DanhMuc" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
         <EntityTypeShape EntityType="dbsachModel.DonHang" Width="1.5" PointX="3" PointY="15.75" IsExpanded="true" />
@@ -22,6 +22,8 @@
         <AssociationConnector Association="dbsachModel.FK_SanPham_KhuyenMai" ManuallyRouted="false" />
         <AssociationConnector Association="dbsachModel.FK_SanPham_NhaXuatBan" ManuallyRouted="false" />
         <AssociationConnector Association="dbsachModel.FK_SanPham_TacGia" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="dbsachModel.Banner" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="dbsachModel.Slide" Width="1.5" PointX="8.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

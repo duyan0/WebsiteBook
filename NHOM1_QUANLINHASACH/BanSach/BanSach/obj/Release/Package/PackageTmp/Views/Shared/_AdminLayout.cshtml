@@ -143,6 +143,30 @@
                                             </ul>
                                         </div>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-bs-toggle="collapse" href="#menuBanner" role="button" aria-expanded="false" aria-controls="menuBanner">
+                                            Banner
+                                            <i class="fas fa-chevron-down ms-2 collapse-icon" id="icon-menuBanner"></i>
+                                        </a>
+                                        <div class="collapse" id="menuBanner">
+                                            <ul class="navbar-nav ms-3 d-block">
+                                                <li class="nav-item"><a class="nav-link" href="~/Banner/Index">DS Banner</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="~/Banner/Create">Thêm Banner</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-bs-toggle="collapse" href="#menuSlide" role="button" aria-expanded="false" aria-controls="menuSlide">
+                                            Slide
+                                            <i class="fas fa-chevron-down ms-2 collapse-icon" id="icon-menuSlide"></i>
+                                        </a>
+                                        <div class="collapse" id="menuSlide">
+                                            <ul class="navbar-nav ms-3 d-block">
+                                                <li class="nav-item"><a class="nav-link" href="~/Slide/Index">DS Slide</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="~/Slide/Create">Thêm Slide</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
 
                                     <!-- Menu Nhân sự (chỉ hiển thị nếu là admin) -->
                                     @if (isAdmin)
@@ -247,6 +271,13 @@
 
             $('#menuDonHang').on('hide.bs.collapse', function () {
                 $('#icon-menuDonHang').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+            });
+            $('#menuBanner').on('show.bs.collapse', function () {
+                $('#icon-menuBanner').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+            });
+
+            $('#menuBanner').on('hide.bs.collapse', function () {
+                $('#icon-menuBanner').removeClass('fa-chevron-up').addClass('fa-chevron-down');
             });
         });
     </script>

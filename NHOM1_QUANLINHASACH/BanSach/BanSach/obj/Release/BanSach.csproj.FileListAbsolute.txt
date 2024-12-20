@@ -127,3 +127,11 @@ D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Release\BanSach.csproj.CoreCo
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Release\BanSach.csproj.Up2Date
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Release\BanSach.dll
 D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\obj\Release\BanSach.pdb
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.AspNet.Identity.Core.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Owin.Security.OAuth.dll
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.AspNet.Identity.Core.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\demogit\NHOM1_QUANLINHASACH\BanSach\BanSach\bin\Microsoft.Owin.Security.OAuth.xml

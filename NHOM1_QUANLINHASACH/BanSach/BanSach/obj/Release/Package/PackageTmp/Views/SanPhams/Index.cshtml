@@ -8,6 +8,7 @@
 }
 
 <link href="~/Content/PagedList.css" rel="stylesheet" />
+<script src="~/Content/js/ThongBao.js"></script>
 <style>
     .tieude {
         text-align: center;
@@ -196,7 +197,7 @@
                         </td>
                         <td>@Html.DisplayFor(modelItem => item.KhuyenMai.MucGiamGia)%</td>
                         <td>
-                            <span class="@((item.TrangThaiSach == "Còn hàng") ? "text-success" : "text-danger")">
+                            <span class="@((item.TrangThaiSach == "Còn hàng") ? "badge badge-success" : "badge badge-danger")">
                                 @Html.DisplayFor(modelItem => item.TrangThaiSach)
                             </span>
                         </td>
@@ -257,18 +258,4 @@ else
             }
         });
     }
-
-    $(document).ready(function () {
-        // Gọi AJAX khi người dùng thay đổi từ khóa tìm kiếm hoặc sắp xếp
-        $('#searchString, #sortOrder').on('change', function () {
-            loadProducts(1); // Tải lại trang đầu tiên khi thay đổi
-        });
-
-        // Xử lý sự kiện khi người dùng phân trang
-        $(document).on('click', '.pagedListPager a', function (e) {
-            e.preventDefault();
-            var page = $(this).attr('href').split('=')[1]; // Lấy trang từ URL
-            loadProducts(page); // Gọi lại AJAX để tải lại sản phẩm
-        });
-    });
 </script>

@@ -18,6 +18,16 @@
           <Property Name="TKhoan" Type="nchar" MaxLength="50" Nullable="false" />
           <Property Name="MKhau" Type="nchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Banner">
+          <Key>
+            <PropertyRef Name="BannerID" />
+          </Key>
+          <Property Name="BannerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HinhAnh" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="MoTa" Type="nvarchar(max)" />
+          <Property Name="Link" Type="nvarchar" MaxLength="100" />
+          <Property Name="ThuTu" Type="int" />
+        </EntityType>
         <EntityType Name="DanhMuc">
           <Key>
             <PropertyRef Name="ID" />
@@ -25,6 +35,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DanhMuc" Type="nchar" MaxLength="50" Nullable="false" />
           <Property Name="TheLoai" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="HinhAnh_DM" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="DonHang">
           <Key>
@@ -101,6 +112,16 @@
           <Property Name="IDkm" Type="int" Nullable="false" />
           <Property Name="SoLuong" Type="int" Nullable="false" />
           <Property Name="TrangThaiSach" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Slide">
+          <Key>
+            <PropertyRef Name="SlideID" />
+          </Key>
+          <Property Name="SlideID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HinhAnh" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="MoTa" Type="nvarchar(max)" />
+          <Property Name="Link" Type="nvarchar" MaxLength="100" />
+          <Property Name="ThuTu" Type="int" />
         </EntityType>
         <EntityType Name="TacGia">
           <Key>
@@ -216,6 +237,7 @@ warning 6002: The table/view 'dbsach.sys.database_firewall_rules' does not have 
         </Association>
         <EntityContainer Name="dbsachModelStoreContainer">
           <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Banner" EntityType="Self.Banner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DanhMuc" EntityType="Self.DanhMuc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DonHang" EntityType="Self.DonHang" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DonHangCT" EntityType="Self.DonHangCT" Schema="dbo" store:Type="Tables" />
@@ -223,6 +245,7 @@ warning 6002: The table/view 'dbsach.sys.database_firewall_rules' does not have 
           <EntitySet Name="KhuyenMai" EntityType="Self.KhuyenMai" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NhaXuatBan" EntityType="Self.NhaXuatBan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Slide" EntityType="Self.Slide" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TacGia" EntityType="Self.TacGia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
             <DefiningQuery>SELECT 
@@ -288,6 +311,7 @@ warning 6002: The table/view 'dbsach.sys.database_firewall_rules' does not have 
           <Property Name="DanhMuc1" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="TheLoai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="SanPham" Relationship="Self.FK_SanPham_DanhMuc" FromRole="DanhMuc" ToRole="SanPham" />
+          <Property Name="HinhAnh_DM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="DonHang">
           <Key>
@@ -527,7 +551,29 @@ warning 6002: The table/view 'dbsach.sys.database_firewall_rules' does not have 
             <End Role="TacGia" EntitySet="TacGia" />
             <End Role="SanPham" EntitySet="SanPham" />
           </AssociationSet>
+          <EntitySet Name="Banners" EntityType="dbsachModel.Banner" />
+          <EntitySet Name="Slides" EntityType="dbsachModel.Slide" />
         </EntityContainer>
+        <EntityType Name="Banner">
+          <Key>
+            <PropertyRef Name="BannerID" />
+          </Key>
+          <Property Name="BannerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HinhAnh" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MoTa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Link" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ThuTu" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Slide">
+          <Key>
+            <PropertyRef Name="SlideID" />
+          </Key>
+          <Property Name="SlideID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HinhAnh" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MoTa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Link" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ThuTu" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -551,6 +597,7 @@ warning 6002: The table/view 'dbsach.sys.database_firewall_rules' does not have 
           <EntitySetMapping Name="DanhMuc">
             <EntityTypeMapping TypeName="dbsachModel.DanhMuc">
               <MappingFragment StoreEntitySet="DanhMuc">
+                <ScalarProperty Name="HinhAnh_DM" ColumnName="HinhAnh_DM" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="DanhMuc1" ColumnName="DanhMuc" />
                 <ScalarProperty Name="TheLoai" ColumnName="TheLoai" />
@@ -659,6 +706,28 @@ warning 6002: The table/view 'dbsach.sys.database_firewall_rules' does not have 
                 <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
                 <ScalarProperty Name="create_date" ColumnName="create_date" />
                 <ScalarProperty Name="modify_date" ColumnName="modify_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Banners">
+            <EntityTypeMapping TypeName="dbsachModel.Banner">
+              <MappingFragment StoreEntitySet="Banner">
+                <ScalarProperty Name="ThuTu" ColumnName="ThuTu" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+                <ScalarProperty Name="HinhAnh" ColumnName="HinhAnh" />
+                <ScalarProperty Name="BannerID" ColumnName="BannerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Slides">
+            <EntityTypeMapping TypeName="dbsachModel.Slide">
+              <MappingFragment StoreEntitySet="Slide">
+                <ScalarProperty Name="ThuTu" ColumnName="ThuTu" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+                <ScalarProperty Name="HinhAnh" ColumnName="HinhAnh" />
+                <ScalarProperty Name="SlideID" ColumnName="SlideID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

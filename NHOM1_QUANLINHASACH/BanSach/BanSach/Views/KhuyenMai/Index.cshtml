@@ -7,8 +7,26 @@
 }
 
 <link href="~/Content/PagedList.css" rel="stylesheet" />
+<script src="~/Content/js/ThongBao.js"></script>
 <h2 class="text-center font-weight-bold">Danh sách khuyến mãi</h2>
-
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="successAlert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="errorAlert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
 <!-- Search Form -->
 <div class="search-bar mb-4">
     @using (Html.BeginForm("Index", "KhuyenMai", FormMethod.Get, new { id = "searchForm" }))
@@ -43,10 +61,10 @@
                 <th>Tên KM</th>
                 <th style="width:150px;">Ngày bắt đầu</th>
                 <th style="width:140px;">Ngày kết thúc</th>
-                <th >Giá giảm</th>
+                <th>Giá giảm</th>
                 <th style="width:140px;">Mô tả</th>
-                <th >SL SP áp dụng</th> <!-- Updated column header -->
-                <th >Thao tác</th>
+                <th>SL SP áp dụng</th> <!-- Updated column header -->
+                <th>Thao tác</th>
             </tr>
         </thead>
         <tbody style="color:black;">

@@ -14,19 +14,19 @@
 
 <table class="table table-bordered table-hover">
     <thead class="text-white" style="background-color:black;">
-        <tr class="text-center">
-            <th>ID</th>
+        <tr >
+            <th>Hình ảnh</th>
             <th>Danh mục</th>
             <th>Thể loại</th>
-            <th style="width: 200px;">Chỉnh sửa</th>
+            <th style="width: 200px;">#</th>
         </tr>
     </thead>
     <tbody style="color:black;">
         @foreach (var item in Model)
         {
             <tr>
-                <td class="text-center align-middle">
-                    @Html.DisplayFor(modelItem => item.ID)
+                <td >
+                    <img src="~/Content/img/@item.HinhAnh_DM" class="rounded-1" alt="@item.DanhMuc1"style="width:100px;" />
                 </td>
                 <td class="align-middle">
                     @Html.DisplayFor(modelItem => item.DanhMuc1)
@@ -34,7 +34,7 @@
                 <td class="align-middle">
                     @Html.DisplayFor(modelItem => item.TheLoai)
                 </td>
-                <td class="text-center align-middle" style="width: 200px;">
+                <td style="width: 200px;">
                     <a href="@Url.Action("Edit", new { id = item.ID })" class="btn btn-warning btn-sm rounded-sm mx-1" title="Sửa">
                         <i class="fas fa-edit text-white"></i>
                     </a>

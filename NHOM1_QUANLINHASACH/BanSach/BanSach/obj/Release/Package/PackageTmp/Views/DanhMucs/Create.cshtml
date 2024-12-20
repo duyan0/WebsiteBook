@@ -8,13 +8,19 @@
 <div class="container mt-5">
     <div class="card shadow-sm border-0 rounded-lg">
         <div class="card-header text-center text-white ">
-            <h2 class="font-weight-bold mb-0">Thêm Danh Mục</h2>
+            <h2 class="fw-semibold mb-0 text-dark">Thêm Danh Mục</h2>
         </div>
         <div class="card-body p-4">
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
-
+                <div class="form-group row mb-3">
+                    @Html.LabelFor(model => model.HinhAnh_DM, "Hình ảnh", htmlAttributes: new { @class = "col-md-3 col-form-label font-weight-bold" })
+                    <div class="col-md-9">
+                        <input type="file" name="HinhAnh_DM" class="form-control rounded-sm" placeholder="Hình ảnh" />
+                        @Html.ValidationMessageFor(model => model.HinhAnh_DM, "", new { @class = "text-danger" })
+                    </div>
+                </div>
                 <div class="form-group row mb-3">
                     @Html.LabelFor(model => model.DanhMuc1, "Tên Danh Mục", htmlAttributes: new { @class = "col-md-3 col-form-label font-weight-bold" })
                     <div class="col-md-9">
