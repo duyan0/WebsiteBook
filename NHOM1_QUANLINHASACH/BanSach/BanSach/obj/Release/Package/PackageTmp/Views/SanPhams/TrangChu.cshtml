@@ -1,10 +1,7 @@
-﻿@model IEnumerable<BanSach.Models.DanhMuc>
-
-@{
+﻿@{
     ViewBag.Title = "Quản lý Nhà Sách";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var temp = new BanSach.Models.DanhMuc();
-    var processedCategories = new HashSet<string>();
+    
 }
 <style>
     .carousel-inner, .carousel-inner a, .col-lg-3 .d-flex {
@@ -29,52 +26,26 @@
     }
 </style>
 
-<div id="header-carousel" class="carousel slide rounded-1 container-fluid" data-bs-ride="carousel">
+<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
-        <!-- Slide 1 -->
-        <div class="carousel-item active" style="height: 300px;">
-            <img class="d-block w-100 h-100" src="~/Content/img/BN_1_3.png" alt="Giảm 100% cho sách chọn lọc" style="object-fit: cover;">
-            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                <div class="p-3" style="max-width: 500px;min-width: 200px;">
-                    <a href="~/SanPhams/ProductList" class="btn btn-secondary py-2 px-2">Mua ngay</a>
-                </div>
-            </div>
+        <div class="carousel-item active">
+            <img src="~/Content/img/BN_1_1.png" class="d-block w-100" alt="..." style="height:400px;object-fit:inherit;">
         </div>
-         @*Slide 2*@ 
-        <div class="carousel-item" style="height: 300px;">
-            <img class="d-block w-100 h-100 img-fluid" src="~/Content/img/BN_1_3.png" alt="Giảm 100% cho sách chọn lọc" style="object-fit: cover;">
-            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                <div class="p-3" style="max-width: 700px;">
-                    <a href="~/SanPhams/ProductList" class="btn btn-light py-2 px-2">Mua ngay</a>
-                </div>
-            </div>
-        </div>
-         @*Slide 3*@ 
-        <div class="carousel-item" style="height: 300px;">
-            <img class="d-block w-100 h-100"  src="~/Content/img/BN_1_3.png" alt="Giảm 100% cho sách chọn lọc" hrel="~/SanPhams/ProductList" style="object-fit: cover;">
-            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                <div class="p-3" style="max-width: 700px;">
-                    <a href="~/SanPhams/ProductList" class="btn btn-light py-2 px-2">Mua ngay</a>
-                </div>
-            </div>
+        <div class="carousel-item ">
+            <img src="~/Content/img/BN_1_1.png" class="d-block w-100" alt="..." style="height:400px;object-fit:inherit;">
+        </div> 
+        <div class="carousel-item ">
+            <img src="~/Content/img/BN_1_1.png" class="d-block w-100" alt="..." style="height:400px;object-fit:inherit;">
         </div>
     </div>
-
-    <!-- Carousel Control - Previous -->
-    <a class="carousel-control-prev" href="#header-carousel" role="button" data-bs-slide="prev">
-        <div class="btn btn-dark d-flex align-items-center justify-content-start" style="width: 40px; height: 40px; border-radius: 50%;" id="prv">
-            <span class="carousel-control-prev-icon d-block" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </div>
-    </a>
-
-    <!-- Carousel Control - Next -->
-    <a class="carousel-control-next" href="#header-carousel" role="button" data-bs-slide="next">
-        <div class="btn btn-dark d-flex align-items-center justify-content-end" style="width: 40px; height: 40px; border-radius: 50%;" id="nxt">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </div>
-    </a>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
 </div>
 
 <!-- Thêm một chút CSS để đảm bảo carousel là responsive -->
@@ -135,28 +106,8 @@
 <div class="container mt-5">
     <h4 class="text-white">Danh mục sản phẩm</h4>
 
-    <div class="row product-category-container overflow-x-auto row-cols-6">
-        @foreach (var item in Model.Take(7))
-        {
-            if (!processedCategories.Contains(item.DanhMuc1) && Session[item.DanhMuc1] == null)
-            {
-                processedCategories.Add(item.DanhMuc1);
-
-                <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2 mt-1">
-                    <div class="card border-0 bg-custom">
-                        <a href="~/SanPhams/Productlist/@item.TheLoai" class="text-decoration-none">
-                            <img src="~/Content/img/BN_2_1.png" class="d-block rounded-3 img-fluid" alt="@item.DanhMuc1">
-                            <p class="text-white text-center mt-2" style="font-size: 14px;">@item.DanhMuc1</p>
-                        </a>
-                    </div>
-                </div>
-            }
-        }
-    </div>
+    @Html.Action("Banner", "DanhMucs")
 </div>
-
-
-
 @Html.Action("TopBanChay", "DonHangCTs", new { categoryId = 1 })
 
 

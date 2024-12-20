@@ -83,7 +83,9 @@ namespace BanSach.Controllers
         public ActionResult TrangChu()
         {
             var danhMucList = db.DanhMuc.ToList();
-            return View(danhMucList);  // Passing a list of categories to the view
+            return View(danhMucList);
+
+
         }
 
         public ActionResult ProductList(int? category, int? page, string SearchString)
@@ -128,8 +130,15 @@ namespace BanSach.Controllers
             {
                 return HttpNotFound();
             }
+
+            // Mã hóa URL liên kết sản phẩm
+            string encodedUrl = HttpUtility.UrlEncode(Url.Action("TrangSP", "SanPhams", new { id = sanPham.IDsp }, Request.Url.Scheme));
+
+            ViewBag.EncodedUrl = encodedUrl;
+
             return View(sanPham);
         }
+
         // GET: SanPhams/Details/5
         public ActionResult Details(int? id)
         {

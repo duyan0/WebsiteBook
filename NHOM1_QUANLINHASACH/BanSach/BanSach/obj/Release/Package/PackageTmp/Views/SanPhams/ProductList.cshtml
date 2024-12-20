@@ -185,12 +185,7 @@
             .then(response => {
                 // Tạo thông báo mới
                 const notification = document.createElement('div');
-                notification.style.padding = '20px';
-                notification.style.borderRadius = '5px';
-                notification.style.color = 'white';
-                notification.style.display = 'flex';
-                notification.style.justifyContent = 'center';
-                notification.style.alignItems = 'center';
+                notification.className = 'notification';
 
                 if (response.ok) {
                     notification.textContent = 'Thêm sản phẩm thành công';
@@ -203,40 +198,76 @@
                 // Thêm thông báo vào container
                 document.getElementById('notification-container').appendChild(notification);
 
+                // Kích hoạt hiệu ứng hiển thị
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 10); // Trì hoãn một chút để transition hoạt động
+
                 // Ẩn thông báo sau 3 giây
                 setTimeout(() => {
-                    notification.style.opacity = '0';
+                    notification.classList.remove('show');
+                    notification.classList.add('hide');
+
+                    // Xóa thông báo sau khi hiệu ứng ẩn hoàn tất
                     setTimeout(() => {
                         notification.remove();
-                    }, 1000); // Thời gian xóa thông báo sau khi nó đã mờ
+                    }, 500); // Thời gian khớp với transition
                 }, 3000);
             })
             .catch(error => {
                 // Tạo thông báo lỗi
                 const notification = document.createElement('div');
-                notification.style.padding = '20px';
-                notification.style.borderRadius = '5px';
-                notification.style.color = 'white';
-                notification.style.display = 'flex';
-                notification.style.justifyContent = 'center';
-                notification.style.alignItems = 'center';
-
+                notification.className = 'notification';
                 notification.textContent = 'Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng. Vui lòng thử lại.';
                 notification.style.backgroundColor = '#f44336'; // Màu đỏ cho thông báo lỗi
 
                 // Thêm thông báo vào container
                 document.getElementById('notification-container').appendChild(notification);
 
+                // Kích hoạt hiệu ứng hiển thị
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 10);
+
                 // Ẩn thông báo sau 3 giây
                 setTimeout(() => {
-                    notification.style.opacity = '0';
+                    notification.classList.remove('show');
+                    notification.classList.add('hide');
+
+                    // Xóa thông báo sau khi hiệu ứng ẩn hoàn tất
                     setTimeout(() => {
                         notification.remove();
-                    }, 1000); // Thời gian xóa thông báo sau khi nó đã mờ
+                    }, 500); // Thời gian khớp với transition
                 }, 3000);
             });
     }
 </script>
+
+<style>
+    .notification {
+        padding: 20px;
+        border-radius: 5px;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0; /* Bắt đầu ẩn */
+        transform: translateY(20px); /* Dịch chuyển xuống */
+        transition: opacity 0.5s ease, transform 0.5s ease; /* Hiệu ứng mượt */
+    }
+
+        .notification.show {
+            opacity: 1; /* Hiển thị */
+            transform: translateY(0);
+            transition: opacity 0.5s ease, transform 0.5s ease; /* Quay lại vị trí ban đầu */
+        }
+
+        .notification.hide {
+            opacity: 0; /* Ẩn */
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease; /* Dịch chuyển xuống khi ẩn */
+        }
+</style>
 
 
 

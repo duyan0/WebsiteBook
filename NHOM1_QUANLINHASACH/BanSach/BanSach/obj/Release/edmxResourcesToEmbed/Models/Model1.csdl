@@ -27,13 +27,15 @@
       <PropertyRef Name="IDdh" />
     </Key>
     <Property Name="IDdh" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="NgayDatHang" Type="DateTime" Precision="0" />
+    <Property Name="NgayDatHang" Type="DateTime" Precision="3" />
     <Property Name="IDkh" Type="Int32" />
     <Property Name="DiaChi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="NgayNhanHang" Type="DateTime" Precision="0" />
+    <Property Name="NgayNhanHang" Type="DateTime" Precision="3" />
     <Property Name="TrangThai" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="KhachHang" Relationship="Self.FK__DonHang__IDkh__6EF57B66" FromRole="DonHang" ToRole="KhachHang" />
     <NavigationProperty Name="DonHangCT" Relationship="Self.FK__DonHangCT__IDDon__72C60C4A" FromRole="DonHang" ToRole="DonHangCT" />
+    <Property Name="TongSoLuong" Type="Int32" />
+    <Property Name="TongTien" Type="Decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="DonHangCT">
     <Key>

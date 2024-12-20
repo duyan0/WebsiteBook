@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 
 <head>
     <meta charset="utf-8">
@@ -32,7 +32,7 @@
             <i class="fas fa-spinner fa-spin"></i>
         </div>
     </div>
-
+    
     <nav class="container fixed-top mb-5 bg-custom" id="topbar" style=" z-index: 10000; border-radius:0 0 3px 3px">
         <div class="row align-items-center mt-1 position-relative d-flex">
             <!-- Logo -->
@@ -83,8 +83,8 @@
                 }
                 else if (Session["IdQly"] != null)
                 {
-                    <a href="@Url.Action("QuanTri", "LoginUser")" class="nav-item nav-link fs-6">Trang ADMIN</a>
-                    <a href="@Url.Action("Logout", "LoginUser")" class="nav-item nav-link fs-6">Đăng xuất</a>
+                    <a href="@Url.Action("QuanTri", "LoginUser")" class="nav-item text-white nav-link fs-6">Trang ADMIN</a>
+                    <a href="@Url.Action("Logout", "LoginUser")" class="nav-item text-white nav-link fs-6">Đăng xuất</a>
                 }
                 else
                 {
@@ -180,6 +180,7 @@
 
     <!-- Custom CSS -->
     <style>
+        
 
         body {
             font-family: 'Poppins', Arial, sans-serif;
@@ -197,7 +198,7 @@
             position: relative;
             display: inline-block;
             border-radius: 1rem;
-            font-size:12px;
+            font-size: 12px;
         }
 
         .dropdown-content {
@@ -296,8 +297,6 @@
         .spinner-grow {
             color: green;
         }
-
-        
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script>

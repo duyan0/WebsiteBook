@@ -6,8 +6,8 @@
 }
 <link href="~/Content/css/Shoppingcart.css" rel="stylesheet" />
 
-<div class="text-center ">
-    <h5 class="text-white fw-semibold fs-2">Giỏ hàng</h5>
+<div class="text-left">
+    <h5 class="text-white fw-semibold fs-2">Giỏ hàng </h5>
 </div>
 
 @if (Model == null || Model.Total_quantity() == 0)
@@ -19,47 +19,47 @@
         <div class="btn btn-danger">
             @Html.ActionLink("Tiếp tục mua hàng", "ProductList", "SanPhams", null, new { @class = "text-decoration-none text-white fs-6" })
         </div>
-
     </div>
 }
 else
 {
-    <table class="table-active table-hover w-100" style="border-radius: 15px;">
+    <table class="table-custom table-striped table-dark w-100">
         <thead>
-            <tr class="text-center font-weight-semi-bold display-0 text-white">
+            <tr class="text-left font-weight-semi-bold display-0 text-white px-2">
+                <th></th>
                 <th>Thông tin</th>
                 <th>Số lượng</th>
                 <th>Thành tiền</th>
                 <th>Lựa chọn</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="mt-2">
             @foreach (var item in Model.Items)
             {
-                // Sử dụng toán tử ?? để gán giá trị mặc định là 0 nếu GiaBan là null
                 decimal giaBan = item._product.GiaBan;
                 decimal mucGiamGia = item.MucGiamGia; // Lấy mức giảm giá từ CartItem
                 decimal giaSauKhuyenMai = giaBan * (1 - mucGiamGia / 100);
                 decimal total = item._quantity * giaSauKhuyenMai;
-
-                <tr class="text-center text-white">
-                    <td width="40%">
+                <tr>
+                    <td>
                         <img src="~/Content/img/@item._product.HinhAnh" width="100" height="100" style="float:left; border-radius: 15px;" />
-                        <p style="padding-top:40px;">
+                    </td>
+                    <td width="20%" class="text-left text-white">
+                        <p>
                             @Html.DisplayFor(model => item._product.TenSP)
                         </p>
                         <p>
-                            <b style="color:red">@giaSauKhuyenMai.ToString("#,##0").Replace(',', '.') VND</b>
+                            <b style="color: #c92127">@giaSauKhuyenMai.ToString("#,##0").Replace(',', '.') VND</b>
                         </p>
                         @if (mucGiamGia > 0)
                         {
                             <p>
-                                <del style="color:grey">@giaBan.ToString("#,##0").Replace(',', '.') VND</del> <!-- Giá gốc -->
-                                <span style="color:green;">(@mucGiamGia% Off)</span> <!-- Mức khuyến mãi -->
+                                <del style="color: gray">@giaBan.ToString("#,##0").Replace(',', '.') VND</del> <!-- Giá gốc -->
+                                <span style="color:green;">-@mucGiamGia% Off</span> <!-- Mức khuyến mãi -->
                             </p>
                         }
                     </td>
-                    <td class="text-center">
+                    <td class="text-left">
                         @using (Html.BeginForm("Update_Cart_Quantity", "ShoppingCart"))
                         {
                             <input type="hidden" value="@item._product.IDsp" name="idPro" />
@@ -67,19 +67,25 @@ else
                             <input type="submit" value="Ok" class="capnhat bg-white" />
                         }
                     </td>
-                    <td style="color: #c92127;"><b>@total.ToString("#,##0").Replace(',', '.') VND</b></td>
+                    <td style="color: #c92127;">
+                        <b>@total.ToString("#,##0").Replace(',', '.') VND</b>
+                    </td>
                     <td class="xoa">
                         <form action="/ShoppingCart/RemoveCart/@item._product.IDsp" method="get">
-                            <button type="submit" class="xoa" style="background-color: red; color: white; border: none; outline: none;">Xóa</button>
+                            <button type="submit" class="btn btn-outline-danger">Xoá</button>
                         </form>
                     </td>
+
                 </tr>
+
             }
         </tbody>
+
         <tfoot>
+
             <tr>
-                <td colspan="6" style="text-align: right; font-size: x-large; color: white;">
-                    Tổng tiền: <b style="color: #c92127;">@Model.Total_money().ToString("#,##0").Replace(',', '.') VND</b>
+                <td colspan="6" class="fs-6 fw-bold" style="text-align:right;">
+                    Tổng tiền: <b style="color: #c92127;font-size:16px;">@Model.Total_money().ToString("#,##0").Replace(',', '.') VND</b>
                 </td>
             </tr>
         </tfoot>
@@ -91,37 +97,63 @@ else
 
             <h2 class="text-center text-white">Thông tin</h2>
 
-            <div class="table-responsive justify-content-center">
-                <table class="table table-dark">
-                    <thead>
-                        <tr class="text-white">
-                            <th class="col-4">
-                                <label for="NameCustomer" class="form-label">Tên :</label>
-                            </th>
-                            <th class="col-4">
-                                <label for="PhoneCustomer" class="form-label">Số điện thoại :</label>
-                            </th>
-                            <th class="col-4">
-                                <label for="AddressDeliverry" class="form-label">Địa chỉ giao hàng :</label>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="text-white">
-                            <td class="col-4">
-                                <input style="width:100%" type="text" name="NameCustomer" id="NameCustomer" class="form-control" placeholder="Điền họ và tên" value="@Session["TenKH"]" required />
-                            </td>
-                            <td class="col-4">
-                                <input style="width:100%" type="text" name="PhoneCustomer" id="PhoneCustomer" class="form-control" placeholder="Điền số điện thoại" value="@Session["SoDT"]" required />
-                            </td>
-                            <td class="col-4">
-                                <input style="width:100%" type="text" name="AddressDeliverry" id="AddressDeliverry" class="form-control" placeholder="Điền địa chỉ giao hàng" required />
-                                <div id="suggestions" class="suggestions" style="display:none;"></div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+
+            <div class="text-white row d-flex mb-2">
+                <div class="col col-sm-12 text-lg-start">
+                    <label for="NameCustomer" class="form-label text-end">Tên </label>
+                </div>
+                <div class="col-lg-12 col-sm-12">
+                    <input style="width:100%" type="text" name="NameCustomer" id="Customer-Form"autocomplete="off" class="form-control" placeholder="Điền họ và tên" value="@Session["TenKH"]" required />
+                </div>
             </div>
+
+            <div class="text-white row d-flex mb-2">
+                <div class="col col-sm-12 text-lg-start">
+                    <label for="PhoneCustomer" class="form-label">Số điện thoại </label>
+                </div>
+                <div class="col-lg-12 col-sm-12">
+                    <input style="width:100%"
+                           type="text"
+                           name="PhoneCustomer"
+                           id="Customer-Form"
+                           autocomplete="off"
+                           class="form-control"
+                           placeholder="Điền số điện thoại"
+                           value="@Session["SoDT"]"
+                           required
+                           minlength="10"
+                           maxlength="11"
+                           pattern="0\d{10,11}"
+                           title="Bắt đầu từ 0 - Min 10 max 11" />
+                </div>
+
+            </div>
+
+            <div class="text-white row d-flex mb-2">
+                <div class="col col-sm-12 text-lg-start">
+                    <label for="AddressDeliverry" class="form-label">Địa chỉ giao hàng :</label>
+                </div>
+                <div class="col-lg-12 col-sm-12">
+                    <input style="width:100%" type="text" name="AddressDeliverry" id="AddressDeliverry"autocomplete="off" class="form-control" placeholder="Điền địa chỉ giao hàng" required />
+                    <div id="suggestions" class="suggestions" style="display:none;"></div>
+                </div>
+            </div>
+
+            @*<div class="text-white row">
+            <div class="col-lg-4 col-sm-12">
+                <input style="width:100%" type="text" name="NameCustomer" id="NameCustomer" class="form-control col-lg-4 col-sm-12" placeholder="Điền họ và tên" value="@Session["TenKH"]" required />
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                <input style="width:100%" type="text" name="PhoneCustomer" id="PhoneCustomer" class="form-control col-lg-4 col-sm-12" placeholder="Điền số điện thoại" value="@Session["SoDT"]" required />
+            </div>
+            <div class="col-lg-4 col-sm-12 ">
+                <input style="width:100%" type="text" name="AddressDeliverry" id="AddressDeliverry" class="form-control col-lg-4 col-sm-12 d-inline" placeholder="Điền địa chỉ giao hàng" required />
+                <div id="suggestions" class="suggestions" style="display:none;"></div>
+            </div>
+        </div>*@
+
+
+
 
 
             <div class="d-flex justify-content-end py-3">
@@ -213,10 +245,27 @@ else
 
         // Hide suggestions when clicking outside
         document.addEventListener('click', function (e) {
-            // Check if the click is outside of the input field or suggestions container
             if (!suggestionsContainer.contains(e.target) && e.target !== addressInput) {
                 suggestionsContainer.style.display = 'none';
             }
         });
     </script>
 }
+<style>
+    .capnhat {
+        border: none;
+        border-radius: 4px;
+        text-align: center;
+        width: 40px;
+    }
+
+    body > div.container.p-0.mt-5.pt-5 > div > table > tbody > tr {
+        border-bottom: 1px solid black;
+        border-top: 1px solid black;
+    }
+    #Customer-Form {
+        border-radius: 4px;
+        border: none;
+        font-size: 16px;
+    }
+</style>

@@ -27,6 +27,8 @@
     <EntitySetMapping Name="DonHang">
       <EntityTypeMapping TypeName="dbsachModel.DonHang">
         <MappingFragment StoreEntitySet="DonHang">
+          <ScalarProperty Name="TongTien" ColumnName="TongTien" />
+          <ScalarProperty Name="TongSoLuong" ColumnName="TongSoLuong" />
           <ScalarProperty Name="IDdh" ColumnName="IDdh" />
           <ScalarProperty Name="NgayDatHang" ColumnName="NgayDatHang" />
           <ScalarProperty Name="IDkh" ColumnName="IDkh" />

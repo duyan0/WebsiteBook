@@ -6,7 +6,9 @@
         text-decoration: none;
         z-index: 100000;
         width: 100%; /* Thay đổi từ 100% sang tự động để phần tử chỉ chiếm không gian cần thiết */
-        display: flex;/* Hiển thị danh mục theo chiều ngang */
+        display: flex;
+        align-items: center;
+        justify-content: space-between; /* Hiển thị danh mục theo chiều ngang */
     }
 
         .danhmuc a:hover {
@@ -18,9 +20,7 @@
     .container-danhmuc {
         border-radius: 10px;
         background-color: white;
-        padding: 10px;
         z-index: 100000;
-        display: flow-root;
         flex-wrap: nowrap; /* Hiển thị các phần tử theo chiều ngang */
         justify-content: space-between; /* Sắp xếp các phần tử theo chiều ngang */
         gap: 2px; /* Khoảng cách giữa các phần tử */
@@ -45,7 +45,6 @@
         z-index: 100000;
         display: none; /* Giữ collapse ẩn mặc định */
     }
-
 </style>
 
 <div class="container-danhmuc">
@@ -62,7 +61,9 @@
                         <div class="list-group-item danhmuc">
                             <a href="javascript:void(0)" role="button">
                                 <strong>@item.DanhMuc1</strong>
+                                <i class="bi bi-chevron-down ml-2"></i>
                             </a>
+
 
                             <div class="collapse" id="collapse-@item.DanhMuc1.Replace(" ", "-")">
                                 <ul class="list-unstyled mt-2 ml-3">

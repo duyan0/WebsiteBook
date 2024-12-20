@@ -147,6 +147,12 @@ namespace BanSach.Controllers
 
             return View(viewModel);
         }
+        [AcceptVerbs(HttpVerbs.Post | HttpVerbs.Get)]
+        public PartialViewResult Banner()
+        {
+            var cateList = db.DanhMuc.Take(7).ToList(); // Lấy 6 mục đầu tiên
+            return PartialView(cateList);
+        }
 
 
 

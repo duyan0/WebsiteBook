@@ -46,19 +46,47 @@ namespace BanSach.Controllers
         }
 
         // GET: KhachHangs/Details/5
+        // GET: KhachHangs/Details/5
+        // GET: KhachHangs/Details/5
         public ActionResult Details(int? id)
         {
+            // Kiểm tra nếu id không hợp lệ
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            // Kiểm tra xem session của khách hàng đã đăng nhập có tồn tại không
+            if (Session["IDkh"] == null)
+            {
+                // Nếu không có session IDkh, người dùng chưa đăng nhập
+                // Chuyển hướng đến controller "Account" và action "Login"
+                return RedirectToAction("LoginAccountCus", "LoginUser");
+                // Hoặc chuyển hướng đến trang đăng nhập
+            }
+
+            // Kiểm tra nếu IDkh trong session và ID của khách hàng là khớp
+            int sessionId = Convert.ToInt32(Session["IDkh"]);
+            if (sessionId != id)
+            {
+                // Nếu ID khách hàng trong session không trùng với id được yêu cầu
+               return RedirectToAction("Forbidden", "Home");
+            }
+
+            // Tìm kiếm thông tin khách hàng theo id
             KhachHang khachHang = db.KhachHang.Find(id);
+
+            // Kiểm tra nếu không tìm thấy khách hàng
             if (khachHang == null)
             {
                 return HttpNotFound();
             }
+
+            // Trả về view với đối tượng khách hàng
             return View(khachHang);
         }
+
+
         public ActionResult DetailsAD(int? id)
         {
             if (id == null)

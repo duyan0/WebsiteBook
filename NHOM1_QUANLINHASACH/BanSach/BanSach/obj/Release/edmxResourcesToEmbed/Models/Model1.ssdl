@@ -26,11 +26,13 @@
       <PropertyRef Name="IDdh" />
     </Key>
     <Property Name="IDdh" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="NgayDatHang" Type="date" />
+    <Property Name="NgayDatHang" Type="datetime" />
     <Property Name="IDkh" Type="int" />
     <Property Name="DiaChi" Type="nvarchar" MaxLength="255" />
-    <Property Name="NgayNhanHang" Type="date" />
+    <Property Name="NgayNhanHang" Type="datetime" />
     <Property Name="TrangThai" Type="nvarchar" MaxLength="30" />
+    <Property Name="TongSoLuong" Type="int" />
+    <Property Name="TongTien" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="DonHangCT">
     <Key>
