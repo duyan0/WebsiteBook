@@ -133,6 +133,9 @@ namespace BanSach.Controllers
             db.Entry(donHang).State = EntityState.Modified; // Đánh dấu đơn hàng là đã sửa đổi
             db.SaveChanges(); // Lưu thay đổi
 
+            // Gửi email thông báo cho admin về đơn hàng mới
+            SendOrderNotificationEmail(id);
+
             return RedirectToAction("Index"); // Chuyển hướng về trang danh sách đơn hàng
         }
         // GET: DonHangs/Cancel/5
@@ -257,6 +260,82 @@ namespace BanSach.Controllers
 
             return RedirectToAction("Index");
         }
+        public void SendOrderNotificationEmail(int orderId)
+        {
+            // Tìm đơn hàng từ cơ sở dữ liệu
+            var donHang = db.DonHang.Include(d => d.KhachHang).FirstOrDefault(d => d.IDdh == orderId);
+
+            if (donHang != null)
+            {
+                // Thông tin khách hàng và nội dung email
+                string customerEmail = donHang.KhachHang.Email; // Địa chỉ email của khách hàng
+                string subject = $"Đơn hàng {donHang.IDdh} của bạn đã được xác nhận";
+
+                // Nội dung email với HTML
+                string body = $@"
+        <html>
+        <body>
+            <h2>Xin chào {donHang.KhachHang.TenKH},</h2>
+            <p>Đơn hàng của bạn đã được xác nhận.</p>
+            <p><strong>Thông tin đơn hàng:</strong></p>
+            <table border='1' cellpadding='5' cellspacing='0'>
+                <tr><td><strong>Mã đơn hàng:</strong></td><td>{donHang.IDdh}</td></tr>
+                <tr><td><strong>Ngày đặt hàng:</strong></td><td>{donHang.NgayDatHang?.ToString("dd/MM/yyyy HH:mm:ss")}</td></tr>
+                <tr><td><strong>Trạng thái:</strong></td><td>{donHang.TrangThai}</td></tr>
+                <tr><td><strong>Tổng tiền:</strong></td><td>{donHang.TongTien?.ToString("C")}</td></tr>
+                <tr><td><strong>Địa chỉ giao hàng:</strong></td><td>{donHang.DiaChi}</td></tr>
+            </table>
+            <p><strong>Chi tiết sản phẩm:</strong></p>
+            <ul>";
+
+                // Thêm thông tin chi tiết đơn hàng
+                foreach (var item in donHang.DonHangCT)
+                {
+                    body += $@"
+                <li>{item.SanPham.TenSP}, Số lượng: {item.SoLuong}, Đơn giá: {item.Gia?.ToString("C")}, Thành tiền: {(item.SoLuong * (decimal)(item.Gia ?? 0))}</li>";
+                }
+
+                body += $@"
+            </ul>
+            <p>Cảm ơn bạn đã mua hàng tại chúng tôi!</p>
+        </body>
+        </html>";
+
+                // Cấu hình SmtpClient cho Gmail
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587) // Sử dụng SMTP của Gmail
+                {
+                    EnableSsl = true, // Bật SSL
+                    Credentials = new System.Net.NetworkCredential("crandi21112004@gmail.com", "lnragtcdumizfwwq"), // Sử dụng mật khẩu ứng dụng
+                    Timeout = 30000 // Thời gian chờ kết nối (30 giây)
+                };
+
+                // Tạo đối tượng MailMessage
+                MailMessage mailMessage = new MailMessage
+                {
+                    From = new MailAddress("crandi21112004@gmail.com"),
+                    Subject = subject,
+                    Body = body,
+                    IsBodyHtml = true // Đặt là true để gửi email dưới dạng HTML
+                };
+
+                // Thêm người nhận (địa chỉ email của khách hàng)
+                mailMessage.To.Add(customerEmail);
+
+                try
+                {
+                    // Gửi email
+                    smtpClient.Send(mailMessage);
+                }
+                catch (Exception ex)
+                {
+                    // Log lỗi nếu có
+                    Console.WriteLine($"Lỗi khi gửi email: {ex.Message}");
+                }
+            }
+        }
+
+
+
 
 
         protected override void Dispose(bool disposing)

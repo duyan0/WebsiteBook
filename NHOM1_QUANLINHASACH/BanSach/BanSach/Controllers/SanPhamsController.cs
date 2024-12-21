@@ -88,15 +88,14 @@ namespace BanSach.Controllers
 
         }
 
-        public ActionResult ProductList(int? category, int? page, string SearchString)
+        public ActionResult ProductList(int? category, int? page, string SearchString, string sortOrder)
         {
             SetAvailablePublishers();
             var products = db.SanPham.Include(p => p.DanhMuc);
 
-            int pageSize = 12;
+            int pageSize = 18;
             int pageNumber = (page ?? 1);
             if (page == null) page = 1;
-
 
             // Tìm kiếm chuỗi truy vấn theo category
             if (category == null)
@@ -114,9 +113,21 @@ namespace BanSach.Controllers
                 products = db.SanPham.OrderByDescending(x => x.TheLoai).Where(s => s.TenSP.Contains(SearchString));
             }
 
-            // Trả về các product được phân trang theo kích thước và số trang.
-            return View(products.ToPagedList(pageNumber, pageSize));
+            // Sắp xếp theo giá
+            switch (sortOrder)
+            {
+                case "price_desc":
+                    products = products.OrderByDescending(x => x.GiaBan); // Sắp xếp theo giá giảm dần
+                    break;
+                case "price_asc":
+                    products = products.OrderBy(x => x.GiaBan); // Sắp xếp theo giá tăng dần
+                    break;
+                default:
+                    products = products.OrderByDescending(x => x.TenSP); // Mặc định sắp xếp theo tên sản phẩm giảm dần
+                    break;
+            }
 
+            return View(products.ToPagedList(pageNumber, pageSize));
         }
         // Xem SP
         public ActionResult TrangSP(int? id)
@@ -532,12 +543,6 @@ namespace BanSach.Controllers
 
             return Json(suggestionsBox, JsonRequestBehavior.AllowGet);  // Trả về danh sách gợi ý
         }
-
-
-
-
-
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

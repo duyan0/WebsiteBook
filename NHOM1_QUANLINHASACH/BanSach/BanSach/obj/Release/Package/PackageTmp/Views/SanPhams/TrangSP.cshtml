@@ -9,7 +9,7 @@
 <div class="container-fluid d-flex flex-wrap" id="productdetails">
     <div class="left">
         <div class="anh">
-            <img src="~/Content/img/@Model.HinhAnh" class="rounded-sm" />
+            <img src="~/Content/img/@Model.HinhAnh" class="rounded-1" style="object-fit:contain;" />
         </div>
         @if (@Model.TrangThaiSach == "Còn hàng" && @Model.SoLuong > 0)
         {
@@ -69,7 +69,7 @@
                             }
                             else
                             {
-                                <span class="normal-price">@string.Format("{0:N0} VND", giaGoc)</span> <!-- Hiển thị giá gốc nếu không có khuyến mãi -->
+                                <span class="text-danger fw-semibold fs-5">@string.Format("{0:N0} VND", giaGoc)</span> <!-- Hiển thị giá gốc nếu không có khuyến mãi -->
                             }
                         }
                     </td>
@@ -104,7 +104,7 @@
 
                 // Điều hướng tới URL sau khi thông báo ẩn
                 window.location.href = "/ShoppingCart/AddToCart/" + productId;
-            }, 500);
-        }, 500); // Hiển thị thông báo trong 500 thôi
+            }, 1);
+        }, 1); // Hiển thị thông báo trong 500 thôi
     }
 </script>

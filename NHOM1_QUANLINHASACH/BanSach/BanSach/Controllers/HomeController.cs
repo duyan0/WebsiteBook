@@ -20,14 +20,18 @@ namespace BanSach.Controllers
         {
             return View();
         }
-        //public ActionResult Profile()
-        //{
-        //    return View();
-        //}
+        public ActionResult Profile()
+        {
+            return View();
+        }
         public ActionResult Forbidden()
         {
             // Bạn có thể hiển thị một trang lỗi tùy chỉnh ở đây
             return View();
+        }
+        public ActionResult Page1()
+        {
+            return PartialView("Page1"); // trả về partial view cho Trang 1
         }
     }
 }

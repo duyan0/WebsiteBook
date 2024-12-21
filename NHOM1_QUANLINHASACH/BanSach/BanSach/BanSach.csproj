@@ -357,6 +357,7 @@
     <Content Include="Content\css\duyan.css" />
     <Content Include="Content\css\khachhang.css" />
     <Content Include="Content\css\layout.css" />
+    <Content Include="Content\css\Login_Regis.css" />
     <Content Include="Content\css\ProductList.css" />
     <Content Include="Content\css\Recent.css" />
     <Content Include="Content\css\Shoppingcart.css" />
@@ -372,12 +373,11 @@
     <Content Include="Content\img\9786047796014.jpg" />
     <Content Include="Content\img\a1.jpg" />
     <Content Include="Content\img\b2.jpg" />
-    <Content Include="Content\img\bao-tri.jpg" />
-    <Content Include="Content\img\BN_1_1.png" />
-    <Content Include="Content\img\BN_1_2.png" />
-    <Content Include="Content\img\BN_1_3.png" />
-    <Content Include="Content\img\BN_2_1.png" />
-    <Content Include="Content\img\BN_2_2.png" />
+    <Content Include="Content\img\Banner\bao-tri.jpg" />
+    <Content Include="Content\img\Banner\BN_2_1.png" />
+    <Content Include="Content\img\Banner\BN_2_2.png" />
+    <Content Include="Content\img\Banner\slide1.jpg" />
+    <Content Include="Content\img\Banner\slide2.png" />
     <Content Include="Content\img\cobanc#.jpg" />
     <Content Include="Content\img\combo-1607202412.jpg" />
     <Content Include="Content\img\conan_bia_tap-102.jpg" />
@@ -385,14 +385,10 @@
     <Content Include="Content\img\icon_thanhcong.png" />
     <Content Include="Content\img\image_237828.jpg" />
     <Content Include="Content\img\kt.jpg" />
-    <Content Include="Content\img\logo-icon.png" />
-    <Content Include="Content\img\Logo.jpg" />
-    <Content Include="Content\img\logosach.png" />
     <Content Include="Content\img\LOGO_book.png" />
-    <Content Include="Content\img\OIP.jpg" />
-    <Content Include="Content\img\slide.jpg" />
-    <Content Include="Content\img\slide1.jpg" />
-    <Content Include="Content\img\slide2.png" />
+    <Content Include="Content\img\slide\BN_1_1.png" />
+    <Content Include="Content\img\slide\BN_1_2.png" />
+    <Content Include="Content\img\slide\BN_1_3.png" />
     <Content Include="Content\img\zalo.png" />
     <Content Include="Content\js\cart.js" />
     <Content Include="Content\js\ThongBao.js" />
@@ -668,6 +664,7 @@
     <Content Include="Views\Slide\Create.cshtml" />
     <Content Include="Views\Slide\Edit.cshtml" />
     <Content Include="Views\Slide\Delete.cshtml" />
+    <Content Include="Views\Home\Page1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

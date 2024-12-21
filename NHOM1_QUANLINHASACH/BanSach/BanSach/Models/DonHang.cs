@@ -11,17 +11,12 @@
         public DonHang()
         {
             this.DonHangCT = new HashSet<DonHangCT>();
-            this.NgayDatHang = DateTime.Now; // Gán giá trị ngày hiện tại
-            this.NgayNhanHang = DateTime.Now;
-            // Có thể gán NgayNhanHang sau này khi nhận hàng
         }
 
         public int IDdh { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime? NgayDatHang { get; set; }
         public Nullable<int> IDkh { get; set; }
         public string DiaChi { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime? NgayNhanHang { get; set; }
         public string TrangThai { get; set; } = "Chờ xử lý";
 

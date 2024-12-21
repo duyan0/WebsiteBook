@@ -1,6 +1,7 @@
 ﻿--root {
     --fs16: 16px;
     --fs14: 14px;
+
 }
 .card-pro {
     text-decoration: none;
@@ -36,7 +37,7 @@
         width: 100%;
         height: auto; /* Đảm bảo chiều cao ảnh thích ứng với diện tích của thẻ */
         max-height: 180px;
-        object-fit: cover;
+        object-fit: contain;
         transition: opacity 0.3s;
     }
 
@@ -47,7 +48,7 @@
     text-align: left;
     width: 100%;
     margin-top: 5px;
-    height: auto;
+    height: 10px;
 }
 
 /* Tên sản phẩm */
@@ -107,7 +108,7 @@
 .btn-add-to-cart {
     margin-top: auto;
     padding: 8px;
-    background-color: white;
+    background-color: var(--bs-dark-rgb);
     color: red;
     font-family: sans-serif;
     border: solid 1px red;
@@ -139,7 +140,7 @@
 }
 /* Bộ lọc giá */
 .price-filter {
-    width:250px;
+    width:210px;
 }
 
 .filter-title {
@@ -199,10 +200,11 @@ h3.page-title {
 .out-of-stock {
     color: red;
     font-weight: bold;
+    
 }
 
 .in-stock {
-    color: #28a745;
+    color: green;
     font-weight: bold;
 }
 
@@ -242,4 +244,8 @@ h3.page-title {
     .sotrang a {
         font-size: 0.8rem; /* Giảm kích thước phân trang trên di động */
     }
+}
+
+body > div.container.p-0.mt-5.pt-5 > div > div.container > div > div.col-12.col-md-9.mb-1 > div > div {
+    padding: 5px;
 }

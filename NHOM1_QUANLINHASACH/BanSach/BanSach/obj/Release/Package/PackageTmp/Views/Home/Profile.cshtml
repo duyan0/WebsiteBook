@@ -1,98 +1,56 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body {
-            background-color: #f5f5f5;
-        }
-
-        .sidebar {
-            height: 100vh;
-            background-color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding-top: 20px;
-        }
-
-            .sidebar a {
-                text-decoration: none;
-                color: #000;
-                padding: 10px 20px;
-                display: block;
-                font-size: 16px;
-            }
-
-                .sidebar a.active {
-                    background-color: #e9ecef;
-                    font-weight: bold;
-                    color: #d70018;
-                }
-
-                .sidebar a:hover {
-                    background-color: #f8f9fa;
-                }
-
-        .content {
-            padding: 20px;
-        }
-
-        .card-box {
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .btn-red {
-            background-color: #d70018;
-            color: white;
-            border: none;
-        }
-
-            .btn-red:hover {
-                background-color: #a50012;
-            }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-3 sidebar">
-                <div class="text-center mb-4">
-                    <img src="~/path-to-avatar.jpg" alt="Avatar" class="rounded-circle img-fluid" style="max-width: 100px;">
-                    <h5 class="mt-3">Võ Duy Ân</h5>
-                    <p>Thành viên bạc</p>
-                </div>
-                <a href="/Profile" class="active">Thông tin tài khoản</a>
-                <a href="/Profile/Addresses">Sổ địa chỉ</a>
-                <a href="/Profile/ChangePassword">Đổi mật khẩu</a>
-                <a href="/Profile/Orders">Đơn hàng của tôi</a>
-                <a href="/Profile/Vouchers">Ví voucher</a>
-                <a href="/Profile/Settings">Cài đặt</a>
+            <!-- Thanh điều hướng -->
+            <nav class="col-md-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item text-white">
+                        @{ Html.RenderPartial("Page1"); }
+                    </li>
+                    <li class="nav-item">
+                        <a href="~/Home/Page1" class="nav-link" id="page2">Trang 2</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="~/Home/Page1" class="nav-link" id="page3">Trang 3</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Phần này sẽ hiển thị nội dung khi click vào thẻ <a> -->
+            <div class="col-md-9" id="content">
+                <h3>Chào mừng bạn!</h3>
+                <p>Chọn một trang để hiển thị nội dung ở đây.</p>
             </div>
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Khi người dùng click vào một link
+            $('a').on('click', function (e) {
+                e.preventDefault();  // Ngừng hành động mặc định của thẻ <a> (tải lại trang)
+
+                var url = $(this).attr('href');  // Lấy URL của trang cần tải
+
+                // Thực hiện yêu cầu AJAX để tải nội dung trang vào #content
+                $('#content').load(url);
+            });
+        });
+    </script>
 </body>
 </html>
-
-

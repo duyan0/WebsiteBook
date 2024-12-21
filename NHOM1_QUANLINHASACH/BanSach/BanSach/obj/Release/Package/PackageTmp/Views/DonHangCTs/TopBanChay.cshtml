@@ -1,91 +1,73 @@
 ﻿@model IEnumerable<BanSach.Models.ViewModel>
 
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owl Carousel Example</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+</head>
+<body>
+    <h3 class="text-center text-white fw-semibold pt-2">
+        Top bán chạy
+    </h3>
+    <div class="owl-carousel container-fluid">
+        @foreach (var item in Model)
+        {
+            <div class="row">
+                <div class="card-body">
+                    <div class="card p-2 justify-content-start mb-0" style="border:none;">
+                        <a href="~/SanPhams/TrangSP/@item.IdPro">
+                            <img src="~/Content/img/@item.ImgPro " alt="Alternate Text" class="mb-0 "style="object-fit:contain;" />
+                        </a>
+                        <p class="mb-2 text-truncate">@item.NamePro</p>
+                        <p class="mb-2 text-danger fw-semibold">@item.price.ToString("N0") VND</p>
+                        <p class="mb-0 text-bg-dark placeholder-wave rounded-1 text-center  ">Đã bán: @item.Sum_Quantity</p>
+                    </div>
+                </div>
+            </div>
+
+        }
+
+    </div>
+    <div>
+        <p class="justify-content-center text-center">
+            <a href="~/SanPhams/ProductList" class="text-decoration-none btn btn-outline-danger py-2 px-2 mt-2">Xem thêm</a>
+        </p>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
-
-</head>
-<div class="container-fluid">
-    <p class="text-center fs-4 text-white fw-bold mb-3">Sản phẩm bán chạy</p>
-
-    <!-- Sử dụng Owl Carousel với cấu trúc BS5 -->
-    <div class="row">
-        <div class="col-12">
-            <div class="owl-carousel related-carousel owl-theme">
-                @foreach (var item in Model)
-                {
-                    <div class="item">
-                        <div class="card bg-white shadow-sm">
-                            <a href="~/SanPhams/TrangSP/@item.IdPro" style="text-decoration: none;">
-                                <div class="card-body">
-                                    <!-- Đảm bảo hình ảnh có chiều rộng đầy đủ và chiều cao cố định với object-fit cover -->
-                                    <img src="~/Content/img/@item.ImgPro" alt="@item.NamePro" class="img-fluid rounded-3" style="height: 200px; object-fit: cover;">
-                                    <p class="text-left text-dark text-truncate" title="@item.NamePro">@item.NamePro</p>
-                                    <p class="text-left text-danger fw-bold" title="@item.price">
-                                        @string.Format("{0:N0} VND", item.price)
-                                    </p>
-                                    <p class="text-center mt-2 text-white text-truncate bg-danger" style="border-radius: 10px; font-size: 14px;" title="@item.Sum_Quantity">Đã bán: @item.Sum_Quantity</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+    <script>
+        $(document).ready(function () {
+            $(".owl-carousel").owlCarousel({
+                loop: true,
+                margin: 10,
+                nav: true,
+                autoplay: true,
+                autoplayTimeout: 3000,
+                responsive: {
+                    0: { items: 2 },
+                    600: { items: 3 },
+                    1000: { items: 5 }
                 }
-            </div>
-        </div>
-        <div>
-            <p class="justify-content-center text-center">
-                <a href="~/SanPhams/ProductList" class="text-decoration-none btn btn-outline-danger py-2 px-2 mt-2">Xem thêm</a>
-            </p>
-        </div>
-    </div>
-</div>
-
-<div class="bg-secondary">
-    <hr />
-</div>
-
+            });
+        });
+    </script>
+</body>
 <style>
-    /* Cố định chiều cao cho các hình ảnh trong carousel */
-    .owl-carousel .item {
+    body > div.container.p-0.mt-5.pt-5 > div > div.owl-carousel.owl-loaded.owl-drag > div.owl-stage-outer > div > div > div > div > div > a > img {
+        width: 100%;
+        height: 190px;
+    }
+
+    body > div.container.p-0.mt-5.pt-5 > div > div.owl-carousel.owl-loaded.owl-drag > div.owl-stage-outer > div > div > div > div > div {
+        height: 309px;
+    }
+    .owl-carousel .card-body {
         padding: 10px;
-        box-sizing: border-box;
-    }
-
-    
-
-    /* Đảm bảo chiều rộng đúng của các items trên màn hình nhỏ */
-    .owl-carousel .item {
-        width: 100% !important;
-    }
-
-    /* Cấu hình card carousel */
-    .owl-carousel .card {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        border-radius: 8px;
     }
 </style>
 
-<!-- Các JS liên quan đến OwlCarousel -->
-<script>
-    $(document).ready(function () {
-        $(".owl-carousel").owlCarousel({
-            loop: true,
-            rewind: false, // Đảm bảo không quay lại đầu danh sách
-            items: Math.min(5, $(".item").length), // Hiển thị ít hơn hoặc bằng số sản phẩm
-            margin: 10,
-            autoplay: true,
-            responsive: {
-                0: { items: 1 },
-                576: { items: 2 },
-                768: { items: 3 },
-                992: { items: 4 },
-                1200: { items: 5 }
-            }
-        });
 
-    });
-</script>
+

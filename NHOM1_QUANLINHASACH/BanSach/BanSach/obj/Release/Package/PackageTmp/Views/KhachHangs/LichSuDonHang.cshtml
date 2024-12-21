@@ -40,13 +40,15 @@
                     {
                         <tr class="text-white text-left">
                             <td class="font-weight-bold text-white">@order.IDdh</td>
+
                             <td class="text-white">
                                 @(
-                    order.NgayDatHang.HasValue
-                    ? order.NgayDatHang.Value.ToString("dd/MM/yyyy HH:mm:ss")
-                    : "Chưa đặt hàng"
-                )
+        order.NgayDatHang.HasValue
+        ? order.NgayDatHang.Value.ToString("dd/MM/yyyy HH:mm:ss")
+        : "Chưa đặt hàng"
+    )
                             </td>
+
                             <td class="text-white">
                                 @if (order.TrangThai == "Đã nhận hàng" && order.NgayNhanHang.HasValue)
                                 {
@@ -61,6 +63,7 @@
                                     <span class="d-inline-flex text-info">Dự kiến 2 ngày</span>
                                 }
                             </td>
+
                             <td class="text-danger font-weight-bold">
                                 @order.GetTongSoTien().ToString("C0", new System.Globalization.CultureInfo("vi-VN"))
                             </td>

@@ -25,7 +25,7 @@
     <script src="~/Scripts/changeimg.js"></script>
 </head>
 
-<body>
+<body class="bg-black">
 
     <div id="loadingOverlay" class="loading-overlay text-center">
         <div class="spinner-grow">
@@ -36,10 +36,10 @@
     <nav class="container fixed-top mb-5 bg-dark" id="topbar" style=" z-index: 10000; border-radius:0 0 3px 3px">
         <div class="row align-items-center mt-1 position-relative d-flex">
             <!-- Logo -->
-            <div class="col-4 col-sm-4 text-center text-sm-start">
+            <div class="col-4 col-sm-4 text-sm-start ">
                 <!-- Logo -->
                 <a href="~/SanPhams/TrangChu" class="text-decoration-none">
-                    <h3 class="fw-semibold mb-0text-white d-inline">
+                    <h3 class="fw-semibold mb-0 text-white d-inline float-sm-start">
                         <img srcset="~/Content/img/LOGO_book.png 2x" style="width:50px;height:50px;" alt="Logo sách">
                     </h3>
                 </a>
@@ -109,58 +109,21 @@
 
     <!-- Navbar End -->
     <!-- Main Start -->
-    <div class="container p-0 mt-5 pt-5" style="width: 100%; background-color: black;">
+    <div class="container p-0 mt-5 pt-5 " style="width: 100%;">
         <div class="container mt-0 bg-dark" style=" border-radius: 5px; padding: 1rem; margin: 0; width: 100%; height: 100%;">
             @RenderBody()
         </div>
     </div>
-    @*<footer class="container-fluid mt-2" style="background-color:black;">
-            <div class="ft">
-                <div class="kt p text-center">
-                    <div class="pk ">
-                        <div class="pk-1 ">Võ Duy Ân</div>
-                        <div class="pk-2"><a href="#">Giới thiệu</a></div>
-                        <div class="pk-2"><a href="#">Chính sách đổi trả</a></div>
-                        <div class="pk-2"><a href="#">Chính sách bảo mật</a></div>
-                        <div class="pk-2"><a href="https://paca25.com/"><i class="fa-brands fa-twitter"></i> LOGO COPY TRÊN ĐÂY</a></div>
-                    </div>
-                    <div class="pk">
-                        <div class="pk-1">Hướng dẫn</div>
-                        <div class="pk-2"><a href="#">Hướng dẫn mua sách</a></div>
-                        <div class="pk-2"><a href="#">Hướng dẫn đổi trả</a></div>
-                        <div class="pk-2"><a href="https://paca25.com/"><i class="fa-brands fa-twitter"></i> LOGO COPY TRÊN ĐÂY</a></div>
-                    </div>
-                    <div class="pk">
-                        <div class="pk-1">Hỗ trợ</div>
-                        <div class="pk-2"><a href="https://www.facebook.com/VDuyA555/"><i class="fa-brands fa-facebook-f"></i> Facebook ( 7:00 - 22:00 )</a></div>
-                        <div class="pk-2"><a href="#"><i class="fa-brands fa-discord"></i> Discord</a></div>
-                        <div class="pk-2"><a href="https://paca25.com/"><i class="fa-brands fa-twitter"></i> LOGO COPY TRÊN ĐÂY</a></div>
-                    </div>
-                    <div class="pk">
-                        <div class="pk-1">Follow US</div>
-                        <div class="pk-2 "><a href="https://www.facebook.com/VDuyA555/"><i class="fa-brands fa-square-facebook" style="color: #046ee5;"></i> Facebook</a></div>
-                        <div class="pk-2"><a href="https://paca25.com/"><i class="fa-brands fa-twitter"></i> LOGO COPY TRÊN ĐÂY</a></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="copyright text-center text-success font-weight-bold " style="margin-top: 20px; color: #777;">
-                &copy; 2024 Võ Duy Ân. All rights reserved. Thời gian hiện tại: <span id="time" class="text-danger"></span>
-            </div>
-
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    function updateTime() {
-                        var currentTime = new Date().toLocaleString();
-                        document.getElementById('time').textContent = currentTime;
-                    }
-                    updateTime();
-                    setInterval(updateTime, 1000);
-                });
-            </script>
-
-        </footer>*@
-    <!-- Footer End -->
+    <div class="container p-0 mt-1 pt-1" style="width: 100%; background-color: black;">
+        <div class="container mt-0 bg-dark" style=" border-radius: 5px; padding: 1rem; margin: 0; width: 100%; height: 100%;">
+            @Html.Action("TopBanChay", "DonHangCTs", new { categoryId = 1 })
+        </div>
+    </div>
+    <div class="container p-0 mt-1 pt-1" style="width: 100%; background-color: black;">
+        <div class="container mt-0 bg-dark" style=" border-radius: 5px; padding: 1rem; margin: 0; width: 100%; height: 100%;">
+            @Html.Action("RecentOrders", "DonHangCTs")
+        </div>
+    </div>
     <div class="d-inline-flex">
         <a href="~/ShoppingCart/ShowCart" class="btn border cart1" style="border-radius:50%;">
             <i class="bi bi-bag-check" style="color:black;"></i>
@@ -200,7 +163,7 @@
             position: relative;
             display: inline-block;
             border-radius: 1rem;
-            font-size: 12px;
+            font-size: 16px;
         }
 
         .dropdown-content {
@@ -210,7 +173,7 @@
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
             z-index: 2;
-            font-size: 12px;
+            font-size: 16px;
             border-radius: 5px;
             margin-left: -64px;
         }
@@ -367,17 +330,7 @@
 
 
     </script>
-    <script>
-        document.getElementById('themeToggle').addEventListener('click', function () {
-            // Kiểm tra chủ đề hiện tại và thay đổi nó
-            var currentTheme = document.documentElement.getAttribute('data-bs-theme');
-            if (currentTheme === 'dark') {
-                document.documentElement.setAttribute('data-bs-theme', 'light');
-            } else {
-                document.documentElement.setAttribute('data-bs-theme', 'dark');
-            }
-        });
-    </script>
+   
     <style>
         .suggestions-box {
             position: absolute;

@@ -1,4 +1,6 @@
-﻿/* Cấu hình cho .left và .right */
+﻿--root {
+    --bs-dark-rgb: rgb(33, 37, 41);
+}
 .left, .right {
     padding: 20px 0;
     object-fit: cover;
@@ -63,8 +65,8 @@
 
 /* Cấu hình cho nút "Thêm" */
 #nut1 {
-    color: #c92127;
-    background-color: white;
+    color: red;
+    background-color: var(--bs-dark-rgb);
 }
 
     #nut1:hover {

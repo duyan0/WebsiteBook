@@ -457,7 +457,7 @@ namespace BanSach.Controllers
                     db.SaveChanges();
 
                     TempData["SuccessMessage"] = "Mật khẩu đã được thay đổi thành công!";
-                    return RedirectToAction("Profile"); // Chuyển hướng đến trang thông tin cá nhân của người dùng
+                    return RedirectToAction("ChangePassword"); // Chuyển hướng đến trang thông tin cá nhân của người dùng
                 }
                 else
                 {

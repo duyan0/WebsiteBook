@@ -79,6 +79,7 @@ namespace BanSach.Controllers
 
         public ActionResult DetailsKH(int? id)
         {
+            // Kiểm tra id null và trả về lỗi nếu không hợp lệ
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -91,22 +92,30 @@ namespace BanSach.Controllers
                 .Where(ct => ct.DonHang.IDdh == id)
                 .ToList();
 
-            // Kiểm tra nếu không có chi tiết đơn hàng nào được tìm thấy
+            // Kiểm tra nếu không có chi tiết đơn hàng nào
             if (donHangCTs == null || !donHangCTs.Any())
             {
                 return HttpNotFound();
             }
 
             // Lấy thông tin đơn hàng từ chi tiết đơn hàng đầu tiên
-            ViewBag.OrderDetails = donHangCTs.FirstOrDefault().DonHang;
+            var donHang = donHangCTs.FirstOrDefault()?.DonHang;
+            if (donHang == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Gán thông tin đơn hàng vào ViewBag
+            ViewBag.OrderDetails = donHang;
 
             // Tính tổng giá trị của đơn hàng
-            decimal totalAmount = donHangCTs.Sum(ct => ct.SoLuong * (decimal?)(ct.Gia ?? 0.0) ?? 0m);
+            decimal totalAmount = donHangCTs.Sum(ct => (ct.SoLuong * (decimal?)(ct.Gia ?? 0.0)) ?? 0m);
             ViewBag.TotalAmount = totalAmount;
 
             // Trả về view với danh sách chi tiết đơn hàng
             return View(donHangCTs);
         }
+
 
 
 
@@ -265,7 +274,7 @@ namespace BanSach.Controllers
                 .Include(d => d.DonHang)
                 .Where(d => d.DonHang.TrangThai == "Đã nhận hàng" || d.DonHang.TrangThai == "Đã xác nhận")
                 .OrderByDescending(d => d.DonHang.NgayDatHang)
-                .Take(1) // Lấy 100 đơn hàng mới nhất
+                .Take(10) // Lấy 100 đơn hàng mới nhất
                 .Select(d => new RecentOrderViewModel
                 {
                     Id = d.SanPham.IDsp,
