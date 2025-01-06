@@ -198,7 +198,7 @@ namespace BanSach.Controllers
             }
 
             // Tìm kiếm trong bảng Admin
-            var checkAdmin = db.Admin.FirstOrDefault(x => x.TKhoan == _cus.TKhoan && x.MKhau == _cus.MKhau);
+            var checkAdmin = db.admins.FirstOrDefault(x => x.TKhoan == _cus.TKhoan && x.MKhau == _cus.MKhau);
             if (checkAdmin != null)
             {
                 // Nếu là quản trị viên, thiết lập session quản lý và chuyển đến trang Admin

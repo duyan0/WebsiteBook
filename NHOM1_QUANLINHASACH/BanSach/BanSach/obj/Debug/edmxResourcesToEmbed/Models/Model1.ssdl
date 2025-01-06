@@ -1,26 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="dbsachModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="Admin">
+<Schema Namespace="SachModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="admins">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="HoTen" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="Email" Type="nchar" MaxLength="50" />
-    <Property Name="DiaChi" Type="nvarchar(max)" />
-    <Property Name="SoDT" Type="nchar" MaxLength="15" Nullable="false" />
-    <Property Name="VaiTro" Type="nchar" MaxLength="50" Nullable="false" />
-    <Property Name="TKhoan" Type="nchar" MaxLength="50" Nullable="false" />
-    <Property Name="MKhau" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="255" />
+    <Property Name="SoDT" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="VaiTro" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TKhoan" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="MKhau" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="Banner">
     <Key>
-      <PropertyRef Name="BannerID" />
+      <PropertyRef Name="Banner_ID" />
     </Key>
-    <Property Name="BannerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="HinhAnh" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Banner_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HinhAnh" Type="nvarchar" MaxLength="255" />
     <Property Name="MoTa" Type="nvarchar(max)" />
-    <Property Name="Link" Type="nvarchar" MaxLength="100" />
+    <Property Name="Link" Type="varchar" MaxLength="100" />
     <Property Name="ThuTu" Type="int" />
   </EntityType>
   <EntityType Name="DanhMuc">
@@ -28,9 +28,16 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="DanhMuc" Type="nchar" MaxLength="50" Nullable="false" />
-    <Property Name="TheLoai" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="HinhAnh_DM" Type="nvarchar" MaxLength="255" />
+    <Property Name="TenDanhMuc" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DanhMuc_TheLoai">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DanhMuc_ID" Type="int" Nullable="false" />
+    <Property Name="TheLoai_ID" Type="int" Nullable="false" />
+    <Property Name="HinhAnh" Type="nvarchar" MaxLength="255" Nullable="false" />
   </EntityType>
   <EntityType Name="DonHang">
     <Key>
@@ -42,14 +49,14 @@
     <Property Name="DiaChi" Type="nvarchar" MaxLength="255" />
     <Property Name="NgayNhanHang" Type="datetime" />
     <Property Name="TrangThai" Type="nvarchar" MaxLength="30" />
-    <Property Name="TongSoLuong" Type="int" />
-    <Property Name="TongTien" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="totalquantity" Type="int" />
+    <Property Name="totalamount" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="DonHangCT">
     <Key>
-      <PropertyRef Name="IDdh" />
+      <PropertyRef Name="ID_ctdh" />
     </Key>
-    <Property Name="IDdh" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_ctdh" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="IDSanPham" Type="int" />
     <Property Name="IDDonHang" Type="int" />
     <Property Name="SoLuong" Type="int" />
@@ -62,13 +69,14 @@
     </Key>
     <Property Name="IDkh" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TenKH" Type="nvarchar" MaxLength="50" />
-    <Property Name="SoDT" Type="nvarchar" MaxLength="11" />
-    <Property Name="Email" Type="nvarchar" MaxLength="255" />
-    <Property Name="TKhoan" Type="nvarchar" MaxLength="50" />
-    <Property Name="MKhau" Type="nvarchar" MaxLength="50" />
+    <Property Name="SoDT" Type="varchar" MaxLength="11" />
+    <Property Name="Email" Type="varchar" MaxLength="255" />
+    <Property Name="TKhoan" Type="varchar" MaxLength="50" />
+    <Property Name="MKhau" Type="varchar" MaxLength="50" />
     <Property Name="TrangThaiTaiKhoan" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="OTP" Type="nvarchar" MaxLength="6" />
+    <Property Name="OTP" Type="varchar" MaxLength="6" />
     <Property Name="OTPExpiry" Type="datetime" />
+    <Property Name="create_date" Type="datetime" />
   </EntityType>
   <EntityType Name="KhuyenMai">
     <Key>
@@ -78,7 +86,7 @@
     <Property Name="TenKhuyenMai" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="NgayBatDau" Type="date" />
     <Property Name="NgayKetThuc" Type="date" />
-    <Property Name="MucGiamGia" Type="int" />
+    <Property Name="MucGiamGia" Type="decimal" Precision="5" Scale="2" />
     <Property Name="MoTa" Type="nvarchar(max)" />
     <Property Name="NgayTao" Type="datetime" />
   </EntityType>
@@ -88,8 +96,8 @@
     </Key>
     <Property Name="IDnxb" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Tennxb" Type="nvarchar" MaxLength="100" Nullable="false" />
-    <Property Name="DiaChi" Type="nvarchar(max)" />
-    <Property Name="SoDienThoai" Type="nvarchar" MaxLength="11" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="255" />
+    <Property Name="SDT" Type="varchar" MaxLength="11" />
     <Property Name="Email" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="SanPham">
@@ -99,7 +107,7 @@
     <Property Name="IDsp" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TenSP" Type="nvarchar" MaxLength="255" Nullable="false" />
     <Property Name="MoTa" Type="nvarchar(max)" />
-    <Property Name="TheLoai" Type="int" Nullable="false" />
+    <Property Name="IDtl" Type="int" Nullable="false" />
     <Property Name="GiaBan" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="HinhAnh" Type="nvarchar" MaxLength="255" Nullable="false" />
     <Property Name="IDtg" Type="int" Nullable="false" />
@@ -110,12 +118,12 @@
   </EntityType>
   <EntityType Name="Slide">
     <Key>
-      <PropertyRef Name="SlideID" />
+      <PropertyRef Name="Slide_ID" />
     </Key>
-    <Property Name="SlideID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="HinhAnh" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Slide_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HinhAnh" Type="nvarchar" MaxLength="255" />
     <Property Name="MoTa" Type="nvarchar(max)" />
-    <Property Name="Link" Type="nvarchar" MaxLength="100" />
+    <Property Name="Link" Type="varchar" MaxLength="100" />
     <Property Name="ThuTu" Type="int" />
   </EntityType>
   <EntityType Name="TacGia">
@@ -123,30 +131,43 @@
       <PropertyRef Name="IDtg" />
     </Key>
     <Property Name="IDtg" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="TenTacGia" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="TenTG" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="NgaySinh" Type="date" />
     <Property Name="QuocGia" Type="nvarchar" MaxLength="50" />
-    <Property Name="TieuSu" Type="nvarchar(max)" />
+    <Property Name="TieuSu" Type="nvarchar" MaxLength="1000" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'dbsach.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="database_firewall_rules">
+  <EntityType Name="TheLoai">
     <Key>
-      <PropertyRef Name="id" />
-      <PropertyRef Name="name" />
-      <PropertyRef Name="start_ip_address" />
-      <PropertyRef Name="end_ip_address" />
-      <PropertyRef Name="create_date" />
-      <PropertyRef Name="modify_date" />
+      <PropertyRef Name="ID" />
     </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
-    <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
-    <Property Name="create_date" Type="datetime" Nullable="false" />
-    <Property Name="modify_date" Type="datetime" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenTheLoai" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
-  <Association Name="FK__DonHang__IDkh__6EF57B66">
+  <Association Name="FK__DanhMuc_T__DanhM__3D5E1FD2">
+    <End Role="DanhMuc" Type="Self.DanhMuc" Multiplicity="1" />
+    <End Role="DanhMuc_TheLoai" Type="Self.DanhMuc_TheLoai" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DanhMuc">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DanhMuc_TheLoai">
+        <PropertyRef Name="DanhMuc_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DanhMuc_T__TheLo__3E52440B">
+    <End Role="TheLoai" Type="Self.TheLoai" Multiplicity="1" />
+    <End Role="DanhMuc_TheLoai" Type="Self.DanhMuc_TheLoai" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TheLoai">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DanhMuc_TheLoai">
+        <PropertyRef Name="TheLoai_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DonHang__IDkh__5629CD9C">
     <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="0..1" />
     <End Role="DonHang" Type="Self.DonHang" Multiplicity="*" />
     <ReferentialConstraint>
@@ -158,7 +179,7 @@ warning 6002: The table/view 'dbsach.sys.database_firewall_rules' does not have 
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DonHangCT__IDDon__72C60C4A">
+  <Association Name="FK__DonHangCT__IDDon__59FA5E80">
     <End Role="DonHang" Type="Self.DonHang" Multiplicity="0..1" />
     <End Role="DonHangCT" Type="Self.DonHangCT" Multiplicity="*" />
     <ReferentialConstraint>
@@ -170,7 +191,7 @@ warning 6002: The table/view 'dbsach.sys.database_firewall_rules' does not have 
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DonHangCT__IDSan__71D1E811">
+  <Association Name="FK__DonHangCT__IDSan__59063A47">
     <End Role="SanPham" Type="Self.SanPham" Multiplicity="0..1" />
     <End Role="DonHangCT" Type="Self.DonHangCT" Multiplicity="*" />
     <ReferentialConstraint>
@@ -179,18 +200,6 @@ warning 6002: The table/view 'dbsach.sys.database_firewall_rules' does not have 
       </Principal>
       <Dependent Role="DonHangCT">
         <PropertyRef Name="IDSanPham" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SanPham_DanhMuc">
-    <End Role="DanhMuc" Type="Self.DanhMuc" Multiplicity="1" />
-    <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="DanhMuc">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="SanPham">
-        <PropertyRef Name="TheLoai" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -230,10 +239,23 @@ warning 6002: The table/view 'dbsach.sys.database_firewall_rules' does not have 
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="dbsachModelStoreContainer">
-    <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+  <Association Name="FK_SanPham_TheLoai">
+    <End Role="TheLoai" Type="Self.TheLoai" Multiplicity="1" />
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TheLoai">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SanPham">
+        <PropertyRef Name="IDtl" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SachModelStoreContainer">
+    <EntitySet Name="admins" EntityType="Self.admins" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Banner" EntityType="Self.Banner" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DanhMuc" EntityType="Self.DanhMuc" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DanhMuc_TheLoai" EntityType="Self.DanhMuc_TheLoai" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DonHang" EntityType="Self.DonHang" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DonHangCT" EntityType="Self.DonHangCT" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="KhachHang" EntityType="Self.KhachHang" Schema="dbo" store:Type="Tables" />
@@ -242,31 +264,26 @@ warning 6002: The table/view 'dbsach.sys.database_firewall_rules' does not have 
     <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Slide" EntityType="Self.Slide" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TacGia" EntityType="Self.TacGia" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
-      <DefiningQuery>SELECT 
-    [database_firewall_rules].[id] AS [id], 
-    [database_firewall_rules].[name] AS [name], 
-    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
-    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
-    [database_firewall_rules].[create_date] AS [create_date], 
-    [database_firewall_rules].[modify_date] AS [modify_date]
-    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
-    </EntitySet>
-    <AssociationSet Name="FK__DonHang__IDkh__6EF57B66" Association="Self.FK__DonHang__IDkh__6EF57B66">
+    <EntitySet Name="TheLoai" EntityType="Self.TheLoai" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__DanhMuc_T__DanhM__3D5E1FD2" Association="Self.FK__DanhMuc_T__DanhM__3D5E1FD2">
+      <End Role="DanhMuc" EntitySet="DanhMuc" />
+      <End Role="DanhMuc_TheLoai" EntitySet="DanhMuc_TheLoai" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DanhMuc_T__TheLo__3E52440B" Association="Self.FK__DanhMuc_T__TheLo__3E52440B">
+      <End Role="TheLoai" EntitySet="TheLoai" />
+      <End Role="DanhMuc_TheLoai" EntitySet="DanhMuc_TheLoai" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DonHang__IDkh__5629CD9C" Association="Self.FK__DonHang__IDkh__5629CD9C">
       <End Role="KhachHang" EntitySet="KhachHang" />
       <End Role="DonHang" EntitySet="DonHang" />
     </AssociationSet>
-    <AssociationSet Name="FK__DonHangCT__IDDon__72C60C4A" Association="Self.FK__DonHangCT__IDDon__72C60C4A">
+    <AssociationSet Name="FK__DonHangCT__IDDon__59FA5E80" Association="Self.FK__DonHangCT__IDDon__59FA5E80">
       <End Role="DonHang" EntitySet="DonHang" />
       <End Role="DonHangCT" EntitySet="DonHangCT" />
     </AssociationSet>
-    <AssociationSet Name="FK__DonHangCT__IDSan__71D1E811" Association="Self.FK__DonHangCT__IDSan__71D1E811">
+    <AssociationSet Name="FK__DonHangCT__IDSan__59063A47" Association="Self.FK__DonHangCT__IDSan__59063A47">
       <End Role="SanPham" EntitySet="SanPham" />
       <End Role="DonHangCT" EntitySet="DonHangCT" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SanPham_DanhMuc" Association="Self.FK_SanPham_DanhMuc">
-      <End Role="DanhMuc" EntitySet="DanhMuc" />
-      <End Role="SanPham" EntitySet="SanPham" />
     </AssociationSet>
     <AssociationSet Name="FK_SanPham_KhuyenMai" Association="Self.FK_SanPham_KhuyenMai">
       <End Role="KhuyenMai" EntitySet="KhuyenMai" />
@@ -278,6 +295,10 @@ warning 6002: The table/view 'dbsach.sys.database_firewall_rules' does not have 
     </AssociationSet>
     <AssociationSet Name="FK_SanPham_TacGia" Association="Self.FK_SanPham_TacGia">
       <End Role="TacGia" EntitySet="TacGia" />
+      <End Role="SanPham" EntitySet="SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SanPham_TheLoai" Association="Self.FK_SanPham_TheLoai">
+      <End Role="TheLoai" EntitySet="TheLoai" />
       <End Role="SanPham" EntitySet="SanPham" />
     </AssociationSet>
   </EntityContainer>

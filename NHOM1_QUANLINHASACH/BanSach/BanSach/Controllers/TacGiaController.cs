@@ -21,7 +21,7 @@ namespace BanSach.Controllers
             // Filtering logic if search string is provided
             if (!String.IsNullOrEmpty(searchString))
             {
-                authors = authors.Where(a => a.TenTacGia.Contains(searchString));
+                authors = authors.Where(a => a.TenTG.Contains(searchString));
             }
 
             // Set page size and page number
@@ -48,7 +48,7 @@ namespace BanSach.Controllers
             // Kiểm tra xem danh sách tác giả có dữ liệu không
             if (tacGias != null && tacGias.Count > 0)
             {
-                ViewBag.TacGia = new SelectList(tacGias, "IDtg", "TenTacGia");
+                ViewBag.TacGia = new SelectList(tacGias, "IDtg", "TenTG");
             }
             else
             {
@@ -72,7 +72,7 @@ namespace BanSach.Controllers
 
             // Nếu có lỗi, hãy gọi lại danh sách tác giả và quốc gia
             var tacGias = db.TacGia.ToList();
-            ViewBag.TacGia = new SelectList(tacGias, "IDtg", "TenTacGia", model.IDtg); // Ghi lại chọn IDtg hiện tại
+            ViewBag.TacGia = new SelectList(tacGias, "IDtg", "TenTG", model.IDtg); // Ghi lại chọn IDtg hiện tại
 
             ViewBag.QuocGia = new SelectList(new List<SelectListItem>
             {
@@ -80,7 +80,7 @@ namespace BanSach.Controllers
                 new SelectListItem { Value = "US", Text = "Mỹ" },
                 new SelectListItem { Value = "JP", Text = "Nhật Bản" },
                 new SelectListItem { Value = "FR", Text = "Pháp" },
-            }, "Value", "Text", model.TenTacGia); // Giữ giá trị QuocGia hiện tại
+            }, "Value", "Text", model.TenTG); // Giữ giá trị QuocGia hiện tại
 
             return View(model);
         }

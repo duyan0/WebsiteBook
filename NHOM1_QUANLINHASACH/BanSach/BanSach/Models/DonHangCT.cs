@@ -14,7 +14,7 @@ namespace BanSach.Models
     
     public partial class DonHangCT
     {
-        public int IDdh { get; set; }
+        public int ID_ctdh { get; set; }
         public Nullable<int> IDSanPham { get; set; }
         public Nullable<int> IDDonHang { get; set; }
         public Nullable<int> SoLuong { get; set; }

@@ -1,14 +1,14 @@
 ﻿@model BanSach.Models.TacGia
 
 @{
-    ViewBag.Title = "Chi tiết Tác Giả " + Model.TenTacGia; // Cập nhật tiêu đề
+    ViewBag.Title = "Chi tiết Tác Giả " + Model.TenTG; // Cập nhật tiêu đề
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <h2 class="text-center font-weight-bold">Chi tiết Tác Giả</h2>
 
 <div class="container">
-    <h4 class="font-weight-bold">Tác Giả: @Html.DisplayFor(model => model.TenTacGia)</h4>
+    <h4 class="font-weight-bold">Tác Giả: @Html.DisplayFor(model => model.TenTG)</h4>
     <hr />
 
     <table class="table" style="border: 2px solid black;">

@@ -29,6 +29,7 @@ namespace BanSach.Models
         public string TrangThaiTaiKhoan { get; set; }
         public string OTP { get; set; }
         public Nullable<System.DateTime> OTPExpiry { get; set; }
+        public Nullable<System.DateTime> create_date { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonHang> DonHang { get; set; }

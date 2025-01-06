@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BanSach.Models.DanhMuc>
+﻿@model IEnumerable<BanSach.Models.DanhMuc_TheLoai>
 
 <style>
     .danhmuc a {
@@ -49,47 +49,7 @@
 
 <div class="container-danhmuc">
     <div class="list-group">
-        @{
-            var temp = new BanSach.Models.DanhMuc();
-
-            foreach (var item in Model)
-            {
-                if (temp.DanhMuc1 != item.DanhMuc1)
-                {
-                    if (Session[item.DanhMuc1] == null)
-                    {
-                        <div class="list-group-item danhmuc">
-                            <a href="javascript:void(0)" role="button">
-                                <strong>@item.DanhMuc1</strong>
-                                <i class="bi bi-chevron-down ml-2"></i>
-                            </a>
-
-
-                            <div class="collapse" id="collapse-@item.DanhMuc1.Replace(" ", "-")">
-                                <ul class="list-unstyled mt-2 ml-3">
-                                    @foreach (var item2 in Model)
-                                    {
-                                        if (item2.DanhMuc1 == item.DanhMuc1 && !string.IsNullOrEmpty(item2.TheLoai))
-                                        {
-                                            <li class="tentheloai text-truncate">
-                                                @Html.ActionLink(item2.TheLoai, "ProductList", "SanPhams", new { category = item2.ID }, new { @class = "tentheloai-link text-dark text-truncate" })
-                                            </li>
-                                        }
-                                    }
-                                </ul>
-                            </div>
-                        </div>
-                    }
-                    Session[item.DanhMuc1] = "co";
-                    temp = item;
-                }
-            }
-
-            foreach (var item in Model)
-            {
-                Session[item.DanhMuc1] = null;
-            }
-        }
+        
     </div>
 </div>
 

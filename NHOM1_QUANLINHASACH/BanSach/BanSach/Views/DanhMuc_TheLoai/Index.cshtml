@@ -1,0 +1,46 @@
+﻿@model IEnumerable<BanSach.Models.DanhMuc_TheLoai>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Thêm", "Create",null,new{ @class = "btn btn-dark" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.HinhAnh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DanhMuc.TenDanhMuc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TheLoai.TenTheLoai)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <img src="~/Content/img/Banner/@item.HinhAnh" width="100" height="100" class="rounded-5" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DanhMuc.TenDanhMuc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TheLoai.TenTheLoai)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

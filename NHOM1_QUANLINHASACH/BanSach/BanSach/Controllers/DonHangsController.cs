@@ -181,7 +181,7 @@ namespace BanSach.Controllers
                 .ToList(); // Đưa tất cả dữ liệu vào bộ nhớ
 
             // Tính tổng doanh thu từ các đơn hàng đã nhận
-            decimal tongDoanhThu = donHangsDaNhanHang.Sum(dh => dh.TongTien ?? 0);
+            decimal tongDoanhThu = donHangsDaNhanHang.Sum(dh => dh.totalamount ?? 0);
 
             // Khởi tạo ViewModel
             var thongKeViewModel = new ThongKeDonHangViewModel
@@ -282,7 +282,7 @@ namespace BanSach.Controllers
                 <tr><td><strong>Mã đơn hàng:</strong></td><td>{donHang.IDdh}</td></tr>
                 <tr><td><strong>Ngày đặt hàng:</strong></td><td>{donHang.NgayDatHang?.ToString("dd/MM/yyyy HH:mm:ss")}</td></tr>
                 <tr><td><strong>Trạng thái:</strong></td><td>{donHang.TrangThai}</td></tr>
-                <tr><td><strong>Tổng tiền:</strong></td><td>{donHang.TongTien?.ToString("C")}</td></tr>
+                <tr><td><strong>Tổng tiền:</strong></td><td>{donHang.totalamount?.ToString("C")}</td></tr>
                 <tr><td><strong>Địa chỉ giao hàng:</strong></td><td>{donHang.DiaChi}</td></tr>
             </table>
             <p><strong>Chi tiết sản phẩm:</strong></p>

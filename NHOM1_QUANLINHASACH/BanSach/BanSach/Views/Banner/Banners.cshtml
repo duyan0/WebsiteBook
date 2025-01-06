@@ -4,37 +4,13 @@
     @foreach (var banner in Model)
     {
         <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 mt-1">
-            <div class="card border-0 bg-dark" id="banner-@banner.BannerID">
+            <div class="card border-0 bg-dark" id="banner-@banner.Banner_ID">
                 <!-- Kiểm tra nếu có link trong banner -->
-                <a href="@banner.Link" id="~/@banner.BannerID">
-                    <img src="~/Content/img/Banner/@banner.HinhAnh" class="d-block rounded-1 img-fluid" alt="@banner.MoTa" id="img-@banner.BannerID">
+                <a href="@banner.Link">
+                    <img src="~/Content/img/Banner/@banner.HinhAnh" class="d-block rounded-1 img-fluid" alt="@banner.MoTa" id="img-@banner.Banner_ID">
                 </a>
             </div>
         </div>
     }
 </div>
-<style>
-    #img-2 {
-        height: 170px;
-        min-height: 80px;
-        width: 298px;
-    }
 
-    #img-3 {
-        height: 170px;
-        min-height: 80px;
-        width: 298px;
-    }
-
-    #img-4 {
-        height: 170px;
-        min-height: 80px;
-        width: 298px;
-    }
-
-    #img-19 {
-        height: 170px;
-        min-height: 80px;
-        width: 298px;
-    }
-</style>

@@ -240,6 +240,7 @@
     <Compile Include="Controllers\AdminsController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\DanhMucsController.cs" />
+    <Compile Include="Controllers\DanhMuc_TheLoaiController.cs" />
     <Compile Include="Controllers\DonHangCTsController.cs" />
     <Compile Include="Controllers\DonHangsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -251,10 +252,11 @@
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\SlideController.cs" />
     <Compile Include="Controllers\TacGiaController.cs" />
+    <Compile Include="Controllers\TheLoaiController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Admin.cs">
+    <Compile Include="Models\admins.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Banner.cs">
@@ -267,7 +269,7 @@
     </Compile>
     <Compile Include="Models\DanhMucFactory.cs" />
     <Compile Include="Models\DanhMucService.cs" />
-    <Compile Include="Models\database_firewall_rules.cs">
+    <Compile Include="Models\DanhMuc_TheLoai.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DonHang.cs">
@@ -314,6 +316,9 @@
     <Compile Include="Models\TacGia.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TheLoai.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ThongKeDanhMucViewModel.cs" />
     <Compile Include="Models\ThongKeDonHangViewModel.cs" />
     <Compile Include="Models\UserProfile.cs" />
@@ -322,6 +327,152 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Admin\css\style.css" />
+    <Content Include="Admin\css\style.min.css" />
+    <Content Include="Admin\fonts\demo.html" />
+    <Content Include="Admin\fonts\stylesheet.css" />
+    <Content Include="Admin\img\avatar\avatar-2.svg" />
+    <Content Include="Admin\img\avatar\avatar-face-02.png" />
+    <Content Include="Admin\img\avatar\avatar-face-03.png" />
+    <Content Include="Admin\img\avatar\avatar-face-04.png" />
+    <Content Include="Admin\img\avatar\avatar-face-05.png" />
+    <Content Include="Admin\img\avatar\avatar-illustrated-01.png" />
+    <Content Include="Admin\img\avatar\avatar-illustrated-02.png" />
+    <Content Include="Admin\img\avatar\avatar-illustrated-03.png" />
+    <Content Include="Admin\img\avatar\avatar-illustrated-04.png" />
+    <Content Include="Admin\img\avatar\Avatar.svg" />
+    <Content Include="Admin\img\categories\01.jpg" />
+    <Content Include="Admin\img\categories\02.jpg" />
+    <Content Include="Admin\img\categories\03.jpg" />
+    <Content Include="Admin\img\categories\04.jpg" />
+    <Content Include="Admin\img\svg\404.svg" />
+    <Content Include="Admin\img\svg\baloon.svg" />
+    <Content Include="Admin\img\svg\Bulk\2 User.svg" />
+    <Content Include="Admin\img\svg\Bulk\3-User-gray.svg" />
+    <Content Include="Admin\img\svg\Bulk\3-User-white.svg" />
+    <Content Include="Admin\img\svg\Bulk\Activity.svg" />
+    <Content Include="Admin\img\svg\Bulk\AddUser.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrow-Down.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrow-Down2.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrow-Down3.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrow-DownCircle.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrow-DownSquare.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrow-Left.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrow-Left2.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrow-Left3.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrow-LeftCircle.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrow-LeftSquare.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrow-Right.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrow-Right2.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrow-Right3.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrow-RightCircle.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrow-RightSquare.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrow-Up.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrow-Up2.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrow-Up3.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrow-UpCircle.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrow-UpSquare.svg" />
+    <Content Include="Admin\img\svg\Bulk\Arrows-up-down.svg" />
+    <Content Include="Admin\img\svg\Bulk\Bag 3.svg" />
+    <Content Include="Admin\img\svg\Bulk\Bag.svg" />
+    <Content Include="Admin\img\svg\Bulk\Bookmark.svg" />
+    <Content Include="Admin\img\svg\Bulk\Buy.svg" />
+    <Content Include="Admin\img\svg\Bulk\Calendar.svg" />
+    <Content Include="Admin\img\svg\Bulk\Call Missed.svg" />
+    <Content Include="Admin\img\svg\Bulk\Call Silent.svg" />
+    <Content Include="Admin\img\svg\Bulk\Call.svg" />
+    <Content Include="Admin\img\svg\Bulk\Calling.svg" />
+    <Content Include="Admin\img\svg\Bulk\Camera.svg" />
+    <Content Include="Admin\img\svg\Bulk\Category-gray.svg" />
+    <Content Include="Admin\img\svg\Bulk\Category-white.svg" />
+    <Content Include="Admin\img\svg\Bulk\Chart.svg" />
+    <Content Include="Admin\img\svg\Bulk\Chat.svg" />
+    <Content Include="Admin\img\svg\Bulk\Close Square.svg" />
+    <Content Include="Admin\img\svg\Bulk\Danger.svg" />
+    <Content Include="Admin\img\svg\Bulk\Delete.svg" />
+    <Content Include="Admin\img\svg\Bulk\Discount.svg" />
+    <Content Include="Admin\img\svg\Bulk\Discovery.svg" />
+    <Content Include="Admin\img\svg\Bulk\Document-gray.svg" />
+    <Content Include="Admin\img\svg\Bulk\Document-white.svg" />
+    <Content Include="Admin\img\svg\Bulk\Download.svg" />
+    <Content Include="Admin\img\svg\Bulk\Edit Square.svg" />
+    <Content Include="Admin\img\svg\Bulk\Edit-gray.svg" />
+    <Content Include="Admin\img\svg\Bulk\Edit-white.svg" />
+    <Content Include="Admin\img\svg\Bulk\Filter 2.svg" />
+    <Content Include="Admin\img\svg\Bulk\Filter.svg" />
+    <Content Include="Admin\img\svg\Bulk\Folder-gray.svg" />
+    <Content Include="Admin\img\svg\Bulk\Folder-white.svg" />
+    <Content Include="Admin\img\svg\Bulk\Game.svg" />
+    <Content Include="Admin\img\svg\Bulk\Graph.svg" />
+    <Content Include="Admin\img\svg\Bulk\Heart.svg" />
+    <Content Include="Admin\img\svg\Bulk\Hide.svg" />
+    <Content Include="Admin\img\svg\Bulk\Home-gray.svg" />
+    <Content Include="Admin\img\svg\Bulk\Home-white.svg" />
+    <Content Include="Admin\img\svg\Bulk\Image 3.svg" />
+    <Content Include="Admin\img\svg\Bulk\Image-gray.svg" />
+    <Content Include="Admin\img\svg\Bulk\Image-white.svg" />
+    <Content Include="Admin\img\svg\Bulk\Info Circle.svg" />
+    <Content Include="Admin\img\svg\Bulk\Info Square.svg" />
+    <Content Include="Admin\img\svg\Bulk\Location.svg" />
+    <Content Include="Admin\img\svg\Bulk\Lock.svg" />
+    <Content Include="Admin\img\svg\Bulk\Login.svg" />
+    <Content Include="Admin\img\svg\Bulk\Logout.svg" />
+    <Content Include="Admin\img\svg\Bulk\Menu-toggle-gray.svg" />
+    <Content Include="Admin\img\svg\Bulk\Menu-toggle-white.svg" />
+    <Content Include="Admin\img\svg\Bulk\Message-gray.svg" />
+    <Content Include="Admin\img\svg\Bulk\Message-white.svg" />
+    <Content Include="Admin\img\svg\Bulk\More Circle.svg" />
+    <Content Include="Admin\img\svg\Bulk\More Square.svg" />
+    <Content Include="Admin\img\svg\Bulk\Notification-gray.svg" />
+    <Content Include="Admin\img\svg\Bulk\Notification.svg" />
+    <Content Include="Admin\img\svg\Bulk\Paper Download.svg" />
+    <Content Include="Admin\img\svg\Bulk\Paper Fail.svg" />
+    <Content Include="Admin\img\svg\Bulk\Paper Negative.svg" />
+    <Content Include="Admin\img\svg\Bulk\Paper Plus.svg" />
+    <Content Include="Admin\img\svg\Bulk\Paper Upload.svg" />
+    <Content Include="Admin\img\svg\Bulk\Paper-gray.svg" />
+    <Content Include="Admin\img\svg\Bulk\Paper-white.svg" />
+    <Content Include="Admin\img\svg\Bulk\Password.svg" />
+    <Content Include="Admin\img\svg\Bulk\Play.svg" />
+    <Content Include="Admin\img\svg\Bulk\Plus.svg" />
+    <Content Include="Admin\img\svg\Bulk\Profile.svg" />
+    <Content Include="Admin\img\svg\Bulk\Scan.svg" />
+    <Content Include="Admin\img\svg\Bulk\Search.svg" />
+    <Content Include="Admin\img\svg\Bulk\Send.svg" />
+    <Content Include="Admin\img\svg\Bulk\Setting-gray.svg" />
+    <Content Include="Admin\img\svg\Bulk\Setting-white.svg" />
+    <Content Include="Admin\img\svg\Bulk\Settings-line.svg" />
+    <Content Include="Admin\img\svg\Bulk\Shield Done.svg" />
+    <Content Include="Admin\img\svg\Bulk\Shield Fail.svg" />
+    <Content Include="Admin\img\svg\Bulk\Show.svg" />
+    <Content Include="Admin\img\svg\Bulk\Star.svg" />
+    <Content Include="Admin\img\svg\Bulk\Swap.svg" />
+    <Content Include="Admin\img\svg\Bulk\Tick Square.svg" />
+    <Content Include="Admin\img\svg\Bulk\Ticket Star.svg" />
+    <Content Include="Admin\img\svg\Bulk\Ticket.svg" />
+    <Content Include="Admin\img\svg\Bulk\Time Square.svg" />
+    <Content Include="Admin\img\svg\Bulk\TimeCircle.svg" />
+    <Content Include="Admin\img\svg\Bulk\Unlock.svg" />
+    <Content Include="Admin\img\svg\Bulk\Upload.svg" />
+    <Content Include="Admin\img\svg\Bulk\Video.svg" />
+    <Content Include="Admin\img\svg\Bulk\Voice 3.svg" />
+    <Content Include="Admin\img\svg\Bulk\Voice.svg" />
+    <Content Include="Admin\img\svg\Bulk\Volume Down.svg" />
+    <Content Include="Admin\img\svg\Bulk\Volume Off.svg" />
+    <Content Include="Admin\img\svg\Bulk\Volume Up.svg" />
+    <Content Include="Admin\img\svg\Bulk\Wallet.svg" />
+    <Content Include="Admin\img\svg\Bulk\Work.svg" />
+    <Content Include="Admin\img\svg\customers.svg" />
+    <Content Include="Admin\img\svg\dropbox.svg" />
+    <Content Include="Admin\img\svg\GoogleDrive.svg" />
+    <Content Include="Admin\img\svg\image-frame.svg" />
+    <Content Include="Admin\img\svg\Logo.svg" />
+    <Content Include="Admin\img\svg\move.svg" />
+    <Content Include="Admin\img\svg\radio.svg" />
+    <Content Include="Admin\img\svg\thumbnail.svg" />
+    <Content Include="Admin\js\script.js" />
+    <Content Include="Admin\plugins\chart.min.js" />
+    <Content Include="Admin\plugins\feather.min.js" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -363,33 +514,33 @@
     <Content Include="Content\css\Shoppingcart.css" />
     <Content Include="Content\css\style.min.css" />
     <Content Include="Content\css\trangsp.css" />
-    <Content Include="Content\img\1 %281%29.jpg" />
-    <Content Include="Content\img\1 %282%29.jpg" />
-    <Content Include="Content\img\1.png" />
-    <Content Include="Content\img\2.jpg" />
-    <Content Include="Content\img\4.jpg" />
-    <Content Include="Content\img\403 - Forbidden.png" />
-    <Content Include="Content\img\5.jpg" />
-    <Content Include="Content\img\9786047796014.jpg" />
-    <Content Include="Content\img\a1.jpg" />
-    <Content Include="Content\img\b2.jpg" />
+    <Content Include="Content\img\book\1 %281%29.jpg" />
+    <Content Include="Content\img\book\1 %282%29.jpg" />
+    <Content Include="Content\img\book\1.png" />
+    <Content Include="Content\img\book\2.jpg" />
+    <Content Include="Content\img\book\4.jpg" />
+    <Content Include="Content\img\book\403 - Forbidden.png" />
+    <Content Include="Content\img\book\5.jpg" />
+    <Content Include="Content\img\book\9786047796014.jpg" />
+    <Content Include="Content\img\book\a1.jpg" />
+    <Content Include="Content\img\book\b2.jpg" />
     <Content Include="Content\img\Banner\bao-tri.jpg" />
     <Content Include="Content\img\Banner\BN_2_1.png" />
     <Content Include="Content\img\Banner\BN_2_2.png" />
     <Content Include="Content\img\Banner\slide1.jpg" />
     <Content Include="Content\img\Banner\slide2.png" />
-    <Content Include="Content\img\cobanc#.jpg" />
-    <Content Include="Content\img\combo-1607202412.jpg" />
-    <Content Include="Content\img\conan_bia_tap-102.jpg" />
-    <Content Include="Content\img\dnt1.jpg" />
-    <Content Include="Content\img\icon_thanhcong.png" />
-    <Content Include="Content\img\image_237828.jpg" />
-    <Content Include="Content\img\kt.jpg" />
-    <Content Include="Content\img\LOGO_book.png" />
+    <Content Include="Content\img\book\cobanc#.jpg" />
+    <Content Include="Content\img\book\combo-1607202412.jpg" />
+    <Content Include="Content\img\book\conan_bia_tap-102.jpg" />
+    <Content Include="Content\img\book\dnt1.jpg" />
+    <Content Include="Content\img\book\icon_thanhcong.png" />
+    <Content Include="Content\img\book\image_237828.jpg" />
+    <Content Include="Content\img\book\kt.jpg" />
+    <Content Include="Content\img\book\LOGO_book.png" />
     <Content Include="Content\img\slide\BN_1_1.png" />
     <Content Include="Content\img\slide\BN_1_2.png" />
     <Content Include="Content\img\slide\BN_1_3.png" />
-    <Content Include="Content\img\zalo.png" />
+    <Content Include="Content\img\book\zalo.png" />
     <Content Include="Content\js\cart.js" />
     <Content Include="Content\js\ThongBao.js" />
     <Content Include="Content\js\User.js" />
@@ -529,6 +680,9 @@
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="App_Browsers\qt.browser" />
+    <Content Include=".config\dotnet-tools.json" />
+    <Content Include=".vs\BanSach.csproj.dtbcache.json" />
+    <Content Include="Content\img.rar" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -536,9 +690,29 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include=".config\dotnet-tools.json" />
-    <Content Include=".vs\BanSach.csproj.dtbcache.json" />
-    <Content Include="Content\img.rar" />
+    <Content Include="Admin\css\style.min.css.map" />
+    <Content Include="Admin\fonts\Inter-Black.woff2" />
+    <Content Include="Admin\fonts\Inter-Bold.woff2" />
+    <Content Include="Admin\fonts\Inter-ExtraBold.woff2" />
+    <Content Include="Admin\fonts\Inter-ExtraLight.woff2" />
+    <Content Include="Admin\fonts\Inter-Light.woff2" />
+    <Content Include="Admin\fonts\Inter-Medium.woff2" />
+    <Content Include="Admin\fonts\Inter-Regular.woff2" />
+    <Content Include="Admin\fonts\Inter-SemiBold.woff2" />
+    <Content Include="Admin\fonts\Inter-Thin.woff2" />
+    <Content Include="Admin\img\avatar\avatar-face-02.webp" />
+    <Content Include="Admin\img\avatar\avatar-face-03.webp" />
+    <Content Include="Admin\img\avatar\avatar-face-04.webp" />
+    <Content Include="Admin\img\avatar\avatar-face-05.webp" />
+    <Content Include="Admin\img\avatar\avatar-illustrated-01.webp" />
+    <Content Include="Admin\img\avatar\avatar-illustrated-02.webp" />
+    <Content Include="Admin\img\avatar\avatar-illustrated-03.webp" />
+    <Content Include="Admin\img\avatar\avatar-illustrated-04.webp" />
+    <Content Include="Admin\img\categories\01.webp" />
+    <Content Include="Admin\img\categories\02.webp" />
+    <Content Include="Admin\img\categories\03.webp" />
+    <Content Include="Admin\img\categories\04.webp" />
+    <Content Include="Admin\plugins\feather.min.js.map" />
     <None Include="Properties\PublishProfiles\nbns - Web Deploy.pubxml" />
     <Content Include="Properties\serviceDependencies.json" />
     <Content Include="Properties\serviceDependencies.local.json" />
@@ -641,7 +815,6 @@
     <Content Include="Views\KhachHangs\HuyDonHang.cshtml" />
     <Content Include="Views\SanPhams\Import.cshtml" />
     <Content Include="Views\SanPhams\ThongKeSanPham.cshtml" />
-    <Content Include="Views\DanhMucs\ThongKeDanhMuc.cshtml" />
     <Content Include="Views\DonHangs\ThongKeDonHang.cshtml" />
     <Content Include="Views\DonHangs\Inhoadon.cshtml" />
     <Content Include="Views\LoginUser\VerifyOtp.cshtml" />
@@ -665,10 +838,16 @@
     <Content Include="Views\Slide\Edit.cshtml" />
     <Content Include="Views\Slide\Delete.cshtml" />
     <Content Include="Views\Home\Page1.cshtml" />
+    <Content Include="Views\TheLoai\Index.cshtml" />
+    <Content Include="Views\TheLoai\Create.cshtml" />
+    <Content Include="Views\TheLoai\Edit.cshtml" />
+    <Content Include="Views\TheLoai\Delete.cshtml" />
+    <Content Include="Views\DanhMuc_TheLoai\Index.cshtml" />
+    <Content Include="Views\DanhMuc_TheLoai\Create.cshtml" />
+    <Content Include="Views\DanhMuc_TheLoai\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\img\themsach\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

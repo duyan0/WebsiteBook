@@ -142,6 +142,9 @@
     @Scripts.Render("~/bundles/jquery")
     <script src="~/Scripts/bootstrap.bundle.js"></script>
     @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modernizr")
+
 
     <!-- Custom CSS -->
     <style>
@@ -330,7 +333,7 @@
 
 
     </script>
-   
+
     <style>
         .suggestions-box {
             position: absolute;

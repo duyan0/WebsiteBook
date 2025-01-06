@@ -1,0 +1,48 @@
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace BanSach.Models
+{
+    public partial class admins
+    {
+        public int ID { get; set; }
+
+        [DisplayName("Họ và Tên")]
+        [Required(ErrorMessage = "Họ và Tên không được để trống.")]
+        [StringLength(100, ErrorMessage = "Họ và Tên không được vượt quá 100 ký tự.")]
+        public string HoTen { get; set; }
+
+        [DisplayName("Email")]
+        [Required(ErrorMessage = "Email không được để trống.")]
+        [EmailAddress(ErrorMessage = "Email không hợp lệ.")]
+        [StringLength(150, ErrorMessage = "Email không được vượt quá 150 ký tự.")]
+        public string Email { get; set; }
+
+        [DisplayName("Địa Chỉ")]
+        [Required(ErrorMessage = "Địa chỉ không được để trống.")]
+        [StringLength(200, ErrorMessage = "Địa chỉ không được vượt quá 200 ký tự.")]
+        public string DiaChi { get; set; }
+
+        [DisplayName("Số Điện Thoại")]
+        [Required(ErrorMessage = "Số điện thoại không được để trống.")]
+        [Phone(ErrorMessage = "Số điện thoại không hợp lệ.")]
+        [StringLength(15, ErrorMessage = "Số điện thoại không được vượt quá 15 ký tự.")]
+        public string SoDT { get; set; }
+
+        [DisplayName("Vai Trò")]
+        [Required(ErrorMessage = "Vai trò không được để trống.")]
+        [StringLength(50, ErrorMessage = "Vai trò không được vượt quá 50 ký tự.")]
+        public string VaiTro { get; set; }
+
+        [DisplayName("Tên Tài Khoản")]
+        [Required(ErrorMessage = "Tên tài khoản không được để trống.")]
+        [StringLength(50, ErrorMessage = "Tên tài khoản không được vượt quá 50 ký tự.")]
+        public string TKhoan { get; set; }
+
+        [DisplayName("Mật Khẩu")]
+        [Required(ErrorMessage = "Mật khẩu không được để trống.")]
+        [StringLength(50, ErrorMessage = "Mật khẩu không được vượt quá 50 ký tự.")]
+        [DataType(DataType.Password)]
+        public string MKhau { get; set; }
+    }
+}

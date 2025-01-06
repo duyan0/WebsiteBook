@@ -13,13 +13,13 @@ namespace BanSach.Controllers
         private readonly db_book1 db = new db_book1();
         public ActionResult Index()
         {
-            var slides = db.Slides.ToList();
+            var slides = db.Slide.ToList();
             return View(slides);
         }
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public PartialViewResult Silde()
         {
-            var slide = db.Slides.ToList();
+            var slide = db.Slide.ToList();
             return PartialView(slide);
         }
         [HttpGet]
@@ -34,7 +34,7 @@ namespace BanSach.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Slides.Add(Slide);
+                db.Slide.Add(Slide);
                 db.SaveChanges();
                 return RedirectToAction("Index");  // Điều hướng lại về danh sách banner
             }
@@ -45,7 +45,7 @@ namespace BanSach.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var banner = db.Slides.Find(id);
+            var banner = db.Slide.Find(id);
             if (banner == null)
             {
                 return HttpNotFound();
@@ -69,13 +69,13 @@ namespace BanSach.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            var banner = db.Slides.Find(id);
+            var banner = db.Slide.Find(id);
             if (banner == null)
             {
                 return HttpNotFound();
             }
 
-            db.Slides.Remove(banner);
+            db.Slide.Remove(banner);
             db.SaveChanges();
             return Json(new { success = true });
         }

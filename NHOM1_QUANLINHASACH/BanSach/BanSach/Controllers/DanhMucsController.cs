@@ -19,143 +19,120 @@ namespace BanSach.Controllers
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public PartialViewResult PhanDanhMuc()
         {
-            var cateList = db.DanhMuc.ToList();
+            var cateList = db.DanhMuc_TheLoai.ToList();
             return PartialView(cateList);
         }
         public ActionResult Index()
         {
-            // Kiểm tra xem có dữ liệu trong danh mục không
-            var danhMucList = db.DanhMuc.ToList();
-            if (danhMucList == null || !danhMucList.Any())
-            {
-                // Nếu không có dữ liệu, log hoặc thông báo rõ ràng
-                ViewBag.Message = "Không có danh mục sản phẩm nào.";
-            }
-            return View(danhMucList);
+            var DanhMuc = db.DanhMuc.ToList();
+            return View(DanhMuc);
         }
-
-
-        // GET: DanhMucs/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DanhMuc danhMuc = db.DanhMuc.Find(id);
-            if (danhMuc == null)
-            {
-                return HttpNotFound();
-            }
-            return View(danhMuc);
-        }
-        //Thêm danh mục GET
         public ActionResult Create()
         {
+            var DM = db.DanhMuc.ToList();
+            if (DM != null && DM.Count > 0)
+            {
+                ViewBag.DM = new SelectList(DM, "ID", "TenDanhMuc");
+            }
+            else
+            {
+                ViewBag.DM = new SelectList(Enumerable.Empty<SelectListItem>(), "Value", "Text");
+            }
+
             return View();
         }
-        //Thêm danh mục POST
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,DanhMuc1,TheLoai,HinhAnh_DM")] DanhMuc danhMuc)
+        public ActionResult Create(DanhMuc model) // Đổi ModelType với tên model bạn đang sử dụng
         {
             if (ModelState.IsValid)
             {
-                // Thêm danh mục mới vào cơ sở dữ liệu
-                db.DanhMuc.Add(danhMuc);
+                // Lưu model vào cơ sở dữ liệu
+                db.DanhMuc.Add(model);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(danhMuc);
+            // Nếu có lỗi, hãy gọi lại danh sách tác giả
+            var DM = db.DanhMuc.ToList();
+            ViewBag.DM = new SelectList(DM, "ID", "TenDanhMuc", model.ID); // Ghi lại chọn IDtg hiện tại
+            return View(model);
         }
-
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DanhMuc danhMuc = db.DanhMuc.Find(id);
-            if (danhMuc == null)
+
+            DanhMuc DM = db.DanhMuc.Find(id);  // Tìm tác giả dựa trên ID
+            if (DM == null)
             {
                 return HttpNotFound();
             }
-            return View(danhMuc);
+
+            return View(DM);  // Truyền model TacGia vào View để hiển thị
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,DanhMuc1,TheLoai,HinhAnh_DM")] DanhMuc danhMuc)
+        public ActionResult Edit(DanhMuc DM)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(danhMuc).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                db.Entry(DM).State = EntityState.Modified;  // Đánh dấu đối tượng là đã sửa đổi
+                db.SaveChanges();  // Lưu thay đổi vào cơ sở dữ liệu
+                return RedirectToAction("Index");  // Chuyển hướng về trang danh sách sau khi cập nhật thành công
             }
-            return View(danhMuc);
+
+            return View(DM);  // Nếu không hợp lệ, trả lại form chỉnh sửa với dữ liệu hiện có
         }
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);  // Trả về lỗi nếu ID không hợp lệ
+            }
+
+            DanhMuc DM = db.DanhMuc.Find(id);  // Tìm đối tượng TacGia dựa vào ID
+            if (DM == null)
+            {
+                return HttpNotFound();  // Nếu không tìm thấy, trả về lỗi 404
+            }
+
+            return View(DM);  // Trả về view và truyền model TacGia vào view để hiển thị chi tiết
+        }
+        // GET: TacGia/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DanhMuc danhMuc = db.DanhMuc.Find(id);
-            if (danhMuc == null)
+
+            DanhMuc DM = db.DanhMuc.Find(id);
+            if (DM == null)
             {
                 return HttpNotFound();
             }
-            return View(danhMuc);
+
+            return View(DM);
         }
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            // Kiểm tra nếu có sản phẩm liên quan đến danh mục này
-            var relatedProducts = db.SanPham.Where(sp => sp.TheLoai == id).ToList();
-
-            if (relatedProducts.Any()) // Nếu có sản phẩm liên quan
-            {
-                // Thêm thông báo lỗi vào ViewBag
-                ViewBag.ErrorMessage = "Danh mục này đang được sử dụng và không thể xóa vì có sản phẩm liên quan.";
-                return View("Delete", db.DanhMuc.Find(id)); // Trả lại view Delete với thông báo lỗi
-            }
-
-            // Nếu không có sản phẩm hoặc đơn hàng liên quan, thực hiện xóa danh mục
-            DanhMuc danhMuc = db.DanhMuc.Find(id);
-            db.DanhMuc.Remove(danhMuc);
+            DanhMuc DM = db.DanhMuc.Find(id);
+            db.DanhMuc.Remove(DM);
             db.SaveChanges();
-
-            return RedirectToAction("Index"); // Chuyển hướng về trang danh sách
-        }
-
-        public ActionResult ThongKeDanhMuc()
-        {
-            // Tạo ViewModel và gán giá trị
-            var viewModel = new ThongKeDanhMucViewModel
-            {
-                TotalCategories = db.DanhMuc.Count(),
-                TotalBooks = db.SanPham.Count(),
-                BooksPerCategory = db.DanhMuc
-                                    .Select(dm => new SachTheoDanhMuc
-                                    {
-                                        DanhMuc = dm.DanhMuc1,
-                                        SoLuongSach = db.SanPham.Count(sp => sp.TheLoai == dm.ID)
-                                    }).ToList()
-            };
-
-            return View(viewModel);
+            return RedirectToAction("Index");
         }
         [AcceptVerbs(HttpVerbs.Post | HttpVerbs.Get)]
         public PartialViewResult Banner()
         {
-            var cateList = db.DanhMuc.Take(7).ToList(); // Lấy 6 mục đầu tiên
+            var cateList = db.DanhMuc_TheLoai.Take(6).ToList(); // Lấy 6 mục đầu tiên
             return PartialView(cateList);
         }
-
-
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

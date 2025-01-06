@@ -25,17 +25,18 @@ namespace BanSach.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Admin> Admin { get; set; }
+        public virtual DbSet<admins> admins { get; set; }
+        public virtual DbSet<Banner> Banner { get; set; }
         public virtual DbSet<DanhMuc> DanhMuc { get; set; }
+        public virtual DbSet<DanhMuc_TheLoai> DanhMuc_TheLoai { get; set; }
         public virtual DbSet<DonHang> DonHang { get; set; }
         public virtual DbSet<DonHangCT> DonHangCT { get; set; }
         public virtual DbSet<KhachHang> KhachHang { get; set; }
         public virtual DbSet<KhuyenMai> KhuyenMai { get; set; }
         public virtual DbSet<NhaXuatBan> NhaXuatBan { get; set; }
         public virtual DbSet<SanPham> SanPham { get; set; }
+        public virtual DbSet<Slide> Slide { get; set; }
         public virtual DbSet<TacGia> TacGia { get; set; }
-        public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
-        public virtual DbSet<Banner> Banners { get; set; }
-        public virtual DbSet<Slide> Slides { get; set; }
+        public virtual DbSet<TheLoai> TheLoai { get; set; }
     }
 }

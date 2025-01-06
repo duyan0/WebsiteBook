@@ -58,7 +58,7 @@
                         </td>
                         <td>
                             @{
-                                var soDienThoai = item.SoDienThoai;
+                                var soDienThoai = item.SDT;
                                 var soDienThoaiChe = soDienThoai.Length > 3
                                     ? new string('*', soDienThoai.Length - 3) + soDienThoai.Substring(soDienThoai.Length - 3)
                                     : soDienThoai; // Nếu độ dài > 3, che bớt và hiển thị 3 số cuối, nếu không thì hiển thị nguyên

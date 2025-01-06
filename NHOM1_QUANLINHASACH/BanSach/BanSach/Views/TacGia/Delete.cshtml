@@ -1,7 +1,7 @@
 ﻿@model BanSach.Models.TacGia
 
 @{
-    ViewBag.Title = "Xác nhận xóa Tác Giả " + Model.TenTacGia; // Cập nhật tiêu đề
+    ViewBag.Title = "Xác nhận xóa Tác Giả " + Model.TenTG; // Cập nhật tiêu đề
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -22,7 +22,7 @@
                             Tên Tác giả
                         </th>
                         <td>
-                            @Html.DisplayFor(model => model.TenTacGia)
+                            @Html.DisplayFor(model => model.TenTG)
                         </td>
                     </tr>
                     <tr>

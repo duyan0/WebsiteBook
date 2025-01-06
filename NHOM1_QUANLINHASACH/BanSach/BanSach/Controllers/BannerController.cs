@@ -11,19 +11,19 @@ namespace BanSach.Controllers
 
     public class BannerController : Controller
     {
-        private db_book1 db = new db_book1();
+        private readonly db_book1 db = new db_book1();
 
         // GET: Banners (Hiển thị danh sách banner)
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public PartialViewResult Banners()
         {
-            var banners = db.Banners.ToList();
+            var banners = db.Banner.ToList();
             return PartialView(banners);
         }
 
         public ActionResult Index()
         {
-            var banners = db.Banners.ToList();
+            var banners = db.Banner.ToList();
             return View(banners);
         }
 
@@ -39,7 +39,7 @@ namespace BanSach.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Banners.Add(banner);
+                db.Banner.Add(banner);
                 db.SaveChanges();
                 return RedirectToAction("Index");  // Điều hướng lại về danh sách banner
             }
@@ -50,7 +50,7 @@ namespace BanSach.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var banner = db.Banners.Find(id);
+            var banner = db.Banner.Find(id);
             if (banner == null)
             {
                 return HttpNotFound();
@@ -74,13 +74,13 @@ namespace BanSach.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            var banner = db.Banners.Find(id);
+            var banner = db.Banner.Find(id);
             if (banner == null)
             {
                 return HttpNotFound();
             }
 
-            db.Banners.Remove(banner);
+            db.Banner.Remove(banner);
             db.SaveChanges();
             return Json(new { success = true });
         }

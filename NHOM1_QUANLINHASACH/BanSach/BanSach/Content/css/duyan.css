@@ -13718,5 +13718,14 @@ textarea.form-control-lg {
         display: none !important;
     }
 }
+.custom-title-h3 {
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 16px;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
 
 /*# sourceMappingURL=bootstrap.css.map */

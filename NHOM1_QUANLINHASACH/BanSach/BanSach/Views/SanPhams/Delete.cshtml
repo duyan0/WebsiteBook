@@ -1,7 +1,7 @@
 ﻿@model BanSach.Models.SanPham
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Xoá sách"+Model.TenSP;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -37,7 +37,7 @@
                     Hình ảnh
                 </p>
                 <p class="col-sm-8 mb-3">
-                    <img src="~/Content/img/@Model.HinhAnh" class="img-fluid rounded" width="150" alt="Hình ảnh sách">
+                    <img src="~/Content/img/book/@Model.HinhAnh" class="img-fluid rounded" width="150" alt="Hình ảnh sách">
                 </p>
 
                 <p class="col-sm-4 font-weight-bold text-dark mb-3">
@@ -54,24 +54,15 @@
                 <p class="col-sm-8 mb-3">
                     @if (Model.TrangThaiSach == "Còn hàng")
                     {
-                        <span class="badge badge-success p-2">@Html.DisplayFor(model => model.TrangThaiSach)</span>
+                        <span class="badge text-bg-success">@Html.DisplayFor(model => model.TrangThaiSach)</span>
                     }
-                    else if (Model.TrangThaiSach == "Hết hàng")
+                    else 
                     {
-                        <span class="badge badge-danger p-2">@Html.DisplayFor(model => model.TrangThaiSach)</span>
-                    }
-                    else
-                    {
-                        <span>@Html.DisplayFor(model => model.TrangThaiSach)</span>
+                        <span class="badge text-bg-danger">@Html.DisplayFor(model => model.TrangThaiSach)</span>
                     }
                 </p>
 
-                <p class="col-sm-4 font-weight-bold text-dark mb-3 text-black">
-                    Danh mục
-                </p>
-                <p class="col-sm-8 mb-3 text-black">
-                    @Html.DisplayFor(model => model.DanhMuc.DanhMuc1)
-                </p>
+                
 
                 <p class="col-sm-4 font-weight-bold text-dark mb-3 text-black">
                     Tên khuyến mãi
@@ -91,7 +82,7 @@
                     Tên tác giả
                 </p>
                 <p class="col-sm-8 mb-3 text-black">
-                    @Html.DisplayFor(model => model.TacGia.TenTacGia)
+                    @Html.DisplayFor(model => model.TacGia.TenTG)
                 </p>
             </div>
         </div>

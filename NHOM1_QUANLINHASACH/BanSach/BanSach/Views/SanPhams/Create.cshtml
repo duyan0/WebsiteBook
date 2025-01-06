@@ -35,10 +35,10 @@
 
 
     <div class="form-group row">
-        @Html.LabelFor(model => model.TheLoai, "Thể loại sách", htmlAttributes: new { @class = "control-label col-md-2 text-dark font-weight-bold" })
+        @Html.LabelFor(model => model.IDtl, "Thể loại", htmlAttributes: new { @class = "control-label text-dark col-md-2 font-weight-bold" })
         <div class="col-md-10">
-            @Html.DropDownList("TheLoai", null, htmlAttributes: new { @class = "form-control border border-dark", style = "border-radius: 10px;", @placeholder = "Chọn thể loại sách" })
-            @Html.ValidationMessageFor(model => model.TheLoai, "", new { @class = "text-danger" })
+            @Html.DropDownList("IDtl", (SelectList)ViewBag.TL, "Chọn thể loại", new { @class = "form-control border border-dark", style = "border-radius: 10px;" })
+            @Html.ValidationMessageFor(model => model.IDtl, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -56,13 +56,9 @@
                 new SelectListItem { Value = "200000", Text = "200.000 VND" },
                 new SelectListItem { Value = "500000", Text = "500.000 VND" },
                 new SelectListItem { Value = "1000000", Text = "1.000.000 VND" },
-                new SelectListItem { Value = "Tùy chỉnh", Text = "Tùy chỉnh" }
             }, new { @class = "form-control border border-dark", @id = "GiaBanDropdown", style = "border-radius: 10px;", @placeholder = "Chọn giá" })
 
-            <div id="GiaTuTuyChinhDiv" style="margin-top: 10px; display: none;">
-                @Html.TextBox("GiaTuTuyChinh", null, new { @class = "form-control border border-dark", placeholder = "Nhập giá tùy chỉnh", type = "text", @id = "GiaTuTuyChinh", style = "border-radius: 10px;" })
-                @Html.ValidationMessageFor(model => model.GiaTuTuyChinh, "", new { @class = "text-danger" })
-            </div>
+
         </div>
     </div>
 
@@ -78,27 +74,25 @@
     <div class="form-group row">
         @Html.LabelFor(model => model.IDtg, "Tác giả", htmlAttributes: new { @class = "control-label text-dark col-md-2 font-weight-bold" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.IDtg, (SelectList)ViewBag.TacGia, "Chọn tác giả", new { @class = "form-control text-dark border border-dark", style = "border-radius: 10px;", @placeholder = "Chọn tác giả" })
+            @Html.DropDownList("IDtg", (SelectList)ViewBag.TacGia, "Chọn Tác giả", new { @class = "form-control border border-dark", style = "border-radius: 10px;" })
             @Html.ValidationMessageFor(model => model.IDtg, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group row">
-        @Html.LabelFor(model => model.IDnxb, "Nhà xuất bản", htmlAttributes: new { @class = "control-label text-dark col-md-2 font-weight-bold" })
-        <div class="col-md-10">
-            @Html.DropDownList("IDnxb", (SelectList)ViewBag.NXB, "Chọn nhà xuất bản", new { @class = "form-control border border-dark", style = "border-radius: 10px;", @placeholder = "Chọn nhà xuất bản" })
-            @Html.ValidationMessageFor(model => model.IDnxb, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group row">
         @Html.LabelFor(model => model.IDkm, "Khuyến mãi", htmlAttributes: new { @class = "control-label text-dark col-md-2 font-weight-bold" })
         <div class="col-md-10">
-            @Html.DropDownList("IDkm", (SelectList)ViewBag.KM, "Chọn mức giảm giá", new { @class = "form-control border border-dark", style = "border-radius: 10px;", @placeholder = "Chọn mức giảm giá" })
+            @Html.DropDownList("IDkm", (SelectList)ViewBag.KM, "Chọn mức giảm giá", new { @class = "form-control border border-dark", style = "border-radius: 10px;" })
             @Html.ValidationMessageFor(model => model.IDkm, "", new { @class = "text-danger" })
         </div>
     </div>
-
+    <div class="form-group row">
+        @Html.LabelFor(model => model.IDnxb, "Nhà xuất bản", htmlAttributes: new { @class = "control-label text-dark col-md-2 font-weight-bold" })
+        <div class="col-md-10">
+            @Html.DropDownList("IDnxb", (SelectList)ViewBag.NXB, "Chọn Nhà xuất bản", new { @class = "form-control border border-dark", style = "border-radius: 10px;" })
+            @Html.ValidationMessageFor(model => model.IDnxb, "", new { @class = "text-danger" })
+        </div>
+    </div>
     <div class="form-group row">
         @Html.LabelFor(model => model.SoLuong, "Số lượng sản phẩm", htmlAttributes: new { @class = "control-label text-dark col-md-2 font-weight-bold" })
         <div class="col-md-10">
@@ -138,35 +132,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Hiển thị ô nhập giá tùy chỉnh
-        $('#GiaBanDropdown').change(function () {
-            if ($(this).val() === "Tùy chỉnh") {
-                $('#GiaTuTuyChinhDiv').show();
-                $('#GiaTuTuyChinh').focus();
-            } else {
-                $('#GiaTuTuyChinhDiv').hide();
-                $('#GiaTuTuyChinh').val('');
-            }
-        });
-
-        // Định dạng số với dấu phẩy
-        function formatNumberWithCommas(x) {
-            return x.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
-
-        // Xử lý nhập liệu
-        $('#GiaTuTuyChinh').on('input', function () {
-            let inputVal = this.value.replace(/,/g, ''); // Xóa dấu phẩy
-            this.value = formatNumberWithCommas(inputVal); // Định dạng lại với dấu phẩy
-        });
-
-        // Khi submit form
-        $('form').submit(function (e) {
-            let giaInput = $('#GiaTuTuyChinh').val();
-            // Loại bỏ dấu phẩy để gửi giá trị
-            $('#GiaTuTuyChinh').val(giaInput.replace(/,/g, ''));
-        });
-
         // Xem trước hình ảnh
         document.getElementById('fileInput').addEventListener('change', function (event) {
             var reader = new FileReader();

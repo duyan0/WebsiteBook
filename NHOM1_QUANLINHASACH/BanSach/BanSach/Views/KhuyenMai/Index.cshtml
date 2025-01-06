@@ -127,7 +127,7 @@
     </table>
 
     <!-- Pagination Controls -->
-    <div class="pagination-container">
+    <div class="pagination-container text-center">
         @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.CurrentFilter }),
             new PagedListRenderOptions
             {
@@ -147,29 +147,4 @@ else
     </div>
 }
 
-<!-- Custom CSS -->
-<style>
-    .table {
-        border-radius: 10px;
-        overflow: hidden;
-    }
 
-    .btn {
-        border-radius: 5px;
-    }
-
-    .search-bar {
-        max-width: 400px;
-        margin: 0 auto 20px auto;
-    }
-
-    .pagination-container {
-        margin-top: 20px;
-        display: flex;
-        justify-content: center;
-    }
-
-    .btn-container {
-        margin-bottom: 20px;
-    }
-</style>

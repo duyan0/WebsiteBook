@@ -8,7 +8,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BanSach.Models;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using OfficeOpenXml;
 using PagedList;
 
@@ -30,14 +29,14 @@ namespace BanSach.Controllers
             ViewBag.AuthorSortParam = sortOrder == "Author" ? "author_desc" : "Author";
             ViewBag.StatusSortParam = sortOrder == "Status" ? "status_desc" : "Status";
 
-            var sanPhams = db.SanPham.Include(s => s.DanhMuc).Include(s => s.TacGia).Include(s => s.NhaXuatBan);
+            var sanPhams = db.SanPham.Include(s => s.TheLoai).Include(s => s.TacGia).Include(s => s.NhaXuatBan);
 
             // Tìm kiếm theo từ khóa
             if (!String.IsNullOrEmpty(searchString))
             {
                 sanPhams = sanPhams.Where(s => s.TenSP.Contains(searchString)
-                                             || s.TacGia.TenTacGia.Contains(searchString)
-                                             || s.DanhMuc.TheLoai.Contains(searchString)
+                                             || s.TacGia.TenTG.Contains(searchString)
+                                             || s.TheLoai.TenTheLoai.Contains(searchString)
                                              || s.TrangThaiSach.Contains(searchString)
                                              || s.NhaXuatBan.Tennxb.Contains(searchString));
             }
@@ -91,7 +90,7 @@ namespace BanSach.Controllers
         public ActionResult ProductList(int? category, int? page, string SearchString, string sortOrder)
         {
             SetAvailablePublishers();
-            var products = db.SanPham.Include(p => p.DanhMuc);
+            var products = db.SanPham.Include(p => p.TheLoai);
 
             int pageSize = 18;
             int pageNumber = (page ?? 1);
@@ -104,7 +103,7 @@ namespace BanSach.Controllers
             }
             else
             {
-                products = db.SanPham.OrderByDescending(x => x.TheLoai).Where(x => x.TheLoai == category);
+                products = db.SanPham.OrderByDescending(x => x.TheLoai).Where(x => x.IDtl == category);
             }
 
             // Tìm kiếm chuỗi truy vấn theo NamePro (SearchString)
@@ -166,8 +165,8 @@ namespace BanSach.Controllers
         }
         public ActionResult Create()
         {
-            ViewBag.TheLoai = new SelectList(db.DanhMuc, "ID", "TheLoai");
-            ViewBag.TacGia = new SelectList(db.TacGia, "IDtg", "TenTacGia");
+            ViewBag.TL = new SelectList(db.TheLoai, "ID", "TenTheLoai");
+            ViewBag.TacGia = new SelectList(db.TacGia, "IDtg", "TenTG");
             ViewBag.NXB = new SelectList(db.NhaXuatBan, "IDnxb", "Tennxb");
 
             // Tạo SelectList cho KM với thông tin kết hợp từ MucGiamGia và TenKhuyenMai
@@ -186,7 +185,7 @@ namespace BanSach.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IDsp,TenSP,MoTa,TheLoai,GiaBan,HinhAnh,IDtg,IDnxb,IDkm,SoLuong,TrangThaiSach")] SanPham sanPham)
+        public ActionResult Create(SanPham sanPham)
         {
             if (ModelState.IsValid)
             {
@@ -195,15 +194,14 @@ namespace BanSach.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.TheLoai = new SelectList(db.DanhMuc, "ID", "TheLoai", sanPham.TheLoai);
-            ViewBag.TacGia = new SelectList(db.TacGia, "IDtg", "TenTacGia", sanPham.TacGia);
+            ViewBag.TL = new SelectList(db.TheLoai, "ID", "TheLoai", sanPham.TheLoai);
+            ViewBag.TacGia = new SelectList(db.TacGia, "IDtg", "TenTG", sanPham.TacGia);
             ViewBag.NXB = new SelectList(db.NhaXuatBan, "IDnxb", "Tennxb", sanPham.NhaXuatBan);
-            ViewBag.KM = new SelectList(
-                db.KhuyenMai.ToList().Select(km => new
-                {
-                    IDKM = km.IDkm,
-                    MucGiamGiaTenKm = $"{km.MucGiamGia}% - {km.TenKhuyenMai}"
-                }),
+            ViewBag.KM = new SelectList(db.KhuyenMai.ToList().Select(km => new
+            {
+                IDKM = km.IDkm,
+                MucGiamGiaTenKm = $"{km.MucGiamGia}% - {km.TenKhuyenMai}"
+            }),
                 "IDKM",
                 "MucGiamGiaTenKm",
                 sanPham.IDkm
@@ -418,7 +416,7 @@ namespace BanSach.Controllers
                             {
                                 TenSP = worksheet.Cells[row, 1].Text,
                                 MoTa = worksheet.Cells[row, 2].Text,
-                                TheLoai = int.TryParse(worksheet.Cells[row, 3].Text, out var category) ? category : 0,  // Updated line to properly parse the integer value
+                                IDtl = int.TryParse(worksheet.Cells[row, 3].Text, out var category) ? category : 0,  // Updated line to properly parse the integer value
                                 GiaBan = decimal.TryParse(worksheet.Cells[row, 4].Text, out var price) ? price : 0,
                                 HinhAnh = worksheet.Cells[row, 5].Text,
                                 IDtg = int.TryParse(worksheet.Cells[row, 6].Text, out var tacGiaId) ? tacGiaId : 0,
@@ -538,7 +536,7 @@ namespace BanSach.Controllers
             var suggestionsBox = db.SanPham
                 .Where(s => s.TenSP.ToLower().Contains(query))  // Kiểm tra xem tên sản phẩm có chứa chuỗi tìm kiếm
                 .Take(10)  // Giới hạn số lượng gợi ý
-                .Select(s => new { TenSP = s.TenSP })  // Chọn chỉ tên sách với đúng tên thuộc tính
+                .Select(s => new { NameSP = s.TenSP })  // Chọn chỉ tên sách với đúng tên thuộc tính
                 .ToList();
 
             return Json(suggestionsBox, JsonRequestBehavior.AllowGet);  // Trả về danh sách gợi ý

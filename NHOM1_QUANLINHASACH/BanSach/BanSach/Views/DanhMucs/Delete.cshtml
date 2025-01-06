@@ -5,16 +5,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<style>
-    .table-bordered {
-        border: 2px solid black; /* Viền đen cho bảng */
-    }
 
-        .table-bordered th,
-        .table-bordered td {
-            border: 1px solid black; /* Viền đen cho các ô trong bảng */
-        }
-</style>
 
 <div class="container mt-4">
     <h2 class="text-danger text-center">Xoá danh mục</h2>
@@ -30,15 +21,7 @@
         <tbody>
             <tr>
                 <td><b>ID</b></td>
-                <td>@Html.DisplayFor(model => model.ID)</td>
-            </tr>
-            <tr>
-                <td><b>Danh mục</b></td>
-                <td>@Html.DisplayFor(model => model.DanhMuc1)</td>
-            </tr>
-            <tr>
-                <td><b>Thể loại</b></td>
-                <td>@Html.DisplayFor(model => model.TheLoai)</td>
+                <td>@Html.DisplayFor(model => model.TenDanhMuc)</td>
             </tr>
         </tbody>
     </table>

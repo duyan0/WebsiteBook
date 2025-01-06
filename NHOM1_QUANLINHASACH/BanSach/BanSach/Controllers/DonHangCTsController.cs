@@ -148,7 +148,7 @@ namespace BanSach.Controllers
             // Lọc và nhóm sản phẩm theo ID, nhưng chỉ lấy sản phẩm thuộc một loại cụ thể
             var query = db.DonHangCT
                             .Include(d => d.SanPham)
-                            .Where(d => d.SanPham.TheLoai == categoryId) // Lọc theo loại sản phẩm
+                            .Where(d => d.SanPham.IDtl == categoryId) // Lọc theo loại sản phẩm
                             .GroupBy(d => new
                             {
                                 idPro = d.IDSanPham,

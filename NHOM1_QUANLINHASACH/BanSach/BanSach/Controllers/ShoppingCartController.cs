@@ -169,7 +169,7 @@ namespace BanSach.Controllers
             if (order != null)
             {
                 ViewBag.OrderId = order.IDdh;
-                ViewBag.TotalAmount = order.TongTien;
+                ViewBag.TotalAmount = order.totalamount;
             }
 
             return View();

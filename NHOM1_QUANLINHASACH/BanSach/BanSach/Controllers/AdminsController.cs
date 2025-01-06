@@ -20,7 +20,7 @@ namespace BanSach.Controllers
             ViewBag.CurrentFilter = searchString;
 
             // Truy vấn danh sách Admin
-            var admins = db.Admin.AsQueryable();
+            var admins = db.admins.AsQueryable();
 
             // Nếu có từ khóa tìm kiếm thì lọc danh sách Admin
             if (!string.IsNullOrEmpty(searchString))
@@ -41,7 +41,7 @@ namespace BanSach.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Admin admin = db.Admin.Find(id);
+            admins admin = db.admins.Find(id);
             if (admin == null)
             {
                 return HttpNotFound();
@@ -57,11 +57,11 @@ namespace BanSach.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,HoTen,Email,DiaChi,SoDT,VaiTro,TKhoan,MKhau")] Admin admin)
+        public ActionResult Create([Bind(Include = "ID,HoTen,Email,DiaChi,SoDT,VaiTro,TKhoan,MKhau")] admins admin)
         {
             if (ModelState.IsValid)
             {
-                db.Admin.Add(admin);
+                db.admins.Add(admin);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -72,7 +72,7 @@ namespace BanSach.Controllers
         {
             if (!id.HasValue) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Admin admin = db.Admin.Find(id);
+            admins admin = db.admins.Find(id);
             if (admin == null) return HttpNotFound();
 
             return View(admin);
@@ -80,7 +80,7 @@ namespace BanSach.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Admin admin)
+        public ActionResult Edit(admins admin)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace BanSach.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Admin admin = db.Admin.Find(id);
+            admins admin = db.admins.Find(id);
             if (admin == null)
             {
                 return HttpNotFound();
@@ -110,8 +110,8 @@ namespace BanSach.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Admin admin = db.Admin.Find(id);
-            db.Admin.Remove(admin);
+            admins admin = db.admins.Find(id);
+            db.admins.Remove(admin);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
