@@ -1,0 +1,150 @@
+﻿@model PagedList.IPagedList<BanSach.Models.PromotionViewModel>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Danh sách khuyến mãi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<script src="~/Content/js/ThongBao.js"></script>
+<h2 class="text-center font-weight-bold">Danh sách khuyến mãi</h2>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="successAlert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="errorAlert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+<!-- Search Form -->
+<div class="search-bar mb-4">
+    @using (Html.BeginForm("Index", "KhuyenMai", FormMethod.Get, new { id = "searchForm" }))
+    {
+        <div class="input-group mb-3">
+            <input type="text" name="searchString" value="@ViewBag.CurrentFilter" class="form-control" placeholder="Tìm kiếm Khuyến Mãi..." />
+            <div class="input-group-append">
+                <button class="btn btn-dark" type="submit">Tìm kiếm</button>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Add New Promotion and Bulk Delete Expired Promotions Button -->
+<p>
+    @Html.ActionLink("Thêm", "Create", null, new { @class = "btn btn-dark rounded-sm" })
+    <a href="@Url.Action("XoaKhuyenMaiHetHan", "KhuyenMai")" class="btn btn-danger ml-3" onclick="return confirm('Bạn có chắc chắn muốn xóa tất cả các khuyến mãi đã hết hạn không?');">
+        Xóa khuyến mãi đã hết hạn
+    </a>
+    <div class="text-left mb-3 text-dark font-weight-bold">
+        <p>Tổng số khuyến mãi: @Model.TotalItemCount</p>
+    </div>
+</p>
+
+@if (Model != null && Model.Any())
+{
+    <!-- Promotions Table -->
+    <table class="table table-bordered table-hover shadow-sm">
+        <thead class="text-white" style="background-color:black;">
+            <tr>
+                <th>ID</th>
+                <th>Tên KM</th>
+                <th style="width:150px;">Ngày bắt đầu</th>
+                <th style="width:140px;">Ngày kết thúc</th>
+                <th>Giá giảm</th>
+                <th style="width:140px;">Mô tả</th>
+                <th>SL SP áp dụng</th> <!-- Updated column header -->
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody style="color:black;">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="font-weight-bold text-center">@Html.DisplayFor(modelItem => item.IDkm)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TenKhuyenMai)</td>
+                    <td class="text-center">
+                        @(item.NgayBatDau.HasValue ? item.NgayBatDau.Value.ToString("dd/MM/yyyy") : "")
+                    </td>
+
+                    <td class="text-center">
+                        @if (item.NgayKetThuc.HasValue)
+                        {
+                            var ngayKetThuc = item.NgayKetThuc.Value;
+                            var ngayHomNay = DateTime.Now.Date;
+                            var soNgayConLai = (ngayKetThuc.Date - ngayHomNay).Days;
+
+                            @ngayKetThuc.ToString("dd/MM/yyyy")
+
+                            if (soNgayConLai == 2)
+                            {
+                                @:<span class="text-warning"> (Gần hết chương trình)</span>
+                            }
+                            else if (soNgayConLai < 0)
+                            {
+                                @:<span class="text-danger"> (Đã hết chương trình)</span>
+                            }
+                        }
+                        else
+                        {
+                            @:Không có ngày kết thúc
+                        }
+                    </td>
+                    <td class="text-center">@Html.DisplayFor(modelItem => item.MucGiamGia)%</td>
+                    <td class="text-center">
+                        @{
+                            string motangan = item.MoTa != null && item.MoTa.Length > 20
+                                ? item.MoTa.Substring(0, 20) + "..."
+                                : (item.MoTa ?? string.Empty);
+                        }
+                        @motangan
+                    </td>
+                    <td class="text-center">@item.SanPhamCount</td> <!-- Displaying the count here -->
+                    <td class="text-center">
+                        <a href="@Url.Action("Edit", new { id = item.IDkm })" class="btn btn-warning btn-sm rounded-sm mx-1">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a href="@Url.Action("Details", new { id = item.IDkm })" class="btn btn-info btn-sm rounded-sm mx-1">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                        <a href="@Url.Action("Delete", new { id = item.IDkm })" class="btn btn-danger btn-sm rounded-sm mx-1">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Pagination Controls -->
+    <div class="pagination-container text-center">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.CurrentFilter }),
+            new PagedListRenderOptions
+            {
+                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                DisplayLinkToIndividualPages = true,
+                MaximumPageNumbersToDisplay = 5
+            })
+    </div>
+}
+else
+{
+    <div class="alert alert-info text-center" role="alert">
+        Không có khuyến mãi nào trong hệ thống.
+    </div>
+}
+
+

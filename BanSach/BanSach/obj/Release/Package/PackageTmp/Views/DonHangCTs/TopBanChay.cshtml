@@ -1,0 +1,73 @@
+﻿@model IEnumerable<BanSach.Models.ViewModel>
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owl Carousel Example</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+</head>
+<body>
+    <h3 class="text-center text-white fw-semibold pt-2">
+        Top bán chạy
+    </h3>
+    <div class="owl-carousel container-fluid">
+        @foreach (var item in Model)
+        {
+            <div class="row">
+                <div class="card-body">
+                    <div class="card p-2 justify-content-start mb-0" style="border:none;">
+                        <a href="~/SanPhams/TrangSP/@item.IdPro">
+                            <img src="~/Content/img/@item.ImgPro " alt="Alternate Text" class="mb-0 "style="object-fit:contain;" />
+                        </a>
+                        <p class="mb-2 text-truncate">@item.NamePro</p>
+                        <p class="mb-2 text-danger fw-semibold">@item.price.ToString("N0") VND</p>
+                        <p class="mb-0 text-bg-dark placeholder-wave rounded-1 text-center  ">Đã bán: @item.Sum_Quantity</p>
+                    </div>
+                </div>
+            </div>
+
+        }
+
+    </div>
+    <div>
+        <p class="justify-content-center text-center">
+            <a href="~/SanPhams/ProductList" class="text-decoration-none btn btn-outline-danger py-2 px-2 mt-2">Xem thêm</a>
+        </p>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".owl-carousel").owlCarousel({
+                loop: true,
+                margin: 10,
+                nav: true,
+                autoplay: true,
+                autoplayTimeout: 3000,
+                responsive: {
+                    0: { items: 2 },
+                    600: { items: 3 },
+                    1000: { items: 5 }
+                }
+            });
+        });
+    </script>
+</body>
+<style>
+    body > div.container.p-0.mt-5.pt-5 > div > div.owl-carousel.owl-loaded.owl-drag > div.owl-stage-outer > div > div > div > div > div > a > img {
+        width: 100%;
+        height: 190px;
+    }
+
+    body > div.container.p-0.mt-5.pt-5 > div > div.owl-carousel.owl-loaded.owl-drag > div.owl-stage-outer > div > div > div > div > div {
+        height: 309px;
+    }
+    .owl-carousel .card-body {
+        padding: 10px;
+    }
+</style>
+
+
+

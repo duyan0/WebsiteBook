@@ -1,0 +1,63 @@
+﻿@model BanSach.Models.NhaXuatBan
+
+@{
+    ViewBag.Title =Model.Tennxb; // Cập nhật tiêu đề
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="text-center">Chi tiết Nhà Xuất Bản</h2> <!-- Tiêu đề chính -->
+
+<div class="container mt-4">
+    <div class="table-responsive">
+        <table class="table table-bordered" style="border: 2px solid black;">
+            <!-- Bảng với viền đen -->
+            <thead class="thead-light">
+                <tr>
+                    <th style="border: 2px solid black;">Thông tin</th>
+                    <th style="border: 2px solid black;">Nội dung</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="border: 2px solid black;">
+                        Tên nhà xuất bản
+                    </td>
+                    <td style="border: 2px solid black;">
+                        @Html.DisplayFor(model => model.Tennxb)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 2px solid black;">
+                        Địa chỉ
+                    </td>
+                    <td style="border: 2px solid black;">
+                        @Html.DisplayFor(model => model.DiaChi)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 2px solid black;">
+                        Hotline
+                    </td>
+                    <td style="border: 2px solid black;">
+                        @Html.DisplayFor(model => model.SDT)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 2px solid black;">
+                        Email
+                    </td>
+                    <td style="border: 2px solid black;">
+                        @Html.DisplayFor(model => model.Email)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-3">
+        <p>
+            @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.IDnxb }, new { @class = "btn btn-warning rounded" }) | <!-- Nút chỉnh sửa -->
+            @Html.ActionLink("Trở về danh sách", "Index", null, new { @class = "btn btn-secondary rounded" }) <!-- Nút trở về -->
+        </p>
+    </div>
+</div>

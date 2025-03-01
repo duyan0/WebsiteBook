@@ -1,0 +1,40 @@
+﻿@model IEnumerable<BanSach.Models.DanhMuc>
+
+@{
+    ViewBag.Title = "Quản lý danh mục";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<h2 class="text-center font-weight-bold text-dark">Danh mục sách</h2>
+
+<div class="mb-2 text-start">
+    @Html.ActionLink("Thêm ", "Create", null, new { @class = "btn btn-dark rounded-sm mb-0" })
+</div>
+
+<table class="table table-bordered table-hover">
+    <thead class="text-white" style="background-color:black;">
+        <tr>
+            <th>Danh mục</th>
+            <th>#</th>
+        </tr>
+    </thead>
+    <tbody style="color:black;">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="align-middle">
+                    @Html.DisplayFor(modelItem => item.TenDanhMuc)
+                </td>
+                <td style="width: 200px;">
+                    <a href="@Url.Action("Edit", new { id = item.ID })" class="btn btn-warning btn-sm rounded-sm mx-1" title="Sửa">
+                        <i class="fas fa-edit text-white"></i>
+                    </a>
+                    <a href="@Url.Action("Delete", new { id = item.ID })" class="btn btn-danger btn-sm rounded-sm delete-link mx-1" title="Xoá">
+                        <i class="fas fa-trash-alt text-white"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

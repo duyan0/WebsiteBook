@@ -1,0 +1,261 @@
+﻿@model IPagedList<BanSach.Models.SanPham>
+@using PagedList.Mvc;
+@using PagedList;
+
+@{
+    ViewBag.Title = "Danh sách sản phẩm";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<script src="~/Content/js/ThongBao.js"></script>
+<style>
+    .tieude {
+        text-align: center;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    .search-bar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+        gap: 10px;
+        padding: 10px;
+        border-radius: 8px;
+        max-width: 600px;
+        margin: 20px auto; /* Tạo khoảng cách đều và căn giữa */
+    }
+
+        .search-bar input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 350px;
+            max-width: 100%; /* Đảm bảo tính tương thích cho các màn hình nhỏ hơn */
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+
+            .search-bar input[type="text"]:focus {
+                border-color: #007bff;
+                outline: none;
+            }
+
+        .search-bar button {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+            .search-bar button:hover {
+                background-color: #0056b3;
+            }
+
+            .search-bar button:active {
+                transform: scale(0.95);
+            }
+
+    table {
+        width: 100%;
+        table-layout: fixed; /* Đảm bảo rằng bảng không bị giãn quá mức */
+        margin-top: 10px;
+    }
+
+        table th, table td {
+            padding: 15px;
+            text-align: center;
+            word-wrap: break-word; /* Điều chỉnh nếu nội dung quá dài */
+            font-size: 16px; /* Cân bằng kích thước chữ */
+        }
+
+    .btn-group-sm > .btn {
+        font-size: 0.9rem;
+    }
+
+    .pagination-container {
+        margin-top: 20px;
+    }
+</style>
+
+<h2 class="tieude">Danh sách sản phẩm</h2>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="successAlert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="errorAlert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+<script>
+    // Tự động ẩn thông báo thành công sau 2 giây
+    setTimeout(function () {
+        var successAlert = document.getElementById("successAlert");
+        if (successAlert) {
+            $(successAlert).alert('close');
+        }
+    }, 2000); // 2000ms = 2 giây
+
+    // Tự động ẩn thông báo lỗi sau 2 giây
+    setTimeout(function () {
+        var errorAlert = document.getElementById("errorAlert");
+        if (errorAlert) {
+            $(errorAlert).alert('close');
+        }
+    }, 2000); // 2000ms = 2 giây
+</script>
+<!-- Search Form -->
+<div class="search-bar">
+    @using (Html.BeginForm("Index", "SanPhams", FormMethod.Get))
+    {
+        @Html.TextBox("searchString", ViewBag.CurrentFilter as string, new { @placeholder = "Nhập từ khóa tìm kiếm..." })
+        <button type="submit">Tìm kiếm</button>
+    }
+</div>
+
+<div class="mb-4 d-flex align-items-center">
+    <!-- Nút "Thêm" -->
+    <a href="@Url.Action("Create")" class="btn btn-dark rounded-sm mr-2">
+        <i class="fas fa-plus text-white"></i> Thêm
+    </a>
+
+    <!-- Nút "Thống Kê Sản Phẩm" -->
+    <a href="@Url.Action("ThongKeSanPham")" class="btn btn-warning rounded-sm text-dark mr-2">
+        <i class="fas fa-chart-bar text-dark"></i> Thống Kê
+    </a>
+
+    <!-- Nút "Nhập sách" -->
+    <a href="@Url.Action("Import")" class="btn btn-success rounded-sm mr-2">
+        <i class="fas fa-file-import text-white"></i> Nhập sách
+    </a>
+
+    <!-- Form Xoá tất cả -->
+    @using (Html.BeginForm("RemoveAll", "SanPhams", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-info  rounded-sm" onclick="return confirm('Bạn có muốn xoá tất cả xác hết hàng không?');">
+            <i class="fas fa-trash-alt"></i> Xoá sách hết hạn
+        </button>
+    }
+</div>
+
+
+
+
+
+@if (Model != null && Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-condensed table-bordered table-hover">
+            <thead style="background-color: black; color: black;">
+                <tr>
+                    <th>Hình ảnh</th>
+                    <th>Tên sách</th>
+                    <th>Thể loại</th>
+                    <th>Giá bán</th>
+                    <th>Số lượng</th>
+                    <th>Khuyến mãi</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <img src="@Url.Content("~/Content/img/" + System.Web.HttpUtility.UrlPathEncode(item.HinhAnh))" width="50" height="50" alt="Ảnh không hiển thị" />
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.TenSP)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DanhMuc.TheLoai)</td>
+                        <td>@string.Format("{0:N0} VND", item.GiaBan)</td>
+                        <td>
+                            @if (item.SoLuong > 0)
+                            {
+                                @Html.DisplayFor(modelItem => item.SoLuong)
+                            }
+                            else
+                            {
+                                <span class="text-danger">0</span>
+                            }
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.KhuyenMai.MucGiamGia)%</td>
+                        <td>
+                            <span class="@((item.TrangThaiSach == "Còn hàng") ? "badge badge-success" : "badge badge-danger")">
+                                @Html.DisplayFor(modelItem => item.TrangThaiSach)
+                            </span>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <a href="@Url.Action("Edit", new { id = item.IDsp })" class="btn btn-warning mx-1 rounded-sm">
+                                    <i class="fas fa-edit text-white"></i>
+                                </a>
+                                <a href="@Url.Action("Details", new { id = item.IDsp })" class="btn btn-info mx-1 rounded-sm">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="@Url.Action("Delete", new { id = item.IDsp })" class="btn btn-danger mx-1 rounded-sm">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- Phân trang -->
+
+    </div>
+}
+else
+{
+    <p style="text-align:center; margin-top:20px; font-weight:bold;">Không tìm thấy sản phẩm nào phù hợp với từ khóa tìm kiếm.</p>
+}
+
+<div class="pagination-container text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, searchString = ViewBag.CurrentFilter }),
+        new PagedListRenderOptions
+        {
+            DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+            DisplayLinkToLastPage = PagedListDisplayMode.Always,
+            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+            DisplayLinkToNextPage = PagedListDisplayMode.Always,
+            DisplayLinkToIndividualPages = true,
+            DisplayPageCountAndCurrentLocation = false,
+            MaximumPageNumbersToDisplay = 5
+        })
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Gửi yêu cầu AJAX mỗi khi có thay đổi
+    function loadProducts(page) {
+        var searchString = $('#searchString').val();
+        var sortOrder = $('#sortOrder').val();
+
+        $.ajax({
+            url: '@Url.Action("Index", "SanPhams")',
+            data: { searchString: searchString, sortOrder: sortOrder, page: page },
+            type: 'GET',
+            success: function (data) {
+                $('#productList').html(data); // Cập nhật lại danh sách sản phẩm
+            }
+        });
+    }
+</script>

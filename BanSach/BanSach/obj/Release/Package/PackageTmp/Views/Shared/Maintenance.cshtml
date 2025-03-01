@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <link href="~/Content/img/logo-icon.png" rel="icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảo Trì Website</title>
+    <style>
+        /* Reset và thiết lập font chữ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Chỉnh sửa container */
+        .maintenance-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+            .maintenance-container h1 {
+                font-size: 2.5rem;
+                color: #4CAF50;
+                margin-bottom: 10px;
+            }
+
+            .maintenance-container p {
+                font-size: 1.2rem;
+                color: #555;
+                margin-bottom: 20px;
+            }
+
+        /* Cập nhật countdown */
+        #countdown {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #f44336;
+            background-color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 2px solid #f44336;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+
+        /* Cải tiến thanh tiến trình */
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #eee;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Danh sách các hành động trong thời gian chờ đợi */
+        ul {
+            list-style: none;
+            padding: 0;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+
+            ul li {
+                margin-bottom: 10px;
+            }
+
+                ul li a {
+                    color: #4CAF50;
+                    text-decoration: none;
+                    font-weight: bold;
+                }
+
+                    ul li a:hover {
+                        text-decoration: underline;
+                    }
+    </style>
+</head>
+<body>
+    <div class="maintenance-container">
+        <h1>Bảo trì</h1>
+        <p>Chúng tôi hiện đang thực hiện bảo trì quan trọng để nâng cao trải nghiệm của bạn. Vui lòng kiên nhẫn chờ đợi.</p>
+        <p>Thời gian ước tính còn lại: <span id="countdown">00:00</span></p>
+
+        <!-- Thanh tiến trình -->
+        <div class="progress-bar">
+            <div id="progress-bar-fill" class="progress-bar-fill"></div>
+        </div>
+        @RenderBody()
+        <p>Trong thời gian chờ đợi, bạn có thể:</p>
+        <ul>
+            <li>Liên hệ với đội hỗ trợ qua email: <a href="mailto:crandi21112004@gmail.com">crandi21112004@gmail.com</a></li>
+        </ul>
+    </div>
+
+    <script>
+        // Thiết lập thời gian đếm ngược
+        var countdownElement = document.getElementById('countdown');
+        var progressBarFill = document.getElementById('progress-bar-fill');
+        var totalTime = 60 * 60; // 5 phút
+
+        function updateCountdown() {
+            var minutes = Math.floor(totalTime / 60);
+            var seconds = totalTime % 60;
+            countdownElement.textContent = formatTime(minutes) + ":" + formatTime(seconds);
+            totalTime--;
+
+            var progress = (60 * 60 - totalTime) / (60 * 60) * 100; // Cập nhật thanh tiến trình
+            progressBarFill.style.width = progress + '%';
+
+            if (totalTime < 0) {
+                clearInterval(countdownInterval);
+                countdownElement.textContent = "Bảo trì hoàn tất!";
+                progressBarFill.style.width = '100%';
+            }
+        }
+
+        function formatTime(time) {
+            return time < 10 ? '0' + time : time;
+        }
+
+        var countdownInterval = setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+﻿@model PagedList.IPagedList<BanSach.Models.DonHangCT>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Quản lý chi tiết đơn hàng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+<style>
+    .tieude {
+        text-align: center;
+        font-weight: bold;
+        color: black;
+    }
+
+    .them a {
+        border-radius: 10px;
+        background-color: darkcyan;
+        color: white;
+        font-size: large;
+        padding: 5px;
+        margin: 50px 10px 0 10px;
+    }
+
+        .them a:hover {
+            text-decoration: none;
+            color: white;
+            background-color: #027171;
+        }
+
+    .table-striped {
+        width: 100%;
+    }
+
+    /* Cập nhật màu sắc giống trạng thái bên DonHangs */
+    .status-waiting {
+        color: orange;
+        font-weight: bold;
+    }
+
+    .status-confirmed {
+        color: green;
+        font-weight: bold;
+    }
+
+    .status-received {
+        color: blue;
+        font-weight: bold;
+    }
+
+    .status-cancelled {
+        color: red;
+        font-weight: bold;
+    }
+
+    /* Search bar styling */
+    .search-bar {
+        max-width: 400px;
+        margin: 0 auto 20px auto;
+    }
+
+    /* Pagination container styling */
+    .pagination-container {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
+<h2 class="tieude">Chi tiết các đơn hàng </h2>
+
+<!-- Search Form -->
+<div class="search-bar mb-4">
+    @using (Html.BeginForm("Index", "DonHangCTs", FormMethod.Get, new { id = "searchForm" }))
+    {
+        <div class="input-group mb-1">
+            <input type="text" name="searchString" value="@Request.QueryString["searchString"]" class="form-control" placeholder="Tìm kiếm Mã Đơn Hàng hoặc Tên Sản Phẩm..." />
+            <div class="input-group-append">
+                <button class="btn btn-dark" type="submit">Tìm kiếm</button>
+            </div>
+        </div>
+    }
+    @using (Html.BeginForm("RemoveAll", "DonHangCTs", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <button type="submit" class="btn btn-danger">Xóa tất cả sản phẩm hết hàng</button>
+    }
+
+</div>
+<div class="text-left mb-3 mt-3 text-dark font-weight-bold">
+    <p>Tổng số Chi tiết đơn hàng: @Model.TotalItemCount</p>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <!-- Order Details Table -->
+    <table class="table table-bordered table-hover">
+        <thead class="text-white" style="background-color:black;">
+            <tr>
+                <th class="text-center">Mã CTĐH</th>
+                <th class="text-center">Mã DH</th>
+                <th>Tên sách</th>
+                <th>Số lượng</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody style="color:black;">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="font-weight-bold text-center">@Html.DisplayFor(modelItem => item.IDdh)</td>
+                    <td class="font-weight-bold text-center">@Html.DisplayFor(modelItem => item.DonHang.IDdh)</td>
+                    <td>@Html.DisplayFor(modelItem => item.SanPham.TenSP)</td>
+                    <td>@Html.DisplayFor(modelItem => item.SoLuong)</td>
+                    
+                    <td style="color: red;" class="font-weight-bold">
+                        @item.TongTien.ToString("N0") VND
+                    </td>
+                    <td>
+                        @{
+                            var statusClass = "";
+                            switch (item.DonHang.TrangThai)
+                            {
+                                case "Chờ xử lý":
+                                    statusClass = "status-waiting";
+                                    break;
+                                case "Đã xác nhận":
+                                    statusClass = "status-confirmed";
+                                    break;
+                                case "Đã nhận hàng":
+                                    statusClass = "status-received";
+                                    break;
+                                case "Đã huỷ":
+                                    statusClass = "status-cancelled";
+                                    break;
+                            }
+                        }
+                        <span class="@statusClass">@Html.DisplayFor(modelItem => item.DonHang.TrangThai)</span>
+                    </td>
+                    <td>
+                        @Html.ActionLink("Xem", "Details", new { id = item.IDDonHang }, new { @class = "btn btn-warning btn-sm rounded-sm" })
+                        @Html.ActionLink("Xoá", "Delete", new { id = item.IDdh }, new { @class = "btn btn-danger btn-sm rounded-sm" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Pagination Controls -->
+    <div class="pagination-container">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = Request.QueryString["searchString"] }),
+            new PagedListRenderOptions
+            {
+                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                DisplayLinkToIndividualPages = true,
+                MaximumPageNumbersToDisplay = 5
+            })
+    </div>
+}
+else
+{
+    <div class="alert alert-info text-center" role="alert">
+        Không có chi tiết đơn hàng nào trong hệ thống.
+    </div>
+}

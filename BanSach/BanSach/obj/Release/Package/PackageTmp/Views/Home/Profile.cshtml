@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Thanh điều hướng -->
+            <nav class="col-md-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item text-white">
+                        @{ Html.RenderPartial("Page1"); }
+                    </li>
+                    <li class="nav-item">
+                        <a href="~/Home/Page1" class="nav-link" id="page2">Trang 2</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="~/Home/Page1" class="nav-link" id="page3">Trang 3</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Phần này sẽ hiển thị nội dung khi click vào thẻ <a> -->
+            <div class="col-md-9" id="content">
+                <h3>Chào mừng bạn!</h3>
+                <p>Chọn một trang để hiển thị nội dung ở đây.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Khi người dùng click vào một link
+            $('a').on('click', function (e) {
+                e.preventDefault();  // Ngừng hành động mặc định của thẻ <a> (tải lại trang)
+
+                var url = $(this).attr('href');  // Lấy URL của trang cần tải
+
+                // Thực hiện yêu cầu AJAX để tải nội dung trang vào #content
+                $('#content').load(url);
+            });
+        });
+    </script>
+</body>
+</html>

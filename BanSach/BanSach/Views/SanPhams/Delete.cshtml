@@ -1,0 +1,99 @@
+﻿@model BanSach.Models.SanPham
+
+@{
+    ViewBag.Title = "Xoá sách"+Model.TenSP;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4 font-weight-bold text-danger">Xóa Thông Tin Sản Phẩm</h2>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger text-center" })
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-5">
+            <div class="row mb-0">
+                <p class="col-sm-4 font-weight-bold text-dark mb-3 text-black">
+                    Tên sản phẩm
+                </p>
+                <p class="col-sm-8 mb-3 text-black">
+                    @Html.DisplayFor(model => model.TenSP)
+                </p>
+
+                <p class="col-sm-4 font-weight-bold text-dark mb-3 text-black">
+                    Mô tả
+                </p>
+                <p class="col-sm-8 mb-3 text-black">
+                    @Html.DisplayFor(model => model.MoTa)
+                </p>
+
+                <p class="col-sm-4 font-weight-bold text-dark mb-3 text-black">
+                    Giá bán
+                </p>
+                <p class="col-sm-8 text-danger font-weight-bold mb-3">
+                    @string.Format("{0:#,##0} VND", Model.GiaBan)
+                </p>
+
+                <p class="col-sm-4 font-weight-bold text-dark mb-3 text-black">
+                    Hình ảnh
+                </p>
+                <p class="col-sm-8 mb-3">
+                    <img src="~/Content/img/book/@Model.HinhAnh" class="img-fluid rounded" width="150" alt="Hình ảnh sách">
+                </p>
+
+                <p class="col-sm-4 font-weight-bold text-dark mb-3">
+                    Số lượng
+                </p>
+                <p class="col-sm-8 mb-3 @(Model.SoLuong == 0 ? "text-danger" : "text-black")">
+                    @Html.DisplayFor(model => model.SoLuong)
+                </p>
+
+
+                <p class="col-sm-4 font-weight-bold text-dark mb-3 text-black">
+                    Trạng thái sách
+                </p>
+                <p class="col-sm-8 mb-3">
+                    @if (Model.TrangThaiSach == "Còn hàng")
+                    {
+                        <span class="badge text-bg-success">@Html.DisplayFor(model => model.TrangThaiSach)</span>
+                    }
+                    else 
+                    {
+                        <span class="badge text-bg-danger">@Html.DisplayFor(model => model.TrangThaiSach)</span>
+                    }
+                </p>
+
+                
+
+                <p class="col-sm-4 font-weight-bold text-dark mb-3 text-black">
+                    Tên khuyến mãi
+                </p>
+                <p class="col-sm-8 mb-3 text-black">
+                    @Html.DisplayFor(model => model.KhuyenMai.TenKhuyenMai)
+                </p>
+
+                <p class="col-sm-4 font-weight-bold text-dark mb-3 text-black">
+                    Nhà xuất bản
+                </p>
+                <p class="col-sm-8 mb-3 text-black">
+                    @Html.DisplayFor(model => model.NhaXuatBan.Tennxb)
+                </p>
+
+                <p class="col-sm-4 font-weight-bold text-dark mb-3 text-black">
+                    Tên tác giả
+                </p>
+                <p class="col-sm-8 mb-3 text-black">
+                    @Html.DisplayFor(model => model.TacGia.TenTG)
+                </p>
+            </div>
+        </div>
+    </div>
+
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "mt-4" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions text-center mb-4">
+            <input type="submit" value="Xóa" class="btn btn-danger  rounded-sm px-4 py-2 mx-2 shadow-sm" />
+            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-success  rounded-sm px-4 py-2 mx-2 shadow-sm" })
+        </div>
+    }
+</div>

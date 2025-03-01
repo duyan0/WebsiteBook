@@ -1,0 +1,66 @@
+﻿@model BanSach.Models.KhachHang
+
+@{
+    ViewBag.Title = "Chi tiết thông tin khách hàng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-2">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-gradient text-dark text-center">
+            <h2>Thông tin chi tiết khách hàng</h2>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-4 text-right font-weight-bold">Tên khách hàng:</div>
+                <div class="col-md-8">@Html.DisplayFor(model => model.TenKH)</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4 text-right font-weight-bold">Số điện thoại:</div>
+                <div class="col-md-8">
+                    @Html.DisplayFor(model => model.SoDT)
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4 text-right font-weight-bold">Email:</div>
+                <div class="col-md-8">
+                    @Html.DisplayFor(model => model.Email)
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4 text-right font-weight-bold">Tài khoản:</div>
+                <div class="col-md-8">@Html.DisplayFor(model => model.TKhoan)</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4 text-right font-weight-bold">Mật khẩu:</div>
+                <div class="col-md-8">
+                    @Html.DisplayFor(model => model.MKhau.Length)
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4 text-right font-weight-bold">Ngày tạo:</div>
+                <div class="col-md-8">
+                    @Html.DisplayFor(model => model.OTPExpiry)
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4 text-right font-weight-bold">Trạng thái tài khoản:</div>
+                <div class="col-md-8">
+                    @if (Model.TrangThaiTaiKhoan != null && Model.TrangThaiTaiKhoan.Equals("Hoạt động", StringComparison.OrdinalIgnoreCase))
+                    {
+                        <span class="btn btn-success rounded-sm">Hoạt động</span>
+                    }
+                    else
+                    {
+                        <span class="btn btn-danger rounded-sm">Đã khóa</span>
+                    }
+                </div>
+            </div>
+            <div class="text-start  mt-4">
+                @Html.ActionLink("Quay về", "index", null, new { @class = "btn btn-dark rounded-1" })
+                @Html.ActionLink("Chỉnh sửa", "EditAD", new { id = Model.IDkh }, new { @class = "btn btn-success rounded-1 " })
+            </div>
+        </div>
+    </div>
+</div>
+

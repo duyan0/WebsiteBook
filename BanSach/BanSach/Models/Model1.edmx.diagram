@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ff0276f6aaa04a39ac94fad8fec9dcd1" Name="Diagram1">
+        <EntityTypeShape EntityType="SachModel.Admin" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SachModel.Banner" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SachModel.DanhMuc" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SachModel.DanhMuc_TheLoai" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SachModel.DonHang" Width="1.5" PointX="6" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SachModel.DonHangCT" Width="1.5" PointX="8.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SachModel.KhachHang" Width="1.5" PointX="3.75" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SachModel.KhuyenMai" Width="1.5" PointX="3.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="SachModel.NhaXuatBan" Width="1.5" PointX="3.75" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SachModel.SanPham" Width="1.5" PointX="6" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SachModel.Slide" Width="1.5" PointX="5.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SachModel.TacGia" Width="1.5" PointX="3.75" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SachModel.TheLoai" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="SachModel.FK__DanhMuc_T__DanhM__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="SachModel.FK__DanhMuc_T__TheLo__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="SachModel.FK__DonHang__IDkh__5629CD9C" ManuallyRouted="false" />
+        <AssociationConnector Association="SachModel.FK__DonHangCT__IDDon__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="SachModel.FK__DonHangCT__IDSan__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="SachModel.FK_SanPham_KhuyenMai" ManuallyRouted="false" />
+        <AssociationConnector Association="SachModel.FK_SanPham_NhaXuatBan" ManuallyRouted="false" />
+        <AssociationConnector Association="SachModel.FK_SanPham_TacGia" ManuallyRouted="false" />
+        <AssociationConnector Association="SachModel.FK_SanPham_TheLoai" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

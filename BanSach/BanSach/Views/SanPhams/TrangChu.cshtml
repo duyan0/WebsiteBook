@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý Nhà Sách";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<style>
+    .carousel-inner, .carousel-inner a, .col-lg-3 .d-flex {
+        border-radius: 8px;
+    }
+
+    .carousel-inner {
+        z-index: 1; /* Ensure carousel items are properly stacked */
+    }
+
+    .carousel-caption {
+        z-index: 2; /* Ensure captions are above the images */
+    }
+
+    .img-fluid {
+        border-radius: 10px;
+    }
+
+    #nxt, #prv {
+        border-radius: 50%;
+        border: none;
+    }
+</style>
+
+
+@Html.Action("Silde", "Slide")
+<!-- Thêm một chút CSS để đảm bảo carousel là responsive -->
+<style>
+    #header-carousel {
+        max-width: auto;
+        margin: 0 auto;
+    }
+
+    .carousel-item img {
+        width: 100%;
+        height: 100%; /* Đảm bảo ảnh chiếm hết chiều cao của phần tử */
+        object-fit: cover; /* Đảm bảo hình ảnh không bị méo, mà cắt bớt nếu cần */
+    }
+</style>
+
+
+<!-- Optional Bootstrap JS for functionality (if not included in the page already) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<div class="container-fluid d-flex mt-2">
+    @Html.Action("Banners", "Banner")
+</div>
+
+@*----------------------------------------*@
+<div class="container mt-5">
+    <h4 class="text-white">Danh mục sản phẩm</h4>
+    @Html.Action("Banner", "DanhMucs")
+</div>
+
+
+
+
+
+
+
+

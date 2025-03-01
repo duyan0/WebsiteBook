@@ -1,0 +1,224 @@
+﻿@model IPagedList<BanSach.Models.KhachHang>
+@using PagedList.Mvc;
+@using PagedList;
+
+@{
+    ViewBag.Title = "Quản lý danh sách khách hàng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link href="~/Content/css/khachhang.css" rel="stylesheet" />
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<style>
+    .tieude {
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .them a {
+        color: white;
+        background-color: #007bff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+        .them a:hover {
+            background-color: #0056b3;
+        }
+
+    .table-striped {
+        width: 100%;
+    }
+
+    /* Table customization */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+        table th, table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #343a40;
+            color: white;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    /* Make sure the row containing the search bar is centered */
+    .row.mb-3 {
+        display: flex;
+        justify-content: center;
+    }
+
+    /* Ensure the search bar takes an appropriate width */
+    .search-bar {
+        max-width: 500px;
+        width: 100%;
+    }
+
+        .search-bar .input-group {
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-bar .btn-search {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+            .search-bar .btn-search:hover {
+                background-color: #0056b3;
+                text-decoration: none;
+            }
+
+    .btn-container {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+        .btn-container .btn-add {
+            background-color: black;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-container .btn-add:hover {
+                background-color: #23272b;
+            }
+</style>
+
+<h2 class="tieude">Danh sách khách hàng</h2>
+
+<div class="row mb-3">
+    <div class="col-md-6 search-bar">
+        @using (Html.BeginForm("Index", "KhachHangs", FormMethod.Get, new { id = "searchForm" }))
+        {
+            <div class="input-group mb-1">
+                <input type="text" name="searchString" value="@ViewBag.CurrentFilter" class="form-control" id="searchInput" placeholder="Tìm kiếm Khách hàng...">
+                <div class="input-group-append">
+                    <button class="btn btn-search" type="submit" style="border-radius: 0 10px 10px 0">Tìm kiếm</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="btn-container">
+    @Html.ActionLink("Thêm", "Create", null, new { @class = "btn-add" })
+    <div class="text-left mb-3 mt-3 text-dark font-weight-bold">
+        <p>Tổng số khách hàng: @Model.TotalItemCount</p>
+    </div>
+</div>
+
+@if (Model != null && Model.Count > 0)
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr style="width:200px;">
+                <th style="width:100px;">ID</th>
+                <th style="width:200px;">Tên KH</th>
+                <th style="width:200px;">Hotline</th>
+                <th style="width:100px;">Email</th>
+                <th style="width:130px;">Trạng thái</th>
+                <th style="width:200px;">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody style="color:black;">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.IDkh)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TenKH)</td>
+                    <td>@(item.SoDT != null && item.SoDT.Length >= 3 ? item.SoDT.Substring(0, 3) + new string('*', item.SoDT.Length - 3) : "")</td>
+                    <td>
+                        @item.Email
+                    </td>
+                    <td>
+                        @if (item.TrangThaiTaiKhoan != null && item.TrangThaiTaiKhoan.Equals("Hoạt động", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <span class="badge badge-success rounded-sm">Hoạt động</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-danger rounded-sm">Đã khóa</span>
+                        }
+                    </td>
+                    @*<td>
+                            <select class="form-select">
+                                @foreach (var tem in Model.ToList())
+                                {
+                                    <option value="@tem.SoDT+@tem.TenKH">@tem.SoDT+@tem.TenKH</option>
+
+                                }
+                            </select>
+                        </td>*@
+
+                    <td style="width:250px;">
+                        <a href="@Url.Action("EditAD", new { id = item.IDkh })" class="btn btn-warning btn-group-sm rounded-sm mx-1" title="Sửa">
+                            <i class="fas fa-edit"></i> <!-- Biểu tượng Sửa -->
+                        </a>
+
+                        <a href="@Url.Action("DetailsAD", new { id = item.IDkh })" class="btn btn-info btn-group-sm rounded-sm mx-1" title="Chi tiết">
+                            <i class="fas fa-eye"></i> <!-- Biểu tượng Chi tiết -->
+                        </a>
+                        <a href="@Url.Action("Delete", new { id = item.IDkh })" class="btn btn-danger btn-group-sm rounded-sm mx-1" title="Xoá">
+                            <i class="fas fa-trash"></i> <!-- Biểu tượng Chi tiết -->
+                        </a>
+
+                        @if (item.TrangThaiTaiKhoan != null && item.TrangThaiTaiKhoan.Equals("Hoạt động", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <a href="@Url.Action("LockAccount", new { id = item.IDkh })" class="btn btn-outline-danger btn-group-sm rounded-sm mx-1" title="Khóa tài khoản" onclick="return confirm('Bạn có chắc chắn muốn khóa tài khoản này không?');">
+                                <i class="fas fa-lock"></i> <!-- Biểu tượng Khóa -->
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("UnlockAccount", new { id = item.IDkh })" class="btn btn-success btn-group-sm rounded-sm mx-1" title="Mở khóa tài khoản" onclick="return confirm('Bạn có chắc chắn muốn mở khóa tài khoản này không?');">
+                                <i class="fas fa-unlock"></i> <!-- Biểu tượng Mở khóa -->
+                            </a>
+                        }
+                    </td>
+
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+    <div class="pagination-container text-center">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.CurrentFilter }),
+            new PagedListRenderOptions
+            {
+                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                DisplayLinkToIndividualPages = true,
+                DisplayPageCountAndCurrentLocation = false,
+                MaximumPageNumbersToDisplay = 5
+            })
+    </div>
+}
+else
+{
+    <div class="alert alert-info text-center" role="alert">
+        Không có khách hàng nào trong hệ thống.
+    </div>
+}

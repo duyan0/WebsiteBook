@@ -1,0 +1,128 @@
+﻿/* Pagination Container */
+.pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: 0;
+    border-radius: 0;
+}
+
+    /* Pagination List Items */
+    .pagination > li {
+        display: inline;
+        margin-right: 5px; /* Thêm khoảng cách 5px giữa các phần tử */
+    }
+
+        /* Pagination Links */
+        .pagination > li > a,
+        .pagination > li > span {
+            position: relative;
+            display: inline-block;
+            padding: 10px 15px;
+            margin-left: -1px;
+            line-height: 1.5;
+            text-decoration: none;
+            background-color: white; /* White background */
+            border: 1px solid #000; /* Black border */
+            color: black; /* Black text */
+            transition: all 0.3s ease;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+
+            /* Hover effect for links */
+            .pagination > li > a:hover,
+            .pagination > li > span:hover {
+                background-color: black; /* Black background on hover */
+                color: white; /* White text */
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+            }
+
+    /* Active state */
+    .pagination > .active > a,
+    .pagination > .active > span,
+    .pagination > .active > a:hover,
+    .pagination > .active > span:hover {
+        z-index: 2;
+        color: white; /* White text */
+        cursor: default;
+        background-color: black; /* Black background for active item */
+        border-color: black; /* Black border */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Disabled state */
+    .pagination > .disabled > span,
+    .pagination > .disabled > a {
+        color: #999; /* Light gray text */
+        cursor: not-allowed;
+        background-color: #f0f0f0; /* Light gray background */
+        border-color: #ddd; /* Light gray border */
+        display: none; /* Don't show disabled pagination links */
+    }
+
+/* Pagination Sizes */
+.pagination-lg > li > a,
+.pagination-lg > li > span {
+    padding: 15px 22px;
+    font-size: 18px;
+}
+
+.pagination-sm > li > a,
+.pagination-sm > li > span {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+/* Borders for first and last items */
+.pagination > li:first-child > a,
+.pagination > li:first-child > span {
+    border-radius: 8px 0 0 8px;
+}
+
+.pagination > li:last-child > a,
+.pagination > li:last-child > span {
+    border-radius: 0 8px 8px 0;
+}
+
+/* Pager styles */
+.pager {
+    padding-left: 0;
+    margin: 20px 0;
+    text-align: center;
+    list-style: none;
+}
+
+    /* Remove pager items that are not in use */
+    .pager li {
+        display: inline;
+    }
+
+        /* Pager Links */
+        .pager li > a,
+        .pager li > span {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: white; /* White background */
+            border: 1px solid #000; /* Black border */
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            color: black; /* Black text */
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+            /* Hover effect for pager */
+            .pager li > a:hover,
+            .pager li > a:focus {
+                text-decoration: none;
+                background-color: #000; /* Black background on hover */
+                color: white; /* White text */
+                box-shadow: 0px 100px 8px rgba(0, 0, 0, 0.15);
+            }
+
+    /* Disabled pager items */
+    .pager .disabled > a,
+    .pager .disabled > span {
+        color: #ccc; /* Light gray text */
+        cursor: not-allowed;
+        display: none; /* Don't show disabled pager items */
+    }

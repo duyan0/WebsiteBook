@@ -1,0 +1,53 @@
+﻿
+#concard .nav-item.nav-link.active {
+    color: white;
+    background-color: #198754;
+    font-weight: bold;
+}
+
+#concard {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: #f8f9fa;
+}
+
+    #concard a {
+        color: black;
+        text-decoration: none;
+        font-weight: bold;
+        border: 1px solid #ddd;
+        padding: 10px 15px;
+        margin-bottom: 5px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+        #concard a:hover {
+            background-color: green;
+            color: white;
+        }
+
+.footer-link {
+    color: #acaf79;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+    .footer-link:hover {
+        color: #f8f9fa;
+        text-decoration: underline;
+    }
+
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa; /* Màu nền để dễ nhìn */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', Arial, sans-serif;
+}
+
+

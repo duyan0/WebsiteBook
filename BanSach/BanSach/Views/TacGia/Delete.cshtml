@@ -1,0 +1,72 @@
+﻿@model BanSach.Models.TacGia
+
+@{
+    ViewBag.Title = "Xác nhận xóa Tác Giả " + Model.TenTG; // Cập nhật tiêu đề
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="text-center">Xóa Tác Giả</h2> <!-- Tiêu đề chính -->
+
+<div class="container">
+    <div class="card" style="border-radius: 15px;">
+        <!-- Bo góc cho card -->
+        <div class="card-header font-weight-bold text-center">
+            Thông tin Tác Giả
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered" style="border-radius: 10px; overflow: hidden;">
+                <!-- Bo góc cho bảng -->
+                <tbody>
+                    <tr>
+                        <th>
+                            Tên Tác giả
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.TenTG)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Ngày sinh
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.NgaySinh)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Quốc gia
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.QuocGia)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Tiểu sử
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.TieuSu)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger mt-4 rounded-sm">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions mt-3">
+            <input type="submit" value="Xóa" class="btn btn-danger rounded" /> <!-- Nút xóa với màu đỏ và bo góc -->
+            @Html.ActionLink("Trở về danh sách", "Index", null, new { @class = "btn btn-secondary ml-2 rounded" }) <!-- Nút trở về với bo góc -->
+        </div>
+
+    }
+</div>

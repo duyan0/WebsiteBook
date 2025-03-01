@@ -1,0 +1,241 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\do-an-quan-li-nha-sach\\bansach\\bansach\\controllers\\donhangctscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\controllers\\donhangctscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\do-an-quan-li-nha-sach\\bansach\\bansach\\controllers\\donhangscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\controllers\\donhangscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\do-an-quan-li-nha-sach\\bansach\\bansach\\views\\donhangcts\\detailskh.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\donhangcts\\detailskh.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\do-an-quan-li-nha-sach\\bansach\\bansach\\views\\danhmucs\\phandanhmuc.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\danhmucs\\phandanhmuc.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\do-an-quan-li-nha-sach\\bansach\\bansach\\views\\sanphams\\productlist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\sanphams\\productlist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\do-an-quan-li-nha-sach\\bansach\\bansach\\controllers\\khachhangscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\controllers\\khachhangscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\do-an-quan-li-nha-sach\\bansach\\bansach\\models\\sanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\models\\sanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\do-an-quan-li-nha-sach\\bansach\\bansach\\app_start\\routeconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\app_start\\routeconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\do-an-quan-li-nha-sach\\bansach\\bansach\\controllers\\sanphamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\controllers\\sanphamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\do-an-quan-li-nha-sach\\bansach\\bansach\\views\\sanphams\\trangsp.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\sanphams\\trangsp.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\do-an-quan-li-nha-sach\\bansach\\bansach\\views\\donhangcts\\recentorders.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\donhangcts\\recentorders.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\do-an-quan-li-nha-sach\\bansach\\bansach\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\do-an-quan-li-nha-sach\\bansach\\bansach\\controllers\\shoppingcartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\controllers\\shoppingcartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DonHangCTsController.cs",
+              "DocumentMoniker": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Controllers\\DonHangCTsController.cs",
+              "RelativeDocumentMoniker": "BanSach\\Controllers\\DonHangCTsController.cs",
+              "ToolTip": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Controllers\\DonHangCTsController.cs",
+              "RelativeToolTip": "BanSach\\Controllers\\DonHangCTsController.cs",
+              "ViewState": "AgIAAAgBAAAAAAAAAAAAABYBAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-01T09:23:47.826Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DonHangsController.cs",
+              "DocumentMoniker": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Controllers\\DonHangsController.cs",
+              "RelativeDocumentMoniker": "BanSach\\Controllers\\DonHangsController.cs",
+              "ToolTip": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Controllers\\DonHangsController.cs",
+              "RelativeToolTip": "BanSach\\Controllers\\DonHangsController.cs",
+              "ViewState": "AgIAABoBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-01T09:23:28.555Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DetailsKH.cshtml",
+              "DocumentMoniker": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Views\\DonHangCTs\\DetailsKH.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\DonHangCTs\\DetailsKH.cshtml",
+              "ToolTip": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Views\\DonHangCTs\\DetailsKH.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\DonHangCTs\\DetailsKH.cshtml",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAACEAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-01T09:22:50.238Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PhanDanhMuc.cshtml",
+              "DocumentMoniker": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Views\\DanhMucs\\PhanDanhMuc.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\DanhMucs\\PhanDanhMuc.cshtml",
+              "ToolTip": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Views\\DanhMucs\\PhanDanhMuc.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\DanhMucs\\PhanDanhMuc.cshtml",
+              "ViewState": "AgIAACMAAAAAAAAAAABAwHMAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-01T09:18:20.101Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "SanPham.cs",
+              "DocumentMoniker": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Models\\SanPham.cs",
+              "RelativeDocumentMoniker": "BanSach\\Models\\SanPham.cs",
+              "ToolTip": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Models\\SanPham.cs",
+              "RelativeToolTip": "BanSach\\Models\\SanPham.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAzwDsAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-01T09:06:38.272Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "RouteConfig.cs",
+              "DocumentMoniker": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\App_Start\\RouteConfig.cs",
+              "RelativeDocumentMoniker": "BanSach\\App_Start\\RouteConfig.cs",
+              "ToolTip": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\App_Start\\RouteConfig.cs",
+              "RelativeToolTip": "BanSach\\App_Start\\RouteConfig.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-01T09:05:54.831Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "SanPhamsController.cs",
+              "DocumentMoniker": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Controllers\\SanPhamsController.cs",
+              "RelativeDocumentMoniker": "BanSach\\Controllers\\SanPhamsController.cs",
+              "ToolTip": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Controllers\\SanPhamsController.cs",
+              "RelativeToolTip": "BanSach\\Controllers\\SanPhamsController.cs",
+              "ViewState": "AgIAAIQAAAAAAAAAAAAAAJsAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-01T09:01:29.65Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "RecentOrders.cshtml",
+              "DocumentMoniker": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Views\\DonHangCTs\\RecentOrders.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\DonHangCTs\\RecentOrders.cshtml",
+              "ToolTip": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Views\\DonHangCTs\\RecentOrders.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\DonHangCTs\\RecentOrders.cshtml",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABYAAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-01T09:00:15.907Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "KhachHangsController.cs",
+              "DocumentMoniker": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Controllers\\KhachHangsController.cs",
+              "RelativeDocumentMoniker": "BanSach\\Controllers\\KhachHangsController.cs",
+              "ToolTip": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Controllers\\KhachHangsController.cs",
+              "RelativeToolTip": "BanSach\\Controllers\\KhachHangsController.cs",
+              "ViewState": "AgIAAHcBAAAAAAAAAAAAALMBAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-01T08:58:13.531Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ProductList.cshtml",
+              "DocumentMoniker": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Views\\SanPhams\\ProductList.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\SanPhams\\ProductList.cshtml",
+              "ToolTip": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Views\\SanPhams\\ProductList.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\SanPhams\\ProductList.cshtml",
+              "ViewState": "AgIAAF0AAAAAAAAAAAAAAGoAAABQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-01T08:50:30.339Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "TrangSP.cshtml",
+              "DocumentMoniker": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Views\\SanPhams\\TrangSP.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\SanPhams\\TrangSP.cshtml",
+              "ToolTip": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Views\\SanPhams\\TrangSP.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\SanPhams\\TrangSP.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-01T08:40:54.453Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ShoppingCartController.cs",
+              "DocumentMoniker": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Controllers\\ShoppingCartController.cs",
+              "RelativeDocumentMoniker": "BanSach\\Controllers\\ShoppingCartController.cs",
+              "ToolTip": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Controllers\\ShoppingCartController.cs",
+              "RelativeToolTip": "BanSach\\Controllers\\ShoppingCartController.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAAAEYAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-01T08:30:17.864Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\DO-AN-QUAN-LI-NHA-SACH\\BanSach\\BanSach\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAADsBAAAAAAAAAAAAADEBAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-01T08:24:27.245Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

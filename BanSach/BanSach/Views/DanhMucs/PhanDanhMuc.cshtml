@@ -1,0 +1,116 @@
+﻿@model IEnumerable<BanSach.Models.DanhMuc_TheLoai>
+
+<style>
+    .danhmuc a {
+        color: black;
+        text-decoration: none;
+        z-index: 100000;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+        .danhmuc a:hover {
+            color: black;
+            transition: color 0.25s ease-in-out;
+            z-index: 100000;
+        }
+
+    .container-danhmuc {
+        background-color: white;
+        z-index: 100000;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        gap: 2px;
+    }
+
+    .tentheloai {
+        list-style-type: none;
+        padding: 5px;
+        max-width: 100%;
+        margin: 5px;
+        z-index: 100000;
+        display: inline-block;
+    }
+
+        .tentheloai:hover {
+            background-color: #c2c2c2;
+            border-radius: 5px;
+        }
+
+    .collapse {
+        position: relative;
+        z-index: 100000;
+        display: none;
+    }
+</style>
+
+<div class="container-danhmuc">
+    <div class="list-group">
+        @{
+            // Lấy danh sách danh mục duy nhất
+            var uniqueDanhMucNames = Model.Select(item => item.DanhMuc.TenDanhMuc)
+                                         .Distinct()
+                                         .ToList();
+
+            foreach (var tenDanhMuc in uniqueDanhMucNames)
+            {
+                if (Session[tenDanhMuc] == null)
+                {
+                    <div class="list-group-item border-0 danhmuc">
+                        <a href="javascript:void(0)" role="button">
+                            <strong>@tenDanhMuc</strong>
+                            <i class="bi bi-chevron-down ml-2"></i>
+                        </a>
+
+                        <div class="collapse" id="collapse-@tenDanhMuc.Replace(" ", "-")">
+                            <ul class="list-unstyled mt-2 ml-3">
+                                @{
+                                    // Lấy danh sách thể loại duy nhất cho danh mục hiện tại bằng GroupBy
+                                    var uniqueTheLoai = Model.Where(item => item.DanhMuc.TenDanhMuc == tenDanhMuc && !string.IsNullOrEmpty(item.TheLoai?.TenTheLoai))
+                                                             .GroupBy(item => item.TheLoai.TenTheLoai) // Nhóm theo TenTheLoai
+                                                             .Select(g => g.First()) // Lấy phần tử đầu tiên trong mỗi nhóm
+                                                             .Select(item => new { item.ID, item.TheLoai.TenTheLoai })
+                                                             .ToList();
+
+                                    foreach (var item2 in uniqueTheLoai)
+                                    {
+                                        <li class="tentheloai text-truncate">
+                                            <a href="@Url.Action("ProductList", "SanPhams", new { category = item2.ID })"
+                                               class="tentheloai-link text-dark text-truncate">
+                                                @item2.TenTheLoai
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                }
+            }
+        }
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.danhmuc').hover(
+            function () {
+                $(this).find('.collapse').stop(true, true).slideDown(300);
+            },
+            function () {
+                $(this).find('.collapse').stop(true, true).slideUp(300);
+            }
+        );
+
+        $('[data-toggle="collapse"]').click(function (e) {
+            e.preventDefault();
+            var target = $(this).attr('href');
+            $(target).stop(true, true).slideToggle(300);
+        });
+    });
+</script>

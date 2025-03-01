@@ -1,0 +1,92 @@
+﻿@model IEnumerable<BanSach.Models.RecentOrderViewModel>
+
+<head>
+    <!-- Cài đặt OwlCarousel -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+</head>
+
+<div class="container-fluid">
+    <p class="text-center text-white fw-semibold mb-3" style="font-size: 26px;">Bán gần đây nhất</p>
+
+    <!-- Owl Carousel -->
+    <div class="owl-carousel owl-theme">
+        @foreach (var i in Model)
+        {
+            <div class="item">
+                <div class="card product-item">
+                    <a href="~/SanPhams/TrangSP/@i.Id" class="text-decoration-none">
+                        <div class="card-body p-2">
+                            <!-- Ảnh sản phẩm với kích thước cố định -->
+                            <img src="~/Content/img/@i.HinhAnh" alt="Ảnh sản phẩm @i.TenSanPham" class="img-fluid rounded-3" style="object-fit:contain;">
+                            <!-- Tên sản phẩm -->
+                            <p class="text-truncate text-dark w-100 text-left" title="@i.TenSanPham">@i.TenSanPham</p>
+                            <p class="mb-2 text-danger fw-semibold">@i.Gia.ToString($"#,#") VND</p>
+                            <p class="mb-0 text-bg-dark placeholder-wave rounded-1 text-center  " title="@i.NgayDatHang.ToString("dd/MM/yyyy HH:mm:ss")">
+                                @i.NgayDatHang.ToString("dd/MM/yyyy HH:mm:ss")
+                            </p>
+                           
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+    <div>
+        <p class="justify-content-center text-center">
+            <a href="~/SanPhams/ProductList" class="text-decoration-none btn btn-outline-danger py-2 px-2 mt-3">Xem thêm</a>
+        </p>
+    </div>
+</div>
+
+<div class="bg-secondary">
+    <hr />
+</div>
+
+<style>
+
+
+
+    body > div.container.p-0.mt-1.pt-1 > div > div.container-fluid > div.owl-carousel.owl-theme.owl-loaded.owl-drag > div.owl-stage-outer > div > div > div > div > a > div {
+        height: 309px;
+    }
+    /* Cấu hình cho hình ảnh trong carousel */
+    .owl-carousel img {
+        height: 190px;
+        width: 200px;
+        object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
+        border-radius: 8px;
+    }
+
+    .owl-carousel .card-body p {
+        margin-top: 5px;
+        font-size: 16px;
+    }
+
+    /* Loại bỏ navigation và dots */
+    .related-carousel .owl-nav, .related-carousel .owl-dots {
+        display: none;
+    }
+    .owl-dots ,.owl-nav {
+        display: none;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $(".owl-carousel").owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: true,
+            autoplay: true,
+            autoplayTimeout: 5000,
+            responsive: {
+                0: { items: 2 },
+                600: { items: 3 },
+                1000: { items: 5 }
+            }
+        });
+    });
+</script>

@@ -1,0 +1,169 @@
+﻿@{
+    ViewBag.Title = "Đăng ký";
+}
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+</head>
+
+
+<style>
+    .field-validation-error {
+        color: red;
+        font-size: 14px;
+        margin-bottom: 10px;
+        text-align: left;
+    }
+
+    .login-page {
+        max-width: 350px;
+        margin: 50px auto;
+        min-width: 200px;
+        position: relative;
+        max-height: auto;
+        min-height: 200px;
+    }
+
+    .form {
+        position: relative;
+        z-index: 1;
+        background: #ffffff;
+        max-width: 340px;
+        margin: 0 auto 50px;
+        padding: 40px;
+        text-align: center;
+        border: 1px solid #e5e5e5;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+        .form input {
+            font-family: "Roboto", sans-serif;
+            outline: 0;
+            background: #f7f7f7;
+            width: 100%;
+            border: 1px solid #ddd;
+            margin: 0 0 15px;
+            padding: 12px;
+            box-sizing: border-box;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+
+        .form button {
+            font-family: "Roboto", sans-serif;
+            text-transform: uppercase;
+            outline: 0;
+            background: #ff424e;
+            width: 100%;
+            border: 0;
+            padding: 14px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+
+        .form .message {
+            margin: 15px 0 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+            .form .message a {
+                color: #ff424e;
+                font-weight: bold;
+                text-decoration: none;
+            }
+
+        .form .password-field {
+            position: relative;
+        }
+
+        .form .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 20%;
+            cursor: pointer;
+            color: #888;
+            font-size: 14px;
+        }
+</style>
+
+<script>
+    function togglePasswordVisibility(id) {
+        var passwordField = document.getElementById(id);
+        var toggleIcon = document.getElementById("toggle" + id);
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            toggleIcon.textContent = "Ẩn";
+        } else {
+            passwordField.type = "password";
+            toggleIcon.textContent = "Hiện";
+        }
+    }
+</script>
+
+<div class="login-page">
+    <div class="form">
+        <h3 style="color: #333; font-weight: bold;">Đăng ký</h3>
+
+        <form action="/LoginUser/RegisterCus" class="login-form" method="post">
+            <p class="field-validation-error">@ViewBag.ErrorRegister</p>
+
+            <p>
+                <input type="text" placeholder="Tên" name="TenKH" />
+            </p>
+            <p>
+                <input type="tel" placeholder="Số điện thoại"  maxlength="11" name="SoDT" />
+            </p>
+
+            <p>
+                <input type="email" placeholder="Email" name="Email" oninput="validateEmail(this)" />
+            </p>
+
+            <p>
+                <input type="text" placeholder="Tài khoản" name="TKhoan" oninput="validateAccount(this)" />
+            </p>
+
+            <div class="password-field">
+                <p>
+                    <input type="password" placeholder="Mật Khẩu" name="MKhau" id="password1" oninput="validatePassword(this)" />
+                    <span id="togglepassword1" class="toggle-password" onclick="togglePasswordVisibility('password1')">Hiện</span>
+                </p>
+            </div>
+
+            <div class="password-field">
+                <p>
+                    <input type="password" placeholder="Nhập lại mật khẩu" name="ConfirmPass" id="password2" oninput="validatePassword(this)" />
+                    <span id="togglepassword2" class="toggle-password" onclick="togglePasswordVisibility('password2')">Hiện</span>
+                </p>
+            </div>
+
+            <button type="submit" class="btn btn-dark w-100 ">Đăng ký</button>
+
+            <p class="message">Đã có tài khoản? <a href="~/LoginUser/LoginAccountCus">Đăng nhập ngay</a></p>
+        </form>
+    </div>
+</div>
+
+<script>
+    function validateEmail(input) {
+        // Loại bỏ dấu chấm (.) và dấu phẩy (,)
+        input.value = input.value.replace(/[<>,]/g, '');
+    }
+    function validateAccount(input) {
+        // Loại bỏ dấu, khoảng trắng, và ký tự < hoặc >
+        input.value = input.value.replace(/[^A-Za-z0-9]/g, '');
+    }
+    function validatePassword(input) {
+        // Loại bỏ khoảng trắng, dấu và các ký tự <> nhưng cho phép ký tự
+        input.value = input.value.replace(/[^A-Za-z0-9"{}"]/g, '');
+    }
+
+</script>
