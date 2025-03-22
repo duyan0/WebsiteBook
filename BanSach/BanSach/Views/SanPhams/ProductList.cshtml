@@ -2,7 +2,7 @@
 @model PagedList.IPagedList<BanSach.Models.SanPham>
 
 @{
-    ViewBag.Title = "Sách";
+    ViewBag.Title = "Danh sách sản phẩm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -108,6 +108,10 @@
                             <div class="card-pro @(item.TrangThaiSach == "Hết hàng" ? "out-of-stock" : "")">
                                 <a href="@Url.Action("TrangSP", "SanPhams", new { id = item.IDsp })">
                                     <img src="~/assets/images/products/@item.HinhAnh" class="img-fluid" alt="@item.TenSP" />
+                                    @if (item.KhuyenMai != null && item.KhuyenMai.MucGiamGia > 0)
+                                    {
+                                        <span class="sale-badge bg-danger">Giảm giá</span>
+                                    }
                                     <p class="availability @(item.TrangThaiSach == "Hết hàng" ? "out-of-stock" : "in-stock")">
                                         @item.TrangThaiSach
                                     </p>
@@ -118,15 +122,13 @@
                                 {
                                     var giaBan = item.GiaBan;
                                     var mucGiamGia = item.KhuyenMai?.MucGiamGia ?? 0;
-                                    var giaSauGiam = giaBan * (1 - (decimal)mucGiamGia / 100.0m);
+                                    var giaSauGiam = giaBan * (1 - (decimal)mucGiamGia / 100.00m);
 
                                     <p class="price-wrapper">
                                         <span class="old-price me-2">
                                             @string.Format("{0:N0} VND", giaBan)
                                         </span>
-                                        <span class="discount-badge" disabled>
-                                            -@mucGiamGia%
-                                        </span>
+                                        <span class="discount-badge" disabled>@((item.KhuyenMai?.MucGiamGia ?? 0).ToString("N0"))%</span>
                                     </p>
                                     <p class="price">
                                         @string.Format("{0:N0} VND", giaSauGiam)
@@ -172,8 +174,7 @@
                     LinkToIndividualPageFormat = "{0}"
                 })
             </div>
-        </div>
-    </div>
+        </div>    </div>
 </div>
 
 <div id="notification-container" style="position: fixed; bottom: 10px; left: 10px; display: flex; flex-direction: column; gap: 10px; z-index: 1000;"></div>
@@ -189,18 +190,36 @@
         });
 
         function themthanhcong(event, productId, productName) {
-            event.preventDefault();
-            fetch(`/ShoppingCart/AddToCart/${productId}`, {
+            event.preventDefault(); // Ngăn hành vi mặc định của nút (nếu có)
+
+            fetch(`/ShoppingCart/GetCartDetails/${productId}`, {
                 method: 'GET'
             })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Phản hồi từ server không thành công');
+                    }
+                    return response.json();
+                })
                 .then(data => {
+                    // Hiển thị thông báo
                     showNotification(data.message || `Thêm "${productName}" thành công`, data.success ? '#198754' : '#dc3545');
+
                     if (data.success) {
-                        setTimeout(() => location.reload(), 1000);
+                        // Cập nhật số lượng giỏ hàng trên giao diện (nếu có phần tử #quantity-cart)
+                        const quantityElement = document.querySelector('#quantity-cart');
+                        if (quantityElement) {
+                            quantityElement.textContent = data.totalQuantity;
+                        }
+
+                        // Tự động làm mới trang sau 1 giây (1000ms)
+                        setTimeout(() => {
+                            location.reload(); // Làm mới toàn bộ trang
+                        }, 1000); // Thời gian chờ 1 giây để người dùng thấy thông báo
                     }
                 })
                 .catch(error => {
+                    // Xử lý lỗi nếu có
                     showNotification('Lỗi kết nối server. Vui lòng thử lại.', '#dc3545');
                     console.error('Error:', error);
                 });
@@ -224,6 +243,7 @@
 }
 
 <style>
+    /* Style hiện tại của bạn */
     .notification {
         padding: 15px;
         border-radius: 5px;
@@ -248,4 +268,23 @@
             transform: translateX(-300px);
             transition: opacity 1s ease-out, transform 0.5s ease;
         }
+
+    .sale-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: #ff4444;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px; /* Hình chữ nhật bo góc */
+        font-size: 12px;
+        font-weight: bold;
+        z-index: 10;
+        text-transform: uppercase;
+    }
+
+    /* Để ảnh chứa badge đúng cách */
+    .card-pro {
+        position: relative; /* Để sale-badge định vị tuyệt đối bên trong */
+    }
 </style>

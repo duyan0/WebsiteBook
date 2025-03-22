@@ -1,32 +1,14 @@
-﻿@{
+﻿@model BanSach.Models.DonHang
+@{
     ViewBag.Title = "Thanh Toán Thành Công";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container text-center mt-5 mb-5">
-    <div class="row justify-content-center">
-        <!-- Hình ảnh -->
-        <div class="col-12 col-sm-6 col-md-4">
-            <img src="~/Content/img/icon_thanhcong.png" alt="Icon thành công" class="img-fluid" style="max-width: 150px;min-width: 100px;" />
-        </div>
-    </div>
 
-    <!-- Tiêu đề và mô tả -->
-    <h2 class="text-success mt-3 fw-bold">Thanh toán thành công</h2>
-
-    <p class="text-success">Cảm ơn bạn đã mua hàng! Đơn hàng của bạn đang được xử lý.</p>
-
-    <!-- Mã đơn hàng và tổng tiền -->
-    <div class="mt-3">
-        <p>
-            <strong class="d-block text-white">Mã đơn hàng: @ViewBag.OrderId </strong>
-            <strong class="d-block text-white">Tổng tiền: @ViewBag.TotalAmount </strong>
-        </p>
-    </div>
-
-    <!-- Các nút liên kết -->
-    <div class="mt-4">
-        <a href="@Url.Action("TrangChu", "SanPhams")" class="btn btn-outline-secondary rounded-sm">Quay về trang chủ</a>
-        <a href="@Url.Action("LichSuDonHang", "KhachHangs")" class="btn btn-success rounded-sm ms-2">Xem đơn hàng</a>
-    </div>
+<div class="text-center text-white">
+    <h2>Thanh toán thành công</h2>
+    <p>Mã đơn hàng: <span class="text-danger fw-semibold">@ViewBag.OrderId</span></p>
+    <p>Tổng số tiền: <span class="text-danger fw-semibold">@(ViewBag.TotalAmount != null ? String.Format("{0:#,##0 VNĐ}", ViewBag.TotalAmount) : "Không xác định")</span></p>
+    <p>Cảm ơn bạn đã mua sắm tại cửa hàng!</p>
+    <a href="@Url.Action("ShowCart", "ShoppingCart")" class="btn btn-primary">Quay lại giỏ hàng</a>
 </div>

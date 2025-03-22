@@ -26,6 +26,7 @@ namespace BanSach.Models
         public string Email { get; set; }
         public string TKhoan { get; set; }
         public string MKhau { get; set; }
+        public string ConfirmPass { get; set; }
         public string TrangThaiTaiKhoan { get; set; }
         public string OTP { get; set; }
         public Nullable<System.DateTime> OTPExpiry { get; set; }

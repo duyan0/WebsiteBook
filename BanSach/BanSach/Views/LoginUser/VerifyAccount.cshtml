@@ -1,0 +1,58 @@
+﻿@model BanSach.Models.VerifyOtpViewModel
+
+@{
+    ViewBag.Title = "Xác nhận tài khoản";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center text-white">Xác nhận tài khoản</h2>
+
+<div class="container mt-4">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div id="SuccessMessage" class="alert alert-success" role="alert">
+            @TempData["SuccessMessage"]
+
+        </div>
+        @Html.ActionLink("Quay lại", "RegisterCus", "LoginUser", null, new { @class = "btn btn-secondary " })
+
+    }
+    else
+    {
+
+
+        using (Html.BeginForm("VerifyAccount", "LoginUser", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.UserId)
+
+            <div class="form-group mb-3">
+                <label for="EnteredOtp" class="form-label text-white">Nhập mã OTP</label>
+                @Html.TextBoxFor(model => model.EnteredOtp, new
+                {
+            @class = "form-control",
+            placeholder = "Nhập mã OTP 4 số",
+            maxlength = "4",
+            oninput = "this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4)"
+            })
+
+                @Html.ValidationMessageFor(model => model.EnteredOtp, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group text-center">
+                <input type="submit" id="submit" value="Xác nhận" class="btn btn-primary" />
+                @Html.ActionLink("Quay lại", "LoginAccountCus", "LoginUser", null, new { @class = "btn btn-secondary ms-2" })
+            </div>
+        }
+        if (TempData["ErrorMessage"] != null)
+        {
+            <div id="ErrorMessage" class="alert alert-danger mt-3 mb-3 " role="alert">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

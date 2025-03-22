@@ -8,6 +8,8 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using BanSach.DesignPatterns.DecoratorPattern;
+using BanSach.DesignPatterns.StrategyPattern;
 using BanSach.Models;
 using PagedList;
 using Rotativa;
@@ -16,11 +18,13 @@ namespace BanSach.Controllers
 {
     public class DonHangsController : Controller
     {
+        private readonly db_Book _db;
         private readonly DonHang _donHangService; // Dịch vụ đơn hàng
-        private readonly db_Book db = new db_Book();
+
         public DonHangsController()
         {
-            _donHangService = new DonHang(); // Hoặc khởi tạo một dịch vụ mặc định
+            _db = new db_Book();
+            _donHangService = new DonHang(); // Khởi tạo cả hai trong một constructor
         }
         public DonHangsController(DonHang donHangService)
         {
@@ -28,9 +32,8 @@ namespace BanSach.Controllers
         }
         public ActionResult Index(string searchString, DateTime? startDate, DateTime? endDate, int? page)
         {
-            var donHangs = db.DonHang.Include(d => d.KhachHang).AsQueryable();
+            var donHangs = _db.DonHang.Include(d => d.KhachHang).AsQueryable();
 
-            // Tìm kiếm theo các tiêu chí
             if (!String.IsNullOrEmpty(searchString))
             {
                 donHangs = donHangs.Where(d => d.IDdh.ToString().Contains(searchString)
@@ -48,42 +51,26 @@ namespace BanSach.Controllers
                 donHangs = donHangs.Where(d => d.NgayDatHang <= endDate.Value);
             }
 
-            // Phân trang
             int pageSize = 10;
             int pageNumber = (page ?? 1);
-
             var pagedDonHangs = donHangs.OrderBy(d => d.TrangThai).ToPagedList(pageNumber, pageSize);
 
-            // Trả về View với kiểu IPagedList<DonHang>
             return View(pagedDonHangs);
         }
 
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DonHang donHang = db.DonHang.Find(id);
-            if (donHang == null)
-            {
-                return HttpNotFound();
-            }
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            DonHang donHang = _db.DonHang.Find(id);
+            if (donHang == null) return HttpNotFound();
             return View(donHang);
         }
 
-        // GET: DonHangs/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DonHang donHang = db.DonHang.Find(id);
-            if (donHang == null)
-            {
-                return HttpNotFound();
-            }
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            DonHang donHang = _db.DonHang.Find(id);
+            if (donHang == null) return HttpNotFound();
             return View(donHang);
         }
 
@@ -93,21 +80,17 @@ namespace BanSach.Controllers
         {
             try
             {
-                DonHang donHang = db.DonHang.Find(id);
-
+                DonHang donHang = _db.DonHang.Find(id);
                 if (donHang == null)
                 {
-                    TempData["ErrorMessage"] = "Đơn đặt hàng không được tìm thấy.\r\n";
+                    TempData["ErrorMessage"] = "Đơn đặt hàng không được tìm thấy.";
                     return RedirectToAction("Index");
                 }
 
-                // Xoá các bản ghi liên quan trong DonHangCT
-                var relatedOrderDetails = db.DonHangCT.Where(dhct => dhct.IDDonHang == id).ToList();
-                db.DonHangCT.RemoveRange(relatedOrderDetails);
-
-                // Xoá DonHang
-                db.DonHang.Remove(donHang);
-                db.SaveChanges();
+                var relatedOrderDetails = _db.DonHangCT.Where(dhct => dhct.IDDonHang == id).ToList();
+                _db.DonHangCT.RemoveRange(relatedOrderDetails);
+                _db.DonHang.Remove(donHang);
+                _db.SaveChanges();
 
                 TempData["SuccessMessage"] = "Đơn đặt hàng và các chi tiết liên quan đã được xóa thành công.";
                 return RedirectToAction("Index");
@@ -120,62 +103,43 @@ namespace BanSach.Controllers
         }
 
 
-        // GET: DonHangs/Confirm/5
         public ActionResult Confirm(int id)
         {
-            var donHang = db.DonHang.Find(id);
-            if (donHang == null)
-            {
-                return HttpNotFound();
-            }
+            var donHang = _db.DonHang.Find(id);
+            if (donHang == null) return HttpNotFound();
 
-            donHang.TrangThai = "Đã xác nhận"; // Cập nhật trạng thái đơn hàng
-            db.Entry(donHang).State = EntityState.Modified; // Đánh dấu đơn hàng là đã sửa đổi
-            db.SaveChanges(); // Lưu thay đổi
-
-            // Gửi email thông báo cho admin về đơn hàng mới
-            SendOrderNotificationEmail(id);
-
-            return RedirectToAction("Index"); // Chuyển hướng về trang danh sách đơn hàng
+            var baseStrategy = new ConfirmOrderStrategy();
+            var strategy = new EmailNotificationDecorator(baseStrategy, this, id); // Thêm email notification
+            strategy.UpdateStatus(donHang, _db);
+            return RedirectToAction("Index");
         }
+
         // GET: DonHangs/Cancel/5
         public ActionResult Cancel(int id)
         {
-            var donHang = db.DonHang.Find(id);
-            if (donHang == null)
-            {
-                return HttpNotFound();
-            }
+            var donHang = _db.DonHang.Find(id);
+            if (donHang == null) return HttpNotFound();
 
-            donHang.TrangThai = "Đã huỷ"; // Cập nhật trạng thái đơn hàng
-            db.Entry(donHang).State = EntityState.Modified; // Đánh dấu đơn hàng là đã sửa đổi
-            db.SaveChanges(); // Lưu thay đổi
-
-            return RedirectToAction("Index"); // Chuyển hướng về trang danh sách đơn hàng
+            var strategy = new CancelOrderStrategy();
+            strategy.UpdateStatus(donHang, _db);
+            return RedirectToAction("Index");
         }
         [HttpGet]
         [Route("DonHang/DaNhanHang/{id:int}")]
-        public async Task<ActionResult> DaNhanHang(int id)
+        public ActionResult DaNhanHang(int id)
         {
-            var donHang = await db.DonHang.FindAsync(id); // Sử dụng FindAsync cho bất đồng bộ
-            if (donHang == null)
-            {
-                return HttpNotFound();
-            }
+            var donHang = _db.DonHang.Find(id);
+            if (donHang == null) return HttpNotFound();
 
-            // Cập nhật ngày nhận hàng và trạng thái khi người dùng đã nhận hàng
-            donHang.NgayNhanHang = DateTime.Now;
-            donHang.TrangThai = "Đã nhận hàng";
-            await db.SaveChangesAsync(); // Sử dụng SaveChangesAsync để lưu bất đồng bộ
-
-            // Chuyển hướng về trang lịch sử đơn hàng sau khi cập nhật
+            var strategy = new ReceivedOrderStrategy();
+            strategy.UpdateStatus(donHang, _db);
             return RedirectToAction("LichSuDonHang", "KhachHangs");
         }
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
         public ActionResult ThongKeDonHang()
         {
             // Lấy danh sách tất cả đơn hàng đã nhận
-            var donHangsDaNhanHang = db.DonHang
+            var donHangsDaNhanHang = _db.DonHang
                 .Include(dh => dh.DonHangCT) // Bao gồm các chi tiết đơn hàng
                 .Where(dh => dh.TrangThai == "Đã nhận hàng")
                 .ToList(); // Đưa tất cả dữ liệu vào bộ nhớ
@@ -186,37 +150,30 @@ namespace BanSach.Controllers
             // Khởi tạo ViewModel
             var thongKeViewModel = new ThongKeDonHangViewModel
             {
-                TongSoDonHang = db.DonHang.Count(),
-                DonHangChoXuLy = db.DonHang.Count(dh => dh.TrangThai == "Chờ xử lý"),
-                DonHangDaXacNhan = db.DonHang.Count(dh => dh.TrangThai == "Đã xác nhận"),
+                TongSoDonHang = _db.DonHang.Count(),
+                DonHangChoXuLy = _db.DonHang.Count(dh => dh.TrangThai == "Chờ xử lý"),
+                DonHangDaXacNhan = _db.DonHang.Count(dh => dh.TrangThai == "Đã xác nhận"),
                 DonHangDaNhanHang = donHangsDaNhanHang.Count(),
-                DonHangDaHuy = db.DonHang.Count(dh => dh.TrangThai == "Đã huỷ"),
+                DonHangDaHuy = _db.DonHang.Count(dh => dh.TrangThai == "Đã huỷ"),
                 TongDoanhThu = tongDoanhThu
             };
 
             return View(thongKeViewModel);
         }
 
-        // GET: DonHangs/RequestReturn/5
         public ActionResult RequestReturn(int id)
         {
-            var donHang = db.DonHang.Find(id);
-            if (donHang == null)
-            {
-                return HttpNotFound();
-            }
+            var donHang = _db.DonHang.Find(id);
+            if (donHang == null) return HttpNotFound();
 
-            // Cập nhật trạng thái đơn hàng thành "Yêu cầu đổi trả"
-            donHang.TrangThai = "Yêu cầu đổi trả";
-            db.Entry(donHang).State = EntityState.Modified;
-            db.SaveChanges();
-
+            var strategy = new RequestReturnStrategy();
+            strategy.UpdateStatus(donHang, _db);
             return RedirectToAction("Index");
         }
         public ActionResult PrintInvoice(int id)
         {
             // Tìm đơn hàng và thông tin khách hàng liên quan
-            var donHang = db.DonHang.Include(d => d.KhachHang).FirstOrDefault(d => d.IDdh == id);
+            var donHang = _db.DonHang.Include(d => d.KhachHang).FirstOrDefault(d => d.IDdh == id);
             if (donHang == null)
             {
                 return HttpNotFound();
@@ -239,17 +196,17 @@ namespace BanSach.Controllers
             try
             {
                 // Lấy danh sách tất cả các đơn hàng có trạng thái "Chờ xử lý"
-                var donHangsToConfirm = db.DonHang.Where(dh => dh.TrangThai == "Chờ xử lý").ToList();
+                var donHangsToConfirm = _db.DonHang.Where(dh => dh.TrangThai == "Chờ xử lý").ToList();
 
                 foreach (var donHang in donHangsToConfirm)
                 {
                     // Cập nhật trạng thái đơn hàng
                     donHang.TrangThai = "Đã xác nhận";
-                    db.Entry(donHang).State = EntityState.Modified;
+                    _db.Entry(donHang).State = EntityState.Modified;
                 }
 
                 // Lưu thay đổi vào cơ sở dữ liệu
-                db.SaveChanges();
+                _db.SaveChanges();
 
                 TempData["SuccessMessage"] = "Tất cả các đơn hàng đã được xác nhận.";
             }
@@ -263,7 +220,7 @@ namespace BanSach.Controllers
         public void SendOrderNotificationEmail(int orderId)
         {
             // Tìm đơn hàng từ cơ sở dữ liệu
-            var donHang = db.DonHang.Include(d => d.KhachHang).FirstOrDefault(d => d.IDdh == orderId);
+            var donHang = _db.DonHang.Include(d => d.KhachHang).FirstOrDefault(d => d.IDdh == orderId);
 
             if (donHang != null)
             {
@@ -305,7 +262,7 @@ namespace BanSach.Controllers
                 SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587) // Sử dụng SMTP của Gmail
                 {
                     EnableSsl = true, // Bật SSL
-                    Credentials = new System.Net.NetworkCredential("crandi21112004@gmail.com", "lnragtcdumizfwwq"), // Sử dụng mật khẩu ứng dụng
+                    Credentials = new System.Net.NetworkCredential("crandi21112004@gmail.com", "wxaq spxp ghcr nyji"), // Sử dụng mật khẩu ứng dụng
                     Timeout = 30000 // Thời gian chờ kết nối (30 giây)
                 };
 
@@ -333,16 +290,11 @@ namespace BanSach.Controllers
                 }
             }
         }
-
-
-
-
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -1,121 +1,110 @@
-﻿@model IPagedList<BanSach.Models.KhachHang>
-@using PagedList.Mvc;
-@using PagedList;
+﻿@model List<BanSach.Models.KhachHang>
+
 
 @{
     ViewBag.Title = "Quản lý danh sách khách hàng";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<link href="~/Content/css/khachhang.css" rel="stylesheet" />
-<link href="~/Content/PagedList.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
+<script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+<script src="~/Content/js/DataTables.js"></script>
 
-<p class="custom-title-h3">Danh sách khách hàng</p>
+<h4 class="fw-semibold mt-2 mb-2 text-center ">Danh sách khách hàng</h4>
 <div class="btn-container">
     @Html.ActionLink("Thêm", "Create", null, new { @class = "btn btn-dark" })
-    <p class="mt-2 mb-1 fw-semibold ">Tổng số khách hàng: @Model.TotalItemCount</p>
 </div>
 
-@if (Model != null && Model.Count > 0)
-{
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr style="width:200px;">
-                <th style="width:100px;">ID</th>
-                <th style="width:200px;">Tên KH</th>
-                <th style="width:200px;">Hotline</th>
-                <th style="width:100px;">Email</th>
-                <th style="width:130px;">Trạng thái</th>
-                <th style="width:200px;">Thao tác</th>
+<table id="myTable" class="table-bordered table-responsive-sm" style="width:100%;">
+    <thead>
+        <tr style="width:200px;">
+            <th style="width:10px;">ID</th>
+            <th style="width:200px;">Tên KH</th>
+            <th style="width:20px;">Hotline</th>
+            <th style="width:100px;">Email</th>
+            <th style="width:130px;">Trạng thái</th>
+            <th style="width:180px;">Ngày tạo</th>
+            <th style="width:200px;">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody style="color:black;">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.IDkh)</td>
+                <td>@Html.DisplayFor(modelItem => item.TenKH)</td>
+                <td>@(item.SoDT != null && item.SoDT.Length >= 3 ? item.SoDT.Substring(0, 3) + new string('*', item.SoDT.Length - 3) : "")</td>
+                <td>
+                    @item.Email
+                </td>
+                <td>
+                    @if (item.TrangThaiTaiKhoan != null && item.TrangThaiTaiKhoan.Equals("Hoạt động", StringComparison.OrdinalIgnoreCase))
+                    {
+                        <span class="badge text-bg-success">Hoạt động</span>
+                    }
+                    else
+                    {
+                        <span class="badge text-bg-danger">Đã khóa</span>
+                    }
+                </td>
+                <td>
+                    @if (item.create_date.HasValue)
+                    {
+                        var localTime = item.create_date.Value.ToLocalTime();
+                        var timeDifference = DateTime.Now - localTime;
+
+                        @localTime.ToString("dd/MM/yyyy HH:mm:ss")
+
+                        if (timeDifference.TotalDays < 1)
+                        {
+                            <span class="badge bg-dark w-50 placeholder-wave">Mới</span>
+                        }
+                    }
+                    else
+                    {
+                        @:Không có
+                    }
+                </td>
+
+
+                <td class="btn-group-sm">
+                    <a href="@Url.Action("EditAD", new { id = item.IDkh })" class="btn btn-warning btn-group-sm rounded-sm mx-1" title="Sửa">
+                        <i class="fas fa-edit"></i> <!-- Biểu tượng Sửa -->
+                    </a>
+
+                    <a href="@Url.Action("DetailsAD", new { id = item.IDkh })" class="btn btn-info btn-group-sm rounded-sm mx-1" title="Chi tiết">
+                        <i class="fas fa-eye"></i> <!-- Biểu tượng Chi tiết -->
+                    </a>
+                    <a href="@Url.Action("Delete", new { id = item.IDkh })" class="btn btn-danger btn-group-sm rounded-sm mx-1" title="Xoá">
+                        <i class="fas fa-trash"></i> <!-- Biểu tượng Chi tiết -->
+                    </a>
+
+                    @if (item.TrangThaiTaiKhoan != null && item.TrangThaiTaiKhoan.Equals("Hoạt động", StringComparison.OrdinalIgnoreCase))
+                    {
+                        <button class="btn btn-outline-danger btn-group-sm rounded-sm mx-1"
+                                title="Khóa tài khoản"
+                                onclick="lockAccount(@item.IDkh)">
+                            <i class="fas fa-lock"></i>
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-success btn-group-sm rounded-sm mx-1"
+                                title="Mở khóa tài khoản"
+                                onclick="unlockAccount(@item.IDkh)">
+                            <i class="fas fa-unlock"></i>
+                        </button>
+                    }
+
+                </td>
+
+
             </tr>
-        </thead>
-        <tbody style="color:black;">
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.IDkh)</td>
-                    <td>@Html.DisplayFor(modelItem => item.TenKH)</td>
-                    <td>@(item.SoDT != null && item.SoDT.Length >= 3 ? item.SoDT.Substring(0, 3) + new string('*', item.SoDT.Length - 3) : "")</td>
-                    <td>
-                        @item.Email
-                    </td>
-                    <td>
-                        @if (item.TrangThaiTaiKhoan != null && item.TrangThaiTaiKhoan.Equals("Hoạt động", StringComparison.OrdinalIgnoreCase))
-                        {
-                            <span class="badge text-bg-success">Hoạt động</span>
-                        }
-                        else
-                        {
-                            <span class="badge text-bg-danger">Đã khóa</span>
-                        }
-                    </td>
-                    @*<td>
-                            <select class="form-select">
-                                @foreach (var tem in Model.ToList())
-                                {
-                                    <option value="@tem.SoDT+@tem.TenKH">@tem.SoDT+@tem.TenKH</option>
+        }
 
-                                }
-                            </select>
-                        </td>*@
+    </tbody>
+</table>
 
-                    <td class="btn-group-sm">
-                        <a href="@Url.Action("EditAD", new { id = item.IDkh })" class="btn btn-warning btn-group-sm rounded-sm mx-1" title="Sửa">
-                            <i class="fas fa-edit"></i> <!-- Biểu tượng Sửa -->
-                        </a>
-
-                        <a href="@Url.Action("DetailsAD", new { id = item.IDkh })" class="btn btn-info btn-group-sm rounded-sm mx-1" title="Chi tiết">
-                            <i class="fas fa-eye"></i> <!-- Biểu tượng Chi tiết -->
-                        </a>
-                        <a href="@Url.Action("Delete", new { id = item.IDkh })" class="btn btn-danger btn-group-sm rounded-sm mx-1" title="Xoá">
-                            <i class="fas fa-trash"></i> <!-- Biểu tượng Chi tiết -->
-                        </a>
-
-                        @if (item.TrangThaiTaiKhoan != null && item.TrangThaiTaiKhoan.Equals("Hoạt động", StringComparison.OrdinalIgnoreCase))
-                        {
-                            <button class="btn btn-outline-danger btn-group-sm rounded-sm mx-1"
-                                    title="Khóa tài khoản"
-                                    onclick="lockAccount(@item.IDkh)">
-                                <i class="fas fa-lock"></i>
-                            </button>
-                        }
-                        else
-                        {
-                            <button class="btn btn-success btn-group-sm rounded-sm mx-1"
-                                    title="Mở khóa tài khoản"
-                                    onclick="unlockAccount(@item.IDkh)">
-                                <i class="fas fa-unlock"></i>
-                            </button>
-                        }
-
-                    </td>
-
-
-                </tr>
-            }
-
-        </tbody>
-    </table>
-
-    <div class="pagination-container text-center">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.CurrentFilter }),
-            new PagedListRenderOptions
-            {
-                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
-                DisplayLinkToLastPage = PagedListDisplayMode.Always,
-                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                DisplayLinkToNextPage = PagedListDisplayMode.Always,
-                DisplayLinkToIndividualPages = true,
-                DisplayPageCountAndCurrentLocation = false,
-                MaximumPageNumbersToDisplay = 5
-            })
-    </div>
-}
-else
-{
-    <div class="alert alert-info text-center" role="alert">
-        Không có khách hàng nào trong hệ thống.
-    </div>
-}
+@Scripts.Render("~/bundles/datatables")
 <script>
     function lockAccount(id) {
         if (confirm('Bạn có chắc chắn muốn khóa tài khoản này không?')) {
@@ -160,3 +149,4 @@ else
     }
 
 </script>
+

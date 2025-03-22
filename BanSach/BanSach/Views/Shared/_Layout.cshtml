@@ -68,7 +68,7 @@
                                autocomplete="off"
                                placeholder="Nhập tên sách"
                                name="SearchString"
-                               value="@ViewBag.CurrentFilter"
+                               value="@ViewBag.CurrentFilterr"
                                style="border-radius: 0;border:none;" />
                         <button class="btn btn-light" type="submit">Tìm kiếm</button>
                     </div>
@@ -92,18 +92,18 @@
                 else if (Session["IdQly"] != null)
                 {
                     <div class="d-inline-flex gap-3">
-                        <a href="@Url.Action("QuanTri", "LoginUser")" class="nav-item text-white nav-link fs-6 ">Trang ADMIN</a>
+                        <a href="@Url.Action("QuanTri", "LoginUser")"  class="nav-item text-white nav-link fs-6 ">Trang ADMIN</a>
                         <a href="@Url.Action("Logout", "LoginUser")" class="nav-item text-white nav-link fs-6">Đăng xuất</a>
                     </div>
                 }
                 else
                 {
                     <div class="d-inline-flex gap-3">
-                        <a href="~/LoginUser/LoginAccountCus" class="page-link text-white fs-6">
+                        <a href="~/LoginUser/LoginAccountCus" id="id_dangNhap" class="page-link text-white fs-6">
                             <i class="bi bi-box-arrow-in-right"></i>
                             <span class="d-none d-sm-inline">Đăng nhập</span>
                         </a>
-                        <a href="~/LoginUser/RegisterCus" class="nav-item nav-link text-white fs-6">
+                        <a href="~/LoginUser/RegisterCus"id="id_dangKy" class="nav-item nav-link text-white fs-6">
                             <i class="bi bi-person-plus"></i>
                             <span class="d-none d-sm-inline">Đăng ký</span>
                         </a>
@@ -122,12 +122,12 @@
             @RenderBody()
         </div>
     </div>
-    <div class="container p-0 mt-1 pt-1" style="width: 100%; background-color: black;">
+    <div class="container p-0 mt-1 pt-1" style="width: 100%;">
         <div class="container mt-0 bg-dark" style=" border-radius: 5px; padding: 1rem; margin: 0; width: 100%; height: 100%;">
             @Html.Action("TopBanChay", "DonHangCTs", new { categoryId = 1 })
         </div>
     </div>
-    <div class="container p-0 mt-1 pt-1" style="width: 100%; background-color: black;">
+    <div class="container p-0 mt-1 pt-1" style="width: 100%;">
         <div class="container mt-0 bg-dark" style=" border-radius: 5px; padding: 1rem; margin: 0; width: 100%; height: 100%;">
             @Html.Action("RecentOrders", "DonHangCTs")
         </div>
@@ -201,13 +201,6 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
-
-
-
-
-
-
-
         .cart_bottom {
             position: fixed;
             bottom: 40px;

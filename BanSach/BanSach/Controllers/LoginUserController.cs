@@ -5,9 +5,6 @@ using System.Web.Mvc;
 using System.Net;
 using System.Net.Mail;
 using System.Data.Entity.Validation;
-
-
-
 namespace BanSach.Controllers
 {
     public class LoginUserController : Controller
@@ -51,32 +48,23 @@ namespace BanSach.Controllers
                 return View();
             }
 
+            // Kiểm tra số điện thoại phải là 10 số (chỉ chứa số)
+            if (string.IsNullOrEmpty(_user.SoDT) || !_user.SoDT.All(char.IsDigit) || _user.SoDT.Length != 10)
+            {
+                ViewBag.ErrorRegister = "Số điện thoại phải là 10 số (chỉ chứa số, ví dụ: 0123456789).";
+                return View();
+            }
+
             // Kiểm tra trùng lặp tài khoản, số điện thoại, và email
-            // Kiểm tra tài khoản đã tồn tại trong bảng KhachHang hoặc Admin
             bool isAccountExist = db.KhachHang.Any(s => s.TKhoan == _user.TKhoan);
-
-            // Kiểm tra số điện thoại đã tồn tại trong bảng KhachHang
             bool isPhoneExist = db.KhachHang.Any(s => s.SoDT == _user.SoDT);
-
-            // Kiểm tra email đã tồn tại trong bảng KhachHang
             bool isEmailExist = db.KhachHang.Any(s => s.Email == _user.Email);
 
-            // Nếu có bất kỳ thông tin nào tồn tại thì báo lỗi
             if (isAccountExist || isPhoneExist || isEmailExist)
             {
-                if (isAccountExist)
-                {
-                    ViewBag.ErrorRegister = "Tài khoản đã tồn tại!";
-                }
-                else if (isPhoneExist)
-                {
-                    ViewBag.ErrorRegister = "Số điện thoại đã tồn tại!";
-                }
-                else if (isEmailExist)
-                {
-                    ViewBag.ErrorRegister = "Email đã tồn tại!";
-                }
-
+                ViewBag.ErrorRegister = isAccountExist ? "Tài khoản đã tồn tại!" :
+                                           isPhoneExist ? "Số điện thoại đã tồn tại!" :
+                                           "Email đã tồn tại!";
                 return View();
             }
 
@@ -87,92 +75,81 @@ namespace BanSach.Controllers
                 return View();
             }
 
-            // Lưu người dùng vào cơ sở dữ liệu mà không có OTP ngay lập tức
-            _user.TrangThaiTaiKhoan = "Chưa xác nhận"; // Đặt trạng thái ban đầu là chưa xác nhận
+            // Lưu người dùng với trạng thái chưa xác nhận
+            _user.TrangThaiTaiKhoan = "Chưa xác nhận";
+            _user.create_date= DateTime.Now;
             db.KhachHang.Add(_user);
-            db.SaveChanges(); // Lưu người dùng mà không có OTP
+            db.SaveChanges();
 
-            // Tạo mã OTP ngẫu nhiên (4 chữ số)
+            // Tạo và lưu mã OTP
             string otp = GenerateOtp();
             _user.OTP = otp;
-            _user.OTPExpiry = DateTime.Now.AddMinutes(5); // Mã OTP có hiệu lực trong 5 phút
-
-            db.SaveChanges(); // Cập nhật mã OTP vào cơ sở dữ liệu
+            _user.OTPExpiry = DateTime.Now.AddMinutes(5);
+            db.SaveChanges();
 
             // Gửi email chứa mã OTP
-            SendEmail(_user.Email, "Xác nhận tài khoản", $"Vui lòng xác nhận tài khoản của bạn bằng cách nhập mã OTP: {otp}");
+            SendEmail(_user.Email, "Xác nhận tài khoản", $"Mã OTP của bạn: {otp}");
 
-            // Chuyển hướng đến trang nhập mã OTP
-            return RedirectToAction("VerifyOtp", new { userId = _user.IDkh });
+            // Chuyển hướng đến trang xác nhận
+            return RedirectToAction("VerifyAccount", new { userId = _user.IDkh, method = "otp" });
         }
-
 
         private string GenerateOtp()
         {
-            Random random = new Random();
-            return random.Next(1000, 9999).ToString(); // Tạo mã OTP 4 chữ số
+            return "2111";
         }
+
         [HttpGet]
-        public ActionResult VerifyOtp(int userId)
+        public ActionResult VerifyAccount(int userId, string method = "otp")
         {
             var user = db.KhachHang.FirstOrDefault(u => u.IDkh == userId);
             if (user == null)
             {
-                ViewBag.ErrorMessage = "Không tìm thấy người dùng.";
-                return View();
+                TempData["ErrorMessage"] = "Không tìm thấy người dùng.";
+                return View("VerifyAccount");
             }
 
-            return View(new VerifyOtpViewModel { UserId = userId });
+            if (method == "email" && user.TrangThaiTaiKhoan == "Chưa xác nhận")
+            {
+                user.TrangThaiTaiKhoan = "Hoạt động";
+                db.SaveChanges();
+                TempData["SuccessMessage"] = "Email đã được xác nhận thành công!";
+                return View("VerifyAccount");
+            }
+
+            return View("VerifyAccount", new VerifyOtpViewModel { UserId = userId });
         }
 
         [HttpPost]
-        public ActionResult VerifyOtp(VerifyOtpViewModel model)
+        public ActionResult VerifyAccount(VerifyOtpViewModel model)
         {
             var user = db.KhachHang.FirstOrDefault(u => u.IDkh == model.UserId);
             if (user == null)
             {
-                ViewBag.ErrorMessage = "Không tìm thấy người dùng.";
-                return View();
+                TempData["ErrorMessage"] = "Không tìm thấy người dùng.";
+                return View("VerifyAccount");
             }
 
-            // Kiểm tra mã OTP có hợp lệ không
+            // Kiểm tra mã OTP
             if (user.OTP != model.EnteredOtp)
             {
-                ViewBag.ErrorMessage = "Mã OTP không đúng.";
-                return View(model);
+                TempData["ErrorMessage"] = "Mã OTP không đúng.";
+                return View("VerifyAccount", model);
             }
 
-            // Kiểm tra mã OTP có hết hạn không
             if (user.OTPExpiry?.AddMinutes(5) < DateTime.Now)
             {
-                ViewBag.ErrorMessage = "Mã OTP đã hết hạn.";
-                return View(model);
+                TempData["ErrorMessage"] = "Mã OTP đã hết hạn.";
+                return View("VerifyAccount", model);
             }
 
-            // Cập nhật trạng thái tài khoản thành đã xác nhận
+            // Xác nhận tài khoản
             user.TrangThaiTaiKhoan = "Hoạt động";
-            user.OTP = null;  // Xóa mã OTP đã sử dụng
+            user.OTP = null;
             db.SaveChanges();
 
-            ViewBag.Message = "Email đã được xác nhận thành công!";
-            return RedirectToAction("LoginAccountCus", "LoginUser");
-        }
-        [HttpGet]
-        public ActionResult VerifyEmail(int userId)
-        {
-            var user = db.KhachHang.FirstOrDefault(u => u.IDkh == userId);
-            if (user != null)
-            {
-                user.TrangThaiTaiKhoan = "Hoạt động";
-                db.SaveChanges();
-                ViewBag.Message = "Email đã được xác nhận thành công!";
-            }
-            else
-            {
-                ViewBag.Message = "Không tìm thấy người dùng.";
-            }
-
-            return View();
+            TempData["SuccessMessage"] = "Tài khoản đã được xác nhận thành công!";
+            return View("VerifyAccount"); // Trả về view thay vì redirect ngay
         }
 
         [HttpGet]
@@ -345,7 +322,7 @@ namespace BanSach.Controllers
         {
             var fromAddress = new MailAddress("crandi21112004@gmail.com", "Võ Duy Ân - HUFLIT");
             var toAddress = new MailAddress(toEmail);
-            string fromPassword = "uisz jzid byry jtqw"; // Sử dụng App Password
+            string fromPassword = "wkdo vwwt ufkk kmgh"; // Sử dụng App Password
 
             var smtp = new SmtpClient
             {
@@ -356,7 +333,6 @@ namespace BanSach.Controllers
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
             };
-
             using (var message = new MailMessage(fromAddress, toAddress)
             {
                 Subject = subject,
@@ -365,12 +341,6 @@ namespace BanSach.Controllers
             {
                 smtp.Send(message);
             }
-        }
-
-        public ActionResult TestEmail()
-        {
-            SendEmail("crandi21112004@gmail.com", "Test Email", "This is a test email.");
-            return Content("Email sent!");
         }
     }
 }

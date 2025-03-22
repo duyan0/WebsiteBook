@@ -27,23 +27,10 @@ namespace BanSach.Controllers
 
         // GET: KhachHangs
         [HttpGet]
-        public ActionResult Index(int? page, string searchString)
+        public ActionResult Index()
         {
-            int pageSize = 10; // Số bản ghi trên mỗi trang
-            int pageNumber = (page ?? 1); // Trang hiện tại, mặc định là trang 1
-            ViewBag.CurrentFilter = searchString;
-            var khachhang = db.KhachHang.AsQueryable();
-
-            // Nếu có từ khóa tìm kiếm thì lọc danh sách Admin
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                khachhang = khachhang.Where(a => a.TenKH.Contains(searchString) ||
-                                           a.SoDT.Contains(searchString) ||
-                                           a.Email.Contains(searchString) ||
-                                           a.TKhoan.Contains(searchString));
-            }
-            var khachHangList = khachhang.OrderBy(kh => kh.IDkh).ToPagedList(pageNumber, pageSize);
-            return View(khachHangList);
+            var listUser = db.KhachHang.ToList();
+            return View(listUser);
         }
 
         // GET: KhachHangs/Details/5

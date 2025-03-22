@@ -20,7 +20,7 @@ namespace BanSach.Controllers
         // GET: SanPhams
         public ActionResult Index(string searchString, string sortOrder, int? page)
         {
-            ViewBag.CurrentFilter = searchString;
+            ViewBag.CurrentFilterr = searchString;
             ViewBag.CurrentSort = sortOrder;
 
             // Các tùy chọn sắp xếp

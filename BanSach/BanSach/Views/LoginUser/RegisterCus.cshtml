@@ -1,14 +1,11 @@
 ﻿@{
     ViewBag.Title = "Đăng ký";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-
 </head>
-
 
 <style>
     .field-validation-error {
@@ -46,7 +43,7 @@
             background: #f7f7f7;
             width: 100%;
             border: 1px solid #ddd;
-            margin: 0 0 15px;
+            margin: 0 0 5px;
             padding: 12px;
             box-sizing: border-box;
             font-size: 14px;
@@ -82,88 +79,176 @@
 
         .form .password-field {
             position: relative;
+            margin-bottom: 15px;
         }
 
         .form .toggle-password {
             position: absolute;
             right: 10px;
-            top: 20%;
+            top: 24px;
+            transform: translateY(-50%);
             cursor: pointer;
             color: #888;
-            font-size: 14px;
+            font-size: 13px;
         }
-</style>
 
-<script>
-    function togglePasswordVisibility(id) {
-        var passwordField = document.getElementById(id);
-        var toggleIcon = document.getElementById("toggle" + id);
-
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-            toggleIcon.textContent = "Ẩn";
-        } else {
-            passwordField.type = "password";
-            toggleIcon.textContent = "Hiện";
-        }
+    .text-danger {
+        color: #dc3545;
+        font-size: 13px;
+        text-align: left;
+        margin-top: 5px;
+        margin-bottom: 0;
     }
-</script>
+</style>
 
 <div class="login-page">
     <div class="form">
         <h3 style="color: #333; font-weight: bold;">Đăng ký</h3>
 
-        <form action="/LoginUser/RegisterCus" class="login-form" method="post">
-            <p class="field-validation-error">@ViewBag.ErrorRegister</p>
+        <form action="/LoginUser/RegisterCus" class="login-form" method="post" onsubmit="return validateForm(event)">
+            <p id="error" class="field-validation-error">@ViewBag.ErrorRegister</p>
 
             <p>
-                <input type="text" placeholder="Tên" name="TenKH" />
+                <input type="text" placeholder="Tên" tabindex="1" name="TenKH" maxlength="50" required />
             </p>
             <p>
-                <input type="tel" placeholder="Số điện thoại"  maxlength="11" name="SoDT" />
-            </p>
-
-            <p>
-                <input type="email" placeholder="Email" name="Email" oninput="validateEmail(this)" />
+                <input type="tel" placeholder="Số điện thoại"tabindex="2"  maxlength="10" name="SoDT" required />
             </p>
 
             <p>
-                <input type="text" placeholder="Tài khoản" name="TKhoan" oninput="validateAccount(this)" />
+                <input type="email" placeholder="Email"tabindex="3" name="Email" minlength="11" maxlength="255" oninput="validateEmail(this)" required />
+            </p>
+
+            <p>
+                <input type="text" placeholder="Tài khoản"tabindex="4" name="TKhoan" minlength="6" maxlength="30" oninput="validateAccount(this)" required />
             </p>
 
             <div class="password-field">
                 <p>
-                    <input type="password" placeholder="Mật Khẩu" name="MKhau" id="password1" oninput="validatePassword(this)" />
+                    <input type="password" placeholder="Mật Khẩu"tabindex="5" name="MKhau" minlength="6" maxlength="30" id="password1" oninput="validatePassword(this)" required />
                     <span id="togglepassword1" class="toggle-password" onclick="togglePasswordVisibility('password1')">Hiện</span>
                 </p>
             </div>
 
             <div class="password-field">
                 <p>
-                    <input type="password" placeholder="Nhập lại mật khẩu" name="ConfirmPass" id="password2" oninput="validatePassword(this)" />
+                    <input type="password" placeholder="Nhập lại mật khẩu" name="ConfirmPass" minlength="6" maxlength="30" id="password2" oninput="validatePassword(this)" required />
                     <span id="togglepassword2" class="toggle-password" onclick="togglePasswordVisibility('password2')">Hiện</span>
                 </p>
             </div>
 
-            <button type="submit" class="btn btn-dark w-100 ">Đăng ký</button>
+            <button type="submit" class="btn btn-dark w-100">Đăng ký</button>
 
             <p class="message">Đã có tài khoản? <a href="~/LoginUser/LoginAccountCus">Đăng nhập ngay</a></p>
         </form>
     </div>
 </div>
 
-<script>
-    function validateEmail(input) {
-        // Loại bỏ dấu chấm (.) và dấu phẩy (,)
-        input.value = input.value.replace(/[<>,]/g, '');
-    }
-    function validateAccount(input) {
-        // Loại bỏ dấu, khoảng trắng, và ký tự < hoặc >
-        input.value = input.value.replace(/[^A-Za-z0-9]/g, '');
-    }
-    function validatePassword(input) {
-        // Loại bỏ khoảng trắng, dấu và các ký tự <> nhưng cho phép ký tự
-        input.value = input.value.replace(/[^A-Za-z0-9"{}"]/g, '');
-    }
+@section Scripts {
+    <script>
+        // Hàm lọc và loại bỏ các ký tự không mong muốn
+        function sanitizeInput(input, allowedPattern) {
+            input.value = input.value.replace(allowedPattern, '');
+        }
 
-</script>
+        // Hàm kiểm tra tài khoản
+        function validateAccount(input) {
+            const value = input.value.trim();
+            const allowedPattern = /[^a-zA-Z0-9]/g; // Chỉ cho phép chữ và số
+            sanitizeInput(input, allowedPattern);
+
+            const minLength = parseInt(input.getAttribute("minlength")) || 6;
+            const maxLength = parseInt(input.getAttribute("maxlength")) || 30;
+            const errorElement = input.parentNode.querySelector(".text-danger") || document.createElement("p");
+
+            // Kiểm tra có chứa cả chữ, số, và chữ in hoa không
+            const hasLetter = /[a-zA-Z]/.test(value);
+            const hasNumber = /[0-9]/.test(value);
+            const hasUppercase = /[A-Z]/.test(value);
+
+            if (value.length < minLength || value.length > maxLength || !hasLetter || !hasNumber || !hasUppercase) {
+                errorElement.textContent = `Tài khoản phải có từ ${minLength} đến ${maxLength} ký tự, chỉ chứa chữ và số, và phải có ít nhất một chữ in hoa.`;
+                errorElement.className = "text-danger";
+                errorElement.style.fontSize = "13px";
+                errorElement.style.display = "block";
+                input.parentNode.appendChild(errorElement);
+                return false;
+            } else {
+                if (input.parentNode.querySelector(".text-danger")) {
+                    input.parentNode.removeChild(input.parentNode.querySelector(".text-danger"));
+                }
+                return true;
+            }
+        }
+
+        // Hàm kiểm tra mật khẩu
+        function validatePassword(input) {
+            const value = input.value.trim();
+            const allowedPattern = /[^a-zA-Z0-9]/g; // Chỉ cho phép chữ và số
+            sanitizeInput(input, allowedPattern);
+
+            const minLength = parseInt(input.getAttribute("minlength")) || 6;
+            const maxLength = parseInt(input.getAttribute("maxlength")) || 30;
+            const errorElement = input.parentNode.querySelector(".text-danger") || document.createElement("p");
+
+            // Kiểm tra có chứa cả chữ, số, và chữ in hoa không
+            const hasLetter = /[a-zA-Z]/.test(value);
+            const hasNumber = /[0-9]/.test(value);
+            const hasUppercase = /[A-Z]/.test(value);
+
+            if (value.length < minLength || value.length > maxLength || !hasLetter || !hasNumber || !hasUppercase) {
+                errorElement.textContent = `Mật khẩu phải có từ ${minLength} đến ${maxLength} ký tự, chỉ chứa chữ và số, và phải có ít nhất một chữ in hoa.`;
+                errorElement.className = "text-danger";
+                errorElement.style.fontSize = "13px";
+                errorElement.style.display = "block";
+                input.parentNode.appendChild(errorElement);
+                return false;
+            } else {
+                if (input.parentNode.querySelector(".text-danger")) {
+                    input.parentNode.removeChild(input.parentNode.querySelector(".text-danger"));
+                }
+                return true;
+            }
+        }
+
+       
+
+        // Hàm hiển thị lỗi
+        function showError(input, message) {
+            let errorElement = input.parentNode.querySelector(".text-danger");
+            if (!errorElement) {
+                errorElement = document.createElement("p");
+                errorElement.className = "text-danger";
+                errorElement.style.fontSize = "13px";
+                input.parentNode.appendChild(errorElement);
+            }
+            errorElement.textContent = message;
+            errorElement.style.display = "block";
+        }
+
+        // Hàm ẩn lỗi
+        function hideError(input) {
+            const errorElement = input.parentNode.querySelector(".text-danger");
+            if (errorElement) {
+                errorElement.style.display = "none";
+            }
+        }
+
+        // Hàm hiện/ẩn mật khẩu
+        function togglePasswordVisibility(passwordId) {
+            const password = document.getElementById(passwordId);
+            const toggle = document.getElementById(`toggle${passwordId === "password1" ? "password1" : "password2"}`);
+            if (password && toggle) { // Kiểm tra xem các phần tử có tồn tại không
+                if (password.type === "password") {
+                    password.type = "text";
+                    toggle.textContent = "Ẩn";
+                } else {
+                    password.type = "password";
+                    toggle.textContent = "Hiện";
+                }
+            } else {
+                console.error("Không tìm thấy phần tử mật khẩu hoặc toggle với ID:", passwordId);
+            }
+        }
+    </script>
+}

@@ -1,50 +1,44 @@
 ﻿@model BanSach.Models.SanPham
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Thêm sản phẩm";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2 class="text-black text-center font-weight-bold mb-4">Thêm sản phẩm</h2>
 
-@using (Html.BeginForm())
+<h2 class="text-center fs-4 fw-bold mb-4 mt-4 ">Thêm sản phẩm</h2>
+
+@using (Html.BeginForm("Create", "SanPhams", FormMethod.Post, new { enctype = "multipart/form-data", @class = "bg-light p-4 rounded shadow-sm border" }))
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal bg-light p-4 rounded shadow-sm border border-dark" style="border-radius: 10px;">
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="row g-3">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group row">
-        @Html.LabelFor(model => model.TenSP, "Tên sản phẩm", htmlAttributes: new { @class = "control-label text-dark col-md-2 font-weight-bold" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control border border-dark", style = "border-radius: 10px;", placeholder = "Nhập tên sản phẩm" } })
+        <!-- Tên sản phẩm -->
+        <div class="col-md-6">
+            <label for="TenSP" class="form-label fw-bold">Tên sản phẩm</label>
+            @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên sản phẩm" } })
             @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
         </div>
-    </div>
 
-    <div class="form-group row">
-        <!-- Trường nhập mô tả -->
-        <label for="MoTa" class="control-label col-md-2 text-dark font-weight-bold">Nhập mô tả cho sách</label>
-        <div class="col-md-10">
-            <textarea id="MoTa" name="MoTa" class="form-control border border-dark" rows="5" style="border-radius: 10px;" placeholder="Nhập mô tả cho sản phẩm"></textarea>
-            <span class="text-danger"></span> <!-- Chỗ để hiển thị thông báo lỗi nếu có -->
-        </div>
-    </div>
-
-
-
-    <div class="form-group row">
-        @Html.LabelFor(model => model.IDtl, "Thể loại", htmlAttributes: new { @class = "control-label text-dark col-md-2 font-weight-bold" })
-        <div class="col-md-10">
-            @Html.DropDownList("IDtl", (SelectList)ViewBag.TL, "Chọn thể loại", new { @class = "form-control border border-dark", style = "border-radius: 10px;" })
+        <!-- Thể loại -->
+        <div class="col-md-6">
+            <label for="IDtl" class="form-label fw-bold">Thể loại</label>
+            @Html.DropDownList("IDtl", (SelectList)ViewBag.TL, "Chọn thể loại", new { @class = "form-select" })
             @Html.ValidationMessageFor(model => model.IDtl, "", new { @class = "text-danger" })
         </div>
-    </div>
 
-    <div class="form-group row">
-        <label class="control-label col-md-2 font-weight-bold text-dark">Giá</label>
-        <div class="col-md-10">
+        <!-- Mô tả -->
+        <div class="col-12">
+            <label for="MoTa" class="form-label fw-bold">Mô tả</label>
+            <textarea id="MoTa" name="MoTa" class="form-control" rows="4" placeholder="Nhập mô tả cho sản phẩm"></textarea>
+            <span class="text-danger" id="MoTaValidation"></span>
+        </div>
+
+        <!-- Giá bán -->
+        <div class="col-md-6">
+            <label for="GiaBanDropdown" class="form-label fw-bold">Giá bán</label>
             @Html.DropDownListFor(model => model.GiaBan, new List<SelectListItem>
             {
                 new SelectListItem { Value = "1000", Text = "1.000 VND" },
@@ -55,93 +49,76 @@
                 new SelectListItem { Value = "100000", Text = "100.000 VND" },
                 new SelectListItem { Value = "200000", Text = "200.000 VND" },
                 new SelectListItem { Value = "500000", Text = "500.000 VND" },
-                new SelectListItem { Value = "1000000", Text = "1.000.000 VND" },
-            }, new { @class = "form-control border border-dark", @id = "GiaBanDropdown", style = "border-radius: 10px;", @placeholder = "Chọn giá" })
-
-
+                new SelectListItem { Value = "1000000", Text = "1.000.000 VND" }
+            }, "Chọn giá", new { @class = "form-select", @id = "GiaBanDropdown" })
+            @Html.ValidationMessageFor(model => model.GiaBan, "", new { @class = "text-danger" })
         </div>
-    </div>
 
-    <div class="form-group row">
-        <div class="control-label text-dark col-md-2 font-weight-bold">Hình</div>
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.HinhAnh, null, new { type = "file", @class = "form-control text-dark border border-dark", @id = "fileInput", style = "border-radius: 10px;", @placeholder = "Chọn hình ảnh cho sản phẩm" })
-            <br />
-            <img id="previewImage" src="#" alt="Hình xem trước" style="display: none; max-width: 200px; max-height: 200px;" class="img-thumbnail" />
+        <!-- Hình ảnh -->
+        <div class="col-md-6">
+            <label for="fileInput" class="form-label fw-bold">Hình ảnh</label>
+            @Html.TextBoxFor(model => model.HinhAnh, null, new { type = "file", @class = "form-control", @id = "fileInput" })
+            <img id="previewImage" src="#" alt="Hình xem trước" style="display: none; max-width: 150px; margin-top: 10px;" class="img-thumbnail" />
         </div>
-    </div>
 
-    <div class="form-group row">
-        @Html.LabelFor(model => model.IDtg, "Tác giả", htmlAttributes: new { @class = "control-label text-dark col-md-2 font-weight-bold" })
-        <div class="col-md-10">
-            @Html.DropDownList("IDtg", (SelectList)ViewBag.TacGia, "Chọn Tác giả", new { @class = "form-control border border-dark", style = "border-radius: 10px;" })
+        <!-- Tác giả -->
+        <div class="col-md-6">
+            <label for="IDtg" class="form-label fw-bold">Tác giả</label>
+            @Html.DropDownList("IDtg", (SelectList)ViewBag.TacGia, "Chọn tác giả", new { @class = "form-select" })
             @Html.ValidationMessageFor(model => model.IDtg, "", new { @class = "text-danger" })
         </div>
-    </div>
 
-    <div class="form-group row">
-        @Html.LabelFor(model => model.IDkm, "Khuyến mãi", htmlAttributes: new { @class = "control-label text-dark col-md-2 font-weight-bold" })
-        <div class="col-md-10">
-            @Html.DropDownList("IDkm", (SelectList)ViewBag.KM, "Chọn mức giảm giá", new { @class = "form-control border border-dark", style = "border-radius: 10px;" })
+        <!-- Khuyến mãi -->
+        <div class="col-md-6">
+            <label for="IDkm" class="form-label fw-bold">Khuyến mãi</label>
+            @Html.DropDownList("IDkm", (SelectList)ViewBag.KM, "Chọn mức giảm giá", new { @class = "form-select" })
             @Html.ValidationMessageFor(model => model.IDkm, "", new { @class = "text-danger" })
         </div>
-    </div>
-    <div class="form-group row">
-        @Html.LabelFor(model => model.IDnxb, "Nhà xuất bản", htmlAttributes: new { @class = "control-label text-dark col-md-2 font-weight-bold" })
-        <div class="col-md-10">
-            @Html.DropDownList("IDnxb", (SelectList)ViewBag.NXB, "Chọn Nhà xuất bản", new { @class = "form-control border border-dark", style = "border-radius: 10px;" })
+
+        <!-- Nhà xuất bản -->
+        <div class="col-md-6">
+            <label for="IDnxb" class="form-label fw-bold">Nhà xuất bản</label>
+            @Html.DropDownList("IDnxb", (SelectList)ViewBag.NXB, "Chọn nhà xuất bản", new { @class = "form-select" })
             @Html.ValidationMessageFor(model => model.IDnxb, "", new { @class = "text-danger" })
         </div>
-    </div>
-    <div class="form-group row">
-        @Html.LabelFor(model => model.SoLuong, "Số lượng sản phẩm", htmlAttributes: new { @class = "control-label text-dark col-md-2 font-weight-bold" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.SoLuong, new
-            {
-                htmlAttributes = new
-                {
-                    @class = "form-control border border-dark",
-                    style = "border-radius: 10px;",
-                    placeholder = "Nhập số lượng sản phẩm",
-                    min = "0",
-                    max = "1000"
-                }
-            })
+
+        <!-- Số lượng -->
+        <div class="col-md-6">
+            <label for="SoLuong" class="form-label fw-bold">Số lượng</label>
+            @Html.EditorFor(model => model.SoLuong, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập số lượng", type = "number", min = "0", max = "10000" } })
             @Html.ValidationMessageFor(model => model.SoLuong, "", new { @class = "text-danger" })
         </div>
-    </div>
 
-
-    <div class="form-group row">
-        <div class="control-label text-dark col-md-2 font-weight-bold">Trạng thái sách</div>
-        <div class="col-md-10">
+        <!-- Trạng thái sách -->
+        <div class="col-md-6 d-none">
+            <label class="form-label fw-bold ">Trạng thái sách</label>
             @Html.HiddenFor(model => model.TrangThaiSach, new { @Value = "Còn hàng" })
-            <p class="form-control-plaintext text-success">Còn hàng</p>
+            <p class="form-control bg-success text-white text-center mb-0">Còn hàng</p>
         </div>
-    </div>
 
-    <div class="form-group row mt-4">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Thêm" class="btn btn-success rounded-sm" />
-            @Html.ActionLink("Quay về", "Index", null, new { @class = "btn btn-secondary ml-2 rounded-sm" })
+        <!-- Nút hành động -->
+        <div class="col-12 text-center mt-4">
+            <input type="submit" value="Thêm" class="btn btn-success" />
+            @Html.ActionLink("Quay về", "Index", null, new { @class = "btn btn-secondary ms-2" })
         </div>
     </div>
-</div>
 }
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- jQuery và Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
 <script>
     $(document).ready(function () {
         // Xem trước hình ảnh
-        document.getElementById('fileInput').addEventListener('change', function (event) {
+        $('#fileInput').on('change', function (event) {
             var reader = new FileReader();
             reader.onload = function () {
-                var img = document.getElementById('previewImage');
-                img.src = reader.result;
-                img.style.display = 'block';
-            }
+                var img = $('#previewImage');
+                img.attr('src', reader.result);
+                img.show();
+            };
             reader.readAsDataURL(event.target.files[0]);
         });
     });
-
 </script>

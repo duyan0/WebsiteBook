@@ -85,11 +85,7 @@
         margin-bottom: 20px;
     }
 
-        .form .forgot-password a {
-            color: #ff424e;
-            font-size: 14px;
-            text-decoration: none;
-        }
+        
 
 /* Responsive Design */
 @media screen and (max-width: 768px) {

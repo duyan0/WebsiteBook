@@ -15,17 +15,14 @@ namespace BanSach.Models
     
     public partial class db_Book : DbContext
     {
-        public db_Book()
-            : base("name=db_Book")
-        {
-        }
-    
+        public db_Book() : base("name=db_Book") { }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-    
-        public virtual DbSet<Admin> Admin { get; set; }
+
+        public DbSet<Admin> Admin { get; set; }
         public virtual DbSet<Banner> Banner { get; set; }
         public virtual DbSet<DanhMuc> DanhMuc { get; set; }
         public virtual DbSet<DanhMuc_TheLoai> DanhMuc_TheLoai { get; set; }

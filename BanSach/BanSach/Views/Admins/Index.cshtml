@@ -1,102 +1,68 @@
-﻿@model PagedList.IPagedList<BanSach.Models.Admin>
-@using PagedList.Mvc;
+﻿@model List<BanSach.Models.Admin>
 
 @{
-    ViewBag.Title = "Quản lí Admin";
+    ViewBag.Title = "Quản lý nhân sự";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<link href="~/Content/PagedList.css" rel="stylesheet" />
-
-<h2 class="tieude">Quản lí Admin</h2>
-
-<!-- Search Bar -->
-<div class="search-bar">
-    @using (Html.BeginForm("Index", "Admins", FormMethod.Get, new { id = "searchForm" }))
-    {
-        <div class="input-group mb-2 mt-2 ">
-            <input type="text" name="searchString" value="@ViewBag.CurrentFilter" class="form-control" id="searchInput" placeholder="Tìm kiếm Admin...">
-            <button class="btn btn-dark" type="submit">Tìm kiếm</button>
-        </div>
-    }
-</div>
-
-<!-- Add New Admin Button -->
+<link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
+<script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+<script src="~/Content/js/DataTables.js"></script>
+<h4 class="fw-semibold mt-2 mb-2 text-center ">Quản lý nhân sự</h4>
 <p>
-    @Html.ActionLink("Thêm ", "Create", null, new { @class = "btn btn-dark rounded-sm" })
+    @Html.ActionLink("Thêm nhân sự", "Create", null, new { @class = "btn btn-dark " })
 </p>
 
-@if (Model != null && Model.Count > 0)
-{
-    <!-- Admins Table -->
-    <table class="table table-bordered  table-responsive-sm table-responsive-md">
-        <thead class="bg-dark text-white align-content-center justify-content-center">
-            <tr>
-                <th>ID</th>
-                <th>Họ tên</th>
-                <th>Email</th>
-                <th>Địa Chỉ</th>
-                <th>Hotline</th>
-                <th style="width:120px;">Vai trò</th>
-                <th style="width:200px;">Thao tác</th>
-            </tr>
-        </thead>
-        <tbody style="color:black;" class="align-content-center justify-content-center">
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.ID</td>
-                    <td>@Html.DisplayFor(modelItem => item.HoTen)</td>
-                    <td>@("*****" + item.Email.Substring(5))</td>
-                    <td>@(item.DiaChi.Length > 20 ? item.DiaChi.Substring(0, 20) + "..." : item.DiaChi)</td>
-                    <td>@("******" + item.SoDT.Substring(6))</td>
-                    <td class="text-center">
-                        @* Determine role badge styling *@
-                        @{
-                            var role = item.VaiTro?.Trim().ToLower();
-                            var buttonClass = role == "admin" ? "text-bg-success" : "text-bg-info";
-                        }
-                        <span class="badge @buttonClass">@item.VaiTro</span>
-                    </td>
-                    <td style="width: 220px;">
-                        @* Show edit/delete only for non-admin roles *@
-                        @if (!string.Equals(item.VaiTro.Trim(), "Admin", StringComparison.OrdinalIgnoreCase))
-                        {
-                            <a href="@Url.Action("Edit", new { id = item.ID })" class="btn btn-warning btn-group-sm rounded-sm mx-1" title="Sửa">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="@Url.Action("Delete", new { id = item.ID })" class="btn btn-danger btn-group-sm rounded-sm mx-1" title="Xoá">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
-                        }
-                        <a href="@Url.Action("Details", new { id = item.ID })" class="btn btn-info btn-group-sm rounded-sm mx-1" title="Chi tiết">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    <!-- Pagination -->
-    <div class="d-flex justify-content-center">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.CurrentFilter }), new PagedListRenderOptions
+<table id="myTable" class="table-bordered table-responsive-sm" style="width:100%;">
+    <thead class="table-dark">
+        <tr class="text-bg-dark">
+            <th>ID</th>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>Địa Chỉ</th>
+            <th>Hotline</th>
+            <th>Vai trò</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody class="fs-6">
+        @foreach (var item in Model)
         {
-            DisplayLinkToFirstPage = PagedListDisplayMode.Always,
-            DisplayLinkToLastPage = PagedListDisplayMode.Always,
-            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-            DisplayLinkToNextPage = PagedListDisplayMode.Always,
-            MaximumPageNumbersToDisplay = 5,
-            DisplayEllipsesWhenNotShowingAllPageNumbers = true,
-            DisplayLinkToIndividualPages = true
-        })
-    </div>
-}
-else
-{
-    <div class="alert alert-info text-center" role="alert">
-        Không có Admin nào trong hệ thống.
-    </div>
-}
+            var role = item.VaiTro?.Trim();
+            var badgeClass = string.Equals(role, "admin", StringComparison.OrdinalIgnoreCase) ? "bg-success" : "bg-danger";
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+            <tr>
+                <td>@item.ID</td>
+                <td>@Html.DisplayFor(modelItem => item.HoTen)</td>
+                <td>@item.Email</td>
+                <td>@item.DiaChi</td>
+                <td>@item.SoDT</td>
+                <td class="text-center">
+                    @if (!string.IsNullOrEmpty(role))
+                    {
+                        <span class="badge @badgeClass text-white">@role</span>
+                    }
+                </td>
+                <td>
+                    @if (!string.Equals(role, "Admin", StringComparison.OrdinalIgnoreCase))
+                    {
+                        <a href="@Url.Action("Edit", new { id = item.ID })" class="btn btn-warning btn-sm mx-1">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="@Url.Action("Delete", new { id = item.ID })" class="btn btn-danger btn-sm mx-1">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    }
+                    <a href="@Url.Action("Details", new { id = item.ID })" class="btn btn-info btn-sm mx-1">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Scripts.Render("~/bundles/datatables")
+
+
+
+
