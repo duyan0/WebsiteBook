@@ -1,0 +1,41 @@
+﻿@model BanSach.Models.SanPham
+
+@{
+    ViewBag.Title = "Nhân bản sản phẩm";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center fw-semibold mb-3">Nhân bản sản phẩm</h2>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <p class="text-muted mb-4">Bạn có muốn sao chép sản phẩm <strong>"@Model.TenSP"</strong> không?</p>
+
+            @using (Html.BeginForm("Clone", "SanPhams", FormMethod.Post, new { @class = "form-inline" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.IDsp)
+
+                <div class="form-actions d-flex justify-content-start gap-2">
+                    <button type="submit" class="btn btn-primary rounded-1">
+                        <i class="fas fa-copy me-1"></i> Clone
+                    </button>
+                    <a href="@Url.Action("Index")" class="btn btn-secondary rounded-1">
+                        <i class="fas fa-arrow-left me-1"></i> Quay lại danh sách
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Có thể thêm logic JavaScript nếu cần (ví dụ: xác nhận trước khi submit)
+        $(document).ready(function () {
+            $('form').submit(function () {
+                return confirm('Bạn có chắc chắn muốn sao chép sản phẩm này không?');
+            });
+        });
+    </script>
+}

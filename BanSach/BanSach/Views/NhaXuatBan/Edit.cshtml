@@ -1,64 +1,55 @@
 ﻿@model BanSach.Models.NhaXuatBan
 
 @{
-    ViewBag.Title = "Cập nhật - " + Model.Tennxb; // Cập nhật tiêu đề
+    ViewBag.Title = "Cập nhật - " + Model.Tennxb;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2 class="text-center font-weight-bold">Chỉnh Sửa Nhà Xuất Bản</h2> <!-- Tiêu đề chính -->
+<div class="container mt-4">
+    <h2 class="mb-4 text-center fw-bold">Chỉnh Sửa Nhà Xuất Bản</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-    <div class="container">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.IDnxb)
 
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.IDnxb)
+                <div class="mb-3">
+                    <label for="Tennxb" class="form-label fw-bold">Tên nhà xuất bản</label>
+                    @Html.EditorFor(model => model.Tennxb, new { htmlAttributes = new { @class = "form-control", @id = "Tennxb" } })
+                    @Html.ValidationMessageFor(model => model.Tennxb, "", new { @class = "text-danger" })
+                </div>
 
-    <div class="form-group row">
-        @Html.LabelFor(model => model.Tennxb, "Tên nhà xuất bản", htmlAttributes: new { @class = "control-label col-md-2", title = "Tên NXB" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Tennxb, new { htmlAttributes = new { @class = "form-control rounded" } }) <!-- Bo góc cho trường nhập -->
-            @Html.ValidationMessageFor(model => model.Tennxb, "", new { @class = "text-danger" })
-        </div>
-    </div>
+                <div class="mb-3">
+                    <label for="DiaChi" class="form-label fw-bold">Địa chỉ</label>
+                    @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control", @id = "DiaChi" } })
+                    @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                </div>
 
-        <div class="form-group row">
-            @Html.LabelFor(model => model.DiaChi, "Địa chỉ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control rounded" } }) <!-- Bo góc cho trường nhập -->
-                @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                <div class="mb-3">
+                    <label for="SDT" class="form-label fw-bold">Hotline</label>
+                    @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control", @id = "SDT" } })
+                    @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    <label for="Email" class="form-label fw-bold">Email</label>
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "Email" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="d-flex justify-content-center gap-3">
+                    <button type="submit" class="btn btn-success px-4">Lưu</button>
+                    @Html.ActionLink("Trở về danh sách", "Index", null, new { @class = "btn btn-outline-secondary px-4" })
+                </div>
             </div>
         </div>
-
-        <div class="form-group row">
-            @Html.LabelFor(model => model.SDT, "Hotline", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control rounded" } }) <!-- Bo góc cho trường nhập -->
-                @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group row">
-            @Html.LabelFor(model => model.Email, "Email", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control rounded" } }) <!-- Bo góc cho trường nhập -->
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-12 text-center">
-                <!-- Căn giữa bằng cách sử dụng col-md-12 -->
-                <input type="submit" value="Lưu" class="btn btn-success rounded" style="width: 150px;" /> <!-- Nút lưu với màu chính, bo góc và chiều rộng 150px -->
-            </div>
-        </div>
-
-    </div>
-}
-
-<div class="text-center">
-    @Html.ActionLink("Trở Về Danh Sách", "Index", null, new { @class = "btn btn-secondary rounded" }) <!-- Nút trở về với bo góc -->
+    }
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -3,64 +3,20 @@
   "WorkspaceRootPath": "D:\\GITHUB\\BanSach\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\github\\bansach\\bansach\\controllers\\loginusercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\controllers\\loginusercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\github\\bansach\\bansach\\designpatterns\\strategypattern\\pricedescendingstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\designpatterns\\strategypattern\\pricedescendingstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|D:\\GITHUB\\BanSach\\bansach\\designpatterns\\commandpattern\\deleteadmincommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\designpatterns\\commandpattern\\deleteadmincommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|D:\\GITHUB\\BanSach\\bansach\\designpatterns\\strategypattern\\priceascendingstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\designpatterns\\strategypattern\\priceascendingstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|D:\\GITHUB\\BanSach\\bansach\\designpatterns\\repositorypattern\\adminrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\designpatterns\\repositorypattern\\adminrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|D:\\GITHUB\\BanSach\\bansach\\designpatterns\\strategypattern\\nameascendingstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\designpatterns\\strategypattern\\nameascendingstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|D:\\GITHUB\\BanSach\\bansach\\designpatterns\\factorypattern\\iadminfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\designpatterns\\factorypattern\\iadminfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|D:\\GITHUB\\BanSach\\bansach\\designpatterns\\factorypattern\\adminfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\designpatterns\\factorypattern\\adminfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|D:\\GITHUB\\BanSach\\bansach\\controllers\\adminscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\controllers\\adminscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|D:\\GITHUB\\BanSach\\bansach\\controllers\\sanphamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\controllers\\sanphamscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|D:\\GITHUB\\BanSach\\bansach\\views\\shared\\_adminlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\shared\\_adminlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|D:\\GITHUB\\BanSach\\bansach\\views\\loginuser\\loginaccountcus.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\loginuser\\loginaccountcus.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|D:\\GITHUB\\BanSach\\bansach\\controllers\\khachhangscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\controllers\\khachhangscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|D:\\GITHUB\\BanSach\\bansach\\views\\khachhangs\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\khachhangs\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|D:\\GITHUB\\BanSach\\bansach\\views\\admins\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\admins\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|D:\\GITHUB\\BanSach\\bansach\\content\\js\\datatables.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\content\\js\\datatables.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|D:\\GITHUB\\BanSach\\bansach\\views\\loginuser\\verifyaccount.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\loginuser\\verifyaccount.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|D:\\GITHUB\\BanSach\\bansach\\views\\loginuser\\registercus.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\loginuser\\registercus.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|D:\\GITHUB\\BanSach\\bansach\\designpatterns\\strategypattern\\isortstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\designpatterns\\strategypattern\\isortstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -75,184 +31,51 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "LoginUserController.cs",
-              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\Controllers\\LoginUserController.cs",
-              "RelativeDocumentMoniker": "BanSach\\Controllers\\LoginUserController.cs",
-              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\Controllers\\LoginUserController.cs",
-              "RelativeToolTip": "BanSach\\Controllers\\LoginUserController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAZAAAAAAAAAA==",
+              "Title": "PriceDescendingStrategy.cs",
+              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\StrategyPattern\\PriceDescendingStrategy.cs",
+              "RelativeDocumentMoniker": "BanSach\\DesignPatterns\\StrategyPattern\\PriceDescendingStrategy.cs",
+              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\StrategyPattern\\PriceDescendingStrategy.cs",
+              "RelativeToolTip": "BanSach\\DesignPatterns\\StrategyPattern\\PriceDescendingStrategy.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-22T02:43:13.754Z",
-              "IsPinned": true,
+              "WhenOpened": "2025-03-31T13:26:07.778Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "DeleteAdminCommand.cs",
-              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\CommandPattern\\DeleteAdminCommand.cs",
-              "RelativeDocumentMoniker": "BanSach\\DesignPatterns\\CommandPattern\\DeleteAdminCommand.cs",
-              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\CommandPattern\\DeleteAdminCommand.cs",
-              "RelativeToolTip": "BanSach\\DesignPatterns\\CommandPattern\\DeleteAdminCommand.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAoAAAA2AAAAAAAAAA==",
+              "Title": "PriceAscendingStrategy.cs",
+              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\StrategyPattern\\PriceAscendingStrategy.cs",
+              "RelativeDocumentMoniker": "BanSach\\DesignPatterns\\StrategyPattern\\PriceAscendingStrategy.cs",
+              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\StrategyPattern\\PriceAscendingStrategy.cs",
+              "RelativeToolTip": "BanSach\\DesignPatterns\\StrategyPattern\\PriceAscendingStrategy.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-22T08:44:56.287Z"
+              "WhenOpened": "2025-03-31T13:26:01.061Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "AdminRepository.cs",
-              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\RepositoryPattern\\AdminRepository.cs",
-              "RelativeDocumentMoniker": "BanSach\\DesignPatterns\\RepositoryPattern\\AdminRepository.cs",
-              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\RepositoryPattern\\AdminRepository.cs",
-              "RelativeToolTip": "BanSach\\DesignPatterns\\RepositoryPattern\\AdminRepository.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAwAAAAuAAAAAAAAAA==",
+              "Title": "NameAscendingStrategy.cs",
+              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\StrategyPattern\\NameAscendingStrategy.cs",
+              "RelativeDocumentMoniker": "BanSach\\DesignPatterns\\StrategyPattern\\NameAscendingStrategy.cs",
+              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\StrategyPattern\\NameAscendingStrategy.cs",
+              "RelativeToolTip": "BanSach\\DesignPatterns\\StrategyPattern\\NameAscendingStrategy.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-22T08:39:41.845Z"
+              "WhenOpened": "2025-03-31T13:25:25.035Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "IAdminFactory.cs",
-              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\FactoryPattern\\IAdminFactory.cs",
-              "RelativeDocumentMoniker": "BanSach\\DesignPatterns\\FactoryPattern\\IAdminFactory.cs",
-              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\FactoryPattern\\IAdminFactory.cs",
-              "RelativeToolTip": "BanSach\\DesignPatterns\\FactoryPattern\\IAdminFactory.cs",
+              "Title": "ISortStrategy.cs",
+              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\StrategyPattern\\ISortStrategy.cs",
+              "RelativeDocumentMoniker": "BanSach\\DesignPatterns\\StrategyPattern\\ISortStrategy.cs",
+              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\StrategyPattern\\ISortStrategy.cs",
+              "RelativeToolTip": "BanSach\\DesignPatterns\\StrategyPattern\\ISortStrategy.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-22T08:39:31.416Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "AdminFactory.cs",
-              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\FactoryPattern\\AdminFactory.cs",
-              "RelativeDocumentMoniker": "BanSach\\DesignPatterns\\FactoryPattern\\AdminFactory.cs",
-              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\FactoryPattern\\AdminFactory.cs",
-              "RelativeToolTip": "BanSach\\DesignPatterns\\FactoryPattern\\AdminFactory.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-22T08:39:39.11Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "AdminsController.cs",
-              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\Controllers\\AdminsController.cs",
-              "RelativeDocumentMoniker": "BanSach\\Controllers\\AdminsController.cs",
-              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\Controllers\\AdminsController.cs",
-              "RelativeToolTip": "BanSach\\Controllers\\AdminsController.cs",
-              "ViewState": "AgIAACcAAAAAAAAAAAAAAC8AAAA9AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-22T08:39:22.502Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "SanPhamsController.cs",
-              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\Controllers\\SanPhamsController.cs",
-              "RelativeDocumentMoniker": "BanSach\\Controllers\\SanPhamsController.cs",
-              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\Controllers\\SanPhamsController.cs",
-              "RelativeToolTip": "BanSach\\Controllers\\SanPhamsController.cs",
-              "ViewState": "AgIAAIoAAAAAAAAAAAAAABUCAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-22T08:24:38.149Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "_AdminLayout.cshtml",
-              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\Views\\Shared\\_AdminLayout.cshtml",
-              "RelativeDocumentMoniker": "BanSach\\Views\\Shared\\_AdminLayout.cshtml",
-              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\Views\\Shared\\_AdminLayout.cshtml",
-              "RelativeToolTip": "BanSach\\Views\\Shared\\_AdminLayout.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFIBAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-22T06:49:03.392Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "KhachHangsController.cs",
-              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\Controllers\\KhachHangsController.cs",
-              "RelativeDocumentMoniker": "BanSach\\Controllers\\KhachHangsController.cs",
-              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\Controllers\\KhachHangsController.cs",
-              "RelativeToolTip": "BanSach\\Controllers\\KhachHangsController.cs",
-              "ViewState": "AgIAAGYAAAAAAAAAAAAAAB4AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-22T06:45:09.957Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "DataTables.js",
-              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\Content\\js\\DataTables.js",
-              "RelativeDocumentMoniker": "BanSach\\Content\\js\\DataTables.js",
-              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\Content\\js\\DataTables.js",
-              "RelativeToolTip": "BanSach\\Content\\js\\DataTables.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-03-22T06:43:23.662Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\Views\\KhachHangs\\Index.cshtml",
-              "RelativeDocumentMoniker": "BanSach\\Views\\KhachHangs\\Index.cshtml",
-              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\Views\\KhachHangs\\Index.cshtml",
-              "RelativeToolTip": "BanSach\\Views\\KhachHangs\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-22T05:22:47.422Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\Views\\Admins\\Index.cshtml",
-              "RelativeDocumentMoniker": "BanSach\\Views\\Admins\\Index.cshtml",
-              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\Views\\Admins\\Index.cshtml",
-              "RelativeToolTip": "BanSach\\Views\\Admins\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-22T05:22:45.22Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "LoginAccountCus.cshtml",
-              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\Views\\LoginUser\\LoginAccountCus.cshtml",
-              "RelativeDocumentMoniker": "BanSach\\Views\\LoginUser\\LoginAccountCus.cshtml",
-              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\Views\\LoginUser\\LoginAccountCus.cshtml",
-              "RelativeToolTip": "BanSach\\Views\\LoginUser\\LoginAccountCus.cshtml",
-              "ViewState": "AgIAAD8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-22T05:21:34.679Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "RegisterCus.cshtml",
-              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\Views\\LoginUser\\RegisterCus.cshtml",
-              "RelativeDocumentMoniker": "BanSach\\Views\\LoginUser\\RegisterCus.cshtml",
-              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\Views\\LoginUser\\RegisterCus.cshtml",
-              "RelativeToolTip": "BanSach\\Views\\LoginUser\\RegisterCus.cshtml",
-              "ViewState": "AgIAAHEAAAAAAAAAAAA0wKEAAAA/AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-22T04:07:00.521Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "VerifyAccount.cshtml",
-              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\Views\\LoginUser\\VerifyAccount.cshtml",
-              "RelativeDocumentMoniker": "BanSach\\Views\\LoginUser\\VerifyAccount.cshtml",
-              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\Views\\LoginUser\\VerifyAccount.cshtml",
-              "RelativeToolTip": "BanSach\\Views\\LoginUser\\VerifyAccount.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACsAAAA9AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-22T03:54:55.883Z"
+              "WhenOpened": "2025-03-31T13:17:55.855Z"
             }
           ]
         }

@@ -1,14 +1,13 @@
-﻿@model IPagedList<BanSach.Models.SanPham>
-@using PagedList.Mvc;
-@using PagedList;
+﻿@model List<BanSach.Models.SanPham>
 
 @{
     ViewBag.Title = "Danh sách sản phẩm";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<link href="~/Content/PagedList.css" rel="stylesheet" />
-<script src="~/Content/js/ThongBao.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
+<script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+<script src="~/Content/js/DataTables.js"></script>
 
 <h3 class="text-center mt-2 mb-2 fw-semibold ">Danh sách sản phẩm</h3>
 <hr />
@@ -17,7 +16,7 @@
     <div class="alert alert-success alert-dismissible fade show" role="alert" id="successAlert">
         @TempData["SuccessMessage"]
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">×</span>
         </button>
     </div>
 }
@@ -26,7 +25,7 @@
     <div class="alert alert-danger alert-dismissible fade show" role="alert" id="errorAlert">
         @TempData["ErrorMessage"]
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">×</span>
         </button>
     </div>
 }
@@ -68,100 +67,75 @@
     @using (Html.BeginForm("RemoveAll", "SanPhams", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        <button type="submit" class="btn btn-danger  rounded-1 " onclick="return confirm('Bạn có muốn xoá tất cả xác hết hàng không?');">
+        <button type="submit" class="btn btn-danger rounded-1 " onclick="return confirm('Bạn có muốn xoá tất cả xác hết hàng không?');">
             <i class="fas fa-trash-alt"></i> Xoá sách hết hàng
         </button>
     }
 </div>
-
-
-
-
-
-@if (Model != null && Model.Any())
-{
-    <div>
-        <table class="table table-condensed table-bordered table-hover table-responsive">
-            <thead style="background-color: black; color: black;">
+<div>
+    <table id="myTable" class="table-bordered table-responsive-sm" style="width:100%;">
+        <thead class="bg-dark text-white">
+            <tr>
+                <th>Hình ảnh</th>
+                <th>Tên sách</th>
+                <th>Thể loại</th>
+                <th>Giá bán</th>
+                <th>Số lượng</th>
+                <th>Khuyến mãi</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
                 <tr>
-                    <th>Hình ảnh</th>
-                    <th>Tên sách</th>
-                    <th>Thể loại</th>
-                    <th>Giá bán</th>
-                    <th>Số lượng</th>
-                    <th>Khuyến mãi</th>
-                    <th>Trạng thái</th>
-                    <th>Thao tác</th>
+                    <td>
+                        <img src="~/assets/images/products/@item.HinhAnh"
+                             width="50"
+                             height="50"
+                             alt="@item.HinhAnh"
+                             class="rounded-1" />
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.TenSP)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TheLoai.TenTheLoai)</td>
+                    <td class="text-danger">@string.Format("{0:N0} VND", item.GiaBan)</td>
+                    <td>
+                        @if (item.SoLuong > 0)
+                        {
+                            @Html.DisplayFor(modelItem => item.SoLuong)
+                        }
+                        else
+                        {
+                            <span class="text-danger">0</span>
+                        }
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.KhuyenMai.MucGiamGia)%</td>
+                    <td>
+                        <span class="@((item.TrangThaiSach == "Còn hàng") ? "badge text-bg-success" : "badge text-bg-danger")">
+                            @Html.DisplayFor(modelItem => item.TrangThaiSach)
+                        </span>
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-sm gap-1">
+                            <a href="@Url.Action("Edit", new { id = item.IDsp })" class="btn btn-warning rounded-1">
+                                <i class="fas fa-edit text-white"></i>
+                            </a>
+                            <a href="@Url.Action("Details", new { id = item.IDsp })" class="btn btn-info rounded-1">
+                                <i class="fas fa-eye text-white"></i>
+                            </a>
+                            <a href="@Url.Action("Clone", new { id = item.IDsp })" class="btn btn-primary rounded-1" title="Clone sản phẩm">
+                                <i class="fas fa-copy text-white"></i>
+                            </a>
+                            <a href="@Url.Action("Delete", new { id = item.IDsp })" class="btn btn-outline-danger rounded-1">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            <img 
-                                 src="~/assets/images/products/@item.HinhAnh" 
-                                 width="50" 
-                                 height="50" 
-                                 alt="@item.HinhAnh"
-                                 class="rounded-1"/>
-                        </td>
-                        <td>@Html.DisplayFor(modelItem => item.TenSP)</td>
-                        <td>@Html.DisplayFor(modelItem => item.TheLoai.TenTheLoai)</td>
-                        <td class="text-danger">@string.Format("{0:N0} VND", item.GiaBan)</td>
-                        <td>
-                            @if (item.SoLuong > 0)
-                            {
-                                @Html.DisplayFor(modelItem => item.SoLuong)
-                            }
-                            else
-                            {
-                                <span class="text-danger">0</span>
-                            }
-                        </td>
-                        <td>@Html.DisplayFor(modelItem => item.KhuyenMai.MucGiamGia)%</td>
-                        <td>
-                            <span class="@((item.TrangThaiSach == "Còn hàng") ? "badge text-bg-success" : "badge text-bg-danger")">
-                                @Html.DisplayFor(modelItem => item.TrangThaiSach)
-                            </span>
-                        </td>
-                        <td>
-                            <div class="btn-group btn-group-sm gap-1">
-                                <a href="@Url.Action("Edit", new { id = item.IDsp })" class="btn btn-warning rounded-1">
-                                    <i class="fas fa-edit text-white"></i>
-                                </a>
-                                <a href="@Url.Action("Details", new { id = item.IDsp })" class="btn btn-info rounded-1">
-                                    <i class="fas fa-eye text-white"></i>
-                                </a>
-                                <a href="@Url.Action("Delete", new { id = item.IDsp })" class="btn btn-outline-danger rounded-1">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-
-        <!-- Phân trang -->
-
-    </div>
-}
-else
-{
-    <p style="text-align:center; margin-top:20px; font-weight:bold;">Không tìm thấy sản phẩm nào phù hợp với từ khóa tìm kiếm.</p>
-}
-
-<div class="pagination-container text-center">
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, searchString = ViewBag.CurrentFilter }),
-        new PagedListRenderOptions
-        {
-            DisplayLinkToFirstPage = PagedListDisplayMode.Always,
-            DisplayLinkToLastPage = PagedListDisplayMode.Always,
-            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-            DisplayLinkToNextPage = PagedListDisplayMode.Always,
-            DisplayLinkToIndividualPages = true,
-            DisplayPageCountAndCurrentLocation = false,
-            MaximumPageNumbersToDisplay = 5
-        })
+            }
+        </tbody>
+    </table>
 </div>
+
+@Scripts.Render("~/bundles/datatables")

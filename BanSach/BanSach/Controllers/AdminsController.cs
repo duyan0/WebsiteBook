@@ -30,12 +30,17 @@ namespace BanSach.Controllers
         public ActionResult Edit(int? id)
         {
             if (!id.HasValue) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            // Kiểm tra xem id có giá trị không, nếu không trả về lỗi 400 (Bad Request)
 
             using (var db = _adminFactory.CreateDbContext())
+            // Sử dụng factory để tạo DbContext, đặt trong using để tự động giải phóng tài nguyên
             {
                 Admin admin = db.Admin.Find(id);
+                // Tìm admin trong database dựa trên id
                 if (admin == null) return HttpNotFound();
+                // Nếu không tìm thấy admin, trả về lỗi 404 (Not Found)
                 return View(admin);
+                // Trả về view với dữ liệu admin để hiển thị form chỉnh sửa
             }
         }
 
@@ -44,15 +49,21 @@ namespace BanSach.Controllers
         public ActionResult Edit(Admin admin)
         {
             if (ModelState.IsValid)
+            // Kiểm tra dữ liệu đầu vào từ form có hợp lệ không
             {
                 using (var db = _adminFactory.CreateDbContext())
+                // Tạo DbContext bằng factory, dùng using để tự động giải phóng
                 {
                     db.Entry(admin).State = EntityState.Modified;
+                    // Đánh dấu đối tượng admin là đã thay đổi trong DbContext
                     db.SaveChanges();
+                    // Lưu thay đổi vào database
                     return RedirectToAction("Index", "Admins");
+                    // Chuyển hướng về danh sách admin sau khi lưu thành công
                 }
             }
             return View(admin);
+            // Nếu dữ liệu không hợp lệ, trả về view với dữ liệu hiện tại để người dùng sửa lại
         }
 
         public ActionResult Details(int? id)
@@ -72,7 +83,7 @@ namespace BanSach.Controllers
         }
         public ActionResult Index()
         {
-            var _listAdmin =_db.Admin.ToList();
+            var _listAdmin = _db.Admin.ToList();
             return View(_listAdmin);
         }
         public ActionResult Create()
@@ -94,20 +105,20 @@ namespace BanSach.Controllers
 
         public ActionResult Delete(int? id)
         {
-            if (!id.HasValue)
+            if (!id.HasValue) // Kiểm tra ID có hợp lệ không
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            using (var db = new db_Book()) // Khởi tạo DbContext trực tiếp
+            using (var db = new db_Book()) // Khởi tạo DbContext
             {
-                var command = new DeleteAdminCommand(id.Value, db);
-                Admin admin = command.GetAdmin();
-                if (admin == null)
+                var command = new DeleteAdminCommand(id.Value, db); // Tạo command
+                Admin admin = command.GetAdmin(); // Lấy thông tin admin
+                if (admin == null) // Nếu không tìm thấy admin
                 {
                     return HttpNotFound();
                 }
-                return View(admin);
+                return View(admin); // Trả về view để hiển thị thông tin admin trước khi xóa
             }
         }
 
@@ -115,11 +126,11 @@ namespace BanSach.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            using (var db = new db_Book()) // Khởi tạo DbContext trực tiếp
+            using (var db = new db_Book()) // Khởi tạo DbContext
             {
-                var command = new DeleteAdminCommand(id, db);
-                command.Execute();
-                return RedirectToAction("Index");
+                var command = new DeleteAdminCommand(id, db); // Tạo command
+                command.Execute(); // Thực thi lệnh xóa
+                return RedirectToAction("Index"); // Chuyển hướng về trang danh sách
             }
         }
 
@@ -131,5 +142,7 @@ namespace BanSach.Controllers
             }
             base.Dispose(disposing);
         }
+       
     }
 }
+

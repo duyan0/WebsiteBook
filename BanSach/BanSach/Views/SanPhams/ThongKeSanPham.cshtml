@@ -4,46 +4,76 @@
 }
 
 <div class="container mt-5">
-    <div class="row">
-        <div class="col-md-12">
-            <h2 class="mb-4">Thống Kê Sản Phẩm</h2>
-            <div class="card">
+    <h2 class="mb-4 text-center">Thống Kê Sản Phẩm</h2>
+
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <h6 class="card-title">Tổng số sách hết hàng:</h6>
-                            <button class="btn btn-dark fw-bold text-white  w-100" disabled>@ViewBag.TongSachHetHang</button> <!-- Button màu đỏ cho hết hàng -->
+                    <div class="row g-3">
+                        <div class="col-md-4 col-sm-6">
+                            <div class="card bg-danger text-white h-100">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title fw-bold">Sách hết hàng</h6>
+                                    <p class="fs-4 mb-0">@ViewBag.TongSachHetHang</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-4 mb-3">
-                            <h6 class="card-title">Tổng số sách còn hàng:</h6>
-                            <button class="btn btn-dark fw-bold text-white  w-100" disabled>@ViewBag.TongSachConHang</button> <!-- Button màu xanh lá cho còn hàng -->
+                        <div class="col-md-4 col-sm-6">
+                            <div class="card bg-success text-white h-100">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title fw-bold">Sách còn hàng</h6>
+                                    <p class="fs-4 mb-0">@ViewBag.TongSachConHang</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-4 mb-3">
-                            <h6 class="card-title">Tổng số lượng sách:</h6>
-                            <button class="btn btn-dark fw-bold text-white  w-100" disabled>@ViewBag.TongSoLuongSach</button> <!-- Button màu xanh dương cho số liệu trung lập -->
+                        <div class="col-md-4 col-sm-6">
+                            <div class="card bg-primary text-white h-100">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title fw-bold">Tổng số lượng sách</h6>
+                                    <p class="fs-4 mb-0">@ViewBag.TongSoLuongSach</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-4 mb-3">
-                            <h6 class="card-title">Tổng số đầu sách:</h6>
-                            <button class="btn btn-dark fw-bold text-white  w-100" disabled>@ViewBag.TongDauSach</button> <!-- Button màu xanh dương cho thông tin trung lập -->
+                        <div class="col-md-4 col-sm-6">
+                            <div class="card bg-info text-white h-100">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title fw-bold">Tổng số đầu sách</h6>
+                                    <p class="fs-4 mb-0">@ViewBag.TongDauSach</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-4 mb-3">
-                            <h6 class="card-title">Tổng giá trị tồn kho:</h6>
-                            <button class="btn btn-dark fw-bold text-white  w-100" disabled>@ViewBag.TongGiaTriTonKho</button> <!-- Button màu xanh nhạt cho giá trị tiền -->
+                        <div class="col-md-4 col-sm-6">
+                            <div class="card bg-dark text-white h-100">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title fw-bold">Tổng giá trị tồn kho</h6>
+                                    <p class="fs-4 mb-0">@ViewBag.TongGiaTriTonKho</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-4 mb-3">
-                            <h6 class="card-title">Tổng số sản phẩm có khuyến mãi:</h6>
-                            <button class="btn btn-dark fw-bold text-white  w-100" disabled>@ViewBag.TongSanPhamKhuyenMai</button> <!-- Button màu xanh lá cho sản phẩm có khuyến mãi -->
+                        <div class="col-md-4 col-sm-6">
+                            <div class="card bg-success text-white h-100">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title fw-bold">Sản phẩm có khuyến mãi</h6>
+                                    <p class="fs-4 mb-0">@ViewBag.TongSanPhamKhuyenMai</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-12 mb-3">
-                            <h6 class="card-title">Tổng số sản phẩm không có khuyến mãi:</h6>
-                            <button class="btn btn-dark fw-bold text-white  w-100" disabled>@ViewBag.TongSanPhamKhongKhuyenMai</button> <!-- Button màu vàng cho không có khuyến mãi -->
+                        <div class="col-md-12">
+                            <div class="card bg-warning text-dark h-100">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title fw-bold">Sản phẩm không khuyến mãi</h6>
+                                    <p class="fs-4 mb-0">@ViewBag.TongSanPhamKhongKhuyenMai</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="mt-2 mb-2 ">
-                @Html.ActionLink("Quay về", "Index", null, new { @class = "btn btn-success " })
-            </div>
         </div>
+    </div>
+
+    <div class="text-center mt-4">
+        @Html.ActionLink("Quay về", "Index", null, new { @class = "btn btn-outline-success" })
     </div>
 </div>

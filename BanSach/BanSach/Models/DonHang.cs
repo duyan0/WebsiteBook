@@ -9,6 +9,7 @@
 
 namespace BanSach.Models
 {
+    using BanSach.DesignPatterns.StatePattern;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -19,9 +20,11 @@ namespace BanSach.Models
         public DonHang()
         {
             this.DonHangCT = new HashSet<DonHangCT>();
+            State = new PendingState();
         }
 
         public int IDdh { get; set; }
+        public IOrderState State { get; set; }
         public DateTime? NgayDatHang { get; set; }
         public Nullable<int> IDkh { get; set; }
         public string DiaChi { get; set; }
@@ -33,6 +36,30 @@ namespace BanSach.Models
         public virtual KhachHang KhachHang { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonHangCT> DonHangCT { get; set; }
+        public void InitializeState()
+        {
+            switch (TrangThai)
+            {
+                case "Chờ xử lý":
+                    State = new PendingState();
+                    break;
+                case "Đã xác nhận":
+                    State = new ConfirmedState();
+                    break;
+                case "Đã nhận hàng":
+                    State = new DeliveredState();
+                    break;
+                case "Đã huỷ":
+                    State = new CancelledState();
+                    break;
+                case "Yêu cầu trả hàng":
+                    State = new ReturnRequestedState();
+                    break;
+                default:
+                    State = new PendingState(); // Mặc định nếu TrangThai không hợp lệ
+                    break;
+            }
+        }
         public decimal GetTongSoTien()
         {
             return DonHangCT != null

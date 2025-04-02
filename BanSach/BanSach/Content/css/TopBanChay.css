@@ -1,0 +1,16 @@
+﻿.card-body {
+    padding: 10px;
+}
+
+@media (min-width: 1200px) {
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .col-lg-2 {
+        flex: 0 0 calc(100% / 5);
+        max-width: calc(100% / 5);
+    }
+}

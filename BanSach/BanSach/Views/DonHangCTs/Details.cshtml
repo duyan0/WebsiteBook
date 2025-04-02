@@ -5,128 +5,119 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<div class="container mt-4">
+    <h2 class="mb-4 text-center fw-bold">Chi Tiết Đơn Hàng</h2>
 
-<div class="container">
-    <!-- Bảng thông tin đơn hàng -->
-    <h2 class="mt-3 mb-3">Chi tiết đơn hàng</h2>
-    <table class="table table-bordered">
-        <tr>
-            <td class="tieude">Mã đơn hàng</td>
-            <td class="value">
-                @ViewBag.OrderDetails.IDdh
-            </td>
-        </tr>
-        <tr>
-            <td class="tieude">Tên khách hàng</td>
-            <td class="value">
-                @ViewBag.OrderDetails.KhachHang.TenKH
-            </td>
-        </tr>
-        <tr>
-            <td class="tieude">Số điện thoại</td>
-            <td class="value">
-                @ViewBag.OrderDetails.KhachHang.SoDT
-            </td>
-        </tr>
-        <tr>
-            <td class="tieude">Địa chỉ</td>
-            <td class="value">
-                @ViewBag.OrderDetails.DiaChi
-            </td>
-        </tr>
-        <tr>
-            <td class="tieude">Ngày đặt hàng</td>
-            <td class="value">
-                @ViewBag.OrderDetails.NgayDatHang.ToString("dd/MM/yyyy HH:mm:ss")
-            </td>
-        </tr>
-        <tr>
-            <td class="tieude">Trạng thái</td>
-            <td class="value" style="
-    @{
-        string trangThai = ViewBag.TrangThai.Trim().ToLower();
-        var color = "black";
+    <!-- Thông tin đơn hàng -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h4 class="card-title mb-3">Thông tin đơn hàng</h4>
+            <dl class="row mb-0">
+                <dt class="col-sm-3 fw-bold">Mã đơn hàng</dt>
+                <dd class="col-sm-9">@ViewBag.OrderDetails.IDdh</dd>
 
-        if (trangThai == "chờ xử lý")
-        {
-            color = "orange";
-        }
-        else if (trangThai == "đã xác nhận")
-        {
-            color = "green";
-        }
-        else if (trangThai == "đã nhận hàng")
-        {
-            color = "blue";
-        }
-        else if (trangThai == "đã huỷ")
-        {
-            color = "red";
-        }
-        @:color: @color;
-    }">
-                @ViewBag.TrangThai
-            </td>
-        </tr>
+                <dt class="col-sm-3 fw-bold">Tên khách hàng</dt>
+                <dd class="col-sm-9">@ViewBag.OrderDetails.KhachHang.TenKH</dd>
 
+                <dt class="col-sm-3 fw-bold">Số điện thoại</dt>
+                <dd class="col-sm-9">@ViewBag.OrderDetails.KhachHang.SoDT</dd>
 
+                <dt class="col-sm-3 fw-bold">Địa chỉ</dt>
+                <dd class="col-sm-9">@ViewBag.OrderDetails.DiaChi</dd>
 
-    </table>
+                <dt class="col-sm-3 fw-bold">Ngày đặt hàng</dt>
+                <dd class="col-sm-9">@ViewBag.OrderDetails.NgayDatHang.ToString("dd/MM/yyyy HH:mm:ss")</dd>
 
-    <!-- Bảng chi tiết sản phẩm -->
-    <table class="table table-bordered">
-        <thead class="text-dark text-truncate">
-            <tr>
-                <th>Tên sản phẩm</th>
-                <th>Số lượng</th>
-                <th>Giá</th>
-                <th>Tổng tiền</th>
-                <th>Đánh giá</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.SanPham.TenSP</td>
-                    <td>@item.SoLuong</td>
-                    <td style="color:red;">@string.Format("{0:N0} VND", item.Gia)</td>
-                    <td style="color:red;">@string.Format("{0:N0} VND", item.TongTien)</td>
-                    <td>
-                        @for (int i = 1; i <= 5; i++)
+                <dt class="col-sm-3 fw-bold">Trạng thái</dt>
+                <dd class="col-sm-9">
+                    @{
+                        string trangThai = ViewBag.TrangThai.Trim().ToLower();
+                        string badgeClass = "badge ";
+                        switch (trangThai)
                         {
-                            int rating = 0;
-                            // Parse the rating safely
-                            if (int.TryParse(item.DanhGia, out rating))
-                            {
-                                if (rating >= i)
-                                {
-                                    <span>⭐</span> <!-- Filled star -->
-                                }
-                                else
-                                {
-                                    <span>☆</span> <!-- Empty star -->
-                                }
-                            }
-                            else
-                            {
-                                <span>@item.DanhGia</span> <!-- If parsing fails, show empty star -->
-                            }
+                            case "chờ xử lý":
+                                badgeClass += "bg-warning text-dark";
+                                break;
+                            case "đã xác nhận":
+                                badgeClass += "bg-success";
+                                break;
+                            case "đã nhận hàng":
+                                badgeClass += "bg-primary";
+                                break;
+                            case "đã huỷ":
+                                badgeClass += "bg-danger";
+                                break;
+                            default:
+                                badgeClass += "bg-secondary";
+                                break;
                         }
-                    </td>
+                    }
+                    <span class="@badgeClass">@ViewBag.TrangThai</span>
+                </dd>
+            </dl>
+        </div>
+    </div>
 
+    <!-- Chi tiết sản phẩm -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h4 class="card-title mb-3">Chi tiết sản phẩm</h4>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Tên sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Giá</th>
+                            <th>Tổng tiền</th>
+                            <th>Đánh giá</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.SanPham.TenSP</td>
+                                <td>@item.SoLuong</td>
+                                <td class="text-danger">@string.Format("{0:N0} VNĐ", item.Gia)</td>
+                                <td class="text-danger">@string.Format("{0:N0} VNĐ", item.TongTien)</td>
+                                <td>
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        int rating = 0;
+                                        if (int.TryParse(item.DanhGia, out rating))
+                                        {
+                                            if (rating >= i)
+                                            {
+                                                <span class="text-warning">★</span> <!-- Filled star -->
+                                            }
+                                            else
+                                            {
+                                                <span>☆</span> <!-- Empty star -->
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span>@item.DanhGia</span>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-                </tr>
-            }
-        </tbody>
-
-    </table>
+    <div class="text-center mt-4">
+        @Html.ActionLink("Quay về", "Index", null, new { @class = "btn btn-outline-success" })
+    </div>
 </div>
 
-
-
-<p>
-    <div class="form-actions text-center">
-        @Html.ActionLink("Quay về", "Index", null, new { @class = "btn btn-success shadow-sm rounded-sm" })
-    </div>
-</p>
+<style>
+    .card:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        transition: box-shadow 0.2s;
+    }
+</style>    

@@ -1,52 +1,51 @@
 ﻿@model BanSach.Models.DanhMuc_TheLoai
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Chỉnh sửa";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Edit</h2>
+<div class="container mt-4">
+    <h2 class="mb-4">Chỉnh sửa Danh Mục - Thể Loại</h2>
 
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+        <div class="card">
+            <div class="card-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ID)
 
-    <div class="form-horizontal">
-        <h4>DanhMuc_TheLoai</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID)
+                <div class="mb-3">
+                    <label for="DanhMuc_ID" class="form-label fw-bold">Danh mục</label>
+                    @Html.DropDownListFor(model => model.DanhMuc_ID, (SelectList)ViewBag.DM, "Chọn danh mục", new { @class = "form-select" })
+                    @Html.ValidationMessageFor(model => model.DanhMuc_ID, "", new { @class = "text-danger" })
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DanhMuc_ID, "Khuyến mãi", new { @class = "control-label font-weight-bold text-dark" })
-            @Html.DropDownListFor(model => model.DanhMuc_ID, (SelectList)ViewBag.DM, "Chọn mức giảm giá", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.DanhMuc_ID, "", new { @class = "text-danger" })
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.TheLoai_ID, "Khuyến mãi", new { @class = "control-label font-weight-bold text-dark" })
-            @Html.DropDownListFor(model => model.TheLoai_ID, (SelectList)ViewBag.TL, "Chọn mức giảm giá", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.TheLoai_ID, "", new { @class = "text-danger" })
-        </div>
+                <div class="mb-3">
+                    <label for="TheLoai_ID" class="form-label fw-bold">Thể loại</label>
+                    @Html.DropDownListFor(model => model.TheLoai_ID, (SelectList)ViewBag.TL, "Chọn thể loại", new { @class = "form-select" })
+                    @Html.ValidationMessageFor(model => model.TheLoai_ID, "", new { @class = "text-danger" })
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.HinhAnh, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="HinhAnh" class="form-control" />
-                @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
+                <div class="mb-3">
+                    <label for="HinhAnh" class="form-label fw-bold">Hình ảnh</label>
+                    <input type="file" name="HinhAnh" id="HinhAnh" class="form-control" />
+                    @if (!string.IsNullOrEmpty(Model.HinhAnh))
+                    {
+                        <img src="~/assets/images/banners/@Model.HinhAnh" alt="Hình ảnh hiện tại" class="img-fluid mt-2" style="max-height: 150px;" />
+                    }
+                    @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                    @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary" })
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    }
 </div>
 
 @section Scripts {

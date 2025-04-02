@@ -2,45 +2,47 @@
 @using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "Quản lý chi tiết đơn hàng";
+    ViewBag.Title = "Quản Lý Chi Tiết Đơn Hàng";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<link href="~/Content/PagedList.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
+<script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+<script src="~/Content/js/DataTables.js"></script>
 
-<h2 class="tieude">Chi tiết các đơn hàng </h2>
+<div class="container mt-4">
+    <h2 class="mb-4 text-center fw-bold">Quản Lý Chi Tiết Đơn Hàng</h2>
+    <!-- Total Count -->
+    <div class="mb-3 fw-bold">
+        Tổng số chi tiết đơn hàng: @Model.TotalItemCount
+    </div>
+    <!-- Search Form and Actions -->
+    <div class="mb-4">
+        <div class="card-body">
+            <div class="row g-3 align-items-center">
 
-<!-- Search Form -->
-<div class="search-bar mb-4">
-    @using (Html.BeginForm("Index", "DonHangCTs", FormMethod.Get, new { id = "searchForm" }))
-    {
-        <div class="input-group mb-1">
-            <input type="text" name="searchString" value="@Request.QueryString["searchString"]" class="form-control" placeholder="Tìm kiếm Mã Đơn Hàng hoặc Tên Sản Phẩm..." />
-            <div class="input-group-append">
-                <button class="btn btn-dark" type="submit">Tìm kiếm</button>
+                <div class="col-md-4 text-start">
+                    @using (Html.BeginForm("RemoveAll", "DonHangCTs", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger">Xóa tất cả sản phẩm hết hàng</button>
+                    }
+                </div>
             </div>
         </div>
-    }
-    @using (Html.BeginForm("RemoveAll", "DonHangCTs", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
+    </div>
 
-        <button type="submit" class="btn btn-danger">Xóa tất cả sản phẩm hết hàng</button>
-    }
 
-</div>
-<div class="text-left mb-3 mt-3 text-dark font-weight-bold">
-    <p>Tổng số Chi tiết đơn hàng: @Model.TotalItemCount</p>
-</div>
 
-@if (Model != null && Model.Any())
-{
+
     <!-- Order Details Table -->
-    <table class="table table-bordered table-hover">
-        <thead class="text-white" style="background-color:black;">
+
+    <table id="myTable" class="table-bordered table-responsive-sm" style="width:100%;">
+
+        <thead class="bg-dark text-white">
             <tr>
-                <th class="text-center">Mã CTĐH</th>
-                <th class="text-center">Mã DH</th>
+                <th>Mã CTĐH</th>
+                <th>Mã ĐH</th>
                 <th>Tên sách</th>
                 <th>Số lượng</th>
                 <th>Tổng tiền</th>
@@ -48,65 +50,59 @@
                 <th>Thao tác</th>
             </tr>
         </thead>
-        <tbody style="color:black;">
+        <tbody>
             @foreach (var item in Model)
             {
                 <tr>
-                    <td class="font-weight-bold text-center">@Html.DisplayFor(modelItem => item.ID_ctdh)</td>
-                    <td class="font-weight-bold text-center">@Html.DisplayFor(modelItem => item.DonHang.IDdh)</td>
+                    <td class="text-center fw-bold">@Html.DisplayFor(modelItem => item.ID_ctdh)</td>
+                    <td class="text-center fw-bold">@Html.DisplayFor(modelItem => item.DonHang.IDdh)</td>
                     <td>@Html.DisplayFor(modelItem => item.SanPham.TenSP)</td>
                     <td>@Html.DisplayFor(modelItem => item.SoLuong)</td>
-                    
-                    <td style="color: red;" class="font-weight-bold">
-                        @item.TongTien.ToString("N0") VND
-                    </td>
+                    <td class="text-danger fw-bold">@item.TongTien.ToString("N0") VNĐ</td>
                     <td>
                         @{
-                            var statusClass = "";
-                            switch (item.DonHang.TrangThai)
+                            string badgeClass = "badge ";
+                            switch (item.DonHang.TrangThai?.Trim().ToLower())
                             {
-                                case "Chờ xử lý":
-                                    statusClass = "status-waiting";
+                                case "chờ xử lý":
+                                    badgeClass += "bg-warning text-dark";
                                     break;
-                                case "Đã xác nhận":
-                                    statusClass = "status-confirmed";
+                                case "đã xác nhận":
+                                    badgeClass += "bg-success";
                                     break;
-                                case "Đã nhận hàng":
-                                    statusClass = "status-received";
+                                case "đã nhận hàng":
+                                    badgeClass += "bg-primary";
                                     break;
-                                case "Đã huỷ":
-                                    statusClass = "status-cancelled";
+                                case "đã huỷ":
+                                    badgeClass += "bg-danger";
+                                    break;
+                                default:
+                                    badgeClass += "bg-secondary";
                                     break;
                             }
                         }
-                        <span class="@statusClass">@Html.DisplayFor(modelItem => item.DonHang.TrangThai)</span>
+                        <span class="@badgeClass">@Html.DisplayFor(modelItem => item.DonHang.TrangThai)</span>
                     </td>
                     <td>
-                        @Html.ActionLink("Xem", "Details", new { id = item.IDDonHang }, new { @class = "btn btn-warning btn-sm rounded-sm" })
-                        @Html.ActionLink("Xoá", "Delete", new { id = item.ID_ctdh }, new { @class = "btn btn-danger btn-sm rounded-sm" })
+                        <div class="btn-group" role="group">
+                            @Html.ActionLink("Xem", "Details", new { id = item.IDDonHang }, new { @class = "btn btn-warning btn-sm" })
+                            @Html.ActionLink("Xóa", "Delete", new { id = item.ID_ctdh }, new { @class = "btn btn-danger btn-sm" })
+                        </div>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 
-    <!-- Pagination Controls -->
-    <div class="pagination-container">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = Request.QueryString["searchString"] }),
-            new PagedListRenderOptions
-            {
-                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
-                DisplayLinkToLastPage = PagedListDisplayMode.Always,
-                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                DisplayLinkToNextPage = PagedListDisplayMode.Always,
-                DisplayLinkToIndividualPages = true,
-                MaximumPageNumbersToDisplay = 5
-            })
-    </div>
-}
-else
-{
-    <div class="alert alert-info text-center" role="alert">
-        Không có chi tiết đơn hàng nào trong hệ thống.
-    </div>
-}
+</div>
+
+<style>
+
+
+    .badge {
+        font-size: 0.9em;
+        padding: 0.5em 1em;
+    }
+</style>
+
+@Scripts.Render("~/bundles/datatables")

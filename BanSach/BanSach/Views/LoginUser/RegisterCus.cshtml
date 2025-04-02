@@ -112,20 +112,20 @@
                 <input type="text" placeholder="Tên" tabindex="1" name="TenKH" maxlength="50" required />
             </p>
             <p>
-                <input type="tel" placeholder="Số điện thoại"tabindex="2"  maxlength="10" name="SoDT" required />
+                <input type="tel" placeholder="Số điện thoại" tabindex="2" maxlength="10" name="SoDT" required />
             </p>
 
             <p>
-                <input type="email" placeholder="Email"tabindex="3" name="Email" minlength="11" maxlength="255" oninput="validateEmail(this)" required />
+                <input type="email" placeholder="Email" tabindex="3" name="Email" minlength="11" maxlength="255" oninput="validateEmail(this)" required />
             </p>
 
             <p>
-                <input type="text" placeholder="Tài khoản"tabindex="4" name="TKhoan" minlength="6" maxlength="30" oninput="validateAccount(this)" required />
+                <input type="text" placeholder="Tài khoản" tabindex="4" name="TKhoan" minlength="6" maxlength="30" oninput="validateAccount(this)" required />
             </p>
 
             <div class="password-field">
                 <p>
-                    <input type="password" placeholder="Mật Khẩu"tabindex="5" name="MKhau" minlength="6" maxlength="30" id="password1" oninput="validatePassword(this)" required />
+                    <input type="password" placeholder="Mật Khẩu" tabindex="5" name="MKhau" minlength="6" maxlength="30" id="password1" oninput="validatePassword(this)" required />
                     <span id="togglepassword1" class="toggle-password" onclick="togglePasswordVisibility('password1')">Hiện</span>
                 </p>
             </div>
@@ -161,7 +161,6 @@
             const maxLength = parseInt(input.getAttribute("maxlength")) || 30;
             const errorElement = input.parentNode.querySelector(".text-danger") || document.createElement("p");
 
-            // Kiểm tra có chứa cả chữ, số, và chữ in hoa không
             const hasLetter = /[a-zA-Z]/.test(value);
             const hasNumber = /[0-9]/.test(value);
             const hasUppercase = /[A-Z]/.test(value);
@@ -171,6 +170,7 @@
                 errorElement.className = "text-danger";
                 errorElement.style.fontSize = "13px";
                 errorElement.style.display = "block";
+                errorElement.id = "ErrorAccount";
                 input.parentNode.appendChild(errorElement);
                 return false;
             } else {
@@ -191,54 +191,90 @@
             const maxLength = parseInt(input.getAttribute("maxlength")) || 30;
             const errorElement = input.parentNode.querySelector(".text-danger") || document.createElement("p");
 
-            // Kiểm tra có chứa cả chữ, số, và chữ in hoa không
             const hasLetter = /[a-zA-Z]/.test(value);
             const hasNumber = /[0-9]/.test(value);
             const hasUppercase = /[A-Z]/.test(value);
 
+            const password1 = document.getElementById("password1");
+            const password2 = document.getElementById("password2");
+
+            // Kiểm tra định dạng cơ bản
             if (value.length < minLength || value.length > maxLength || !hasLetter || !hasNumber || !hasUppercase) {
                 errorElement.textContent = `Mật khẩu phải có từ ${minLength} đến ${maxLength} ký tự, chỉ chứa chữ và số, và phải có ít nhất một chữ in hoa.`;
                 errorElement.className = "text-danger";
                 errorElement.style.fontSize = "13px";
                 errorElement.style.display = "block";
+                errorElement.id = "erorrPassword";
                 input.parentNode.appendChild(errorElement);
                 return false;
             } else {
-                if (input.parentNode.querySelector(".text-danger")) {
+                if (input.parentNode.querySelector(".text-danger") && !errorElement.textContent.includes("khớp")) {
                     input.parentNode.removeChild(input.parentNode.querySelector(".text-danger"));
                 }
-                return true;
             }
+
+            // So sánh hai mật khẩu nếu cả hai đã được nhập
+            if (input.id === "password2" && password1.value && password2.value) {
+                if (password1.value !== password2.value) {
+                    errorElement.textContent = "Mật khẩu nhập lại không khớp với mật khẩu.";
+                    errorElement.className = "text-danger";
+                    errorElement.style.fontSize = "13px";
+                    errorElement.style.display = "block";
+                    errorElement.id = "erorrConfirmPassword";
+                    input.parentNode.appendChild(errorElement);
+                    return false;
+                } else {
+                    if (input.parentNode.querySelector(".text-danger")) {
+                        input.parentNode.removeChild(input.parentNode.querySelector(".text-danger"));
+                    }
+                    return true;
+                }
+            }
+            return true;
         }
 
-       
+        // Hàm kiểm tra form trước khi submit
+        function validateForm(event) {
+            const password1 = document.getElementById("password1");
+            const password2 = document.getElementById("password2");
+            const account = document.querySelector("input[name='TKhoan']");
 
-        // Hàm hiển thị lỗi
-        function showError(input, message) {
-            let errorElement = input.parentNode.querySelector(".text-danger");
-            if (!errorElement) {
-                errorElement = document.createElement("p");
-                errorElement.className = "text-danger";
-                errorElement.style.fontSize = "13px";
-                input.parentNode.appendChild(errorElement);
-            }
-            errorElement.textContent = message;
-            errorElement.style.display = "block";
-        }
+            let isValid = true;
 
-        // Hàm ẩn lỗi
-        function hideError(input) {
-            const errorElement = input.parentNode.querySelector(".text-danger");
-            if (errorElement) {
-                errorElement.style.display = "none";
+            // Kiểm tra tài khoản
+            if (!validateAccount(account)) {
+                isValid = false;
             }
+
+            // Kiểm tra mật khẩu
+            if (!validatePassword(password1)) {
+                isValid = false;
+            }
+
+            // Kiểm tra mật khẩu nhập lại và so sánh
+            if (!validatePassword(password2) || password1.value !== password2.value) {
+                const errorElement = password2.parentNode.querySelector(".text-danger") || document.createElement("p");
+                if (password1.value !== password2.value) {
+                    errorElement.textContent = "Mật khẩu nhập lại không khớp với mật khẩu.";
+                    errorElement.className = "text-danger";
+                    errorElement.style.fontSize = "13px";
+                    errorElement.style.display = "block";
+                    password2.parentNode.appendChild(errorElement);
+                }
+                isValid = false;
+            }
+
+            if (!isValid) {
+                event.preventDefault(); // Ngăn submit nếu có lỗi
+            }
+            return isValid;
         }
 
         // Hàm hiện/ẩn mật khẩu
         function togglePasswordVisibility(passwordId) {
             const password = document.getElementById(passwordId);
             const toggle = document.getElementById(`toggle${passwordId === "password1" ? "password1" : "password2"}`);
-            if (password && toggle) { // Kiểm tra xem các phần tử có tồn tại không
+            if (password && toggle) {
                 if (password.type === "password") {
                     password.type = "text";
                     toggle.textContent = "Ẩn";

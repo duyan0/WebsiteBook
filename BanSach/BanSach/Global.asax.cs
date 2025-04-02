@@ -10,6 +10,7 @@ using System.Web.Routing;
 using Unity.AspNet.Mvc;
 using Unity.Lifetime;
 using Unity;
+using PayPal.Api;
 
 namespace BanSach
 {
@@ -22,6 +23,12 @@ namespace BanSach
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            // Khởi tạo cấu hình PayPal
+            var config = ConfigManager.Instance.GetProperties();
+            var accessToken = new OAuthTokenCredential(config).GetAccessToken();
+            APIContext apiContext = new APIContext(accessToken);
+
         }
 
         // Kiểm tra chế độ bảo trì trong mỗi yêu cầu HTTP

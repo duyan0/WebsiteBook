@@ -40,8 +40,9 @@
                 <!-- Logo -->
                 <a href="~/SanPhams/TrangChu" class="text-decoration-none">
                     <h3 class="fw-semibold mb-0 text-white d-inline float-sm-start">
-                        <img srcset="~/assets/images/logo/logo_sach.png 2x" style="width:50px;height:50px;" alt="Logo sách">
+                        <img srcset="~/assets/images/logo/LOGO_XBOOK.png 2x" style="width:50px;height:50px;" alt="Logo sách">
                     </h3>
+                   
                 </a>
                 <!-- Danh mục dropdown -->
                 <div class="d-inline-flex align-items-center justify-content-betweentext-white w-auto d-none d-sm-inline-flex" style="height: 65px; padding: 0 10px;">
@@ -50,8 +51,8 @@
                         <i class="bi bi-caret-down text-white"></i>
                     </a>
                 </div>
-                <div class="collapse position-absolute navbar navbar-vertical navbar-light align-items-center bg-light p-0" 
-                     id="navbar-vertical" 
+                <div class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start bg-white p-0"
+                     id="navbar-vertical"
                      style="min-width: 220px; margin-left:4rem; margin-top:0;">
                     @Html.Action("PhanDanhMuc", "DanhMucs")
                 </div>
@@ -92,7 +93,7 @@
                 else if (Session["IdQly"] != null)
                 {
                     <div class="d-inline-flex gap-3">
-                        <a href="@Url.Action("QuanTri", "LoginUser")"  class="nav-item text-white nav-link fs-6 ">Trang ADMIN</a>
+                        <a href="@Url.Action("QuanTri", "LoginUser")" class="nav-item text-white nav-link fs-6 ">Trang ADMIN</a>
                         <a href="@Url.Action("Logout", "LoginUser")" class="nav-item text-white nav-link fs-6">Đăng xuất</a>
                     </div>
                 }
@@ -103,7 +104,7 @@
                             <i class="bi bi-box-arrow-in-right"></i>
                             <span class="d-none d-sm-inline">Đăng nhập</span>
                         </a>
-                        <a href="~/LoginUser/RegisterCus"id="id_dangKy" class="nav-item nav-link text-white fs-6">
+                        <a href="~/LoginUser/RegisterCus" id="id_dangKy" class="nav-item nav-link text-white fs-6">
                             <i class="bi bi-person-plus"></i>
                             <span class="d-none d-sm-inline">Đăng ký</span>
                         </a>
@@ -116,9 +117,11 @@
 
 
     <!-- Navbar End -->
-    <!-- Main Start -->
+    
     <div class="container p-0 mt-5 pt-5 " style="width: 100%;">
+        @*@Html.Partial("_Breadcrumb")*@
         <div class="container mt-0 bg-dark" style=" border-radius: 5px; padding: 1rem; margin: 0; width: 100%; height: 100%;">
+
             @RenderBody()
         </div>
     </div>
@@ -183,7 +186,6 @@
             z-index: 2;
             font-size: 16px;
             border-radius: 5px;
-            margin-left: -64px;
         }
 
             .dropdown-content a {
@@ -201,6 +203,7 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
+
         .cart_bottom {
             position: fixed;
             bottom: 40px;
@@ -250,115 +253,140 @@
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script>
-            $(document).ready(function() {
-        $("#searchInput").on("input", function() {
-            var searchTerm = $(this).val().trim();  // Loại bỏ khoảng trắng thừa
+    $(document).ready(function() {
+    $("#searchInput").on("input", function() {
+        var searchTerm = $(this).val().trim();
 
-            if (searchTerm.length >= 2) {  // Chỉ tìm kiếm khi người dùng nhập từ 2 ký tự trở lên
-                $.ajax({
-                    url: '@Url.Action("SearchSuggestions", "SanPhams")', // Gọi đến action SearchSuggestions
-                    data: { query: searchTerm },
-                    success: function(data) {
-                        console.log(data);  // In dữ liệu ra để kiểm tra
+        if (searchTerm.length >= 1) {
+            $.ajax({
+                url: '@Url.Action("SearchSuggestions", "SanPhams")',
+                type: 'GET',
+                data: { query: searchTerm },
+                dataType: 'json',
+                success: function(data) {
+                    console.log("Dữ liệu trả về:", data);
 
-                        if (data && data.length > 0) {
-                            var suggestionsHtml = "<ul>";
-                            $.each(data, function(index, item) {
-                                console.log(item);  // Kiểm tra từng item trong data
-                                suggestionsHtml += "<li class='suggestion-item'>" + item.TenSP + "</li>";  // Đảm bảo tên thuộc tính đúng
-                            });
-                            suggestionsHtml += "</ul>";
-                            $("#suggestionsBox").html(suggestionsHtml).show();
-                        } else {
-                            $("#suggestionsBox").empty().hide();
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("Lỗi:", error);  // In lỗi nếu có
+                    if (data && Array.isArray(data) && data.length > 0) {
+                        var suggestionsHtml = "<ul class='suggestion-list'>";
+                        $.each(data, function(index, item) {
+                            console.log("Item:", item);
+
+                            var tenSP = item.TenSP || "Không có tên";
+                            var giaBan = item.GiaBan ? item.GiaBan.toLocaleString('vi-VN') + " VND" : "Không có giá";
+                            
+
+                            suggestionsHtml += `
+                                <li class='suggestion-item'>
+                                    <div class='suggestion-content d-flex align-items-center'>
+                                       
+                                        <div>
+                                            <div class='suggestion-name'>${tenSP}</div>
+                                            <div class='suggestion-price'>${giaBan}</div>
+                                        </div>
+                                    </div>
+                                </li>`;
+                        });
+                        suggestionsHtml += "</ul>";
+                        $("#suggestionsBox").html(suggestionsHtml).show();
+                    } else {
+                        $("#suggestionsBox").empty().hide();
                     }
-                });
-            } else {
-                $("#suggestionsBox").empty().hide();
-            }
-        });
-
-        $(document).on("click", ".suggestion-item", function() {
-            var selectedText = $(this).text();
-            $("#searchInput").val(selectedText);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Lỗi AJAX:", status, error);
+                }
+            });
+        } else {
             $("#suggestionsBox").empty().hide();
-        });
-
-        $(document).on("click", function(event) {
-            if (!$(event.target).closest("#searchInput").length) {
-                $("#suggestionsBox").empty().hide();
-            }
-        });
+        }
     });
+
+    $(document).on("click", ".suggestion-item", function() {
+        var selectedText = $(this).find(".suggestion-name").text();
+        $("#searchInput").val(selectedText);
+        $("#suggestionsBox").empty().hide();
+    });
+
+    $(document).on("click", function(event) {
+        if (!$(event.target).closest("#searchInput, #suggestionsBox").length) {
+            $("#suggestionsBox").empty().hide();
+        }
+    });
+});
 
     </script>
     @*<script>
-        // Hiển thị loading khi người dùng click vào liên kết
-        document.addEventListener('click', function (event) {
-            if (event.target.tagName === 'A' && event.target.href) {
-                event.preventDefault(); // Ngăn chuyển trang ngay lập tức
-                const link = event.target.href; // Lưu URL đích
+            // Hiển thị loading khi người dùng click vào liên kết
+            document.addEventListener('click', function (event) {
+                if (event.target.tagName === 'A' && event.target.href) {
+                    event.preventDefault(); // Ngăn chuyển trang ngay lập tức
+                    const link = event.target.href; // Lưu URL đích
+                    const loadingOverlay = document.getElementById("loadingOverlay");
+
+                    // Hiển thị màn hình loading
+                    loadingOverlay.style.display = "flex";
+
+                    // Đảm bảo loading hiển thị ít nhất 2 giây trước khi chuyển trang
+                    setTimeout(function () {
+                        window.location.href = link; // Chuyển đến trang mới sau 2 giây
+                    }, 1000);
+                }
+            });
+
+            // Hiển thị loading khi trang mới bắt đầu tải và ẩn sau 2 giây
+            window.addEventListener('load', function () {
                 const loadingOverlay = document.getElementById("loadingOverlay");
-
-                // Hiển thị màn hình loading
-                loadingOverlay.style.display = "flex";
-
-                // Đảm bảo loading hiển thị ít nhất 2 giây trước khi chuyển trang
+                loadingOverlay.style.display = "flex"; // Hiển thị loading khi trang mới tải
                 setTimeout(function () {
-                    window.location.href = link; // Chuyển đến trang mới sau 2 giây
+                    loadingOverlay.style.display = "none"; // Ẩn sau 2 giây
                 }, 1000);
-            }
-        });
-
-        // Hiển thị loading khi trang mới bắt đầu tải và ẩn sau 2 giây
-        window.addEventListener('load', function () {
-            const loadingOverlay = document.getElementById("loadingOverlay");
-            loadingOverlay.style.display = "flex"; // Hiển thị loading khi trang mới tải
-            setTimeout(function () {
-                loadingOverlay.style.display = "none"; // Ẩn sau 2 giây
-            }, 1000);
-        });
-    </script>*@
+            });
+        </script>*@
 
     <style>
         .suggestions-box {
             position: absolute;
-            max-height: 200px;
-            overflow-y: scroll; /* Giữ khả năng cuộn nhưng ẩn thanh cuộn */
-            background-color: white;
-            width: 416px;
-            margin-left: 10px;
-            z-index: 1000000;
-            /* Viền của suggestions box */
-            border-radius: 0 0 5px 5px; /* Bo tròn góc */
+            width: 100%;
+            max-width: 415px; /* Điều chỉnh theo kích thước input */
+            background: #fff;
+            border: none;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: none;
         }
 
-            /* Ẩn thanh cuộn */
-            .suggestions-box::-webkit-scrollbar {
-                width: 0; /* Ẩn thanh cuộn ngang */
-                height: 0; /* Ẩn thanh cuộn dọc */
+        .suggestion-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .suggestion-item {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+            .suggestion-item:hover {
+                background-color: #f5f5f5;
             }
 
-            /* Phần tử danh sách */
-            .suggestions-box ul {
-                list-style: none;
-                margin: 0;
-                padding: 0;
-            }
+        .suggestion-img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
 
-            .suggestions-box li {
-                padding: 10px;
-                cursor: pointer;
-            }
+        .suggestion-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
 
-                /* Hover effect khi di chuột lên item */
-                .suggestions-box li:hover {
-                    background-color: #f0f0f0;
-                }
+        .suggestion-price {
+            font-size: 12px;
+            color: #e74c3c; /* Màu đỏ cho giá, có thể thay đổi */
+        }
 
         .bg-custom {
             background-color: #1f1f20;

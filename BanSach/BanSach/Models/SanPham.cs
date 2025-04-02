@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Text;
+using BanSach.DesignPatterns.PrototypePattern;
 
 namespace BanSach.Models
 {
-    public partial class SanPham
+    public class SanPham : IPrototype<SanPham>
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SanPham()
@@ -36,6 +37,7 @@ namespace BanSach.Models
         public decimal GiaBan { get; set; }
 
         [DisplayName("Hình Ảnh")]
+        [Required(ErrorMessage = "Hình ảnh không được để trống.")]
         [StringLength(250, ErrorMessage = "Đường dẫn hình ảnh không được vượt quá 250 ký tự.")]
         public string HinhAnh { get; set; }
 
@@ -64,6 +66,22 @@ namespace BanSach.Models
         public virtual NhaXuatBan NhaXuatBan { get; set; }
         public virtual TacGia TacGia { get; set; }
         public virtual TheLoai TheLoai { get; set; }
-        
+        public SanPham Clone()
+        {
+            return new SanPham
+            {
+                IDsp = this.IDsp, 
+                TenSP = this.TenSP,
+                MoTa = this.MoTa,
+                IDtl = this.IDtl,
+                GiaBan = this.GiaBan,
+                HinhAnh = this.HinhAnh,
+                IDtg = this.IDtg,
+                IDnxb = this.IDnxb,
+                IDkm = this.IDkm,
+                SoLuong = this.SoLuong,
+                TrangThaiSach = this.TrangThaiSach
+            };
+        }
     }
 }

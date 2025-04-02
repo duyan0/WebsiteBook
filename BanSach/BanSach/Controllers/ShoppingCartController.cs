@@ -136,89 +136,66 @@ namespace BanSach.Controllers
             return RedirectToAction("ShowCart", "ShoppingCart");
         }
 
-        public ActionResult CheckOut(FormCollection form)
+        [HttpPost]
+        public ActionResult CheckOut(string CodeCustomer, string NameCustomer, string PhoneCustomer, string AddressDeliverry)
         {
+            if (string.IsNullOrEmpty(CodeCustomer))
+            {
+                TempData["ErrorMessage"] = "Vui lòng đăng nhập trước khi đặt hàng.";
+                return RedirectToAction("Cart");
+            }
+
+            Cart cart = Session["Cart"] as Cart;
+
+
             try
             {
-                Cart cart = Session["Cart"] as Cart;
-
-                if (cart == null || !cart.Items.Any())
+                // Tạo đơn hàng
+                DonHang donHang = new DonHang
                 {
-                    return RedirectToAction("ShowCart", "ShoppingCart");
-                }
-
-                DonHang _order = new DonHang
-                {
+                    IDkh = int.Parse(CodeCustomer),
                     NgayDatHang = DateTime.Now,
-                    DiaChi = form["AddressDeliverry"],
-                    IDkh = int.Parse(form["CodeCustomer"]),
+                    totalamount = cart.Total_money(),
                     TrangThai = "Chờ xử lý",
-
+                    State = new PendingState()
                 };
+                db.DonHang.Add(donHang);
+                db.SaveChanges();
 
-
-                db.DonHang.Add(_order);
-
+                // Tạo chi tiết đơn hàng
                 foreach (var item in cart.Items)
                 {
-                    var giaBan = item._product.GiaBan;
-                    var mucGiamGia = item.MucGiamGia;
-                    var giaSauKhuyenMai = giaBan * (1 - (mucGiamGia / 100));
-
-                    var _order_detail = new DonHangCT
+                    DonHangCT donHangCT = new DonHangCT
                     {
-                        IDDonHang = _order.IDdh,
+                        IDDonHang = donHang.IDdh,
                         IDSanPham = item._product.IDsp,
-                        Gia = (double)giaSauKhuyenMai,
-                        SoLuong = item._quantity
+                        SoLuong = item._quantity,
+                        Gia = (double?)item._product.GiaBan
+
                     };
+                    db.DonHangCT.Add(donHangCT);
 
-                    db.DonHangCT.Add(_order_detail);
-
-                    var product = db.SanPham.SingleOrDefault(s => s.IDsp == item._product.IDsp);
-                    if (product != null)
-                    {
-                        product.SoLuong -= item._quantity;
-                    }
+                    // Cập nhật số lượng sản phẩm
+                    var product = db.SanPham.Find(item._product.IDsp);
+                    product.SoLuong -= item._quantity;
+                    db.Entry(product).State = EntityState.Modified;
                 }
                 db.SaveChanges();
 
-                // Lưu OrderId vào Session sau khi tạo đơn hàng thành công
-                Session["OrderId"] = _order.IDdh;
-
+                // Xóa giỏ hàng sau khi đặt hàng
                 cart.ClearCart();
-                return RedirectToAction("CheckOut_Success", "ShoppingCart");
+                Session["Cart"] = cart;
 
+                TempData["SuccessMessage"] = "Đặt hàng thành công!";
+                return RedirectToAction("LichSuDonHang", "KhachHangs");
             }
-            catch
+            catch (Exception ex)
             {
-                return Content("Có sai sót! Xin kiểm tra lại thông tin");
+                TempData["ErrorMessage"] = "Lỗi khi đặt hàng: " + ex.Message;
+                return RedirectToAction("Cart");
             }
         }
 
 
-        // Thông báo thanh toán thành công
-        public ActionResult CheckOut_Success()
-        {
-            if (Session["OrderId"] == null)
-            {
-                return RedirectToAction("ShowCart");
-            }
-
-            var orderId = (int)Session["OrderId"];
-            var order = db.DonHang.Find(orderId);
-            if (order != null)
-            {
-                ViewBag.OrderId = order.IDdh;
-                ViewBag.TotalAmount = order.Total_DH; // Gán giá trị mặc định nếu Total_DH là null
-            }
-            else
-            {
-                // Nếu không tìm thấy đơn hàng, chuyển hướng hoặc hiển thị thông báo lỗi
-                TempData["ErrorMessage"] = "Không tìm thấy thông tin đơn hàng.";
-                return RedirectToAction("ShowCart");
-            }
-            return View();
-        }
     }
 }

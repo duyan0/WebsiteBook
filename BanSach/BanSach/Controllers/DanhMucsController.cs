@@ -44,8 +44,14 @@ namespace BanSach.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(DanhMuc model) // Đổi ModelType với tên model bạn đang sử dụng
+        public ActionResult Create(DanhMuc model)
         {
+            // Kiểm tra TenDanhMuc không trùng (không phân biệt hoa/thường)
+            if (db.DanhMuc.Any(d => d.TenDanhMuc.ToLower() == model.TenDanhMuc.ToLower()))
+            {
+                ModelState.AddModelError("TenDanhMuc", "Tên danh mục đã tồn tại. Vui lòng chọn tên khác.");
+            }
+
             if (ModelState.IsValid)
             {
                 // Lưu model vào cơ sở dữ liệu
@@ -54,9 +60,9 @@ namespace BanSach.Controllers
                 return RedirectToAction("Index");
             }
 
-            // Nếu có lỗi, hãy gọi lại danh sách tác giả
+            // Nếu có lỗi, tải lại danh sách danh mục
             var DM = db.DanhMuc.ToList();
-            ViewBag.DM = new SelectList(DM, "ID", "TenDanhMuc", model.ID); // Ghi lại chọn IDtg hiện tại
+            ViewBag.DM = new SelectList(DM, "ID", "TenDanhMuc", model.ID);
             return View(model);
         }
         public ActionResult Edit(int? id)

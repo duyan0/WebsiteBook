@@ -1,4 +1,5 @@
-﻿using BanSach.Models;
+﻿using BanSach.DesignPatterns.StrategyPattern;
+using BanSach.Models;
 using OfficeOpenXml;
 using PagedList;
 using System;
@@ -20,61 +21,8 @@ namespace BanSach.Controllers
         // GET: SanPhams
         public ActionResult Index(string searchString, string sortOrder, int? page)
         {
-            ViewBag.CurrentFilterr = searchString;
-            ViewBag.CurrentSort = sortOrder;
-
-            // Các tùy chọn sắp xếp
-            ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.PriceSortParam = sortOrder == "Price" ? "price_desc" : "Price";
-            ViewBag.AuthorSortParam = sortOrder == "Author" ? "author_desc" : "Author";
-            ViewBag.StatusSortParam = sortOrder == "Status" ? "status_desc" : "Status";
-
-            var sanPhams = db.SanPham.Include(s => s.TheLoai).Include(s => s.TacGia).Include(s => s.NhaXuatBan);
-
-            // Tìm kiếm theo từ khóa
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                sanPhams = sanPhams.Where(s => s.TenSP.Contains(searchString)
-                                             || s.TacGia.TenTG.Contains(searchString)
-                                             || s.TheLoai.TenTheLoai.Contains(searchString)
-                                             || s.TrangThaiSach.Contains(searchString)
-                                             || s.NhaXuatBan.Tennxb.Contains(searchString));
-            }
-
-            // Sắp xếp theo các tiêu chí
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    sanPhams = sanPhams.OrderByDescending(s => s.TenSP);
-                    break;
-                case "Price":
-                    sanPhams = sanPhams.OrderBy(s => s.GiaBan);
-                    break;
-                case "price_desc":
-                    sanPhams = sanPhams.OrderByDescending(s => s.GiaBan);
-                    break;
-                case "Author":
-                    sanPhams = sanPhams.OrderBy(s => s.SoLuong);
-                    break;
-                case "author_desc":
-                    sanPhams = sanPhams.OrderByDescending(s => s.SoLuong);
-                    break;
-                case "Status":
-                    sanPhams = sanPhams.OrderBy(s => s.TrangThaiSach);
-                    break;
-                case "status_desc":
-                    sanPhams = sanPhams.OrderByDescending(s => s.TrangThaiSach);
-                    break;
-                default:
-                    sanPhams = sanPhams.OrderBy(s => s.IDsp);
-                    break;
-            }
-
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
-
-            // Trả về danh sách sản phẩm đã phân trang dưới dạng PartialView
-            return PartialView("Index", sanPhams.ToPagedList(pageNumber, pageSize));
+            var sanphamList = db.SanPham.ToList();
+            return View(sanphamList);
         }
 
 
@@ -90,6 +38,7 @@ namespace BanSach.Controllers
         public ActionResult ProductList(int? category, int? page, string SearchString, string sortOrder)
         {
             SetAvailablePublishers();
+            ViewBag.CurrentFilterr = SearchString;
 
             // Khởi tạo truy vấn
             var products = db.SanPham
@@ -97,7 +46,7 @@ namespace BanSach.Controllers
                             .Include(p => p.KhuyenMai) // Bao gồm bảng KhuyenMai để truy cập MucGiamGia
                             .AsQueryable();
 
-            int pageSize = 18;
+            int pageSize = 20;
             int pageNumber = (page ?? 1);
 
             // Lọc theo category
@@ -113,27 +62,20 @@ namespace BanSach.Controllers
             }
 
             // Sắp xếp theo giá (bao gồm giảm giá) hoặc tên sản phẩm
+            ISortStrategy sortStrategy;
             switch (sortOrder)
             {
-                case "price_desc":
-                    // Sắp xếp theo giá giảm dần, ưu tiên giá sau giảm nếu có khuyến mãi
-                    products = products.OrderByDescending(x =>
-                        x.KhuyenMai != null && x.KhuyenMai.MucGiamGia > 0
-                        ? x.GiaBan * (1 - (decimal)x.KhuyenMai.MucGiamGia / 100)
-                        : x.GiaBan);
-                    break;
                 case "price_asc":
-                    // Sắp xếp theo giá tăng dần, ưu tiên giá sau giảm nếu có khuyến mãi
-                    products = products.OrderBy(x =>
-                        x.KhuyenMai != null && x.KhuyenMai.MucGiamGia > 0
-                        ? x.GiaBan * (1 - (decimal)x.KhuyenMai.MucGiamGia / 100)
-                        : x.GiaBan);
+                    sortStrategy = new PriceAscendingStrategy();
+                    break;
+                case "price_desc":
+                    sortStrategy = new PriceDescendingStrategy();
                     break;
                 default:
-                    // Mặc định theo tên sản phẩm tăng dần
-                    products = products.OrderBy(x => x.TenSP);
+                    sortStrategy = new NameAscendingStrategy();
                     break;
             }
+            products = sortStrategy.Sort(products);
 
             // Trả về kết quả phân trang
             return View(products.ToPagedList(pageNumber, pageSize));
@@ -252,7 +194,7 @@ namespace BanSach.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit( SanPham sanPham)
+        public ActionResult Edit(SanPham sanPham)
         {
             if (ModelState.IsValid)
             {
@@ -339,32 +281,21 @@ namespace BanSach.Controllers
                 publisherList = db.NhaXuatBan.Select(x => x.Tennxb).ToList(); // Cập nhật danh sách
             }
 
-            // Tạo slug từ danh sách đã lấy
-            var publishers = publisherList.Select(p => new { Original = p, Slug = SlugHelper.GenerateSlug(p) }).ToList();
-            System.Diagnostics.Debug.WriteLine("Số nhà xuất bản sau khi tạo slug: " + publishers.Count);
-
             // Kiểm tra và thêm giá trị mặc định nếu rỗng
-            if (!publishers.Any())
+            if (!publisherList.Any())
             {
                 System.Diagnostics.Debug.WriteLine("Không có nhà xuất bản, thêm mặc định.");
-                publishers.Add(new { Original = "Không có Nhà Xuất Bản khả dụng", Slug = "khong-co-nha-xuat-ban-kha-dung" });
+                publisherList.Add("Không có Nhà Xuất Bản khả dụng");
             }
 
             // Gán danh sách vào ViewBag
-            ViewBag.AvailablePublishers = publishers;
-            System.Diagnostics.Debug.WriteLine("ViewBag.AvailablePublishers đã gán: " + publishers.Count);
+            ViewBag.AvailablePublishers = publisherList;
+            System.Diagnostics.Debug.WriteLine("ViewBag.AvailablePublishers đã gán: " + publisherList.Count);
 
-            // Lọc theo nhà xuất bản (ánh xạ ngược từ slug về tên gốc)
+            // Lọc theo nhà xuất bản
             if (publisherFilters != null && publisherFilters.Any())
             {
-                var slugToOriginal = publishers.ToDictionary(p => p.Slug, p => p.Original);
-                var originalNames = publisherFilters.Select(slug => slugToOriginal.TryGetValue(slug, out var original) ? original : null)
-                                                    .Where(name => name != null)
-                                                    .ToList();
-                if (originalNames.Any())
-                {
-                    sanPhams = sanPhams.Where(p => originalNames.Contains(p.NhaXuatBan.Tennxb));
-                }
+                sanPhams = sanPhams.Where(p => publisherFilters.Contains(p.NhaXuatBan.Tennxb));
             }
 
             // Lọc theo phạm vi giá
@@ -418,6 +349,7 @@ namespace BanSach.Controllers
             int pageNumber = (page ?? 1);
             return View("ProductList", sanPhams.ToPagedList(pageNumber, pageSize));
         }
+
         private void SetAvailablePublishers()
         {
             System.Diagnostics.Debug.WriteLine("SetAvailablePublishers - Kiểm tra DB: " + db.NhaXuatBan.Count());
@@ -470,7 +402,7 @@ namespace BanSach.Controllers
 
                         db.SaveChanges();
                         TempData["thanhcong"] = "Nhập sách thành công";
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Import");
                     }
                 }
                 else
@@ -499,18 +431,21 @@ namespace BanSach.Controllers
 
             // Tổng giá trị tồn kho (tổng giá bán * số lượng cho tất cả sản phẩm còn hàng)
             decimal tongGiaTriTonKho = sanPhams.Where(sp => sp.SoLuong > 0).Sum(sp => sp.GiaBan * sp.SoLuong);
+
             // Số lượng các sản phẩm có khuyến mãi
             int tongSanPhamKhuyenMai = sanPhams.Count(sp => sp.IDkm > 0);
 
-            // Số lượng các sản phẩm không có khuyến mãi
-            int tongSanPhamKhongKhuyenMai = sanPhams.Count(sp => sp.IDkm > 0);
+            // Số lượng các sản phẩm không có khuyến mãi (sửa lại điều kiện: IDkm <= 0 hoặc null)
+#pragma warning disable CS0472 // The result of the expression is always the same since a value of this type is never equal to 'null'
+            int tongSanPhamKhongKhuyenMai = sanPhams.Count(sp => sp.IDkm <= 0 || sp.IDkm == null);
+#pragma warning restore CS0472 // The result of the expression is always the same since a value of this type is never equal to 'null'
 
             // Tạo đối tượng ViewBag để truyền thông tin sang View
             ViewBag.TongSachHetHang = tongSachHetHang;
             ViewBag.TongSachConHang = tongSachConHang;
             ViewBag.TongSoLuongSach = tongSoLuongSach;
             ViewBag.TongDauSach = tongDauSach;
-            ViewBag.TongGiaTriTonKho = tongGiaTriTonKho;
+            ViewBag.TongGiaTriTonKho = tongGiaTriTonKho.ToString("N0") + " VNĐ"; // Định dạng thành tiền VND
             ViewBag.TongSanPhamKhuyenMai = tongSanPhamKhuyenMai;
             ViewBag.TongSanPhamKhongKhuyenMai = tongSanPhamKhongKhuyenMai;
 
@@ -562,22 +497,53 @@ namespace BanSach.Controllers
 
         public ActionResult SearchSuggestions(string query)
         {
-            if (string.IsNullOrEmpty(query))
+            var suggestions = db.SanPham
+                .Where(p => p.TenSP.Contains(query))
+                .Select(p => new
+                {
+                    TenSP = p.TenSP,
+                    GiaBan = p.KhuyenMai != null && p.KhuyenMai.MucGiamGia > 0
+                            ? (int)(p.GiaBan * (1 - (decimal)p.KhuyenMai.MucGiamGia / 100))
+                            : p.GiaBan
+                })
+                .Take(5) // Giới hạn số gợi ý
+                .ToList();
+            return Json(suggestions, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Clone(int? id)
+        {
+            if (id == null)
             {
-                return Json(new List<object>(), JsonRequestBehavior.AllowGet); // Trả về một mảng rỗng nếu không có query
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            // Loại bỏ khoảng trắng thừa từ chuỗi nhập vào
-            query = query.Trim().ToLower();  // Chuyển thành chữ thường để so sánh không phân biệt hoa/thường
+            SanPham sanPham = db.SanPham.Find(id);
+            if (sanPham == null)
+            {
+                return HttpNotFound();
+            }
 
-            // Tìm kiếm sản phẩm theo tên sách, so sánh không phân biệt chữ hoa chữ thường và bao gồm khoảng trắng
-            var suggestionsBox = db.SanPham
-                .Where(s => s.TenSP.ToLower().Contains(query))  // Kiểm tra xem tên sản phẩm có chứa chuỗi tìm kiếm
-                .Take(10)  // Giới hạn số lượng gợi ý
-                .Select(s => new { NameSP = s.TenSP })  // Chọn chỉ tên sách với đúng tên thuộc tính
-                .ToList();
+            return View(sanPham);
+        }
 
-            return Json(suggestionsBox, JsonRequestBehavior.AllowGet);  // Trả về danh sách gợi ý
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Clone(int id)
+        {
+            SanPham originalProduct = db.SanPham.Find(id);
+            if (originalProduct == null)
+            {
+                return HttpNotFound();
+            }
+
+            SanPham clonedProduct = originalProduct.Clone();
+            clonedProduct.TenSP = clonedProduct.TenSP;
+            clonedProduct.IDsp = 0; // Đặt lại ID
+
+            db.SanPham.Add(clonedProduct);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
         protected override void Dispose(bool disposing)
         {

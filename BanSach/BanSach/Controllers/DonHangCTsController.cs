@@ -143,12 +143,11 @@ namespace BanSach.Controllers
         }
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         [ChildActionOnly]
-        public PartialViewResult TopBanChay(int categoryId)
+        public PartialViewResult TopBanChay()
         {
             // Lọc và nhóm sản phẩm theo ID, nhưng chỉ lấy sản phẩm thuộc một loại cụ thể
             var query = db.DonHangCT
-                            .Include(d => d.SanPham)
-                            .Where(d => d.SanPham.IDtl == categoryId) // Lọc theo loại sản phẩm
+                            .Include(d => d.SanPham) // Lọc theo loại sản phẩm
                             .GroupBy(d => new
                             {
                                 idPro = d.IDSanPham,
@@ -157,14 +156,14 @@ namespace BanSach.Controllers
                                 price = d.SanPham.GiaBan
                             })
                             .OrderByDescending(gr => gr.Sum(d => d.SoLuong)) // Lấy tổng số lượng bán
-                            .Take(10) // Lấy 10 sản phẩm bán chạy nhất
+                            .Take(15) // Lấy 10 sản phẩm bán chạy nhất
                             .Select(gr => new ViewModel
                             {
                                 IdPro = gr.Key.idPro,
                                 NamePro = gr.Key.namePro,
                                 ImgPro = gr.Key.imgPro,
                                 price = (decimal)gr.Key.price,
-                                Sum_Quantity = gr.Sum(d => d.SoLuong) // Tổng số lượng bán của sản phẩm
+                                Sum_Quantity = (int)gr.Sum(d => d.SoLuong) // Tổng số lượng bán của sản phẩm
                             })
                             .ToList();
 
@@ -272,9 +271,12 @@ namespace BanSach.Controllers
             var recentOrders = db.DonHangCT
                 .Include(d => d.SanPham)
                 .Include(d => d.DonHang)
-                .Where(d => d.DonHang.TrangThai == "Đã nhận hàng" || d.DonHang.TrangThai == "Đã xác nhận")
-                .OrderByDescending(d => d.DonHang.NgayDatHang)
-                .Take(10) // Lấy 100 đơn hàng mới nhất
+                .Where(d => d.SanPham != null
+                         && (d.DonHang.TrangThai == "Đã nhận hàng" || d.DonHang.TrangThai == "Đã xác nhận"))
+                .GroupBy(d => d.IDSanPham) // Nhóm theo ID sản phẩm để tránh trùng lặp
+                .Select(gr => gr.OrderByDescending(d => d.DonHang.NgayDatHang).FirstOrDefault()) // Lấy đơn hàng mới nhất trong mỗi nhóm
+                .OrderByDescending(d => d.DonHang.NgayDatHang) // Sắp xếp theo ngày đặt hàng
+                .Take(15) // Lấy 15 sản phẩm duy nhất
                 .Select(d => new RecentOrderViewModel
                 {
                     Id = d.SanPham.IDsp,
@@ -285,6 +287,13 @@ namespace BanSach.Controllers
                     HinhAnh = d.SanPham.HinhAnh // Lấy đường dẫn của hình ảnh sản phẩm
                 })
                 .ToList();
+
+            // Debug: In số lượng sản phẩm và chi tiết
+            Console.WriteLine($"Số sản phẩm trong recentOrders: {recentOrders.Count}");
+            foreach (var item in recentOrders)
+            {
+                Console.WriteLine($"ID: {item.Id}, Tên: {item.TenSanPham}, Ngày: {item.NgayDatHang}");
+            }
 
             return PartialView("RecentOrders", recentOrders);
         }

@@ -84,12 +84,12 @@ else
     </table>
 
     <div class="container-fluid">
-        <form class="col-12 py-4 px-0" action="/ShoppingCart/CheckOut" method="post">
+        <form class="col-12 py-4 px-0" id="checkoutForm" method="post">
             <input type="hidden" name="CodeCustomer" value="@Session["IDkh"]" required />
 
             <h2 class="text-center text-white">Thông tin</h2>
 
-            <!-- Hiển thị lỗi nếu thanh toán MoMo thất bại -->
+            <!-- Hiển thị lỗi nếu thanh toán thất bại -->
             @if (TempData["ErrorMessage"] != null)
             {
                 <div class="alert alert-danger text-center">
@@ -128,9 +128,10 @@ else
             <div class="d-flex justify-content-end py-3">
                 @if (Session["IDkh"] != null || Session["IDQly"] != null)
                 {
-                    <button type="submit" class="btn btn-danger">
+                    <button type="submit" formaction="@Url.Action("CheckOut", "ShoppingCart")" class="btn btn-danger me-2">
                         Đặt hàng <i class="fas fa-mobile-alt"></i>
                     </button>
+                    
                 }
                 else
                 {
@@ -138,14 +139,13 @@ else
                     <a href="@Url.Action("LoginAccountCus", "LoginUser")" class="btn btn-danger ms-3">Đăng nhập</a>
                 }
             </div>
-
         </form>
     </div>
 }
 
 @section Scripts {
     <script>
-        const apiKey = 'cNNqPnwuPiecDAb0midTWtf8NJkrIXhh3qws63ns';
+        const apiKey = 'cNNqPnwuPiecDAb0midTWtf8NJkrIXhh3qws63ns'; // Thay bằng API key mới từ Goong
         const addressInput = document.getElementById('AddressDeliverry');
         const suggestionsContainer = document.getElementById('suggestions');
         let sessionToken = crypto.randomUUID() || 'default-session-token';

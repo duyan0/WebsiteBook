@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Optimization;
+using System.Web.UI.WebControls;
 
 namespace BanSach
 {
@@ -22,9 +23,15 @@ namespace BanSach
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
+            bundles.Add(new StyleBundle("~/Content/css/TopBanChay").Include(
+         "~/Content/css/TopBanChay.css"));
+            bundles.Add(new StyleBundle("~/Content/css/trangsp.css").Include(
+         "~/Content/css/trangsp.css"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/css/duyan.css"));
+
+            BundleTable.EnableOptimizations = true; // Bật tối ưu hóa
         }
     }
 }

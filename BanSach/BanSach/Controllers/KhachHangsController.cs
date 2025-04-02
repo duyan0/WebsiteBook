@@ -239,6 +239,8 @@ namespace BanSach.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        [OutputCache(Duration = 0)]
         public ActionResult LichSuDonHang(int? page)
         {
             // Lấy ID khách hàng từ session
@@ -255,6 +257,12 @@ namespace BanSach.Controllers
                 .OrderByDescending(dh => dh.NgayDatHang) // Sắp xếp theo ngày đặt hàng giảm dần
                 .Include(dh => dh.DonHangCT) // Bao gồm các chi tiết đơn hàng
                 .ToList();
+
+            // Khởi tạo State cho từng đơn hàng
+            foreach (var order in orders)
+            {
+                order.InitializeState();
+            }
 
             // Phân loại đơn hàng theo trạng thái
             var confirmedOrders = orders.Where(dh => dh.TrangThai == "Đã xác nhận").ToList();

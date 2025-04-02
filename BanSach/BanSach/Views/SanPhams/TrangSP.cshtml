@@ -4,81 +4,100 @@
     ViewBag.Title = "Sách - " + Model.TenSP;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <link href="~/Content/css/trangsp.css" rel="stylesheet" />
-
-<div class="container-fluid d-flex flex-wrap" id="productdetails">
-    <div class="left">
-        <div class="anh">
-            <img src="~/assets/images/products/@Model.HinhAnh" class="rounded-1" style="object-fit:contain;" />
+@Styles.Render("~/Content/css/trangsp.css")
+<div class="container-fluid product-container">
+    <div class="row g-4">
+        <!-- Phần ảnh sản phẩm -->
+        <div class="col-lg-5 col-md-6 col-12 product-image-section">
+            <div class="product-image">
+                <img src="~/assets/images/products/@Model.HinhAnh" alt="@Model.TenSP" class="img-fluid rounded-3 shadow-sm" />
+            </div>
+            @if (Model.TrangThaiSach == "Còn hàng" && Model.SoLuong > 0)
+            {
+                <div class="action-buttons mt-4">
+                    <a href="/ShoppingCart/AddToCart/@Model.IDsp" class="btn btn-outline-danger btn-add-to-cart">
+                        <i class="bi bi-plus-square me-2"></i> Thêm vào giỏ
+                    </a>
+                    <a href="/ShoppingCart/MuaNgay/@Model.IDsp" class="btn btn-danger btn-buy-now">
+                        <i class="bi bi-bag me-2"></i> Mua ngay
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="action-buttons mt-4 d">
+                    <a href="" class="btn btn-outline-danger disabled btn-add-to-cart">
+                        <i class="bi bi-plus-square me-2"></i> Hết hàng
+                    </a>
+                    <a href="" class="btn btn-danger disabled btn-buy-now">
+                        <i class="bi bi-bag me-2"></i> Hết hàng
+                    </a>
+                </div>
+            }
+        
         </div>
-        @if (@Model.TrangThaiSach == "Còn hàng" && @Model.SoLuong > 0)
-        {
-            <div class="nut mt-4">
-                <a href="/ShoppingCart/AddToCart/@Model.IDsp" id="nut1">
-                    <i class="bi bi-plus-square"></i> Thêm
-                </a>
-                <a href="/ShoppingCart/MuaNgay/@Model.IDsp" id="nut2">
-                    <i class="bi bi-bag"></i> Mua ngay
-                </a>
-            </div>
-        }
-        else
-        {
-            <div class="text-danger mt-4">
-                <strong>Sản phẩm này hiện đã hết hàng. Vui lòng quay lại sau!</strong>
-            </div>
-        }
-    </div>
-    <div class="right">
-        <div class="product-details">
-            <p class="text-center text-white" style="font-size:30px;"><b>@Model.TenSP</b></p>
-            <table class="product-details-table">
-                <tr>
-                    <td class="label">Tác giả:</td>
-                    <td class="value">@Model.TacGia.TenTG</td>
-                </tr>
 
-                <tr>
-                    <td class="label">Nhà xuất bản:</td>
-                    <td class="value">@Model.NhaXuatBan.Tennxb</td>
-                </tr>
-                <tr>
-                    <td class="label">Thể loại:</td>
-                    <td class="value">@Model.TheLoai.TenTheLoai</td>
-                </tr>
-                @if (Model.KhuyenMai?.MucGiamGia > 0)
-                {
-                    <tr>
-                        <td class="label">Giá khuyến mãi:</td>
-                        <td class="value">@Model.KhuyenMai.MucGiamGia %</td>
-                    </tr>
-                }
-                <tr>
-                    <td class="label">Giá tiền:</td>
-                    <td class="value">
-                        @{
-                            var giaGoc = Model.GiaBan;
-                            var mucGiam = Model.KhuyenMai?.MucGiamGia ?? 0;
-                            var giaSauGiam = mucGiam > 0 ? giaGoc * (1 - (decimal)mucGiam / 100.0m) : giaGoc;
+        <!-- Phần thông tin sản phẩm -->
+        <div class="col-lg-7 col-md-6 col-12 product-details-section">
+            <div class="product-details bg-dark text-white p-4 rounded-3 shadow-sm">
+                <h1 class="product-title">@Model.TenSP</h1>
+                <div class="product-info mt-3">
+                    <div class="info-item">
+                        <span class="label">Tác giả:</span>
+                        <span class="value">@Model.TacGia.TenTG</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Nhà xuất bản:</span>
+                        <span class="value">@Model.NhaXuatBan.Tennxb</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Thể loại:</span>
+                        <span class="value">@Model.TheLoai.TenTheLoai</span>
+                    </div>
+                    @if (Model.KhuyenMai?.MucGiamGia > 0)
+                    {
+                        <div class="info-item">
+                            <span class="label">Khuyến mãi:</span>
+                            <span class="value text-success fw-bold">
+                                @(Model.KhuyenMai.MucGiamGia.GetValueOrDefault().ToString("0"))%
+                            </span>
+                        </div>
+                    }
+                    <div class="info-item price-info">
+                        <span class="label">Giá tiền:</span>
+                        <span class="value">
+                            @{
+                                var giaGoc = Model.GiaBan;
+                                var mucGiam = Model.KhuyenMai?.MucGiamGia ?? 0;
+                                var giaSauGiam = mucGiam > 0 ? giaGoc * (1 - (decimal)mucGiam / 100.0m) : giaGoc;
 
-                            if (mucGiam > 0)
-                            {
-                                <span class="old-price">@string.Format("{0:N0} VND", giaGoc)</span> <!-- Hiển thị giá gốc đã gạch bỏ -->
-                                <br />
-                                <span class="discount-price">@string.Format("{0:N0} VND", giaSauGiam)</span> <!-- Hiển thị giá sau giảm -->
+                                if (mucGiam > 0)
+                                {
+                                    <span class="text-secondary mb-0 mt-0  text-decoration-line-through ">@string.Format("{0:N0} VND", giaGoc)</span>
+                                    <span class="discount-price text-danger fw-bold ms-2">@string.Format("{0:N0} VND", giaSauGiam)</span>
+                                }
+                                else
+                                {
+                                    <span class="current-price text-danger fw-bold">@string.Format("{0:N0} VND", giaGoc)</span>
+                                }
                             }
-                            else
-                            {
-                                <span class="text-danger fw-semibold fs-5">@string.Format("{0:N0} VND", giaGoc)</span> <!-- Hiển thị giá gốc nếu không có khuyến mãi -->
-                            }
-                        }
-                    </td>
-                </tr>
-                <tr>
-                    <td class="label">Mô tả:</td>
-                    <td class="value">@Model.MoTa</td>
-                </tr>
-            </table>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Số lượng:</span>
+                        <span class="value fw-bold">
+                            @(Model.SoLuong > 0 ? "Còn hàng" : "Hết hàng")
+                            <span class="text-info ms-1">@Model.SoLuong</span>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Mô tả:</span>
+                        <span class="value">@Model.MoTa</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

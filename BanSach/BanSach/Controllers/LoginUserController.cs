@@ -5,6 +5,8 @@ using System.Web.Mvc;
 using System.Net;
 using System.Net.Mail;
 using System.Data.Entity.Validation;
+using BanSach.DesignPatterns.FactoryMethodPattern;
+using BanSach.DesignPatterns.TemplateMethodPattern;
 namespace BanSach.Controllers
 {
     public class LoginUserController : Controller
@@ -19,19 +21,21 @@ namespace BanSach.Controllers
         [HttpGet]
         public ActionResult Logout()
         {
+            LogoutHandler handler;
             if (Session["Idkh"] != null)
             {
-                Session["Idkh"] = null;
-                Session["IDkh"] = null;
-                Session["TenKH"] = null;
-                Session["SoDT"] = null;
-                return RedirectToAction("LoginAccountCus", "LoginUser");
+                handler = new CustomerLogoutHandler(ControllerContext);
             }
-            if (Session["IdQly"] != null)
+            else if (Session["IdQly"] != null)
             {
-                Session.Clear();
+                handler = new AdminLogoutHandler(ControllerContext);
             }
-            return RedirectToAction("ProductList", "SanPhams");
+            else
+            {
+                return RedirectToAction("ProductList", "SanPhams");
+            }
+
+            return handler.Logout();
         }
         [HttpGet]
         public ActionResult RegisterCus()
@@ -48,49 +52,44 @@ namespace BanSach.Controllers
                 return View();
             }
 
-            // Kiểm tra số điện thoại phải là 10 số (chỉ chứa số)
             if (string.IsNullOrEmpty(_user.SoDT) || !_user.SoDT.All(char.IsDigit) || _user.SoDT.Length != 10)
             {
                 ViewBag.ErrorRegister = "Số điện thoại phải là 10 số (chỉ chứa số, ví dụ: 0123456789).";
                 return View();
             }
 
-            // Kiểm tra trùng lặp tài khoản, số điện thoại, và email
-            bool isAccountExist = db.KhachHang.Any(s => s.TKhoan == _user.TKhoan);
             bool isPhoneExist = db.KhachHang.Any(s => s.SoDT == _user.SoDT);
             bool isEmailExist = db.KhachHang.Any(s => s.Email == _user.Email);
+            bool isAccountExist = db.KhachHang.Any(s => s.TKhoan == _user.TKhoan);
 
-            if (isAccountExist || isPhoneExist || isEmailExist)
+            if (isPhoneExist || isEmailExist || isAccountExist)
             {
-                ViewBag.ErrorRegister = isAccountExist ? "Tài khoản đã tồn tại!" :
-                                           isPhoneExist ? "Số điện thoại đã tồn tại!" :
-                                           "Email đã tồn tại!";
+                ViewBag.ErrorRegister = isPhoneExist ? "Số điện thoại đã tồn tại" :
+                                           isEmailExist ? "Email đã tồn tại" :
+                                           "Tài khoản đã tồn tại";
                 return View();
             }
 
-            // Kiểm tra mật khẩu khớp nhau
             if (_user.MKhau != ConfirmPass)
             {
                 ViewBag.ErrorRegister = "Mật khẩu nhập lại không đúng!";
                 return View();
             }
 
-            // Lưu người dùng với trạng thái chưa xác nhận
             _user.TrangThaiTaiKhoan = "Chưa xác nhận";
-            _user.create_date= DateTime.Now;
+            _user.create_date = DateTime.Now;
             db.KhachHang.Add(_user);
             db.SaveChanges();
 
-            // Tạo và lưu mã OTP
-            string otp = GenerateOtp();
+            // Sử dụng Factory Method để tạo verifier
+            IVerifier verifier = VerifierFactory.CreateVerifier("otp");
+            string otp = verifier.GenerateVerification();
             _user.OTP = otp;
             _user.OTPExpiry = DateTime.Now.AddMinutes(5);
             db.SaveChanges();
 
-            // Gửi email chứa mã OTP
-            SendEmail(_user.Email, "Xác nhận tài khoản", $"Mã OTP của bạn: {otp}");
+            verifier.SendVerification(_user.Email, otp);
 
-            // Chuyển hướng đến trang xác nhận
             return RedirectToAction("VerifyAccount", new { userId = _user.IDkh, method = "otp" });
         }
 

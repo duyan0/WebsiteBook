@@ -9,78 +9,58 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" />
 <link href="~/Content/css/ProductList.css" rel="stylesheet" />
 
-<h3 class="page-title text-white">Danh sách sản phẩm</h3>
+<h3 class="text-center fw-semibold text-white" style="margin-left: 300px;">Danh sách sản phẩm</h3>
 
 <div class="container">
     <div class="row">
         <!-- Cột trái: Bộ lọc giá và nhà xuất bản -->
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-md-3 mt-0">
             <!-- Form chung cho cả giá và nhà xuất bản -->
             <form id="filterForm" method="get" action="/SanPhams/FilterProducts">
                 <!-- Bộ lọc giá -->
-                <div class="price-filter p-2 shadow-lg rounded bg-dark mb-3 mt-2">
-                    <h4 class="filter-title mb-3 text-primary text-white">GIÁ</h4>
+                <div class="price-filter p-2 shadow-lg rounded bg-white mb-3 mt-3">
+                    <h4 class="filter-title mb-3 text-primary text-dark">GIÁ</h4>
                     <div class="form-check mb-2">
-                        <input type="checkbox" class="form-check-input" id="price1" name="priceRange" value="0-150000"
-                               @(Request["priceRange"] != null && Request["priceRange"].Contains("0-150000") ? "checked" : "")>
-                        <label class="form-check-label text-white" for="price1">0 - 150,000 VND</label>
+                        <input type="checkbox" class="form-check-input" id="price1" name="priceRange" value="0-150000" @(Request["priceRange"] != null && Request["priceRange"].Contains("0-150000") ? "checked" : "")>
+                        <label class="form-check-label text-dark" for="price1">0 - 150,000 VND</label>
                     </div>
                     <div class="form-check mb-2">
-                        <input type="checkbox" class="form-check-input" id="price2" name="priceRange" value="150000-300000"
-                               @(Request["priceRange"] != null && Request["priceRange"].Contains("150000-300000") ? "checked" : "")>
-                        <label class="form-check-label text-white" for="price2">150,000 - 300,000 VND</label>
+                        <input type="checkbox" class="form-check-input" id="price2" name="priceRange" value="150000-300000" @(Request["priceRange"] != null && Request["priceRange"].Contains("150000-300000") ? "checked" : "")>
+                        <label class="form-check-label text-dark" for="price2">150,000 - 300,000 VND</label>
                     </div>
                     <div class="form-check mb-2">
-                        <input type="checkbox" class="form-check-input" id="price3" name="priceRange" value="300000-499999"
-                               @(Request["priceRange"] != null && Request["priceRange"].Contains("300000-499999") ? "checked" : "")>
-                        <label class="form-check-label text-white" for="price3">300,000 - 499,999 VND</label>
+                        <input type="checkbox" class="form-check-input" id="price3" name="priceRange" value="300000-499999" @(Request["priceRange"] != null && Request["priceRange"].Contains("300000-499999") ? "checked" : "")>
+                        <label class="form-check-label text-dark" for="price3">300,000 - 499,999 VND</label>
                     </div>
                     <div class="form-check mb-2">
-                        <input type="checkbox" class="form-check-input" id="price4" name="priceRange" value="500000-700000"
-                               @(Request["priceRange"] != null && Request["priceRange"].Contains("500000-700000") ? "checked" : "")>
-                        <label class="form-check-label text-white" for="price4">500,000 - 700,000 VND</label>
+                        <input type="checkbox" class="form-check-input" id="price4" name="priceRange" value="500000-700000" @(Request["priceRange"] != null && Request["priceRange"].Contains("500000-700000") ? "checked" : "")>
+                        <label class="form-check-label text-dark" for="price4">500,000 - 700,000 VND</label>
                     </div>
                     <div class="form-check mb-3">
-                        <input type="checkbox" class="form-check-input" id="price5" name="priceRange" value="700000-up"
-                               @(Request["priceRange"] != null && Request["priceRange"].Contains("700000-up") ? "checked" : "")>
-                        <label class="form-check-label text-white" for="price5">700,000 - Trở Lên</label>
+                        <input type="checkbox" class="form-check-input" id="price5" name="priceRange" value="700000-up" @(Request["priceRange"] != null && Request["priceRange"].Contains("700000-up") ? "checked" : "")>
+                        <label class="form-check-label text-dark" for="price5">700,000 - Trở Lên</label>
                     </div>
                 </div>
 
-                <!-- Bộ lọc nhà xuất bản -->
-                <div class="price-filter p-2 shadow-sm rounded bg-white mb-3">
-                    <h4 class="filter-title mb-3 text-primary text-dark">Nhà Xuất Bản</h4>
-                    @{
-                        var availablePublishers = ViewBag.AvailablePublishers as List<dynamic> ?? new List<dynamic>();
-                        // Debug để kiểm tra dữ liệu
-                        if (ViewBag.AvailablePublishers == null)
+                <!-- Bộ lọc nhà xuất bản - Chỉ hiển thị nếu có dữ liệu -->
+                @{
+                    var availablePublishers = ViewBag.AvailablePublishers as List<string> ?? new List<string>();
+                    
+                }
+                @if (availablePublishers.Any()) // Chỉ hiển thị nếu có nhà xuất bản
+                {
+                    <div class="price-filter p-2 shadow-sm rounded bg-white mb-3">
+                        <h4 class="filter-title mb-3 text-primary text-dark">Nhà Xuất Bản</h4>
+                        @foreach (var publisher in availablePublishers)
                         {
-                                        <p>Debug: ViewBag.AvailablePublishers là null</p>
-                        }
-                        else
-                        {
-                            <p>Debug: Kiểu dữ liệu = @ViewBag.AvailablePublishers.GetType().ToString()</p>
-                            <p>Debug: Số lượng = @availablePublishers.Count</p>
-                            <p>Debug: Dữ liệu = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(availablePublishers))</p>
-                        }
-                    }
-                    @if (!availablePublishers.Any())
-                    {
-                        <p>Không có nhà xuất bản nào để hiển thị.</p>
-                    }
-                    else
-                    {
-                        foreach (var publisher in availablePublishers)
-                        {
-                            bool isChecked = Request["publisherFilters"] != null && Request["publisherFilters"].Contains(publisher.Slug);
+                            bool isChecked = Request["publisherFilters"] != null && Request["publisherFilters"].Contains(publisher);
                             <div class="form-check mb-2">
-                                <input type="checkbox" class="form-check-input" name="publisherFilters" value="@publisher.Slug" @(isChecked ? "checked" : "")
-                                       @(publisher.Original == "Không có Nhà Xuất Bản khả dụng" ? "disabled" : "") />
-                                <label class="form-check-label">@publisher.Original</label>
+                                <input type="checkbox" class="form-check-input" name="publisherFilters" value="@publisher" @(isChecked ? "checked" : "") @(publisher == "Không có Nhà Xuất Bản khả dụng" ? "disabled" : "") />
+                                <label class="form-check-label">@publisher</label>
                             </div>
                         }
-                    }
-                </div>
+                    </div>
+                }
 
                 <!-- Bộ lọc sắp xếp giá -->
                 <div class="price-filter p-2 shadow-sm rounded bg-white mb-3">
@@ -104,7 +84,7 @@
                 {
                     foreach (var item in Model)
                     {
-                        <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 d-flex align-items-stretch gap-1 p-1 mb-lg-0">
+                        <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 d-flex align-items-stretch gap-1 p-1 mb-lg-0 justify-content-start">
                             <div class="card-pro @(item.TrangThaiSach == "Hết hàng" ? "out-of-stock" : "")">
                                 <a href="@Url.Action("TrangSP", "SanPhams", new { id = item.IDsp })">
                                     <img src="~/assets/images/products/@item.HinhAnh" class="img-fluid" alt="@item.TenSP" />

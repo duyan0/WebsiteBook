@@ -227,22 +227,6 @@ BEGIN
 END;
 GO
 
-CREATE TRIGGER trg_UpdateTotalQuantityDonHangCT
-ON [Sach].[dbo].[DonHangCT]
-AFTER INSERT, UPDATE, DELETE
-AS
-BEGIN
-    DECLARE @IDdh INT;
-    -- Lấy ID của đơn hàng đã thay đổi
-    SELECT @IDdh = IDDonHang FROM inserted;
-
-    -- Tính tổng số lượng cho đơn hàng
-    UPDATE [Sach].[dbo].[DonHang]
-    SET totalquantity = (SELECT SUM(SoLuong) FROM [Sach].[dbo].[DonHangCT] WHERE IDDonHang = @IDdh)
-    WHERE IDdh = @IDdh;
-END;
-GO
-
 CREATE TRIGGER trg_UpdateOTPExpiry
 ON [Sach].[dbo].[KhachHang]
 AFTER INSERT, UPDATE
@@ -256,21 +240,9 @@ BEGIN
 END;
 GO
 
-CREATE TRIGGER trg_SetCreateDate
-ON [Sach].[dbo].[KhachHang]
-AFTER INSERT
-AS
-BEGIN
-    -- Cập nhật trường create_date bằng thời gian hiện tại khi có bản ghi mới được chèn vào
-    UPDATE [Sach].[dbo].[KhachHang]
-    SET create_date = GETDATE() -- Gán thời gian hiện tại
-    WHERE IDkh IN (SELECT IDkh FROM inserted);
-END;
-GO
-
 --Bảng Admins
 INSERT INTO Admin(HoTen, Email, DiaChi, SoDT, VaiTro, TKhoan, MKhau)
-VALUES (N'Võ Duy Ân', N'admin@gmail.com', N'Số 123, Đường ABC', N'0912345678', N'Admin', N'admin', N'1');
+VALUES (N'Võ Duy Ân', N'admin@gmail.com', N'Số 123, Đường ABC', N'0912345678', N'Admin2104', N'Admin2104', N'1');
 --Bảng DanhMuc
 INSERT INTO DanhMuc (TenDanhMuc)
 VALUES (N'Sách Tiếng Việt'), (N'Sách Tiếng Anh'), (N'Sách Kinh Tế');
@@ -282,27 +254,46 @@ INSERT INTO DanhMuc_TheLoai (DanhMuc_ID, TheLoai_ID, HinhAnh)
 VALUES (1, 1, N'./images/sach_tieng_viet.jpg'), (2, 2, N'./images/sach_tieng_anh.jpg');
 --Bảng KhachHang
 INSERT INTO KhachHang (TenKH, SoDT, Email, TKhoan, MKhau, TrangThaiTaiKhoan, OTP, OTPExpiry, create_date)
-VALUES (N'Nguyễn Thị B', N'0934567890', N'nguyenb@example.com', N'voduyan', N'voduyan', N'Hoạt động', N'123456', DATEADD(HOUR, 1, GETDATE()), GETDATE());
+VALUES (N'Nguyễn Thị B', N'0934567890', N'nguyenb@example.com', N'Vda2104', N'Vda2104', N'Hoạt động', N'123456', DATEADD(HOUR, 1, GETDATE()), GETDATE());
 --Bảng TacGia
 INSERT INTO TacGia (TenTG, NgaySinh, QuocGia, TieuSu)
-VALUES (N'Nguyễn Nhật Ánh', '1955-12-01', N'Việt Nam', N'Nhà văn nổi tiếng của Việt Nam.');
+VALUES 
+    (N'Nguyễn Nhật Ánh', '1955-12-01', N'Việt Nam', N'Nhà văn nổi tiếng của Việt Nam với nhiều tác phẩm dành cho tuổi trẻ.'),
+    (N'Haruki Murakami', '1949-01-12', N'Nhật Bản', N'Tác giả nổi tiếng với phong cách viết huyền ảo và sâu sắc.'),
+    (N'J.K. Rowling', '1965-07-31', N'Anh', N'Người sáng tạo ra series Harry Potter nổi tiếng toàn cầu.'),
+    (N'Victor Hugo', '1802-02-26', N'Pháp', N'Nhà văn lớn của Pháp, tác giả của "Những người khốn khổ".'),
+    (N'Tô Hoài', '1920-09-27', N'Việt Nam', N'Nhà văn Việt Nam với nhiều tác phẩm kinh điển như "Dế Mèn phiêu lưu ký".');
 --Bảng NhaXuatBan
 INSERT INTO NhaXuatBan (Tennxb, DiaChi, SDT, Email)
-VALUES (N'Nhà xuất bản Trẻ', N'123 Đường ABC, Quận 1, TP.HCM', N'0901234567', N'nxb@tre.com.vn');
+VALUES
+    (N'Nhà xuất bản Kim Đồng', N'55 Quang Trung, Hai Bà Trưng, Hà Nội', N'0987654321', N'kimdong@nxb.com'),
+    (N'Nhà xuất bản Giáo Dục', N'81 Trần Hưng Đạo, Hoàn Kiếm, Hà Nội', N'0912345678', N'giaoduc@nxb.edu.vn'),
+    (N'Nhà xuất bản Văn Học', N'18 Nguyễn Du, Quận 1, TP.HCM', N'0934567890', N'vanhoc@nxb.vn'),
+    (N'Nhà xuất bản Tổng Hợp', N'62 Nguyễn Thị Minh Khai, Quận 3, TP.HCM', N'0978123456', N'tonghop@nxb.com.vn');
 --Bảng KhuyenMai
 INSERT INTO KhuyenMai (TenKhuyenMai, NgayBatDau, NgayKetThuc, MucGiamGia, MoTa, NgayTao)
-VALUES (N'Giảm giá mùa hè', '2025-06-01', '2025-06-30', 20.00, N'Giảm giá 20% cho tất cả sách', GETDATE());
+VALUES 
+    (N'Giảm giá mùa hè', GETDATE(), '2025-06-30', 20.00, N'Giảm giá 20% cho tất cả sách', GETDATE()),
+    (N'Khuyến mãi Tết 2026', GETDATE(), '2026-02-15', 15.00, N'Giảm 15% cho sách thiếu nhi', GETDATE()),
+    (N'Black Friday 2025', GETDATE(), '2025-12-01', 30.00, N'Giảm 30% toàn bộ cửa hàng', GETDATE()),
+    (N'Ngày sách Việt Nam', GETDATE(), '2025-04-30', 10.00, N'Giảm 10% sách văn học', GETDATE()),
+    (N'Back to School', GETDATE(), '2025-09-15', 25.00, N'Giảm 25% sách giáo khoa', GETDATE()),
+    (N'Giáng sinh rực rỡ', GETDATE(), '2025-12-31', 20.00, N'Giảm 20% sách ngoại ngữ', GETDATE()),
+    (N'Khuyến mãi tháng 5', GETDATE(), '2025-05-31', 15.00, N'Giảm 15% sách kỹ năng', GETDATE()),
+    (N'Mừng Quốc khánh', GETDATE(), '2025-09-07', 50.00, N'Giảm 50% sách lịch sử', GETDATE()),
+    (N'Sinh nhật cửa hàng', GETDATE(), '2025-07-20', 10.00, N'Giảm 10% tất cả sản phẩm', GETDATE()),
+    (N'Khuyến mãi cuối năm', GETDATE(), '2025-12-31', 35.00, N'Giảm 35% sách kinh doanh', GETDATE());
 --Bảng SanPham
 INSERT INTO SanPham (TenSP, MoTa, IDtl, GiaBan, HinhAnh, IDtg, IDnxb, IDkm, SoLuong, TrangThaiSach)
 VALUES (N'Sách học lập trình C#', N'Sách hướng dẫn lập trình C# cho người mới bắt đầu', 1, 250000, N'./images/sach_csharp.jpg', 1, 1, 1, 0, N'Hết hàng');
 --Bảng Slide
 INSERT INTO Slide (HinhAnh, MoTa, Link, ThuTu)VALUES 
-(N'anh_slide1.jpg', N'Mô tả cho Slide 1', 'https://example.com/slide1', 1)
+(N'anh_slide1.jpg', N'Mô tả cho Slide 1', 'https://localhost:44307/SanPhams/ProductList', 1)
 --Bảng Banner
 INSERT INTO Banner (HinhAnh, MoTa, Link, ThuTu)VALUES
-(N'anh_banner1.jpg', N'Mô tả cho Banner 1', 'https://example.com/banner1', 1),
-(N'anh_banner2.jpg', N'Mô tả cho Banner 2', 'https://example.com/banner2', 2),
-(N'anh_banner3.jpg', N'Mô tả cho Banner 3', 'https://example.com/banner3', 3);
+(N'anh_banner1.jpg', N'Mô tả cho Banner 1', 'https://localhost:44307/SanPhams/ProductList', 1),
+(N'anh_banner2.jpg', N'Mô tả cho Banner 2', 'https://localhost:44307/SanPhams/ProductList', 2),
+(N'anh_banner3.jpg', N'Mô tả cho Banner 3', 'https://localhost:44307/SanPhams/ProductList', 3);
 
 --Select tất cả các trigger
 SELECT 
@@ -320,3 +311,4 @@ WHERE
 ORDER BY 
     t.name;                                  -- Sắp xếp theo tên trigger
 
+select * from NhaXuatBan

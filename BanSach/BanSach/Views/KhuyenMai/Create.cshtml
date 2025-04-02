@@ -1,129 +1,76 @@
 ﻿@model BanSach.Models.KhuyenMai
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Thêm Khuyến Mãi";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2 class="mb-4 font-weight-bold text-center">Tạo Khuyến Mãi Mới</h2>
+<div class="container mt-4">
+    <h2 class="mb-4 text-center fw-bold">Thêm Khuyến Mãi Mới</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-    <div class="card" style="padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="mb-3">
+                    <label for="TenKhuyenMai" class="form-label fw-bold">Tên khuyến mãi</label>
+                    @Html.EditorFor(model => model.TenKhuyenMai, new { htmlAttributes = new { @class = "form-control", @id = "TenKhuyenMai", @placeholder = "Nhập tên khuyến mãi" } })
+                    @Html.ValidationMessageFor(model => model.TenKhuyenMai, "", new { @class = "text-danger" })
+                </div>
 
-        <div class="form-group row">
-            @Html.LabelFor(model => model.TenKhuyenMai, "Tên khuyến mãi", htmlAttributes: new { @class = "col-md-2 col-form-label font-weight-bold" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TenKhuyenMai, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên khuyến mãi" } })
-                @Html.ValidationMessageFor(model => model.TenKhuyenMai, "", new { @class = "text-danger" })
+                <div class="mb-3">
+                    <label for="NgayBatDau" class="form-label fw-bold">Ngày bắt đầu</label>
+                    @Html.EditorFor(model => model.NgayBatDau, new { htmlAttributes = new { @class = "form-control", @id = "NgayBatDau", @type = "date" } })
+                    @Html.ValidationMessageFor(model => model.NgayBatDau, "", new { @class = "text-danger" })
+                    <small class="form-text text-muted">Ngày kết thúc sẽ tự động là 7 ngày sau.</small>
+                </div>
+
+                <div class="mb-3">
+                    <label for="MucGiamGia" class="form-label fw-bold">Mức giảm giá</label>
+                    <select class="form-select" id="MucGiamGia" name="MucGiamGia">
+                        <option value="">Chọn mức giảm giá</option>
+                        @for (int i = 5; i <= 60; i += 5)
+                        {
+                            <option value="@i">@i%</option>
+                        }
+                    </select>
+                    <span class="text-danger" data-valmsg-for="MucGiamGia" data-valmsg-replace="true"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="MoTa" class="form-label fw-bold">Mô tả</label>
+                    @Html.EditorFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control", @id = "MoTa", @placeholder = "Nhập mô tả khuyến mãi" } })
+                    @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="submit" class="btn btn-success">Thêm mới</button>
+                    @Html.ActionLink("Trở về danh sách", "Index", null, new { @class = "btn btn-outline-secondary" })
+                </div>
             </div>
         </div>
+    }
+</div>
 
-        <div class="form-group row">
-            @Html.LabelFor(model => model.NgayBatDau, "Ngày bắt đầu", htmlAttributes: new { @class = "col-md-2 col-form-label font-weight-bold" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NgayBatDau, new { htmlAttributes = new { @class = "form-control", @type = "date", placeholder = "Nhập ngày bắt đầu" } })
-                @Html.ValidationMessageFor(model => model.NgayBatDau, "", new { @class = "text-danger" })
-                <small class="form-text text-muted">Ngày kết thúc sẽ được tự động tính là 7 ngày sau.</small>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-2 col-form-label font-weight-bold" for="MucGiamGia">Giảm giá</label>
-            <div class="col-md-10">
-                <select class="form-control rounded-3" id="MucGiamGia" name="MucGiamGia">
-                    <option value="">Chọn mức giảm giá</option>
-                    <option value="5">5%</option>
-                    <option value="10">10%</option>
-                    <option value="15">15%</option>
-                    <option value="20">20%</option>
-                    <option value="25">25%</option>
-                    <option value="30">30%</option>
-                    <option value="35">35%</option>
-                    <option value="40">40%</option>
-                    <option value="45">45%</option>
-                    <option value="50">50%</option>
-                    <option value="55">55%</option>
-                    <option value="60">60%</option>
-                </select>
-                <span class="text-danger" data-valmsg-for="MucGiamGia" data-valmsg-replace="true"></span>
-            </div>
-        </div>
-
-
-        <div class="form-group row">
-            @Html.LabelFor(model => model.MoTa, "Mô tả", htmlAttributes: new { @class = "col-md-2 col-form-label font-weight-bold" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập mô tả khuyến mãi" } })
-                @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-10 offset-md-2">
-                <input type="submit" value="Tạo mới" class="btn btn-outline-success" style="border-radius: 8px;" />
-                @Html.ActionLink("Trở về danh sách", "Index", null, new { @class = "btn btn-secondary ml-2", @style = "border-radius: 8px;" })
-            </div>
-        </div>
-    </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $('#NgayBatDau').on('change', function () {
+                var ngayBatDau = new Date($(this).val());
+                if (!isNaN(ngayBatDau.getTime())) {
+                    ngayBatDau.setDate(ngayBatDau.getDate() + 7);
+                    var day = ("0" + ngayBatDau.getDate()).slice(-2);
+                    var month = ("0" + (ngayBatDau.getMonth() + 1)).slice(-2);
+                    var formattedDate = ngayBatDau.getFullYear() + "-" + month + "-" + day;
+                    // Nếu có trường Ngày Kết Thúc, có thể thêm vào đây
+                }
+            });
+        });
+    </script>
 }
-
-<style>
-    .card {
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .btn {
-        border-radius: 8px;
-    }
-
-    .font-weight-bold {
-        font-weight: bold;
-    }
-
-    .form-control {
-        border-radius: 6px; /* Bo góc nhẹ cho các trường nhập liệu */
-    }
-
-        .form-control:focus {
-            outline: 2px solid black; /* Đường viền đen khi chọn vào ô nhập liệu */
-        }
-</style>
-<script>
-    $(document).ready(function () {
-        // Khi người dùng chọn ngày bắt đầu
-        $('#NgayBatDau').on('change', function () {
-            var ngayBatDau = new Date($(this).val());
-            if (!isNaN(ngayBatDau.getTime())) {
-                // Tự động tính ngày kết thúc là 7 ngày sau ngày bắt đầu
-                ngayBatDau.setDate(ngayBatDau.getDate() + 7);
-
-                // Định dạng ngày kết thúc thành yyyy-mm-dd để phù hợp với input type="date"
-                var day = ("0" + ngayBatDau.getDate()).slice(-2);
-                var month = ("0" + (ngayBatDau.getMonth() + 1)).slice(-2);
-                var formattedDate = ngayBatDau.getFullYear() + "-" + month + "-" + day;
-
-                $('#NgayKetThuc').val(formattedDate);
-            }
-        });
-
-        // Kiểm tra điều kiện ngày kết thúc khi người dùng tự thay đổi
-        $('#NgayKetThuc').blur(function () {
-            var ngayBatDau = new Date($('#NgayBatDau').val());
-            var ngayKetThuc = new Date($(this).val());
-
-            if ((ngayKetThuc - ngayBatDau) / (1000 * 60 * 60 * 24) < 7) {
-                alert('Ngày kết thúc phải cách ngày bắt đầu ít nhất 7 ngày.');
-                $(this).val(''); // Xóa giá trị ngày không hợp lệ
-            }
-        });
-    });
-</script>
-
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

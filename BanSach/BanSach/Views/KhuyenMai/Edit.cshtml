@@ -19,16 +19,16 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-floating mb-3">
-                        @Html.LabelFor(model => model.TenKhuyenMai, "Tên khuyến mãi")
+                    <div class="mb-3">
+                        <label class="form-label">Tên khuyến mãi</label>
                         @Html.EditorFor(model => model.TenKhuyenMai, new { htmlAttributes = new { @class = "form-control", placeholder = "Tên khuyến mãi" } })
                         @Html.ValidationMessageFor(model => model.TenKhuyenMai, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="col-md-6">
-                    <div class="form-floating mb-3">
-                        @Html.LabelFor(model => model.MucGiamGia, "Mức giảm giá (%)")
+                    <div class="mb-3">
+                        <label class="form-label">Mức giảm giá (%)</label>
                         @Html.EditorFor(model => model.MucGiamGia, new { htmlAttributes = new { @class = "form-control", placeholder = "Mức giảm giá" } })
                         @Html.ValidationMessageFor(model => model.MucGiamGia, "", new { @class = "text-danger" })
                     </div>
@@ -37,36 +37,30 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-floating mb-3">
-                        @Html.LabelFor(model => model.NgayBatDau, "Ngày bắt đầu")
-
+                    <div class="mb-3">
+                        <label class="form-label">Ngày bắt đầu</label>
                         @Html.TextBoxFor(model => model.NgayBatDau, new { @class = "form-control", @type = "datetime-local", placeholder = "Ngày bắt đầu", @Value = (Model.NgayBatDau.HasValue ? Model.NgayBatDau.Value.ToString("yyyy-MM-ddTHH:mm") : "") })
                         @Html.ValidationMessageFor(model => model.NgayBatDau, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="col-md-6">
-                    <div class="form-floating mb-3">
-                        @Html.LabelFor(model => model.NgayKetThuc, "Ngày kết thúc")
-
+                    <div class="mb-3">
+                        <label class="form-label">Ngày kết thúc</label>
                         @Html.TextBoxFor(model => model.NgayKetThuc, new { @class = "form-control", @type = "datetime-local", placeholder = "Ngày kết thúc", @Value = (Model.NgayKetThuc.HasValue ? Model.NgayKetThuc.Value.ToString("yyyy-MM-ddTHH:mm") : "") })
                         @Html.ValidationMessageFor(model => model.NgayKetThuc, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
 
-
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-floating mb-3">
-                        @Html.LabelFor(model => model.MoTa, "Mô tả")
+                    <div class="mb-3">
+                        <label class="form-label">Mô tả</label>
                         @Html.EditorFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control", placeholder = "Mô tả" } })
-
                         @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
-
             </div>
 
             <div class="d-flex justify-content-center mt-4">
@@ -76,4 +70,3 @@
         </div>
     </div>
 }
-
