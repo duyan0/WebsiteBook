@@ -25,7 +25,7 @@
     <script src="~/Scripts/changeimg.js"></script>
 </head>
 
-<body class="bg-black">
+<body class="bg-secondary-subtle">
 
     <div id="loadingOverlay" class="loading-overlay text-center">
         <div class="spinner-grow">
@@ -33,105 +33,117 @@
         </div>
     </div>
 
-    <nav class="container fixed-top mb-5 bg-dark" id="topbar" style=" z-index: 10000; border-radius:0 0 3px 3px">
-        <div class="row align-items-center mt-1 position-relative d-flex">
-            <!-- Logo -->
-            <div class="col-4 col-sm-4 text-sm-start ">
+
+    
+    <nav class="container-fluid fixed-top mb-5 bg-white" id="topbar" style=" z-index: 10000; border-radius:0 0 3px 3px">
+        <div class="container">
+            <div class="row align-items-center mt-1 position-relative d-flex">
                 <!-- Logo -->
-                <a href="~/SanPhams/TrangChu" class="text-decoration-none">
-                    <h3 class="fw-semibold mb-0 text-white d-inline float-sm-start">
-                        <img srcset="~/assets/images/logo/LOGO_XBOOK.png 2x" style="width:50px;height:50px;" alt="Logo sách">
-                    </h3>
-                   
-                </a>
-                <!-- Danh mục dropdown -->
-                <div class="d-inline-flex align-items-center justify-content-betweentext-white w-auto d-none d-sm-inline-flex" style="height: 65px; padding: 0 10px;">
-                    <a class="shadow-none d-inline-flex text-decoration-none" data-toggle="collapse" href="#navbar-vertical">
-                        <h6 class="m-0 fs-6 text-white mb-0 me-2">Danh mục</h6>
-                        <i class="bi bi-caret-down text-white"></i>
+                <div class="col-4 col-sm-4 text-sm-start ">
+                    <!-- Logo -->
+                    <a href="~/SanPhams/TrangChu" class="text-decoration-none">
+                        <h3 class="fw-semibold mb-0 text-dark d-inline float-sm-start">
+                            <img srcset="~/assets/images/logo/LOGO_XBOOK.png 2x" style="width:50px;height:50px;" alt="Logo sách">
+                        </h3>
+
                     </a>
-                </div>
-                <div class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start bg-white p-0"
-                     id="navbar-vertical"
-                     style="min-width: 220px; margin-left:4rem; margin-top:0;">
-                    @Html.Action("PhanDanhMuc", "DanhMucs")
-                </div>
-                @*<button id="themeToggle" class="btn btn-light">Chưa có</button>*@
-            </div>
-            <!-- Cột giữa: Tìm kiếm -->
-            <div class="col-4 col-sm-4">
-                @using (Html.BeginForm("ProductList", "SanPhams", FormMethod.Get))
-                {
-                    <div class="input-group">
-                        <input type="text"
-                               class="form-control form-control-lg fs-6"
-                               id="searchInput"
-                               autocomplete="off"
-                               placeholder="Nhập tên sách"
-                               name="SearchString"
-                               value="@ViewBag.CurrentFilterr"
-                               style="border-radius: 0;border:none;" />
-                        <button class="btn btn-light" type="submit">Tìm kiếm</button>
+                    <!-- Danh mục dropdown -->
+                    <div class="d-inline-flex align-items-center justify-content-betweentext-dark w-auto d-none d-sm-inline-flex" style="height: 65px; padding: 0 10px;">
+                        <a class="shadow-none d-inline-flex text-decoration-none" data-toggle="collapse" href="#navbar-vertical">
+                            <h6 class="m-0 fs-13 text-dark mb-0 me-2">Danh mục</h6>
+                            <i class="bi bi-caret-down fs-13 text-dark"></i>
+                        </a>
+                    </div>
+                    <div class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start bg-white p-0"
+                         id="navbar-vertical"
+                         style="min-width: 220px; margin-left:4rem; margin-top:0;">
+                        @Html.Action("PhanDanhMuc", "DanhMucs")
                     </div>
 
-                    <div id="suggestionsBox" class="suggestions-box"></div>
-                }
-            </div>
-            <div class="col-4 col-sm-4 d-inline-flex justify-content-end" id="user">
-                @if (Session["IDkh"] != null)
-                {
-                    <div class="dropdown">
-                        <a href="#" class="nav-link text-white">@Session["TenKH"]</a>
-                        <div class="dropdown-content fw-bold">
-                            <a href="@Url.Action("InfoCustomer", "LoginUser")">Thông tin</a>
-                            <a href="~/KhachHangs/LichSuDonHang">Đơn hàng</a>
-                            <a href="~/KhachHangs/ChangePassword">Đổi mật khẩu</a>
-                            <a href="@Url.Action("Logout", "LoginUser")">LogOut</a>
+                </div>
+                <!-- Cột giữa: Tìm kiếm -->
+                <div class="col-4 col-sm-4">
+                    @using (Html.BeginForm("ProductList", "SanPhams", FormMethod.Get))
+                    {
+                        <div class="input-group">
+                            <input type="text"
+                                   class="form-control rounded-start border text-dark form-control-lg fs-6"
+                                   id="searchInput"
+                                   autocomplete="off"
+                                   placeholder="Nhập tên sách"
+                                   name="SearchString"
+                                   value="@ViewBag.CurrentFilterr"
+                                   style="border-radius: 0;border:none;" />
+                            <button class="btn btn-dark px-3" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+
                         </div>
-                    </div>
-                }
-                else if (Session["IdQly"] != null)
-                {
-                    <div class="d-inline-flex gap-3">
-                        <a href="@Url.Action("QuanTri", "LoginUser")" class="nav-item text-white nav-link fs-6 ">Trang ADMIN</a>
-                        <a href="@Url.Action("Logout", "LoginUser")" class="nav-item text-white nav-link fs-6">Đăng xuất</a>
-                    </div>
-                }
-                else
-                {
-                    <div class="d-inline-flex gap-3">
-                        <a href="~/LoginUser/LoginAccountCus" id="id_dangNhap" class="page-link text-white fs-6">
-                            <i class="bi bi-box-arrow-in-right"></i>
-                            <span class="d-none d-sm-inline">Đăng nhập</span>
-                        </a>
-                        <a href="~/LoginUser/RegisterCus" id="id_dangKy" class="nav-item nav-link text-white fs-6">
-                            <i class="bi bi-person-plus"></i>
-                            <span class="d-none d-sm-inline">Đăng ký</span>
-                        </a>
-                    </div>
 
-                }
+                        <div id="suggestionsBox" class="suggestions-box"></div>
+                    }
+                </div>
+                <div class="col-4 d-inline-flex justify-content-end" id="user">
+                    @if (Session["IDkh"] != null)
+                    {
+                        <div class="dropdown">
+                            <a href="#" class="nav-link text-dark">@Session["TenKH"]</a>
+                            <div class="dropdown-content fw-bold">
+                                <a href="@Url.Action("InfoCustomer", "LoginUser")">Thông tin</a>
+                                <a href="~/KhachHangs/LichSuDonHang">Đơn hàng</a>
+                                <a href="~/KhachHangs/ChangePassword">Đổi mật khẩu</a>
+                                <a href="@Url.Action("Logout", "LoginUser")">LogOut</a>
+                            </div>
+                        </div>
+                    }
+                    else if (Session["IdQly"] != null)
+                    {
+                        <div class="d-inline-flex gap-3">
+                            <a href="@Url.Action("QuanTri", "LoginUser")" class="nav-item text-dark nav-link fs-13">Trang ADMIN</a>
+                            <a href="@Url.Action("Logout", "LoginUser")" class="nav-item text-dark nav-link fs-13">Đăng xuất</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="d-inline-flex gap-3">
+                            <a href="~/LoginUser/login" id="id_dangNhap" class="page-link text-dark fs-13">
+                                <i class="bi bi-box-arrow-in-right"></i>
+                                <span class="d-none d-sm-inline">Đăng nhập</span>
+                            </a>
+                            <a href="~/LoginUser/RegisterCus" id="id_dangKy" class="nav-item nav-link text-dark fs-13">
+                                <i class="bi bi-person-plus"></i>
+                                <span class="d-none d-sm-inline">Đăng ký</span>
+                            </a>
+                        </div>
+
+                    }
+                </div>
             </div>
         </div>
     </nav>
 
+    <style>
+        
+        .fs-13 {
+            font-size: 13px;    
+        }
+    </style>
 
     <!-- Navbar End -->
-    
+
     <div class="container p-0 mt-5 pt-5 " style="width: 100%;">
         @*@Html.Partial("_Breadcrumb")*@
-        <div class="container mt-0 bg-dark" style=" border-radius: 5px; padding: 1rem; margin: 0; width: 100%; height: 100%;">
-
+        <div class="container mt-0 bg-white" style=" border-radius: 5px; padding: 1rem; margin: 0; width: 100%; height: 100%;">
             @RenderBody()
         </div>
     </div>
     <div class="container p-0 mt-1 pt-1" style="width: 100%;">
-        <div class="container mt-0 bg-dark" style=" border-radius: 5px; padding: 1rem; margin: 0; width: 100%; height: 100%;">
+        <div class="container mt-0  bg-white" style=" border-radius: 5px; padding: 1rem; margin: 0; width: 100%; height: 100%;">
             @Html.Action("TopBanChay", "DonHangCTs", new { categoryId = 1 })
         </div>
     </div>
     <div class="container p-0 mt-1 pt-1" style="width: 100%;">
-        <div class="container mt-0 bg-dark" style=" border-radius: 5px; padding: 1rem; margin: 0; width: 100%; height: 100%;">
+        <div class="container mt-0  bg-white" style=" border-radius: 5px; padding: 1rem; margin: 0; width: 100%; height: 100%;">
             @Html.Action("RecentOrders", "DonHangCTs")
         </div>
     </div>
@@ -156,7 +168,13 @@
     @RenderSection("Scripts", required: false)<!-- Render Bootstrap bundle -->
     <!-- Custom CSS -->
     <style>
-
+        
+        .bg-rophim {
+            background-color: #0f121b;
+        }
+        .bg-rophim-body {
+            background-color: #191b24;
+        }
 
         body {
             font-family: 'Poppins', Arial, sans-serif;
@@ -273,12 +291,12 @@
 
                             var tenSP = item.TenSP || "Không có tên";
                             var giaBan = item.GiaBan ? item.GiaBan.toLocaleString('vi-VN') + " VND" : "Không có giá";
-                            
+
 
                             suggestionsHtml += `
                                 <li class='suggestion-item'>
                                     <div class='suggestion-content d-flex align-items-center'>
-                                       
+
                                         <div>
                                             <div class='suggestion-name'>${tenSP}</div>
                                             <div class='suggestion-price'>${giaBan}</div>

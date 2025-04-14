@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<BanSach.Models.RecentOrderViewModel>
 
-<div class="container-fluid mt-4 ">
-    <p class="text-center text-white fw-semibold mb-3" style="font-size: 26px;">Bán gần đây nhất</p>
+<div class="container-fluid mt-2 ">
+    <p class="text-center text-dark fs-4 fw-semibold mb-3" style="font-size: 26px;">Bán gần đây nhất</p>
 
     <div class="row p-1 justify-content-start">
         @foreach (var i in Model.Take(15))

@@ -120,7 +120,7 @@ else
                     <label for="AddressDeliverry" class="form-label">Địa chỉ giao hàng:</label>
                 </div>
                 <div class="col-lg-12 col-sm-12">
-                    <input style="width:100%" type="text" name="AddressDeliverry" id="AddressDeliverry" autocomplete="off" class="form-control" placeholder="Điền địa chỉ giao hàng" required />
+                    <input style="width:100%" type="text" name="AddressDelivery" id="AddressDeliverry" autocomplete="off" class="form-control" placeholder="Điền địa chỉ giao hàng" required />
                     <div id="suggestions" class="suggestions" style="display:none;"></div>
                 </div>
             </div>
@@ -131,7 +131,10 @@ else
                     <button type="submit" formaction="@Url.Action("CheckOut", "ShoppingCart")" class="btn btn-danger me-2">
                         Đặt hàng <i class="fas fa-mobile-alt"></i>
                     </button>
-                    
+                    <button type="submit" formaction="@Url.Action("CreatePayPalPayment", "OnlinePayment")" class="btn btn-danger me-2">
+                        Đặt hàng PayPal <i class="fas fa-mobile-alt"></i>
+                    </button>
+
                 }
                 else
                 {

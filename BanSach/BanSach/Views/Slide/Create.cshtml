@@ -7,8 +7,8 @@
 
 <h3 class="text-center fw-semibold mt-2">Thêm banner</h3>
 
+@using (Html.BeginForm("Create", "Slide", FormMethod.Post, new { enctype = "multipart/form-data" }))
 
-@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
@@ -17,8 +17,8 @@
         <div class="form-group mt-2">
             @Html.LabelFor(model => model.HinhAnh, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-12">
-                <input type="file" name="HinhAnh" class="form-control" id="fileInput" onchange="previewImage(event)" />
-                <img id="imagePreview" src="" alt="Image Preview" style="display: none; width: 100px; height: 100px;" />
+                <input type="file" name="HinhAnh" id="HinhAnh" class="form-control" onchange="previewImage(event)" />
+                <img id="imagePreview" src="#" alt="Preview" style="display:none; width: 100px;" />
                 @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -56,20 +56,23 @@
     </div>
 
 }
-    
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
 
 <script>
     function previewImage(event) {
-        var reader = new FileReader();
+        const input = event.target;
+        const reader = new FileReader();
         reader.onload = function () {
-            var output = document.getElementById('imagePreview');
-            output.src = reader.result;
-            output.style.display = 'block';
+            const preview = document.getElementById('imagePreview');
+            preview.src = reader.result;
+            preview.style.display = 'block';
+        };
+        if (input.files && input.files[0]) {
+            reader.readAsDataURL(input.files[0]);
         }
-        reader.readAsDataURL(event.target.files[0]);
     }
 </script>
 

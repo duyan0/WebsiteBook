@@ -1,0 +1,40 @@
+﻿
+
+@{
+    ViewBag.Title = "Thanh Toán PayPal Thành Công";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Giả sử bạn có layout chung
+}
+
+@section styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card text-center">
+                <div class="card-header bg-success text-white">
+                    <h2><i class="fas fa-check-circle"></i> Thanh Toán Thành Công</h2>
+                </div>
+                <div class="card-body">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success">
+                            @TempData["SuccessMessage"]
+                        </div>
+                    }
+                    <p>Cảm ơn bạn đã mua hàng! Đơn hàng của bạn đã được xử lý thành công.</p>
+                    <p>Bạn có thể xem chi tiết đơn hàng trong lịch sử mua hàng.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="@Url.Action("LichSuDonHang", "KhachHangs")" class="btn btn-primary">
+                        Xem Lịch Sử Đơn Hàng <i class="fas fa-history"></i>
+                    </a>
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary ms-2">
+                        Tiếp Tục Mua Sắm <i class="fas fa-shopping-bag"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

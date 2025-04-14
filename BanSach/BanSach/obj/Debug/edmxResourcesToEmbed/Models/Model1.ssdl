@@ -7,7 +7,6 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="HoTen" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Email" Type="varchar" MaxLength="100" />
-    <Property Name="DiaChi" Type="nvarchar" MaxLength="255" />
     <Property Name="SoDT" Type="varchar" MaxLength="11" Nullable="false" />
     <Property Name="VaiTro" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="TKhoan" Type="varchar" MaxLength="50" Nullable="false" />
@@ -22,6 +21,20 @@
     <Property Name="MoTa" Type="nvarchar(max)" />
     <Property Name="Link" Type="varchar" MaxLength="100" />
     <Property Name="ThuTu" Type="int" />
+    <Property Name="TrangThai" Type="nvarchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="DanhGiaSanPham">
+    <Key>
+      <PropertyRef Name="IDdgsp" />
+    </Key>
+    <Property Name="IDdgsp" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDkh" Type="int" Nullable="false" />
+    <Property Name="IDsp" Type="int" Nullable="false" />
+    <Property Name="IDDonHang" Type="int" />
+    <Property Name="DiemDanhGia" Type="int" Nullable="false" />
+    <Property Name="NhanXet" Type="nvarchar(max)" />
+    <Property Name="NgayDanhGia" Type="datetime" />
+    <Property Name="PhanHoi" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="DanhMuc">
     <Key>
@@ -55,11 +68,10 @@
       <PropertyRef Name="ID_ctdh" />
     </Key>
     <Property Name="ID_ctdh" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="IDSanPham" Type="int" />
-    <Property Name="IDDonHang" Type="int" />
-    <Property Name="SoLuong" Type="int" />
-    <Property Name="Gia" Type="float" />
-    <Property Name="DanhGia" Type="nvarchar(max)" />
+    <Property Name="IDSanPham" Type="int" Nullable="false" />
+    <Property Name="IDDonHang" Type="int" Nullable="false" />
+    <Property Name="SoLuong" Type="int" Nullable="false" />
+    <Property Name="Gia" Type="decimal" Precision="18" Scale="2" Nullable="false" />
   </EntityType>
   <EntityType Name="KhachHang">
     <Key>
@@ -71,10 +83,12 @@
     <Property Name="Email" Type="varchar" MaxLength="255" />
     <Property Name="TKhoan" Type="varchar" MaxLength="50" />
     <Property Name="MKhau" Type="varchar" MaxLength="50" />
+    <Property Name="DiaChi" Type="nvarchar" MaxLength="255" />
     <Property Name="TrangThaiTaiKhoan" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="OTP" Type="varchar" MaxLength="6" />
     <Property Name="OTPExpiry" Type="datetime" />
-    <Property Name="create_date" Type="datetime" />
+    <Property Name="NgayTao" Type="datetime" />
+    <Property Name="NgayCapNhat" Type="datetime" />
   </EntityType>
   <EntityType Name="KhuyenMai">
     <Key>
@@ -87,6 +101,7 @@
     <Property Name="MucGiamGia" Type="decimal" Precision="5" Scale="2" />
     <Property Name="MoTa" Type="nvarchar(max)" />
     <Property Name="NgayTao" Type="datetime" />
+    <Property Name="NgayCapNhat" Type="datetime" />
   </EntityType>
   <EntityType Name="NhaXuatBan">
     <Key>
@@ -113,6 +128,16 @@
     <Property Name="IDkm" Type="int" Nullable="false" />
     <Property Name="SoLuong" Type="int" Nullable="false" />
     <Property Name="TrangThaiSach" Type="nvarchar" MaxLength="50" />
+    <Property Name="NgayPhatHanh" Type="date" />
+    <Property Name="ISBN" Type="varchar" MaxLength="13" />
+    <Property Name="SoTrang" Type="int" />
+    <Property Name="NgonNgu" Type="nvarchar" MaxLength="50" />
+    <Property Name="LuotXem" Type="int" Nullable="false" />
+    <Property Name="KichThuoc" Type="nvarchar" MaxLength="50" />
+    <Property Name="TrongLuong" Type="int" />
+    <Property Name="NgayTao" Type="datetime" Nullable="false" />
+    <Property Name="NgayCapNhat" Type="datetime" />
+    <Property Name="DiemDanhGiaTrungBinh" Type="decimal" Precision="3" Scale="1" />
   </EntityType>
   <EntityType Name="Slide">
     <Key>
@@ -123,6 +148,7 @@
     <Property Name="MoTa" Type="nvarchar(max)" />
     <Property Name="Link" Type="varchar" MaxLength="100" />
     <Property Name="ThuTu" Type="int" />
+    <Property Name="TrangThai" Type="nvarchar" MaxLength="30" />
   </EntityType>
   <EntityType Name="TacGia">
     <Key>
@@ -133,6 +159,7 @@
     <Property Name="NgaySinh" Type="date" />
     <Property Name="QuocGia" Type="nvarchar" MaxLength="50" />
     <Property Name="TieuSu" Type="nvarchar" MaxLength="1000" />
+    <Property Name="HinhAnh" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="TheLoai">
     <Key>
@@ -141,7 +168,43 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TenTheLoai" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
-  <Association Name="FK__DanhMuc_T__DanhM__3D5E1FD2">
+  <Association Name="FK__DanhGiaSa__IDDon__6C190EBB">
+    <End Role="DonHang" Type="Self.DonHang" Multiplicity="0..1" />
+    <End Role="DanhGiaSanPham" Type="Self.DanhGiaSanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DonHang">
+        <PropertyRef Name="IDdh" />
+      </Principal>
+      <Dependent Role="DanhGiaSanPham">
+        <PropertyRef Name="IDDonHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DanhGiaSan__IDkh__6A30C649">
+    <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="1" />
+    <End Role="DanhGiaSanPham" Type="Self.DanhGiaSanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KhachHang">
+        <PropertyRef Name="IDkh" />
+      </Principal>
+      <Dependent Role="DanhGiaSanPham">
+        <PropertyRef Name="IDkh" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DanhGiaSan__IDsp__6B24EA82">
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="1" />
+    <End Role="DanhGiaSanPham" Type="Self.DanhGiaSanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SanPham">
+        <PropertyRef Name="IDsp" />
+      </Principal>
+      <Dependent Role="DanhGiaSanPham">
+        <PropertyRef Name="IDsp" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DanhMuc_T__DanhM__4E88ABD4">
     <End Role="DanhMuc" Type="Self.DanhMuc" Multiplicity="1" />
     <End Role="DanhMuc_TheLoai" Type="Self.DanhMuc_TheLoai" Multiplicity="*" />
     <ReferentialConstraint>
@@ -153,7 +216,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DanhMuc_T__TheLo__3E52440B">
+  <Association Name="FK__DanhMuc_T__TheLo__4F7CD00D">
     <End Role="TheLoai" Type="Self.TheLoai" Multiplicity="1" />
     <End Role="DanhMuc_TheLoai" Type="Self.DanhMuc_TheLoai" Multiplicity="*" />
     <ReferentialConstraint>
@@ -165,7 +228,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DonHang__IDkh__5629CD9C">
+  <Association Name="FK__DonHang__IDkh__5FB337D6">
     <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="0..1" />
     <End Role="DonHang" Type="Self.DonHang" Multiplicity="*" />
     <ReferentialConstraint>
@@ -177,8 +240,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DonHangCT__IDDon__59FA5E80">
-    <End Role="DonHang" Type="Self.DonHang" Multiplicity="0..1" />
+  <Association Name="FK__DonHangCT__IDDon__6383C8BA">
+    <End Role="DonHang" Type="Self.DonHang" Multiplicity="1" />
     <End Role="DonHangCT" Type="Self.DonHangCT" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="DonHang">
@@ -189,8 +252,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DonHangCT__IDSan__59063A47">
-    <End Role="SanPham" Type="Self.SanPham" Multiplicity="0..1" />
+  <Association Name="FK__DonHangCT__IDSan__628FA481">
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="1" />
     <End Role="DonHangCT" Type="Self.DonHangCT" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="SanPham">
@@ -252,6 +315,7 @@
   <EntityContainer Name="SachModelStoreContainer">
     <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Banner" EntityType="Self.Banner" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DanhGiaSanPham" EntityType="Self.DanhGiaSanPham" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DanhMuc" EntityType="Self.DanhMuc" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DanhMuc_TheLoai" EntityType="Self.DanhMuc_TheLoai" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DonHang" EntityType="Self.DonHang" Schema="dbo" store:Type="Tables" />
@@ -263,23 +327,35 @@
     <EntitySet Name="Slide" EntityType="Self.Slide" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TacGia" EntityType="Self.TacGia" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TheLoai" EntityType="Self.TheLoai" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__DanhMuc_T__DanhM__3D5E1FD2" Association="Self.FK__DanhMuc_T__DanhM__3D5E1FD2">
+    <AssociationSet Name="FK__DanhGiaSa__IDDon__6C190EBB" Association="Self.FK__DanhGiaSa__IDDon__6C190EBB">
+      <End Role="DonHang" EntitySet="DonHang" />
+      <End Role="DanhGiaSanPham" EntitySet="DanhGiaSanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DanhGiaSan__IDkh__6A30C649" Association="Self.FK__DanhGiaSan__IDkh__6A30C649">
+      <End Role="KhachHang" EntitySet="KhachHang" />
+      <End Role="DanhGiaSanPham" EntitySet="DanhGiaSanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DanhGiaSan__IDsp__6B24EA82" Association="Self.FK__DanhGiaSan__IDsp__6B24EA82">
+      <End Role="SanPham" EntitySet="SanPham" />
+      <End Role="DanhGiaSanPham" EntitySet="DanhGiaSanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DanhMuc_T__DanhM__4E88ABD4" Association="Self.FK__DanhMuc_T__DanhM__4E88ABD4">
       <End Role="DanhMuc" EntitySet="DanhMuc" />
       <End Role="DanhMuc_TheLoai" EntitySet="DanhMuc_TheLoai" />
     </AssociationSet>
-    <AssociationSet Name="FK__DanhMuc_T__TheLo__3E52440B" Association="Self.FK__DanhMuc_T__TheLo__3E52440B">
+    <AssociationSet Name="FK__DanhMuc_T__TheLo__4F7CD00D" Association="Self.FK__DanhMuc_T__TheLo__4F7CD00D">
       <End Role="TheLoai" EntitySet="TheLoai" />
       <End Role="DanhMuc_TheLoai" EntitySet="DanhMuc_TheLoai" />
     </AssociationSet>
-    <AssociationSet Name="FK__DonHang__IDkh__5629CD9C" Association="Self.FK__DonHang__IDkh__5629CD9C">
+    <AssociationSet Name="FK__DonHang__IDkh__5FB337D6" Association="Self.FK__DonHang__IDkh__5FB337D6">
       <End Role="KhachHang" EntitySet="KhachHang" />
       <End Role="DonHang" EntitySet="DonHang" />
     </AssociationSet>
-    <AssociationSet Name="FK__DonHangCT__IDDon__59FA5E80" Association="Self.FK__DonHangCT__IDDon__59FA5E80">
+    <AssociationSet Name="FK__DonHangCT__IDDon__6383C8BA" Association="Self.FK__DonHangCT__IDDon__6383C8BA">
       <End Role="DonHang" EntitySet="DonHang" />
       <End Role="DonHangCT" EntitySet="DonHangCT" />
     </AssociationSet>
-    <AssociationSet Name="FK__DonHangCT__IDSan__59063A47" Association="Self.FK__DonHangCT__IDSan__59063A47">
+    <AssociationSet Name="FK__DonHangCT__IDSan__628FA481" Association="Self.FK__DonHangCT__IDSan__628FA481">
       <End Role="SanPham" EntitySet="SanPham" />
       <End Role="DonHangCT" EntitySet="DonHangCT" />
     </AssociationSet>

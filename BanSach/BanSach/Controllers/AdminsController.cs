@@ -133,7 +133,62 @@ namespace BanSach.Controllers
                 return RedirectToAction("Index"); // Chuyển hướng về trang danh sách
             }
         }
+        public ActionResult QuanLyDanhGia()
+        {
+            var danhGiaList = _db.DanhGiaSanPham
+                .Include(d => d.SanPham) // Bao gồm navigation property nếu cần
+                .Include(d => d.KhachHang)
+                .ToList(); // Trả về List<DanhGiaSanPham>
+            return View(danhGiaList);
+        }
 
+        // Phản hồi đánh giá
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PhanHoiDanhGia(int idDanhGia, string phanHoi)
+        {
+            var danhGia = _db.DanhGiaSanPham.Find(idDanhGia);
+            if (danhGia == null)
+            {
+                TempData["ErrorMessage"] = "Không tìm thấy đánh giá.";
+                return RedirectToAction("QuanLyDanhGia");
+            }
+
+            danhGia.PhanHoi = phanHoi;
+            _db.SaveChanges();
+
+            TempData["SuccessMessage"] = "Phản hồi đã được cập nhật.";
+            return RedirectToAction("QuanLyDanhGia");
+        }
+
+        // Xóa đánh giá
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult XoaDanhGia(int idDanhGia)
+        {
+            var danhGia = _db.DanhGiaSanPham.Find(idDanhGia);
+            if (danhGia == null)
+            {
+                TempData["ErrorMessage"] = "Không tìm thấy đánh giá.";
+                return RedirectToAction("QuanLyDanhGia");
+            }
+
+            var idSanPham = danhGia.IDsp;
+            _db.DanhGiaSanPham.Remove(danhGia);
+
+            // Cập nhật điểm đánh giá trung bình
+            var product = _db.SanPham.Find(idSanPham);
+            var avgRating = _db.DanhGiaSanPham
+                .Where(d => d.IDsp == idSanPham)
+                .Average(d => (decimal?)d.DiemDanhGia) ?? 0;
+            product.DiemDanhGiaTrungBinh = Math.Round(avgRating, 1);
+            _db.Entry(product).State = System.Data.Entity.EntityState.Modified;
+
+            _db.SaveChanges();
+
+            TempData["SuccessMessage"] = "Đánh giá đã được xóa.";
+            return RedirectToAction("QuanLyDanhGia");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

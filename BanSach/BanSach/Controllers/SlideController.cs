@@ -1,7 +1,9 @@
-﻿using BanSach.Models;
+﻿using AngleSharp.Text;
+using BanSach.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -33,24 +35,51 @@ namespace BanSach.Controllers
             var slide = db.Slide.ToList();
             return PartialView(slide);
         }
+        // GET: Create
         [HttpGet]
         public ActionResult Create()
         {
             var usedThuTus = db.Slide.Select(sp => sp.ThuTu).ToList();
-            ViewBag.UsedThuTus = usedThuTus ?? new List<int?>(); // Đảm bảo không null
-            return View(new Slide()); // Trả về model rỗng ban đầu
+            ViewBag.UsedThuTus = usedThuTus ?? new List<int?>();
+            return View(new Slide());
         }
 
-        // POST: Create (Thêm mới Slide với ràng buộc)
+        // POST: Create (Thêm mới Slide với upload hình ảnh)
         [HttpPost]
-        [ValidateAntiForgeryToken] // Bảo mật chống CSRF
-        public ActionResult Create([Bind(Include = "HinhAnh,MoTa,Link,ThuTu")] Slide slide)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "MoTa,Link,ThuTu,HinhAnh")] Slide slide, HttpPostedFileBase HinhAnh)
         {
             try
             {
-                // Kiểm tra các trường bắt buộc
-                if (string.IsNullOrEmpty(slide.HinhAnh))
+                // Kiểm tra file upload
+                if (HinhAnh != null && HinhAnh.ContentLength > 0)
+                {
+                    // Kiểm tra định dạng file (chỉ cho phép hình ảnh)
+                    var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                    var extension = Path.GetExtension(HinhAnh.FileName).ToLower();
+                    if (!allowedExtensions.Contains(extension))
+                    {
+                        ModelState.AddModelError("HinhAnh", "Chỉ chấp nhận file ảnh (.jpg, .jpeg, .png, .gif).");
+                    }
+                    else
+                    {
+                        // Tạo tên file duy nhất để tránh trùng lặp
+                        var fileName = Guid.NewGuid().ToString() + extension;
+                        var path = Path.Combine(Server.MapPath("~/assets/images/slide/"), fileName);
+
+                        // Lưu file vào thư mục
+                        HinhAnh.SaveAs(path);
+
+                        // Lưu đường dẫn vào model
+                        slide.HinhAnh = "" + fileName;
+                    }
+                }
+                else
+                {
                     ModelState.AddModelError("HinhAnh", "Hình ảnh là bắt buộc.");
+                }
+
+                // Kiểm tra các trường bắt buộc khác
                 if (string.IsNullOrEmpty(slide.Link))
                     ModelState.AddModelError("Link", "Link là bắt buộc.");
                 if (slide.ThuTu == null)
@@ -83,7 +112,7 @@ namespace BanSach.Controllers
 
             // Trả lại danh sách thứ tự đã sử dụng nếu thất bại
             ViewBag.UsedThuTus = db.Slide.Select(s => s.ThuTu).ToList() ?? new List<int?>();
-            return View(slide); // Trả về slide với dữ liệu đã nhập
+            return View(slide);
         }
 
         // GET: Edit/{id} (Hiển thị form sửa Slide)

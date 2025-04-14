@@ -1,0 +1,40 @@
+﻿
+
+@{
+    ViewBag.Title = "Hủy Thanh Toán PayPal";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Giả sử bạn có layout chung
+}
+
+@section styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card text-center">
+                <div class="card-header bg-danger text-white">
+                    <h2><i class="fas fa-times-circle"></i> Thanh Toán Đã Hủy</h2>
+                </div>
+                <div class="card-body">
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["ErrorMessage"]
+                        </div>
+                    }
+                    <p>Thanh toán PayPal của bạn đã bị hủy. Đơn hàng không được tạo.</p>
+                    <p>Bạn có thể quay lại giỏ hàng để thử lại hoặc tiếp tục mua sắm.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="@Url.Action("ShowCart", "ShoppingCart")" class="btn btn-primary">
+                        Quay Lại Giỏ Hàng <i class="fas fa-shopping-cart"></i>
+                    </a>
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary ms-2">
+                        Tiếp Tục Mua Sắm <i class="fas fa-shopping-bag"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

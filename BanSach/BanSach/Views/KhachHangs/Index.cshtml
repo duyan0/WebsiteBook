@@ -47,10 +47,10 @@
                     }
                 </td>
                 <td>
-                    @if (item.create_date.HasValue)
+                    @if (item.NgayTao.HasValue)
                     {
-                        var localTime = item.create_date.Value.ToLocalTime();
-                        var timeDifference = DateTime.Now - localTime;
+                            var localTime = item.NgayTao.Value.ToLocalTime();
+                            var timeDifference = DateTime.Now - localTime;
 
                         @localTime.ToString("dd/MM/yyyy HH:mm:ss")
 

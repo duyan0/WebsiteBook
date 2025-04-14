@@ -11,27 +11,31 @@ namespace BanSach.Models
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class KhachHang
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public KhachHang()
         {
+            this.DanhGiaSanPham = new HashSet<DanhGiaSanPham>();
             this.DonHang = new HashSet<DonHang>();
         }
-
+    
         public int IDkh { get; set; }
         public string TenKH { get; set; }
         public string SoDT { get; set; }
         public string Email { get; set; }
         public string TKhoan { get; set; }
         public string MKhau { get; set; }
-        public string ConfirmPass { get; set; }
+        public string DiaChi { get; set; }
         public string TrangThaiTaiKhoan { get; set; }
         public string OTP { get; set; }
         public Nullable<System.DateTime> OTPExpiry { get; set; }
-        public Nullable<System.DateTime> create_date { get; set; }
-
+        public Nullable<System.DateTime> NgayTao { get; set; }
+        public Nullable<System.DateTime> NgayCapNhat { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DanhGiaSanPham> DanhGiaSanPham { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonHang> DonHang { get; set; }
     }

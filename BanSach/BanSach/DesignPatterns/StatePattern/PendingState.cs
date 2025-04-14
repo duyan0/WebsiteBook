@@ -34,7 +34,7 @@ public class PendingState : IOrderState
                 <tr><td><strong>Mã đơn hàng:</strong></td><td>{donHang.IDdh}</td></tr>
                 <tr><td><strong>Ngày đặt hàng:</strong></td><td>{donHang.NgayDatHang?.ToString("dd/MM/yyyy HH:mm:ss")}</td></tr>
                 <tr><td><strong>Trạng thái:</strong></td><td>{donHang.TrangThai}</td></tr>
-                <tr><td><strong>Tổng tiền:</strong></td><td>{donHang.totalamount?.ToString("C")}</td></tr>
+                <tr><td><strong>Tổng tiền:</strong></td><td>{donHang.Total_DH.ToString("C")}</td></tr>
                 <tr><td><strong>Địa chỉ giao hàng:</strong></td><td>{donHang.DiaChi}</td></tr>
             </table>
             <p>Cảm ơn bạn đã mua hàng tại chúng tôi!</p>

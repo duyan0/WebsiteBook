@@ -1,11 +1,13 @@
 ﻿using BanSach.DesignPatterns.StrategyPattern;
 using BanSach.Models;
+using Ganss.Xss;
 using OfficeOpenXml;
 using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
@@ -81,41 +83,37 @@ namespace BanSach.Controllers
             return View(products.ToPagedList(pageNumber, pageSize));
         }
 
-        // Xem SP
         public ActionResult TrangSP(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            // Tìm sản phẩm
             SanPham sanPham = db.SanPham.Find(id);
             if (sanPham == null)
             {
                 return HttpNotFound();
             }
+
+            // Lấy danh sách đánh giá của sản phẩm
+            var danhGiaList = db.DanhGiaSanPham
+                .Where(d => d.IDsp == id)
+                .Include(d => d.KhachHang) // Bao gồm thông tin khách hàng nếu cần
+                .OrderByDescending(d => d.NgayDanhGia) // Sắp xếp theo ngày mới nhất
+                .ToList();
 
             // Mã hóa URL liên kết sản phẩm
             string encodedUrl = HttpUtility.UrlEncode(Url.Action("TrangSP", "SanPhams", new { id = sanPham.IDsp }, Request.Url.Scheme));
-
             ViewBag.EncodedUrl = encodedUrl;
 
+            // Truyền danh sách đánh giá vào ViewBag
+            ViewBag.DanhGiaList = danhGiaList;
+
             return View(sanPham);
         }
 
-        // GET: SanPhams/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            SanPham sanPham = db.SanPham.Find(id);
-            if (sanPham == null)
-            {
-                return HttpNotFound();
-            }
-            return View(sanPham);
-        }
         public ActionResult Create()
         {
             ViewBag.TL = new SelectList(db.TheLoai, "ID", "TenTheLoai");
@@ -137,23 +135,50 @@ namespace BanSach.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(SanPham sanPham)
+        public ActionResult Create(SanPham sanPham, HttpPostedFileBase HinhAnh)
         {
             if (ModelState.IsValid)
             {
+                if (HinhAnh != null && HinhAnh.ContentLength > 0)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(HinhAnh.FileName) +
+                        DateTime.Now.ToString("yyyyMMddHHmmss") +
+                        Path.GetExtension(HinhAnh.FileName);
+
+                    string directory = Server.MapPath("~/assets/images/products/");
+                    if (!Directory.Exists(directory))
+                    {
+                        Directory.CreateDirectory(directory);
+                    }
+
+                    string path = Path.Combine(directory, fileName);
+                    HinhAnh.SaveAs(path);
+                    sanPham.HinhAnh = fileName;
+                }
+
+                // Sanitize MoTa
+                var sanitizer = new HtmlSanitizer();
+                sanPham.MoTa = sanitizer.Sanitize(sanPham.MoTa);
+
+                sanPham.NgayTao = DateTime.Now;
+                sanPham.LuotXem = 0;
+                sanPham.DiemDanhGiaTrungBinh = null;
+
                 db.SanPham.Add(sanPham);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.TL = new SelectList(db.TheLoai, "ID", "TenTheLoai", sanPham.TheLoai);
-            ViewBag.TacGia = new SelectList(db.TacGia, "IDtg", "TenTG", sanPham.TacGia);
-            ViewBag.NXB = new SelectList(db.NhaXuatBan, "IDnxb", "Tennxb", sanPham.NhaXuatBan);
-            ViewBag.KM = new SelectList(db.KhuyenMai.ToList().Select(km => new
-            {
-                IDKM = km.IDkm,
-                MucGiamGiaTenKm = $"{km.MucGiamGia}% - {km.TenKhuyenMai}"
-            }),
+            // Reload dropdown lists
+            ViewBag.TL = new SelectList(db.TheLoai, "ID", "TenTheLoai", sanPham.IDtl);
+            ViewBag.TacGia = new SelectList(db.TacGia, "IDtg", "TenTG", sanPham.IDtg);
+            ViewBag.NXB = new SelectList(db.NhaXuatBan, "IDnxb", "Tennxb", sanPham.IDnxb);
+            ViewBag.KM = new SelectList(
+                db.KhuyenMai.ToList().Select(km => new
+                {
+                    IDKM = km.IDkm,
+                    MucGiamGiaTenKm = $"{km.MucGiamGia}% - {km.TenKhuyenMai}"
+                }),
                 "IDKM",
                 "MucGiamGiaTenKm",
                 sanPham.IDkm

@@ -30,15 +30,13 @@
     }
 
 .action-buttons {
-    display: flex;
-    gap: 10px;
     width: 100%;
     justify-content: center;
 }
 
-.btn-add-to-cart, .btn-buy-now {
-    flex: 1;
-    padding: 12px 20px;
+.btn-add-to-cart,
+.btn-buy-now {
+    padding: 10px 15px;
     font-size: 1rem;
     border-radius: 8px;
     text-align: center;
@@ -73,35 +71,74 @@
     font-size: 2rem;
     font-weight: 600;
     text-align: center;
-    margin-bottom: 20px;
 }
 
 .info-item {
-    display: flex;
-    align-items: flex-start;
     padding: 10px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: start;
+    gap: 10px;
 }
 
     .info-item .label {
         font-weight: bold;
-        min-width: 120px;
         color: #fff;
+        min-width: 120px;
+        font-size: 0.95rem;
     }
 
     .info-item .value {
-        flex: 1;
         color: #fff;
+        font-size: 0.95rem;
+        flex: 1;
     }
 
-.old-price {
-    font-size: 1rem;
-
+.discount-price,
+.current-price {
+    font-size: 1.5rem;
 }
 
-.discount-price, .current-price {
-    font-size: 1.5rem;
-    
+/* Phần mô tả */
+.description-section .card {
+    border: none;
+    border-radius: 8px;
+}
+
+.description-section .description-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: black;
+}
+
+/* Phần đánh giá */
+.reviews-section .card {
+    border: none;
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+}
+
+    .reviews-section .card:hover {
+        transform: translateY(-2px);
+    }
+
+.reviews-section .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.reviews-section .card-text {
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.reviews-section .alert-info {
+    font-size: 0.85rem;
+    border-radius: 6px;
+}
+
+.reviews-section .text-muted {
+    font-size: 0.85rem;
 }
 
 /* Responsive Design */
@@ -118,9 +155,20 @@
         flex-direction: column;
     }
 
-    .btn-add-to-cart, .btn-buy-now {
+    .btn-add-to-cart,
+    .btn-buy-now {
         width: 100%;
     }
+
+    .info-item {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+        .info-item .label {
+            min-width: auto;
+            margin-bottom: 4px;
+        }
 }
 
 @media (max-width: 768px) {
@@ -136,22 +184,34 @@
         font-size: 1.5rem;
     }
 
-    .info-item {
-        flex-direction: column;
-        padding: 8px 0;
+    .discount-price,
+    .current-price {
+        font-size: 1.3rem;
     }
 
-        .info-item .label {
-            min-width: unset;
-            margin-bottom: 5px;
-        }
+    .info-item .label,
+    .info-item .value {
+        font-size: 0.9rem;
+    }
 
-    .discount-price, .current-price {
-        font-size: 1.3rem;
+    .description-section .description-text {
+        font-size: 0.9rem;
+    }
+
+    .reviews-section .card-body {
+        padding: 12px;
+    }
+
+    .reviews-section .card-title {
+        font-size: 0.95rem;
+    }
+
+    .reviews-section .card-text {
+        font-size: 0.85rem;
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
     .product-image img {
         max-width: 100%;
     }
@@ -160,14 +220,39 @@
         font-size: 1.25rem;
     }
 
-    .btn-add-to-cart, .btn-buy-now {
-        padding: 10px 15px;
+    .btn-add-to-cart,
+    .btn-buy-now {
+        padding: 8px 12px;
         font-size: 0.9rem;
-        display: flex;
-        gap: 5px;
     }
 
-    .info-item .label, .info-item .value {
+    .info-item .label,
+    .info-item .value {
+        font-size: 0.85rem;
+    }
+
+    .discount-price,
+    .current-price {
+        font-size: 1.2rem;
+    }
+
+    .description-section .description-text {
+        font-size: 0.85rem;
+    }
+
+    .reviews-section .card-body {
+        padding: 10px;
+    }
+
+    .reviews-section .card-title {
         font-size: 0.9rem;
+    }
+
+    .reviews-section .card-text {
+        font-size: 0.8rem;
+    }
+
+    .reviews-section .alert-info {
+        font-size: 0.8rem;
     }
 }

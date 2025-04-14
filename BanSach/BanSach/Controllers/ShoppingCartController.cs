@@ -155,7 +155,8 @@ namespace BanSach.Controllers
                 {
                     IDkh = int.Parse(CodeCustomer),
                     NgayDatHang = DateTime.Now,
-                    totalamount = cart.Total_money(),
+                    TongTien = cart.Total_money(),
+                    DiaChi = AddressDeliverry,
                     TrangThai = "Chờ xử lý",
                     State = new PendingState()
                 };
@@ -170,7 +171,7 @@ namespace BanSach.Controllers
                         IDDonHang = donHang.IDdh,
                         IDSanPham = item._product.IDsp,
                         SoLuong = item._quantity,
-                        Gia = (double?)item._product.GiaBan
+                        Gia = item._product.GiaBan
 
                     };
                     db.DonHangCT.Add(donHangCT);

@@ -13718,5 +13718,11 @@ textarea.form-control-lg {
         display: none !important;
     }
 }
+.bg-rophim {
+    background-color: #0f121b;
+}
 
+.bg-rophim-body {
+    background-color: #191b24;
+}
 /*# sourceMappingURL=bootstrap.css.map */

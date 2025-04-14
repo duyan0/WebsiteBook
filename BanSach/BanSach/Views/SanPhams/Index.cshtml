@@ -29,23 +29,6 @@
         </button>
     </div>
 }
-<script>
-    // Tự động ẩn thông báo thành công sau 2 giây
-    setTimeout(function () {
-        var successAlert = document.getElementById("successAlert");
-        if (successAlert) {
-            $(successAlert).alert('close');
-        }
-    }, 2000); // 2000ms = 2 giây
-
-    // Tự động ẩn thông báo lỗi sau 2 giây
-    setTimeout(function () {
-        var errorAlert = document.getElementById("errorAlert");
-        if (errorAlert) {
-            $(errorAlert).alert('close');
-        }
-    }, 2000); // 2000ms = 2 giây
-</script>
 
 <div class="mb-3 d-flex align-items-center gap-1 btn-group">
     <!-- Nút "Thêm" -->
@@ -82,6 +65,7 @@
                 <th>Giá bán</th>
                 <th>Số lượng</th>
                 <th>Khuyến mãi</th>
+                <th>ISBN</th>
                 <th>Trạng thái</th>
                 <th>Thao tác</th>
             </tr>
@@ -91,15 +75,15 @@
             {
                 <tr>
                     <td>
-                        <img src="~/assets/images/products/@item.HinhAnh"
+                        <img src="@Url.Content("~/assets/images/products/" + item.HinhAnh)"
                              width="50"
                              height="50"
-                             alt="@item.HinhAnh"
-                             class="rounded-1" />
+                             alt="@item.TenSP"
+                             class="rounded-2" />
                     </td>
                     <td>@Html.DisplayFor(modelItem => item.TenSP)</td>
                     <td>@Html.DisplayFor(modelItem => item.TheLoai.TenTheLoai)</td>
-                    <td class="text-danger">@string.Format("{0:N0} VND", item.GiaBan)</td>
+                    <td class="text-danger">@string.Format("{0:N0} ", item.GiaBan)</td>
                     <td>
                         @if (item.SoLuong > 0)
                         {
@@ -111,6 +95,7 @@
                         }
                     </td>
                     <td>@Html.DisplayFor(modelItem => item.KhuyenMai.MucGiamGia)%</td>
+                    <td>@Html.DisplayFor(modelItem => item.ISBN)</td>
                     <td>
                         <span class="@((item.TrangThaiSach == "Còn hàng") ? "badge text-bg-success" : "badge text-bg-danger")">
                             @Html.DisplayFor(modelItem => item.TrangThaiSach)
@@ -137,5 +122,160 @@
         </tbody>
     </table>
 </div>
+<!-- Nav Tabs -->
+<ul class="nav nav-tabs fw-bold bg-light p-2 rounded" id="bookTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-1" data-bs-toggle="tab" data-bs-target="#hot-sale" type="button" role="tab">
+            Sách HOT - Giảm Sốc
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-2" data-bs-toggle="tab" data-bs-target="#bestseller" type="button" role="tab">
+            Bestseller Ngoại Văn
+        </button>
+    </li>
+</ul>
+
+<!-- Tab Content -->
+<div class="tab-content mt-4" id="bookTabsContent">
+    <div class="tab-pane fade show active" id="hot-sale" role="tabpanel" aria-labelledby="tab-1">
+        <!-- Nội dung tab Sách HOT -->
+        <div class="row row-cols-2 row-cols-md-4 g-4">
+            <!-- 1 sản phẩm -->
+            <div class="col">
+                <div class="card h-100 text-center">
+                    <img src="https://placehold.co/310x210" class="card-img-top" alt="Sách 1">
+                    <div class="card-body">
+                        <h6 class="card-title">Tên sách 1</h6>
+                        <p class="text-danger fw-bold">36.000 đ <small class="text-muted text-decoration-line-through">56.000 đ</small></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Thêm các sách khác -->
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="bestseller" role="tabpanel" aria-labelledby="tab-2">
+        <!-- Nội dung tab Bestseller -->
+        <div class="row row-cols-2 row-cols-md-4 g-4">
+            <!-- 1 sản phẩm -->
+            <div class="col">
+                <div class="card h-100 text-center">
+                    <img src="https://placehold.co/310x210" class="card-img-top" alt="Sách 2">
+                    <div class="card-body">
+                        <h6 class="card-title">Tên sách 2</h6>
+                        <p class="text-danger fw-bold">100.000 đ <small class="text-muted text-decoration-line-through">155.000 đ</small></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Thêm các sách khác -->
+        </div>
+    </div>
+</div>
+<div class="bg-light p-3 rounded position-relative">
+    <h5 class="fw-bold text-danger mb-3">
+        <i class="bi bi-journal-bookmark-fill me-2"></i> TỦ SÁCH NỔI BẬT
+    </h5>
+
+    <!-- Nút Prev -->
+    <button class="btn btn-light shadow position-absolute top-50 start-0 translate-middle-y" onclick="scrollLeft()">
+        <i class="bi bi-chevron-left"></i>
+    </button>
+
+    <!-- Nút Next -->
+    <button class="btn btn-light shadow position-absolute top-50 end-0 translate-middle-y" onclick="scrollRight()">
+        <i class="bi bi-chevron-right"></i>
+    </button>
+
+    <!-- Wrapper scroll ngang -->
+    <div id="bookScroll" class="d-flex overflow-auto gap-3 pb-2 px-5" style="scroll-snap-type: x mandatory;">
+        <!-- Quyển sách mẫu -->
+        <div class="text-center flex-shrink-0" style="width: 120px; scroll-snap-align: start;">
+            <img src="https://via.placeholder.com/120x180" class="img-fluid rounded mb-2" alt="Sách 1">
+            <p class="small">Tên sách 1</p>
+        </div>
+        <div class="text-center flex-shrink-0" style="width: 120px; scroll-snap-align: start;">
+            <img src="https://via.placeholder.com/120x180" class="img-fluid rounded mb-2" alt="Sách 1">
+            <p class="small">Tên sách 1</p>
+        </div>
+        <div class="text-center flex-shrink-0" style="width: 120px; scroll-snap-align: start;">
+            <img src="https://via.placeholder.com/120x180" class="img-fluid rounded mb-2" alt="Sách 1">
+            <p class="small">Tên sách 1</p>
+        </div>
+        <div class="text-center flex-shrink-0" style="width: 120px; scroll-snap-align: start;">
+            <img src="https://via.placeholder.com/120x180" class="img-fluid rounded mb-2" alt="Sách 1">
+            <p class="small">Tên sách 1</p>
+        </div>
+        <div class="text-center flex-shrink-0" style="width: 120px; scroll-snap-align: start;">
+            <img src="https://via.placeholder.com/120x180" class="img-fluid rounded mb-2" alt="Sách 1">
+            <p class="small">Tên sách 1</p>
+        </div>
+        <div class="text-center flex-shrink-0" style="width: 120px; scroll-snap-align: start;">
+            <img src="https://via.placeholder.com/120x180" class="img-fluid rounded mb-2" alt="Sách 1">
+            <p class="small">Tên sách 1</p>
+        </div>
+        <div class="text-center flex-shrink-0" style="width: 120px; scroll-snap-align: start;">
+            <img src="https://via.placeholder.com/120x180" class="img-fluid rounded mb-2" alt="Sách 1">
+            <p class="small">Tên sách 1</p>
+        </div>
+        <div class="text-center flex-shrink-0" style="width: 120px; scroll-snap-align: start;">
+            <img src="https://via.placeholder.com/120x180" class="img-fluid rounded mb-2" alt="Sách 1">
+            <p class="small">Tên sách 1</p>
+        </div>
+        <div class="text-center flex-shrink-0" style="width: 120px; scroll-snap-align: start;">
+            <img src="https://via.placeholder.com/120x180" class="img-fluid rounded mb-2" alt="Sách 1">
+            <p class="small">Tên sách 1</p>
+        </div>
+        <div class="text-center flex-shrink-0" style="width: 120px; scroll-snap-align: start;">
+            <img src="https://via.placeholder.com/120x180" class="img-fluid rounded mb-2" alt="Sách 1">
+            <p class="small">Tên sách 1</p>
+        </div>
+        <div class="text-center flex-shrink-0" style="width: 120px; scroll-snap-align: start;">
+            <img src="https://via.placeholder.com/120x180" class="img-fluid rounded mb-2" alt="Sách 1">
+            <p class="small">Tên sách 1</p>
+        </div>
+        <div class="text-center flex-shrink-0" style="width: 120px; scroll-snap-align: start;">
+            <img src="https://via.placeholder.com/120x180" class="img-fluid rounded mb-2" alt="Sách 1">
+            <p class="small">Tên sách 1</p>
+        </div>
+    </div>
+</div>
+
+<!-- JS Scroll -->
+<script>
+    const scrollContainer = document.getElementById("bookScroll");
+
+    function scrollLeft() {
+        scrollContainer.scrollBy({ left: -300, behavior: 'smooth' });
+    }
+
+    function scrollRight() {
+        scrollContainer.scrollBy({ left: 300, behavior: 'smooth' });
+    }
+</script>
+
+<style>
+    .overflow-auto::-webkit-scrollbar {
+        display: none;
+    }
+</style>
+
 
 @Scripts.Render("~/bundles/datatables")
+<script>
+    // Tự động ẩn thông báo thành công sau 2 giây
+    setTimeout(function () {
+        var successAlert = document.getElementById("successAlert");
+        if (successAlert) {
+            $(successAlert).alert('close');
+        }
+    }, 2000); // 2000ms = 2 giây
+
+    // Tự động ẩn thông báo lỗi sau 2 giây
+    setTimeout(function () {
+        var errorAlert = document.getElementById("errorAlert");
+        if (errorAlert) {
+            $(errorAlert).alert('close');
+        }
+    }, 2000); // 2000ms = 2 giây
+</script>

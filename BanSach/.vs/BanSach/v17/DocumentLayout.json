@@ -1,22 +1,46 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\GITHUB\\BanSach\\",
+  "WorkspaceRootPath": "D:\\WebsiteBook\\BanSach\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\github\\bansach\\bansach\\designpatterns\\strategypattern\\pricedescendingstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\designpatterns\\strategypattern\\pricedescendingstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\websitebook\\bansach\\bansach\\views\\donhangcts\\recentorders.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\donhangcts\\recentorders.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|D:\\GITHUB\\BanSach\\bansach\\designpatterns\\strategypattern\\priceascendingstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\designpatterns\\strategypattern\\priceascendingstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\websitebook\\bansach\\bansach\\views\\donhangcts\\topbanchay.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\donhangcts\\topbanchay.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|D:\\GITHUB\\BanSach\\bansach\\designpatterns\\strategypattern\\nameascendingstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\designpatterns\\strategypattern\\nameascendingstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\websitebook\\bansach\\bansach\\views\\sanphams\\trangchu.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\sanphams\\trangchu.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|D:\\GITHUB\\BanSach\\bansach\\designpatterns\\strategypattern\\isortstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\designpatterns\\strategypattern\\isortstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\websitebook\\bansach\\bansach\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\websitebook\\bansach\\bansach\\views\\banner\\banners.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\banner\\banners.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\websitebook\\bansach\\bansach\\views\\danhmucs\\banner.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\danhmucs\\banner.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\websitebook\\bansach\\bansach\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\websitebook\\bansach\\bansach\\views\\slide\\silde.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\views\\slide\\silde.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\websitebook\\bansach\\bansach\\controllers\\bannercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\controllers\\bannercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|d:\\websitebook\\bansach\\bansach\\models\\banner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EDC49F0-991C-4875-8397-7570FA4B7FAA}|BanSach\\BanSach.csproj|solutionrelative:bansach\\models\\banner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,51 +55,132 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "PriceDescendingStrategy.cs",
-              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\StrategyPattern\\PriceDescendingStrategy.cs",
-              "RelativeDocumentMoniker": "BanSach\\DesignPatterns\\StrategyPattern\\PriceDescendingStrategy.cs",
-              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\StrategyPattern\\PriceDescendingStrategy.cs",
-              "RelativeToolTip": "BanSach\\DesignPatterns\\StrategyPattern\\PriceDescendingStrategy.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-31T13:26:07.778Z",
+              "Title": "RecentOrders.cshtml",
+              "DocumentMoniker": "D:\\WebsiteBook\\BanSach\\BanSach\\Views\\DonHangCTs\\RecentOrders.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\DonHangCTs\\RecentOrders.cshtml",
+              "ToolTip": "D:\\WebsiteBook\\BanSach\\BanSach\\Views\\DonHangCTs\\RecentOrders.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\DonHangCTs\\RecentOrders.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-14T09:50:06.879Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "PriceAscendingStrategy.cs",
-              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\StrategyPattern\\PriceAscendingStrategy.cs",
-              "RelativeDocumentMoniker": "BanSach\\DesignPatterns\\StrategyPattern\\PriceAscendingStrategy.cs",
-              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\StrategyPattern\\PriceAscendingStrategy.cs",
-              "RelativeToolTip": "BanSach\\DesignPatterns\\StrategyPattern\\PriceAscendingStrategy.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-31T13:26:01.061Z"
+              "Title": "TopBanChay.cshtml",
+              "DocumentMoniker": "D:\\WebsiteBook\\BanSach\\BanSach\\Views\\DonHangCTs\\TopBanChay.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\DonHangCTs\\TopBanChay.cshtml",
+              "ToolTip": "D:\\WebsiteBook\\BanSach\\BanSach\\Views\\DonHangCTs\\TopBanChay.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\DonHangCTs\\TopBanChay.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-14T09:49:43.479Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "NameAscendingStrategy.cs",
-              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\StrategyPattern\\NameAscendingStrategy.cs",
-              "RelativeDocumentMoniker": "BanSach\\DesignPatterns\\StrategyPattern\\NameAscendingStrategy.cs",
-              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\StrategyPattern\\NameAscendingStrategy.cs",
-              "RelativeToolTip": "BanSach\\DesignPatterns\\StrategyPattern\\NameAscendingStrategy.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAEAAAAAAAAAA==",
+              "Title": "TrangChu.cshtml",
+              "DocumentMoniker": "D:\\WebsiteBook\\BanSach\\BanSach\\Views\\SanPhams\\TrangChu.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\SanPhams\\TrangChu.cshtml",
+              "ToolTip": "D:\\WebsiteBook\\BanSach\\BanSach\\Views\\SanPhams\\TrangChu.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\SanPhams\\TrangChu.cshtml",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAADYAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-14T09:49:01.863Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\WebsiteBook\\BanSach\\BanSach\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\WebsiteBook\\BanSach\\BanSach\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-14T09:47:19.578Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Silde.cshtml",
+              "DocumentMoniker": "D:\\WebsiteBook\\BanSach\\BanSach\\Views\\Slide\\Silde.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\Slide\\Silde.cshtml",
+              "ToolTip": "D:\\WebsiteBook\\BanSach\\BanSach\\Views\\Slide\\Silde.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\Slide\\Silde.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-14T09:47:06.604Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Banner.cs",
+              "DocumentMoniker": "D:\\WebsiteBook\\BanSach\\BanSach\\Models\\Banner.cs",
+              "RelativeDocumentMoniker": "BanSach\\Models\\Banner.cs",
+              "ToolTip": "D:\\WebsiteBook\\BanSach\\BanSach\\Models\\Banner.cs",
+              "RelativeToolTip": "BanSach\\Models\\Banner.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-31T13:25:25.035Z"
+              "WhenOpened": "2025-04-14T09:45:38.103Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "BannerController.cs",
+              "DocumentMoniker": "D:\\WebsiteBook\\BanSach\\BanSach\\Controllers\\BannerController.cs",
+              "RelativeDocumentMoniker": "BanSach\\Controllers\\BannerController.cs",
+              "ToolTip": "D:\\WebsiteBook\\BanSach\\BanSach\\Controllers\\BannerController.cs",
+              "RelativeToolTip": "BanSach\\Controllers\\BannerController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-14T09:44:42.664Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Banner.cshtml",
+              "DocumentMoniker": "D:\\WebsiteBook\\BanSach\\BanSach\\Views\\DanhMucs\\Banner.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\DanhMucs\\Banner.cshtml",
+              "ToolTip": "D:\\WebsiteBook\\BanSach\\BanSach\\Views\\DanhMucs\\Banner.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\DanhMucs\\Banner.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-14T09:43:54.991Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Banners.cshtml",
+              "DocumentMoniker": "D:\\WebsiteBook\\BanSach\\BanSach\\Views\\Banner\\Banners.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\Banner\\Banners.cshtml",
+              "ToolTip": "D:\\WebsiteBook\\BanSach\\BanSach\\Views\\Banner\\Banners.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\Banner\\Banners.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-14T09:43:32.28Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "ISortStrategy.cs",
-              "DocumentMoniker": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\StrategyPattern\\ISortStrategy.cs",
-              "RelativeDocumentMoniker": "BanSach\\DesignPatterns\\StrategyPattern\\ISortStrategy.cs",
-              "ToolTip": "D:\\GITHUB\\BanSach\\BanSach\\DesignPatterns\\StrategyPattern\\ISortStrategy.cs",
-              "RelativeToolTip": "BanSach\\DesignPatterns\\StrategyPattern\\ISortStrategy.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-31T13:17:55.855Z"
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\WebsiteBook\\BanSach\\BanSach\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "BanSach\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\WebsiteBook\\BanSach\\BanSach\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "BanSach\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAAAIYAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-14T09:41:31.372Z",
+              "EditorCaption": ""
             }
           ]
         }

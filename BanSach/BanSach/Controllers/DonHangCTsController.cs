@@ -79,41 +79,27 @@ namespace BanSach.Controllers
 
         public ActionResult DetailsKH(int? id)
         {
-            // Kiểm tra id null và trả về lỗi nếu không hợp lệ
+            // Kiểm tra id null hoặc không hợp lệ
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            // Lấy danh sách chi tiết đơn hàng với ID đơn hàng được cung cấp
-            var donHangCTs = db.DonHangCT
-                .Include(ct => ct.SanPham)
-                .Include(ct => ct.DonHang.KhachHang)
-                .Where(ct => ct.DonHang.IDdh == id)
-                .ToList();
+            // Lấy thông tin đơn hàng với chi tiết đơn hàng và sản phẩm
+            var donHang = db.DonHang
+                .Include(d => d.DonHangCT.Select(ct => ct.SanPham)) // Bao gồm chi tiết đơn hàng và sản phẩm
+                .Include(d => d.DanhGiaSanPham) // Bao gồm đánh giá nếu cần
+                .Include(d => d.KhachHang) // Bao gồm thông tin khách hàng
+                .FirstOrDefault(d => d.IDdh == id);
 
-            // Kiểm tra nếu không có chi tiết đơn hàng nào
-            if (donHangCTs == null || !donHangCTs.Any())
-            {
-                return HttpNotFound();
-            }
-
-            // Lấy thông tin đơn hàng từ chi tiết đơn hàng đầu tiên
-            var donHang = donHangCTs.FirstOrDefault()?.DonHang;
+            // Kiểm tra nếu không tìm thấy đơn hàng
             if (donHang == null)
             {
                 return HttpNotFound();
             }
 
-            // Gán thông tin đơn hàng vào ViewBag
-            ViewBag.OrderDetails = donHang;
-
-            // Tính tổng giá trị của đơn hàng
-            decimal totalAmount = donHangCTs.Sum(ct => (ct.SoLuong * (decimal?)(ct.Gia ?? 0.0)) ?? 0m);
-            ViewBag.TotalAmount = totalAmount;
-
-            // Trả về view với danh sách chi tiết đơn hàng
-            return View(donHangCTs);
+            // Trả về view với đối tượng DonHang
+            return View(donHang);
         }
 
 
@@ -331,26 +317,60 @@ namespace BanSach.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddDanhGia(int id, int idSanPham, string danhgia)
+        public ActionResult AddDanhGia(int idDonHang, int idSanPham, int diemDanhGia, string nhanXet)
         {
-            // Tìm chi tiết đơn hàng theo ID đơn hàng và sản phẩm
-            var donHangCT = db.DonHangCT
-                .FirstOrDefault(d => d.IDDonHang == id && d.IDSanPham == idSanPham);
-
-            if (donHangCT == null)
+            var khachHangId = Session["IDkh"]?.ToString();
+            if (string.IsNullOrEmpty(khachHangId))
             {
-                return HttpNotFound();
+                TempData["ErrorMessage"] = "Vui lòng đăng nhập để đánh giá.";
+                return RedirectToAction("login", "loginuser");
             }
 
-            // Cập nhật đánh giá cho chi tiết đơn hàng
-            donHangCT.DanhGia = danhgia;
+            int idKh = int.Parse(khachHangId);
+
+            // Kiểm tra đơn hàng có tồn tại và chứa sản phẩm
+            var donHangCT = db.DonHangCT
+                .FirstOrDefault(d => d.IDDonHang == idDonHang && d.IDSanPham == idSanPham && d.DonHang.IDkh == idKh);
+            if (donHangCT == null)
+            {
+                TempData["ErrorMessage"] = "Không tìm thấy sản phẩm trong đơn hàng.";
+                return RedirectToAction("DetailsKH", new { ID = idDonHang });
+            }
+
+            // Kiểm tra xem đã đánh giá chưa
+            var existingDanhGia = db.DanhGiaSanPham
+                .FirstOrDefault(d => d.IDkh == idKh && d.IDsp == idSanPham && d.IDDonHang == idDonHang);
+            if (existingDanhGia != null)
+            {
+                TempData["ErrorMessage"] = "Bạn đã đánh giá sản phẩm này trong đơn hàng.";
+                return RedirectToAction("DetailsKH", new { ID = idDonHang });
+            }
+
+            // Thêm đánh giá mới
+            var danhGia = new DanhGiaSanPham
+            {
+                IDkh = idKh,
+                IDsp = idSanPham,
+                IDDonHang = idDonHang,
+                DiemDanhGia = diemDanhGia,
+                NhanXet = nhanXet,
+                NgayDanhGia = DateTime.Now
+            };
+
+            db.DanhGiaSanPham.Add(danhGia);
+
+            // Cập nhật điểm đánh giá trung bình cho sản phẩm
+            var product = db.SanPham.Find(idSanPham);
+            var avgRating = db.DanhGiaSanPham
+                .Where(d => d.IDsp == idSanPham)
+                .Average(d => (decimal?)d.DiemDanhGia) ?? 0;
+            product.DiemDanhGiaTrungBinh = Math.Round(avgRating, 1);
+            db.Entry(product).State = System.Data.Entity.EntityState.Modified;
+
             db.SaveChanges();
 
-            // Thêm thông báo thành công
-            TempData["SuccessMessage"] = "Đánh giá của bạn đã được cập nhật.";
-
-            // Quay lại trang chi tiết đơn hàng
-            return RedirectToAction("DetailsKH", new { ID = id });
+            TempData["SuccessMessage"] = "Đánh giá của bạn đã được gửi thành công.";
+            return RedirectToAction("DetailsKH", new { ID = idDonHang });
         }
 
         protected override void Dispose(bool disposing)

@@ -1,0 +1,119 @@
+﻿@{
+    ViewBag.Title = "Đăng nhập";
+}
+<script src="~/Content/js/User.js"></script>
+<link href="~/Content/css/Login_Regis.css" rel="stylesheet" />
+
+<script>
+    // Hàm kiểm tra xem chuỗi có chứa cả chữ (in hoa và in thường), số, và ký tự in hoa không
+    function hasLetterNumberAndUppercase(str) {
+        return /[a-zA-Z]/.test(str) && /[0-9]/.test(str) && /[A-Z]/.test(str);
+    }
+
+    // Hàm kiểm tra và hiển thị lỗi khi nhập
+    function validateAccountInput(input) {
+        const value = input.value.trim(); // Loại bỏ khoảng trắng ở đầu và cuối
+        const isValid = hasLetterNumberAndUppercase(value);
+        const errorElement = input.id === "TKhoan" ? document.getElementById("tkError") : document.getElementById("mkError");
+
+        if (value.length >= 6 && !isValid) {
+            errorElement.style.display = "block";
+        } else {
+            errorElement.style.display = "none";
+        }
+    }
+
+    // Hàm kiểm tra form trước khi submit
+    function validateForm(event) {
+        event.preventDefault(); // Ngăn submit mặc định
+
+        const tkhoan = document.getElementById("TKhoan").value.trim();
+        const mkhau = document.getElementById("MKhau").value.trim();
+        const tkError = document.getElementById("tkError");
+        const mkError = document.getElementById("mkError");
+        let isValid = true;
+
+        // Kiểm tra Tài khoản
+        if (!hasLetterNumberAndUppercase(tkhoan) || tkhoan.length < 6) {
+            tkError.style.display = "block";
+            isValid = false;
+        } else {
+            tkError.style.display = "none";
+        }
+
+        // Kiểm tra Mật khẩu
+        if (!hasLetterNumberAndUppercase(mkhau) || mkhau.length < 6) {
+            mkError.style.display = "block";
+            isValid = false;
+        } else {
+            mkError.style.display = "none";
+        }
+
+        // Nếu hợp lệ, submit form
+        if (isValid) {
+            event.target.submit();
+        }
+
+        return isValid;
+    }
+
+    // Hàm hiện/ẩn mật khẩu (giữ nguyên chức năng cũ)
+    function togglePasswordVisibility() {
+        const password = document.getElementById("MKhau");
+        const toggle = document.getElementById("togglePassword");
+        if (password.type === "password") {
+            password.type = "text";
+            toggle.textContent = "Ẩn";
+        } else {
+            password.type = "password";
+            toggle.textContent = "Hiện";
+        }
+    }
+</script>
+<div class="login-page col-xl-12">
+    <div class="form">
+        <h3 style="color: #333; font-weight: bold;">Đăng nhập</h3>
+        <form action="/LoginUser/login" class="form-group" method="post" onsubmit="return validateForm(event)">
+            <p class="field-validation-error">@ViewBag.ErrorInfo</p>
+
+            <div class="mb-1 mt-2">
+                <p class="text-secondary mb-0 text-start" style="font-size:14px;">Tài khoản<span class="text-danger">*</span></p>
+                <input type="text"
+                       class="form-control mb-0 text-left"
+                       id="TKhoan"
+                       placeholder="Nhập tài khoản"
+                       name="TKhoan"
+                       required
+                       minlength="6"
+                       maxlength="30"
+                       oninput="validateAccountInput(this)">
+                <p id="tkError" class="text-danger text-left mt-1 mb-0" style="font-size:13px; display:none;">Tài khoản phải chứa cả chữ, số, và ký tự in hoa.</p>
+            </div>
+
+            <div class="mb-1 mt-2 password-field">
+                <p class="text-secondary mb-0 text-start" style="font-size:14px;">Mật khẩu<span class="text-danger">*</span></p>
+                <input type="password"
+                       class="form-control mb-0 text-left"
+                       id="MKhau"
+                       placeholder="Nhập mật khẩu"
+                       name="MKhau"
+                       required
+                       minlength="6"
+                       maxlength="30"
+                       oninput="validateAccountInput(this)">
+                <p id="mkError" class="text-danger text-left mt-1 mb-0" style="font-size:13px; display:none;">Mật khẩu phải chứa cả chữ, số, và ký tự in hoa.</p>
+                <span id="togglePassword" class="toggle-password mt-4" onclick="togglePasswordVisibility()">Hiện</span>
+            </div>
+
+            <div class="forgot-password mb-0 mt-2 ">
+                <p><a class="text-decoration-none text-secondary fs-6" href="/LoginUser/ForgotPassword">Quên mật khẩu?</a></p>
+            </div>
+
+            <button type="submit" class="btn btn-dark w-100">Đăng nhập</button>
+
+            <p class="message">Chưa có tài khoản? <a href="~/LoginUser/RegisterCus">Đăng kí ngay</a></p>
+        </form>
+    </div>
+</div>
+
+

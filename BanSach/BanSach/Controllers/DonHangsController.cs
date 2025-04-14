@@ -172,7 +172,7 @@ namespace BanSach.Controllers
                 .Where(dh => dh.TrangThai == "Đã nhận hàng")
                 .ToList();
 
-            decimal tongDoanhThu = donHangsDaNhanHang.Sum(dh => dh.totalamount ?? 0);
+            decimal tongDoanhThu = donHangsDaNhanHang.Sum(dh => dh.Total_DH);
 
             var thongKeViewModel = new ThongKeDonHangViewModel
             {

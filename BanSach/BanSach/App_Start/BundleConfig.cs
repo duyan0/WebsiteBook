@@ -31,6 +31,12 @@ namespace BanSach
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/css/duyan.css"));
 
+            //Admin
+            bundles.Add(new StyleBundle("~/Admin/css").Include(
+                      "~/Admin/css/LayOutAdmin.css"));
+            bundles.Add(new ScriptBundle("~/Admin/js").Include(
+                      "~/Admin/js/LayOutAdmin.js"));
+
             BundleTable.EnableOptimizations = true; // Bật tối ưu hóa
         }
     }

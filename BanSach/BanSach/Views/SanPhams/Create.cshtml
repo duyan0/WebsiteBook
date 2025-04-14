@@ -5,8 +5,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-
-<h2 class="text-center fs-4 fw-bold mb-4 mt-4 ">Thêm sản phẩm</h2>
+<h2 class="text-center fs-4 fw-bold mb-4 mt-4">Thêm sản phẩm</h2>
 
 @using (Html.BeginForm("Create", "SanPhams", FormMethod.Post, new { enctype = "multipart/form-data", @class = "bg-light p-4 rounded shadow-sm border" }))
 {
@@ -30,35 +29,27 @@
         </div>
 
         <!-- Mô tả -->
-        <div class="col-12">
-            <label for="MoTa" class="form-label fw-bold">Mô tả</label>
-            <textarea id="MoTa" name="MoTa" class="form-control" rows="4" placeholder="Nhập mô tả cho sản phẩm"></textarea>
-            <span class="text-danger" id="MoTaValidation"></span>
+        <div class="form-group">
+            @Html.LabelFor(model => model.MoTa, "Mô tả", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-12">
+                @Html.TextAreaFor(model => model.MoTa, new { @class = "form-control", @id = "moTaEditor" })
+                @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+            </div>
         </div>
 
         <!-- Giá bán -->
         <div class="col-md-6">
-            <label for="GiaBanDropdown" class="form-label fw-bold">Giá bán</label>
-            @Html.DropDownListFor(model => model.GiaBan, new List<SelectListItem>
-            {
-                new SelectListItem { Value = "1000", Text = "1.000 VND" },
-                new SelectListItem { Value = "5000", Text = "5.000 VND" },
-                new SelectListItem { Value = "10000", Text = "10.000 VND" },
-                new SelectListItem { Value = "20000", Text = "20.000 VND" },
-                new SelectListItem { Value = "50000", Text = "50.000 VND" },
-                new SelectListItem { Value = "100000", Text = "100.000 VND" },
-                new SelectListItem { Value = "200000", Text = "200.000 VND" },
-                new SelectListItem { Value = "500000", Text = "500.000 VND" },
-                new SelectListItem { Value = "1000000", Text = "1.000.000 VND" }
-            }, "Chọn giá", new { @class = "form-select", @id = "GiaBanDropdown" })
+            <label for="GiaBan" class="form-label fw-bold">Giá bán</label>
+            @Html.EditorFor(model => model.GiaBan, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập giá bán", type = "number" } })
             @Html.ValidationMessageFor(model => model.GiaBan, "", new { @class = "text-danger" })
         </div>
 
         <!-- Hình ảnh -->
         <div class="col-md-6">
-            <label for="fileInput" class="form-label fw-bold">Hình ảnh</label>
-            @Html.TextBoxFor(model => model.HinhAnh, null, new { type = "file", @class = "form-control", @id = "fileInput" })
+            <label for="HinhAnh" class="form-label fw-bold">Hình ảnh</label>
+            @Html.TextBoxFor(model => model.HinhAnh, new { type = "file", @class = "form-control", @id = "fileInput", accept = "image/*" })
             <img id="previewImage" src="#" alt="Hình xem trước" style="display: none; max-width: 150px; margin-top: 10px;" class="img-thumbnail" />
+            @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
         </div>
 
         <!-- Tác giả -->
@@ -89,13 +80,59 @@
             @Html.ValidationMessageFor(model => model.SoLuong, "", new { @class = "text-danger" })
         </div>
 
+        <!-- Ngày phát hành -->
+        <div class="col-md-6">
+            <label for="NgayPhatHanh" class="form-label fw-bold">Ngày phát hành</label>
+            @Html.EditorFor(model => model.NgayPhatHanh, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+            @Html.ValidationMessageFor(model => model.NgayPhatHanh, "", new { @class = "text-danger" })
+        </div>
+
+        <!-- ISBN -->
+        <div class="col-md-6">
+            <label for="ISBN" class="form-label fw-bold">ISBN</label>
+            @Html.EditorFor(model => model.ISBN, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập ISBN", maxlength = "13" } })
+            @Html.ValidationMessageFor(model => model.ISBN, "", new { @class = "text-danger" })
+        </div>
+
+        <!-- Số trang -->
+        <div class="col-md-6">
+            <label for="SoTrang" class="form-label fw-bold">Số trang</label>
+            @Html.EditorFor(model => model.SoTrang, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập số trang", type = "number", min = "1" } })
+            @Html.ValidationMessageFor(model => model.SoTrang, "", new { @class = "text-danger" })
+        </div>
+
+        <!-- Ngôn ngữ -->
+        <div class="col-md-6">
+            <label for="NgonNgu" class="form-label fw-bold">Ngôn ngữ</label>
+            @Html.EditorFor(model => model.NgonNgu, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập ngôn ngữ" } })
+            @Html.ValidationMessageFor(model => model.NgonNgu, "", new { @class = "text-danger" })
+        </div>
+
+        <!-- Kích thước -->
+        <div class="col-md-6">
+            <label for="KichThuoc" class="form-label fw-bold">Kích thước</label>
+            @Html.EditorFor(model => model.KichThuoc, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập kích thước (VD: 14x20 cm)" } })
+            @Html.ValidationMessageFor(model => model.KichThuoc, "", new { @class = "text-danger" })
+        </div>
+
+        <!-- Trọng lượng -->
+        <div class="col-md-6">
+            <label for="TrongLuong" class="form-label fw-bold">Trọng lượng (gram)</label>
+            @Html.EditorFor(model => model.TrongLuong, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập trọng lượng", type = "number", min = "0" } })
+            @Html.ValidationMessageFor(model => model.TrongLuong, "", new { @class = "text-danger" })
+        </div>
+
         <!-- Trạng thái sách -->
         <div class="col-md-6 d-none">
-            <label class="form-label fw-bold ">Trạng thái sách</label>
+            <label class="form-label fw-bold">Trạng thái sách</label>
             @Html.HiddenFor(model => model.TrangThaiSach, new { @Value = "Còn hàng" })
             <p class="form-control bg-success text-white text-center mb-0">Còn hàng</p>
         </div>
 
+        <!-- Hidden fields for system-managed properties -->
+        @Html.HiddenFor(model => model.LuotXem, new { @Value = "0" })
+        @Html.HiddenFor(model => model.NgayTao, new { @Value = DateTime.Now })
+        @Html.HiddenFor(model => model.DiemDanhGiaTrungBinh)
         <!-- Nút hành động -->
         <div class="col-12 text-center mt-4">
             <input type="submit" value="Thêm" class="btn btn-success" />
@@ -118,7 +155,35 @@
                 img.attr('src', reader.result);
                 img.show();
             };
-            reader.readAsDataURL(event.target.files[0]);
+            if (event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
         });
     });
 </script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <!-- Include TinyMCE -->
+    <script src="https://cdn.tiny.cloud/1/vl7w7f41mkjjir8cj3tij09ogrnc5vyzhoydz8mx56j87z4w/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#moTaEditor',
+            plugins: [
+                // Core editing features
+                'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+                // Your account includes a free trial of TinyMCE premium features
+                // Try the most popular premium features until Apr 28, 2025:
+                'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown', 'importword', 'exportword', 'exportpdf'
+            ],
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ],
+            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+        });
+    </script>
+}

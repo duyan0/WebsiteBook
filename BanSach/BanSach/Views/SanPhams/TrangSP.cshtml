@@ -6,98 +6,145 @@
 }
 
 <link href="~/Content/css/trangsp.css" rel="stylesheet" />
-@Styles.Render("~/Content/css/trangsp.css")
-<div class="container-fluid product-container">
-    <div class="row g-4">
-        <!-- Phần ảnh sản phẩm -->
-        <div class="col-lg-5 col-md-6 col-12 product-image-section">
-            <div class="product-image">
-                <img src="~/assets/images/products/@Model.HinhAnh" alt="@Model.TenSP" class="img-fluid rounded-3 shadow-sm" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-12">
+            <div class="position-sticky top-0 mt-5" style="z-index: 1;">
+                <img src="~/assets/images/products/@Model.HinhAnh" alt="@Model.TenSP" class="rounded-1 w-100 object-fit-contain" />
+                <div class="mt-3 d-flex flex-column flex-md-row gap-2">
+                    @if (Model.TrangThaiSach == "Còn hàng" && Model.SoLuong > 0)
+                    {
+                        <a href="/ShoppingCart/AddToCart/@Model.IDsp" class="p-2 py-3 btn btn-outline-danger w-100">
+                            <i class="bi bi-plus-square me-2"></i> Thêm vào giỏ
+                        </a>
+                        <a href="/ShoppingCart/MuaNgay/@Model.IDsp" class="p-2 py-3 btn btn-danger w-100">
+                            <i class="bi bi-bag me-2"></i> Mua ngay
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#" class="btn btn-outline-danger p-2 w-100 disabled">
+                            <i class="bi bi-plus-square me-2"></i> Hết hàng
+                        </a>
+                        <a href="#" class="btn btn-danger p-2 w-100 disabled">
+                            <i class="bi bi-bag me-2"></i> Hết hàng
+                        </a>
+                    }
+                </div>
             </div>
-            @if (Model.TrangThaiSach == "Còn hàng" && Model.SoLuong > 0)
+        </div>
+
+
+        <div class="col-lg-8 col-12 h-100">
+            <div class="bg-rophim text-white p-4  h-100 d-flex flex-column">
+                <h4 class="mb-3 text-center">@Model.TenSP</h4>
+                <div class="row lh-lg flex-grow-1 ">
+                    <div class="col-12 col-md-6 d-flex rounded-top">
+                        <ul class="list-unstyled w-100 mb-2">
+                            <li class="mb-3"><strong>Tác giả:</strong> @Model.TacGia.TenTG</li>
+                            <li class="mb-3"><strong>Nhà xuất bản:</strong> @Model.NhaXuatBan.Tennxb</li>
+                            <li class="mb-3"><strong>Thể loại:</strong> @Model.TheLoai.TenTheLoai</li>
+                            @if (Model.KhuyenMai?.MucGiamGia > 0)
+                            {
+                                <li class="mb-3"><strong>Khuyến mãi:</strong> <span class="text-success fw-bold">@Model.KhuyenMai.MucGiamGia.GetValueOrDefault().ToString("0")%</span></li>
+                            }
+                            <li class="mb-3">
+                                <strong class="me-2">Giá tiền:</strong>
+                                @{
+                                    var giaGoc = Model.GiaBan;
+                                    var mucGiam = Model.KhuyenMai?.MucGiamGia ?? 0;
+                                    var giaSauGiam = mucGiam > 0 ? giaGoc * (1 - (decimal)mucGiam / 100.0m) : giaGoc;
+
+                                    if (mucGiam > 0)
+                                    {
+                                        <span class="text-secondary text-decoration-line-through me-2" style="font-size:13px;">@string.Format("{0:N0} VND", giaGoc)</span>
+                                        <span class="text-danger fw-bold">@string.Format("{0:N0} VND", giaSauGiam)</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-danger fw-bold">@string.Format("{0:N0} VND", giaGoc)</span>
+                                    }
+                                }
+                            </li>
+                            <li class="mb-3">
+                                <strong>Số lượng:</strong>
+                                @(Model.SoLuong > 0 ? "Còn hàng" : "Hết hàng")
+                                <span class="text-info ms-1">@Model.SoLuong</span>
+                            </li>
+                            <li class="mb-3"><strong>Ngày phát hành:</strong> @(Model.NgayPhatHanh?.ToString("dd/MM/yyyy"))</li>
+                        </ul>
+                    </div>
+                    <div class="col-6 d-flex  rounded-top">
+                        <ul class="list-unstyled w-100">
+                            <li class="mb-3"><strong>ISBN:</strong> @Model.ISBN</li>
+                            <li class="mb-3"><strong>Số trang:</strong> @Model.SoTrang</li>
+                            <li class="mb-3"><strong>Ngôn ngữ:</strong> @Model.NgonNgu</li>
+                            <li class="mb-3"><strong>Lượt xem:</strong> @Model.LuotXem</li>
+                            <li class="mb-3"><strong>Kích thước:</strong> @Model.KichThuoc</li>
+                            <li class="mb-3"><strong>Trọng lượng:</strong> @Model.TrongLuong</li>
+                            
+                        </ul>
+                    </div>
+                    <hr />
+                    <div class="col-12  rounded-bottom">
+                        <p class="fs-5 fw-semibold">Mô tả</p>
+                        <div class="text-white lh-base" style="text-align:justify;">@Html.Raw(Model.MoTa)</div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+    <div class="text-bg-secondary">
+        <hr />
+    </div>
+    <div class="row">
+        <div class="mt-2">
+            <h3 class="mb-2 text-white"><i class="text-warning fs-5 "></i>Đánh Giá Sản Phẩm</h3>
+            @if (ViewBag.DanhGiaList != null && ViewBag.DanhGiaList.Count > 0)
             {
-                <div class="action-buttons mt-4">
-                    <a href="/ShoppingCart/AddToCart/@Model.IDsp" class="btn btn-outline-danger btn-add-to-cart">
-                        <i class="bi bi-plus-square me-2"></i> Thêm vào giỏ
-                    </a>
-                    <a href="/ShoppingCart/MuaNgay/@Model.IDsp" class="btn btn-danger btn-buy-now">
-                        <i class="bi bi-bag me-2"></i> Mua ngay
-                    </a>
+                <div class="row g-3">
+                    @foreach (var dg in ViewBag.DanhGiaList)
+                    {
+                        <div class="col-12">
+                            <div class="card shadow-sm">
+                                <div class="card-body p-3">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h6 class="card-title mb-0">
+                                            @(dg.KhachHang != null ? dg.KhachHang.TenKH : "Khách hàng ẩn danh")
+                                        </h6>
+                                        <span class="text-warning text-sa">
+                                            @for (int i = 0; i < dg.DiemDanhGia; i++)
+                                            {
+                                                <i class="fas fa-star"></i>
+                                            }
+                                        </span>
+                                        <small class="text-center text-muted">@(dg.NgayDanhGia?.ToString("dd/MM/yyyy HH:mm:ss") ?? "N/A")</small>
+                                    </div>
+                                    <p class="card-text mb-1">@(dg.NhanXet ?? "Không có nhận xét")</p>
+
+                                    @if (!string.IsNullOrEmpty(dg.PhanHoi))
+                                    {
+                                        <div class="alert alert-info small mt-2 py-2">
+                                            <strong>Nhân viên:</strong> @dg.PhanHoi
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             }
             else
             {
-                <div class="action-buttons mt-4 d">
-                    <a href="" class="btn btn-outline-danger disabled btn-add-to-cart">
-                        <i class="bi bi-plus-square me-2"></i> Hết hàng
-                    </a>
-                    <a href="" class="btn btn-danger disabled btn-buy-now">
-                        <i class="bi bi-bag me-2"></i> Hết hàng
-                    </a>
-                </div>
+                <p class="text-white">Chưa có đánh giá nào cho sản phẩm này.</p>
             }
-        
-        </div>
-
-        <!-- Phần thông tin sản phẩm -->
-        <div class="col-lg-7 col-md-6 col-12 product-details-section">
-            <div class="product-details bg-dark text-white p-4 rounded-3 shadow-sm">
-                <h1 class="product-title">@Model.TenSP</h1>
-                <div class="product-info mt-3">
-                    <div class="info-item">
-                        <span class="label">Tác giả:</span>
-                        <span class="value">@Model.TacGia.TenTG</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="label">Nhà xuất bản:</span>
-                        <span class="value">@Model.NhaXuatBan.Tennxb</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="label">Thể loại:</span>
-                        <span class="value">@Model.TheLoai.TenTheLoai</span>
-                    </div>
-                    @if (Model.KhuyenMai?.MucGiamGia > 0)
-                    {
-                        <div class="info-item">
-                            <span class="label">Khuyến mãi:</span>
-                            <span class="value text-success fw-bold">
-                                @(Model.KhuyenMai.MucGiamGia.GetValueOrDefault().ToString("0"))%
-                            </span>
-                        </div>
-                    }
-                    <div class="info-item price-info">
-                        <span class="label">Giá tiền:</span>
-                        <span class="value">
-                            @{
-                                var giaGoc = Model.GiaBan;
-                                var mucGiam = Model.KhuyenMai?.MucGiamGia ?? 0;
-                                var giaSauGiam = mucGiam > 0 ? giaGoc * (1 - (decimal)mucGiam / 100.0m) : giaGoc;
-
-                                if (mucGiam > 0)
-                                {
-                                    <span class="text-secondary mb-0 mt-0  text-decoration-line-through ">@string.Format("{0:N0} VND", giaGoc)</span>
-                                    <span class="discount-price text-danger fw-bold ms-2">@string.Format("{0:N0} VND", giaSauGiam)</span>
-                                }
-                                else
-                                {
-                                    <span class="current-price text-danger fw-bold">@string.Format("{0:N0} VND", giaGoc)</span>
-                                }
-                            }
-                        </span>
-                    </div>
-                    <div class="info-item">
-                        <span class="label">Số lượng:</span>
-                        <span class="value fw-bold">
-                            @(Model.SoLuong > 0 ? "Còn hàng" : "Hết hàng")
-                            <span class="text-info ms-1">@Model.SoLuong</span>
-                        </span>
-                    </div>
-                    <div class="info-item">
-                        <span class="label">Mô tả:</span>
-                        <span class="value">@Model.MoTa</span>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

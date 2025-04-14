@@ -1,119 +1,115 @@
-﻿@model List<BanSach.Models.DonHangCT>
+﻿@model BanSach.Models.DonHang
 
 @{
-    ViewBag.Title = "Chi tiết đơn hàng - " + ViewBag.OrderDetails.IDdh;
+    ViewBag.Title = "Chi Tiết Đơn Hàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container mt-2">
-    <h2 class="text-center mb-4 text-white">Chi tiết đơn hàng</h2>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
-    <div class="d-flex justify-content-end mb-4">
-        <a href="@Url.Action("ExportOrderDetailsToExcel", "DonHangCTs", new { id = ViewBag.OrderDetails.IDdh })"
-           class="btn btn-success shadow-sm rounded-sm"
-           title="Xuất chi tiết đơn hàng sang Excel">
-            Xuất Excel
-        </a>
+
+<div class="container my-5 bg-dark text-light rounded p-4">
+    <h2 class="text-light"><i class="fas fa-shopping-bag"></i> Chi Tiết Đơn Hàng #@Model.IDdh</h2>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Thông tin đơn hàng -->
+    <div class="card bg-secondary text-light mb-4 border-0">
+        <div class="card-body">
+            <p><strong>Ngày đặt:</strong> @(Model.NgayDatHang?.ToString("dd/MM/yyyy") ?? "Chưa xác định")</p>
+            <p>
+                <strong>Tổng tiền:</strong>
+                @{
+                    var totalAmount = Model.DonHangCT?.Sum(ct => ct.SoLuong * ct.Gia) ?? 0;
+                }
+                @totalAmount.ToString("N0") VNĐ
+            </p>
+            <p><strong>Trạng thái:</strong> @(Model.TrangThai ?? "Chưa xác định")</p>
+        </div>
     </div>
 
-    <table class="table table-striped table-dark text-white">
-        <thead>
-            <tr>
-                <th class="text-white">Mã đơn hàng</th>
-                <th class="text-white">Tên khách hàng</th>
-                <th class="text-white">Số điện thoại</th>
-                <th class="text-white">Địa chỉ</th>
-                <th class="text-white">Ngày đặt hàng</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="text-white">@ViewBag.OrderDetails.IDdh</td>
-                <td class="text-white">@ViewBag.OrderDetails.KhachHang.TenKH</td>
-                <td class="text-white">@ViewBag.OrderDetails.KhachHang.SoDT</td>
-                <td class="text-white">@ViewBag.OrderDetails.DiaChi</td>
-                <td class="text-white">@ViewBag.OrderDetails.NgayDatHang</td>
-            </tr>
-        </tbody>
-    </table>
-    
+    <!-- Danh sách sản phẩm -->
+    <h4 class="text-light">Sản Phẩm</h4>
     <div class="table-responsive">
-        <table class="table table-striped table-dark">
-            <thead>
+        <table class="table table-dark table-bordered table-hover">
+            <thead class="table-light">
                 <tr>
-                    <th class="text-white">Sản phẩm</th>
-                    <th class="text-white">Số lượng</th>
-                    <th class="text-white">Giá</th>
-                    <th class="text-white">Tổng tiền</th>
-                    <th class="text-white">Đánh giá</th>
+                    <th>Sản Phẩm</th>
+                    <th>Số Lượng</th>
+                    <th>Giá</th>
+                    <th>Tổng</th>
+                    <th>Đánh Giá</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @foreach (var item in Model.DonHangCT ?? Enumerable.Empty<BanSach.Models.DonHangCT>())
                 {
+                    var danhGia = Model.DanhGiaSanPham?.FirstOrDefault(d => d.IDsp == item.IDSanPham && d.IDDonHang == Model.IDdh);
                     <tr>
-                        <td class="text-white">@item.SanPham.TenSP</td>
-                        <td class="text-white">@item.SoLuong</td>
-                        <td class="text-danger">@string.Format("{0:N0} VND", item.Gia)</td>
-                        <td class="text-danger">
-                            @(string.Format("{0:N0} VND", item.SoLuong * item.Gia))
-                        </td>
+                        <td>@(item.SanPham?.TenSP ?? "Không xác định")</td>
+                        <td>@item.SoLuong</td>
+                        <td>@item.Gia.ToString("N0") VNĐ</td>
+                        <td>@((item.SoLuong * item.Gia).ToString("N0")) VNĐ</td>
                         <td>
-                            @if (string.IsNullOrEmpty(item.DanhGia))
+                            @if (danhGia == null)
                             {
-                                <!-- Hiển thị form đánh giá -->
-                                using (Html.BeginForm("AddDanhGia", "DonHangCTs", FormMethod.Post, new { @class = "d-inline" }))
-                                {
+                                <form method="post" action="@Url.Action("AddDanhGia", "DonHangCTs")" class="p-3 bg-secondary rounded">
                                     @Html.AntiForgeryToken()
-                                    <input type="hidden" name="id" value="@item.IDDonHang" />
-                                    <input type="hidden" name="idSanPham" value="@item.SanPham.IDsp" />
-
-                                    <select name="danhgia" class="form-select d-inline-flex w-auto mb-0" required>
-                                        <option value="1">1★</option>
-                                        <option value="2">2★</option>
-                                        <option value="3">3★</option>
-                                        <option value="4">4★</option>
-                                        <option value="5">5★</option>
-                                    </select>
-                                    <button type="submit" class="btn btn-success mb-0">Gửi</button>
-                                }
+                                    <input type="hidden" name="idDonHang" value="@Model.IDdh" />
+                                    <input type="hidden" name="idSanPham" value="@item.IDSanPham" />
+                                    <div class="form-group mb-3">
+                                        <label class="text-light">Điểm đánh giá:</label>
+                                        <select name="diemDanhGia" class="form-control bg-dark text-light border-secondary" required>
+                                            <option value="" class="text-dark">Chọn điểm</option>
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                <option value="@i">@i Sao</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label class="text-light">Nhận xét:</label>
+                                        <textarea name="nhanXet" class="form-control bg-dark text-light border-secondary" rows="3" placeholder="Nhập nhận xét của bạn..."></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-sm w-100">
+                                        Gửi Đánh Giá <i class="fas fa-star"></i>
+                                    </button>
+                                </form>
                             }
                             else
                             {
-                                <!-- Hiển thị đánh giá -->
-                                @Html.Raw(RenderRating(item.DanhGia))
+                                <div class="p-2">
+                                    <p class="mb-1"><strong>@danhGia.DiemDanhGia Sao</strong>: @danhGia.NhanXet</p>
+                                    @if (!string.IsNullOrEmpty(danhGia.PhanHoi))
+                                    {
+                                        <p class="mb-0"><strong>Phản hồi:</strong> @danhGia.PhanHoi</p>
+                                    }
+                                </div>
                             }
                         </td>
                     </tr>
                 }
-                <!-- Tổng tiền của toàn bộ đơn hàng -->
-                <tr class="font-weight-bold">
-                    <td colspan="4" class="text-end text-white">Tổng cộng:</td>
-                    <td class="text-danger fw-bold">
-                        @string.Format("{0:N0} VND", ViewBag.TotalAmount)
-                    </td>
-                </tr>
             </tbody>
         </table>
     </div>
+
+    <a href="@Url.Action("LichSuDonHang", "KhachHangs")" class="btn btn-outline-light mt-3">
+        Quay Lại <i class="fas fa-arrow-left"></i>
+    </a>
 </div>
 
-<div class="text-center">
-    <a href="~/KhachHangs/LichSuDonHang" class="btn btn-success shadow-lg rounded-sm mx-2 me-2">Quay về</a>
-</div>
-
-@helper RenderRating(string danhGia)
-{
-    int rating = int.Parse(danhGia);
-    for (int i = 1; i <= 5; i++)
-    {
-        if (i <= rating)
-        {
-            <span style="color: gold;">★</span> <!-- Filled star -->
-        }
-        else
-        {
-            <span class="text-white">☆</span> <!-- Empty star -->
-        }
-    }
+@section scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 }

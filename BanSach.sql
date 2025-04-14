@@ -12,13 +12,13 @@ GO
 -- Chuyển sang cơ sở dữ liệu mới tạo
 USE Sach;
 GO
--- Bảng Admin
+
+-- Bảng Admin (không có khóa ngoại)
 CREATE TABLE Admin
 ( 
     ID INT IDENTITY (1, 1) NOT NULL,
     HoTen NVARCHAR(50) NOT NULL,
     Email VARCHAR(100) NULL,
-    DiaChi NVARCHAR(255) NULL,
     SoDT VARCHAR(11) NOT NULL,
     VaiTro NVARCHAR(50) NOT NULL,
     TKhoan VARCHAR(50) NOT NULL,
@@ -26,17 +26,17 @@ CREATE TABLE Admin
     PRIMARY KEY CLUSTERED(ID ASC)
 );
 GO
--- Bảng Category
+
+-- Bảng DanhMuc (không có khóa ngoại)
 CREATE TABLE DanhMuc
 (
     ID INT IDENTITY(1,1) NOT NULL,
     TenDanhMuc NVARCHAR(50) NOT NULL,
     PRIMARY KEY CLUSTERED(ID ASC)
 );
-
 GO
 
--- Bảng TheLoai
+-- Bảng TheLoai (không có khóa ngoại)
 CREATE TABLE TheLoai
 (
     ID INT IDENTITY(1,1) NOT NULL,
@@ -45,39 +45,7 @@ CREATE TABLE TheLoai
 );
 GO
 
--- Bảng DanhMuc_TheLoai
-CREATE TABLE DanhMuc_TheLoai
-(
-    ID INT IDENTITY(1,1) NOT NULL,
-    DanhMuc_ID INT NOT NULL,
-    TheLoai_ID INT NOT NULL,
-    HinhAnh NVARCHAR(255) NOT NULL,
-    PRIMARY KEY CLUSTERED(ID ASC),
-    FOREIGN KEY (DanhMuc_ID) REFERENCES DanhMuc(ID),
-    FOREIGN KEY (TheLoai_ID) REFERENCES TheLoai(ID)
-);
-GO
-
--- Bảng KhachHang
-CREATE TABLE KhachHang
-(
-    IDkh INT IDENTITY(1,1) NOT NULL,
-    TenKH NVARCHAR(50) NULL,
-    SoDT VARCHAR(11) NULL,
-    Email VARCHAR(255) NULL,
-    TKhoan VARCHAR(50) NULL,
-    MKhau VARCHAR(50) NULL,
-    TrangThaiTaiKhoan NVARCHAR(50) NOT NULL DEFAULT N'Hoạt động',
-    OTP VARCHAR(6),
-    OTPExpiry DATETIME,
-	create_date DATETIME,
-    PRIMARY KEY CLUSTERED (IDkh ASC),
-    CONSTRAINT UQ_KhachHang_Email UNIQUE (Email),
-    CONSTRAINT UQ_KhachHang_SoDT UNIQUE (SoDT)
-);
-GO
-
--- Bảng TacGia
+-- Bảng TacGia (không có khóa ngoại)
 CREATE TABLE TacGia
 (
     IDtg INT IDENTITY(1,1) NOT NULL,
@@ -85,11 +53,12 @@ CREATE TABLE TacGia
     NgaySinh DATE NULL,
     QuocGia NVARCHAR(50) NULL,
     TieuSu NVARCHAR(1000) NULL,
+    HinhAnh NVARCHAR(MAX),
     PRIMARY KEY CLUSTERED (IDtg ASC)
 );
 GO
 
--- Bảng NhaXuatBan
+-- Bảng NhaXuatBan (không có khóa ngoại)
 CREATE TABLE NhaXuatBan
 (
     IDnxb INT IDENTITY(1,1) NOT NULL,
@@ -102,7 +71,7 @@ CREATE TABLE NhaXuatBan
 );
 GO
 
--- Bảng KhuyenMai
+-- Bảng KhuyenMai (không có khóa ngoại)
 CREATE TABLE KhuyenMai
 (
     IDkm INT IDENTITY(1,1) NOT NULL,
@@ -112,13 +81,74 @@ CREATE TABLE KhuyenMai
     MucGiamGia DECIMAL(5, 2) NULL,
     MoTa NVARCHAR(MAX) NULL,
     NgayTao DATETIME,
+    NgayCapNhat DATETIME,
     PRIMARY KEY CLUSTERED (IDkm ASC),
     CONSTRAINT CK_NgayKetThuc CHECK (NgayKetThuc >= NgayBatDau),
     CONSTRAINT CK_MucGiamGia CHECK (MucGiamGia >= 0 AND MucGiamGia <= 100)
 );
 GO
 
--- Bảng SanPham
+-- Bảng KhachHang (không có khóa ngoại)
+CREATE TABLE KhachHang
+(
+    IDkh INT IDENTITY(1,1) NOT NULL,
+    TenKH NVARCHAR(50) NULL,
+    SoDT VARCHAR(11) NULL,
+    Email VARCHAR(255) NULL,
+    TKhoan VARCHAR(50) NULL,
+    MKhau VARCHAR(50) NULL,
+    DiaChi NVARCHAR(255),
+    TrangThaiTaiKhoan NVARCHAR(50) NOT NULL DEFAULT N'Hoạt động',
+    OTP VARCHAR(6),
+    OTPExpiry DATETIME,
+    NgayTao DATETIME,
+    NgayCapNhat DATETIME,
+    PRIMARY KEY CLUSTERED (IDkh ASC),
+    CONSTRAINT UQ_KhachHang_Email UNIQUE (Email),
+    CONSTRAINT UQ_KhachHang_SoDT UNIQUE (SoDT)
+);
+GO
+
+-- Bảng Slide (không có khóa ngoại)
+CREATE TABLE Slide
+(
+    Slide_ID INT IDENTITY(1,1) NOT NULL,
+    HinhAnh NVARCHAR(255) NULL,
+    MoTa NVARCHAR(MAX) NULL,
+    Link VARCHAR(100) NULL,
+    ThuTu INT NULL,
+    TrangThai NVARCHAR(30),
+    PRIMARY KEY CLUSTERED (Slide_ID ASC)
+);
+GO
+
+-- Bảng Banner (không có khóa ngoại)
+CREATE TABLE Banner
+(
+    Banner_ID INT IDENTITY(1,1) NOT NULL,
+    HinhAnh NVARCHAR(255) NULL,
+    MoTa NVARCHAR(MAX) NULL,
+    Link VARCHAR(100) NULL,
+    ThuTu INT NULL,
+    TrangThai NVARCHAR(30),
+    PRIMARY KEY CLUSTERED (Banner_ID ASC)
+);
+GO
+
+-- Bảng DanhMuc_TheLoai (phụ thuộc DanhMuc, TheLoai)
+CREATE TABLE DanhMuc_TheLoai
+(
+    ID INT IDENTITY(1,1) NOT NULL,
+    DanhMuc_ID INT NOT NULL,
+    TheLoai_ID INT NOT NULL,
+    HinhAnh NVARCHAR(255) NOT NULL,
+    PRIMARY KEY CLUSTERED(ID ASC),
+    FOREIGN KEY (DanhMuc_ID) REFERENCES DanhMuc(ID),
+    FOREIGN KEY (TheLoai_ID) REFERENCES TheLoai(ID)
+);
+GO
+
+-- Bảng SanPham (phụ thuộc TheLoai, TacGia, NhaXuatBan, KhuyenMai)
 CREATE TABLE SanPham
 (
     IDsp INT IDENTITY(1,1) NOT NULL,
@@ -132,17 +162,31 @@ CREATE TABLE SanPham
     IDkm INT NOT NULL,
     SoLuong INT NOT NULL,
     TrangThaiSach NVARCHAR(50) NULL,
+    NgayPhatHanh DATE NULL,
+    ISBN VARCHAR(13) NULL,
+    SoTrang INT NULL,
+    NgonNgu NVARCHAR(50) NULL,
+    LuotXem INT  NULL DEFAULT 0,
+    KichThuoc NVARCHAR(50) NULL,
+    TrongLuong INT NULL,
+    NgayTao DATETIME NULL DEFAULT GETDATE(),
+    NgayCapNhat DATETIME NULL,
+    DiemDanhGiaTrungBinh DECIMAL(3,1) NULL,
     PRIMARY KEY CLUSTERED (IDsp ASC),
     CONSTRAINT FK_SanPham_TheLoai FOREIGN KEY (IDtl) REFERENCES TheLoai(ID),
     CONSTRAINT FK_SanPham_TacGia FOREIGN KEY (IDtg) REFERENCES TacGia(IDtg),
     CONSTRAINT FK_SanPham_NhaXuatBan FOREIGN KEY (IDnxb) REFERENCES NhaXuatBan(IDnxb),
     CONSTRAINT FK_SanPham_KhuyenMai FOREIGN KEY (IDkm) REFERENCES KhuyenMai(IDkm),
+    CONSTRAINT UQ_SanPham_ISBN UNIQUE (ISBN),
     CONSTRAINT CK_SoLuong CHECK (SoLuong > -1),
-    CONSTRAINT CK_Gia CHECK (GiaBan > 0)
+    CONSTRAINT CK_Gia CHECK (GiaBan > 0),
+    CONSTRAINT CK_SoTrang CHECK (SoTrang > 0),
+    CONSTRAINT CK_TrongLuong CHECK (TrongLuong > 0),
+    CONSTRAINT CK_DiemDanhGiaTrungBinh CHECK (DiemDanhGiaTrungBinh BETWEEN 0 AND 5)
 );
 GO
 
--- Bảng DonHang
+-- Bảng DonHang (phụ thuộc KhachHang)
 CREATE TABLE DonHang
 (
     IDdh INT IDENTITY (1, 1) NOT NULL,
@@ -156,46 +200,43 @@ CREATE TABLE DonHang
 );
 GO
 
--- Bảng DonHangCT
+-- Bảng DonHangCT (phụ thuộc SanPham, DonHang)
 CREATE TABLE DonHangCT
 (
     ID_ctdh INT IDENTITY(1,1) NOT NULL,
-    IDSanPham INT NULL,
-    IDDonHang INT NULL,
-    SoLuong INT NULL,
-    Gia FLOAT(53) NULL,
-    DanhGia NVARCHAR(MAX) NULL,
+    IDSanPham INT NOT NULL,
+    IDDonHang INT NOT NULL,
+    SoLuong INT NOT NULL,
+    Gia DECIMAL(18,2) NOT NULL,
     PRIMARY KEY CLUSTERED (ID_ctdh ASC),
     FOREIGN KEY (IDSanPham) REFERENCES SanPham(IDsp),
-    FOREIGN KEY (IDDonHang) REFERENCES DonHang(IDdh)
+    FOREIGN KEY (IDDonHang) REFERENCES DonHang(IDdh),
+    CONSTRAINT CK_SoLuongDonHang CHECK (SoLuong > 0),
+    CONSTRAINT CK_GiaDonHang CHECK (Gia >= 0)
 );
 GO
 
--- Bảng Slide
-CREATE TABLE Slide
+-- Bảng DanhGiaSanPham (phụ thuộc KhachHang, SanPham, DonHang)
+CREATE TABLE DanhGiaSanPham
 (
-    Slide_ID INT IDENTITY(1,1) NOT NULL,
-    HinhAnh NVARCHAR(255) NULL,
-    MoTa NVARCHAR(MAX) NULL,
-    Link VARCHAR(100) NULL,
-    ThuTu INT NULL,
-    PRIMARY KEY CLUSTERED (Slide_ID ASC)
+    IDdgsp INT IDENTITY(1,1) NOT NULL,
+    IDkh INT NOT NULL,
+    IDsp INT NOT NULL,
+    IDDonHang INT NULL,
+    DiemDanhGia INT NOT NULL,
+    NhanXet NVARCHAR(MAX) NULL,
+    NgayDanhGia DATETIME DEFAULT GETDATE(),
+    PhanHoi NVARCHAR(MAX) NULL,
+    PRIMARY KEY CLUSTERED (IDdgsp ASC),
+    FOREIGN KEY (IDkh) REFERENCES KhachHang(IDkh),
+    FOREIGN KEY (IDsp) REFERENCES SanPham(IDsp),
+    FOREIGN KEY (IDDonHang) REFERENCES DonHang(IDdh),
+    CONSTRAINT CK_DiemDanhGia CHECK (DiemDanhGia BETWEEN 1 AND 5),
+    CONSTRAINT UQ_DanhGiaSanPham UNIQUE (IDkh, IDsp, IDDonHang)
 );
 GO
 
--- Bảng Banner
-CREATE TABLE Banner
-(
-    Banner_ID INT IDENTITY(1,1) NOT NULL,
-    HinhAnh NVARCHAR(255) NULL,
-    MoTa NVARCHAR(MAX) NULL,
-    Link VARCHAR(100) NULL,
-    ThuTu INT NULL,
-    PRIMARY KEY CLUSTERED (Banner_ID ASC)
-);
-GO
-
--- Trigger Update TrangThaiSach
+-- Trigger Update TrangThaiSach (phụ thuộc SanPham)
 CREATE TRIGGER trg_UpdateTrangThaiSach
 ON [Sach].[dbo].[SanPham]
 AFTER INSERT, UPDATE
@@ -213,102 +254,59 @@ BEGIN
 END;
 GO
 
--- Trigger Set NgayTao
-CREATE TRIGGER trg_SetNgayTao
-ON [Sach].[dbo].[KhuyenMai]
-AFTER INSERT
-AS
-BEGIN
-    SET NOCOUNT ON;
-    UPDATE [Sach].[dbo].[KhuyenMai]
-    SET NgayTao = GETDATE()
-    FROM [Sach].[dbo].[KhuyenMai] km
-    INNER JOIN inserted i ON km.IDkm = i.IDkm;
-END;
-GO
 
-CREATE TRIGGER trg_UpdateOTPExpiry
-ON [Sach].[dbo].[KhachHang]
-AFTER INSERT, UPDATE
-AS
-BEGIN
-    -- Cập nhật trường OTPExpiry bằng thời gian hiện tại khi có sự thay đổi mã OTP
-    UPDATE [Sach].[dbo].[KhachHang]
-    SET OTPExpiry = GETDATE() -- Gán thời gian hiện tại
-    WHERE IDkh IN (SELECT IDkh FROM inserted)
-      AND OTP IS NOT NULL;  -- Chỉ cập nhật khi có mã OTP mới
-END;
-GO
-
---Bảng Admins
-INSERT INTO Admin(HoTen, Email, DiaChi, SoDT, VaiTro, TKhoan, MKhau)
-VALUES (N'Võ Duy Ân', N'admin@gmail.com', N'Số 123, Đường ABC', N'0912345678', N'Admin2104', N'Admin2104', N'1');
---Bảng DanhMuc
-INSERT INTO DanhMuc (TenDanhMuc)
-VALUES (N'Sách Tiếng Việt'), (N'Sách Tiếng Anh'), (N'Sách Kinh Tế');
---Bảng TheLoai
-INSERT INTO TheLoai (TenTheLoai)
-VALUES (N'Văn học'), (N'Giáo dục'), (N'Sách thiếu nhi');
---Bảng DanhMuc_TheLoai
-INSERT INTO DanhMuc_TheLoai (DanhMuc_ID, TheLoai_ID, HinhAnh)
-VALUES (1, 1, N'./images/sach_tieng_viet.jpg'), (2, 2, N'./images/sach_tieng_anh.jpg');
---Bảng KhachHang
-INSERT INTO KhachHang (TenKH, SoDT, Email, TKhoan, MKhau, TrangThaiTaiKhoan, OTP, OTPExpiry, create_date)
-VALUES (N'Nguyễn Thị B', N'0934567890', N'nguyenb@example.com', N'Vda2104', N'Vda2104', N'Hoạt động', N'123456', DATEADD(HOUR, 1, GETDATE()), GETDATE());
---Bảng TacGia
-INSERT INTO TacGia (TenTG, NgaySinh, QuocGia, TieuSu)
-VALUES 
-    (N'Nguyễn Nhật Ánh', '1955-12-01', N'Việt Nam', N'Nhà văn nổi tiếng của Việt Nam với nhiều tác phẩm dành cho tuổi trẻ.'),
-    (N'Haruki Murakami', '1949-01-12', N'Nhật Bản', N'Tác giả nổi tiếng với phong cách viết huyền ảo và sâu sắc.'),
-    (N'J.K. Rowling', '1965-07-31', N'Anh', N'Người sáng tạo ra series Harry Potter nổi tiếng toàn cầu.'),
-    (N'Victor Hugo', '1802-02-26', N'Pháp', N'Nhà văn lớn của Pháp, tác giả của "Những người khốn khổ".'),
-    (N'Tô Hoài', '1920-09-27', N'Việt Nam', N'Nhà văn Việt Nam với nhiều tác phẩm kinh điển như "Dế Mèn phiêu lưu ký".');
---Bảng NhaXuatBan
+INSERT INTO TacGia (TenTG, NgaySinh, QuocGia, TieuSu, HinhAnh)
+VALUES (N'Nguyễn Nhật Ánh', '1955-05-07', N'Việt Nam', N'Nhà văn nổi tiếng với các tác phẩm dành cho thanh thiếu niên.', N'/images/authors/nguyennhatanh.jpg');
 INSERT INTO NhaXuatBan (Tennxb, DiaChi, SDT, Email)
-VALUES
-    (N'Nhà xuất bản Kim Đồng', N'55 Quang Trung, Hai Bà Trưng, Hà Nội', N'0987654321', N'kimdong@nxb.com'),
-    (N'Nhà xuất bản Giáo Dục', N'81 Trần Hưng Đạo, Hoàn Kiếm, Hà Nội', N'0912345678', N'giaoduc@nxb.edu.vn'),
-    (N'Nhà xuất bản Văn Học', N'18 Nguyễn Du, Quận 1, TP.HCM', N'0934567890', N'vanhoc@nxb.vn'),
-    (N'Nhà xuất bản Tổng Hợp', N'62 Nguyễn Thị Minh Khai, Quận 3, TP.HCM', N'0978123456', N'tonghop@nxb.com.vn');
---Bảng KhuyenMai
-INSERT INTO KhuyenMai (TenKhuyenMai, NgayBatDau, NgayKetThuc, MucGiamGia, MoTa, NgayTao)
+VALUES (N'NXB Trẻ', N'161B Lý Chính Thắng, Quận 3, TP.HCM', '02839316289', 'nxbtre@gmail.com');
+INSERT INTO KhuyenMai (TenKhuyenMai, NgayBatDau, NgayKetThuc, MucGiamGia, MoTa, NgayTao, NgayCapNhat)
+VALUES (N'Khuyến mãi mùa hè', '2025-06-01', '2025-06-30', 20.00, N'Giảm giá 20% cho tất cả sách văn học.', GETDATE(), GETDATE());
+INSERT INTO Slide (HinhAnh, MoTa, Link, ThuTu, TrangThai)
+VALUES (N'/images/slides/slide1.jpg', N'Slide quảng cáo sách mới', '/sanpham/moi', 1, N'Hiển thị');
+INSERT INTO Banner (HinhAnh, MoTa, Link, ThuTu, TrangThai)
+VALUES (N'/images/banners/banner1.jpg', N'Banner sách văn học', '/danhmuc/vanhoc', 1, N'Hiển thị');
+INSERT INTO SanPham (TenSP, MoTa, IDtl, GiaBan, HinhAnh, IDtg, IDnxb, IDkm, SoLuong, TrangThaiSach, NgayPhatHanh, ISBN, SoTrang, NgonNgu, LuotXem, KichThuoc, TrongLuong, NgayTao, NgayCapNhat, DiemDanhGiaTrungBinh)
+VALUES (
+    N'Mắt Biếc',
+    N'Tiểu thuyết lãng mạn của Nguyễn Nhật Ánh kể về mối tình đơn phương của Ngạn.',
+    1,
+    120000.00,
+    N'/images/books/matbiec.jpg',
+    1,
+    1,
+    1,
+    100,
+    N'Còn hàng',
+    '2020-01-15',
+    '9786041234567',
+    300,
+    N'Tiếng Việt',
+    1500,
+    N'13.5x20.5 cm',
+    350,
+    GETDATE(),
+    GETDATE(),
+    4.5
+);
+
+INSERT INTO DanhMuc (TenDanhMuc)
 VALUES 
-    (N'Giảm giá mùa hè', GETDATE(), '2025-06-30', 20.00, N'Giảm giá 20% cho tất cả sách', GETDATE()),
-    (N'Khuyến mãi Tết 2026', GETDATE(), '2026-02-15', 15.00, N'Giảm 15% cho sách thiếu nhi', GETDATE()),
-    (N'Black Friday 2025', GETDATE(), '2025-12-01', 30.00, N'Giảm 30% toàn bộ cửa hàng', GETDATE()),
-    (N'Ngày sách Việt Nam', GETDATE(), '2025-04-30', 10.00, N'Giảm 10% sách văn học', GETDATE()),
-    (N'Back to School', GETDATE(), '2025-09-15', 25.00, N'Giảm 25% sách giáo khoa', GETDATE()),
-    (N'Giáng sinh rực rỡ', GETDATE(), '2025-12-31', 20.00, N'Giảm 20% sách ngoại ngữ', GETDATE()),
-    (N'Khuyến mãi tháng 5', GETDATE(), '2025-05-31', 15.00, N'Giảm 15% sách kỹ năng', GETDATE()),
-    (N'Mừng Quốc khánh', GETDATE(), '2025-09-07', 50.00, N'Giảm 50% sách lịch sử', GETDATE()),
-    (N'Sinh nhật cửa hàng', GETDATE(), '2025-07-20', 10.00, N'Giảm 10% tất cả sản phẩm', GETDATE()),
-    (N'Khuyến mãi cuối năm', GETDATE(), '2025-12-31', 35.00, N'Giảm 35% sách kinh doanh', GETDATE());
---Bảng SanPham
-INSERT INTO SanPham (TenSP, MoTa, IDtl, GiaBan, HinhAnh, IDtg, IDnxb, IDkm, SoLuong, TrangThaiSach)
-VALUES (N'Sách học lập trình C#', N'Sách hướng dẫn lập trình C# cho người mới bắt đầu', 1, 250000, N'./images/sach_csharp.jpg', 1, 1, 1, 0, N'Hết hàng');
---Bảng Slide
-INSERT INTO Slide (HinhAnh, MoTa, Link, ThuTu)VALUES 
-(N'anh_slide1.jpg', N'Mô tả cho Slide 1', 'https://localhost:44307/SanPhams/ProductList', 1)
---Bảng Banner
-INSERT INTO Banner (HinhAnh, MoTa, Link, ThuTu)VALUES
-(N'anh_banner1.jpg', N'Mô tả cho Banner 1', 'https://localhost:44307/SanPhams/ProductList', 1),
-(N'anh_banner2.jpg', N'Mô tả cho Banner 2', 'https://localhost:44307/SanPhams/ProductList', 2),
-(N'anh_banner3.jpg', N'Mô tả cho Banner 3', 'https://localhost:44307/SanPhams/ProductList', 3);
+(N'Sách Học Tập'),
+(N'Sách Văn Học'),
+(N'Thiếu Nhi');
+INSERT INTO TheLoai (TenTheLoai)
+VALUES 
+(N'Toán Học'),
+(N'Tiểu Thuyết'),
+(N'Truyện Cổ Tích'),
+(N'Văn Học Nước Ngoài');
+INSERT INTO DanhMuc_TheLoai (DanhMuc_ID, TheLoai_ID, HinhAnh)
+VALUES
+(1, 1, N'toanhoc.jpg'),         -- Sách Học Tập - Toán Học
+(1, 2, N'tieuthuyet.jpg'),      -- Sách Học Tập - Tiểu Thuyết
+(2, 2, N'vanhocvn.jpg'),        -- Sách Văn Học - Tiểu Thuyết
+(2, 4, N'vanhocnuocngoai.jpg'),-- Sách Văn Học - Văn Học Nước Ngoài
+(3, 3, N'truyencotich.jpg'),    -- Thiếu Nhi - Truyện Cổ Tích
+(3, 1, N'toanchotre.jpg');      -- Thiếu Nhi - Toán Học
 
---Select tất cả các trigger
-SELECT 
-    t.name AS TênTrigger,                    -- Lấy tên của trigger và gọi là "TênTrigger"
-    OBJECT_NAME(t.parent_id) AS TênBảng,     -- Lấy tên bảng mà trigger gắn vào, gọi là "TênBảng"
-    t.create_date AS NgàyTạo,                -- Lấy ngày tạo trigger, gọi là "NgàyTạo"
-    t.is_disabled AS TrạngTháiTắt,           -- Lấy trạng thái tắt/bật của trigger, gọi là "TrạngTháiTắt"
-    t.is_instead_of_trigger AS TriggerThayThế  -- Lấy xem trigger có phải loại thay thế không, gọi là "TriggerThayThế"
-FROM 
-    sys.triggers t                           -- Từ bảng hệ thống sys.triggers, đặt tên ngắn là "t"
-INNER JOIN 
-    sys.objects o ON t.parent_id = o.object_id  -- Kết hợp với bảng sys.objects dựa trên parent_id
-WHERE 
-    t.type = 'TR'                            -- Chỉ lấy những thứ là trigger thôi
-ORDER BY 
-    t.name;                                  -- Sắp xếp theo tên trigger
-
-select * from NhaXuatBan
+select * from DanhMuc

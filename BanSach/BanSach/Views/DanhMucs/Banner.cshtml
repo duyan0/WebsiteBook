@@ -3,7 +3,6 @@
 @{
     var processedCategories = new HashSet<string>();
 }
-
 <div class="row product-category-container ">
     @foreach (var item in Model)
     {
@@ -12,11 +11,11 @@
             processedCategories.Add(item.DanhMuc.TenDanhMuc);
 
             <div class="col-2">
-                <div class="card border-0 bg-dark h-100">
+                <div class="card border-0 bg-white h-100">
                     <a href="~/SanPhams/Productlist?category=@item.ID" class="text-decoration-none">
                         <img src="~/assets/images/banners/@item.HinhAnh" class="card-img-top rounded-3 img-fluid" alt="@item.DanhMuc.TenDanhMuc">
                         <div class="card-body text-center p-2">
-                            <p class="text-white mb-0" style="font-size: 14px;">@item.DanhMuc.TenDanhMuc</p>
+                            <p class="text-dark mb-0" style="font-size: 14px;">@item.DanhMuc.TenDanhMuc</p>
                         </div>
                     </a>
                 </div>

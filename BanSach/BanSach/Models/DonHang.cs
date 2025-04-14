@@ -10,6 +10,7 @@
 namespace BanSach.Models
 {
     using BanSach.DesignPatterns.StatePattern;
+    using Microsoft.Extensions.DependencyModel;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -19,23 +20,25 @@ namespace BanSach.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DonHang()
         {
+            this.DanhGiaSanPham = new HashSet<DanhGiaSanPham>();
             this.DonHangCT = new HashSet<DonHangCT>();
             State = new PendingState();
         }
 
         public int IDdh { get; set; }
-        public IOrderState State { get; set; }
-        public DateTime? NgayDatHang { get; set; }
+        public Nullable<System.DateTime> NgayDatHang { get; set; }
         public Nullable<int> IDkh { get; set; }
         public string DiaChi { get; set; }
-        public DateTime? NgayNhanHang { get; set; }
+        public Nullable<System.DateTime> NgayNhanHang { get; set; }
         public string TrangThai { get; set; }
-        public Nullable<int> totalquantity { get; set; }
-        public Nullable<decimal> totalamount { get; set; }
-
+        public decimal TongTien { get; set; }
+        public IOrderState State { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DanhGiaSanPham> DanhGiaSanPham { get; set; }
         public virtual KhachHang KhachHang { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonHangCT> DonHangCT { get; set; }
+
         public void InitializeState()
         {
             switch (TrangThai)
@@ -63,8 +66,7 @@ namespace BanSach.Models
         public decimal GetTongSoTien()
         {
             return DonHangCT != null
-                ? DonHangCT.Sum(ct => (ct.SoLuong ?? 0) * (decimal)(ct.Gia ?? 0))
-                : 0;
+                   ? DonHangCT.Sum(ct => (ct.SoLuong * ct.Gia)) : 0;
         }
 
         // Phương thức này tính tổng tiền cho đơn hàng
@@ -73,8 +75,7 @@ namespace BanSach.Models
             get
             {
                 return DonHangCT != null
-                    ? DonHangCT.Sum(ct => (ct.SoLuong ?? 0) * (decimal)(ct.Gia ?? 0))
-                    : 0;
+                    ? DonHangCT.Sum(ct => (ct.SoLuong * ct.Gia)) : 0;
             }
         }
     }

@@ -77,7 +77,7 @@ namespace BanSach.Controllers
             }
 
             _user.TrangThaiTaiKhoan = "Chưa xác nhận";
-            _user.create_date = DateTime.Now;
+            _user.NgayTao = DateTime.Now;
             db.KhachHang.Add(_user);
             db.SaveChanges();
 
@@ -164,7 +164,7 @@ namespace BanSach.Controllers
 
         //.../auth/userinfo.email,.../auth/userinfo.profile	
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
-        public ActionResult LoginAccountCus(KhachHang _cus)
+        public ActionResult login(KhachHang _cus)
         {
 
             if (_cus.TKhoan == null)

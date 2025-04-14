@@ -349,7 +349,7 @@ namespace BanSach.Controllers
                         : (order.TrangThai == "Đã xác nhận" && order.NgayDatHang.HasValue
                             ? "Dự kiến: " + order.NgayDatHang.Value.AddDays(2).ToString("dd/MM/yyyy")
                             : "Chưa có thông tin");
-                    worksheet.Cell(currentRow, 4).Value = order.totalamount;
+                    worksheet.Cell(currentRow, 4).Value = order.Total_DH;
                     worksheet.Cell(currentRow, 5).Value = order.TrangThai;
                 }
 
@@ -467,7 +467,34 @@ namespace BanSach.Controllers
                 return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
             }
         }
+        // Xem danh sách đánh giá của khách hàng
+        public ActionResult DanhGiaCuaToi()
+        {
+            var khachHangId = Session["CodeCustomer"]?.ToString();
+            if (string.IsNullOrEmpty(khachHangId))
+            {
+                TempData["ErrorMessage"] = "Vui lòng đăng nhập để xem đánh giá.";
+                return RedirectToAction("Loginaccountcus", "LoginUser");
+            }
 
+            int idKh = int.Parse(khachHangId);
+            var danhGias = db.DanhGiaSanPham
+                .Where(d => d.IDkh == idKh)
+                .Select(d => new
+                {
+                    d.IDdgsp,
+                    d.SanPham.TenSP,
+                    d.DiemDanhGia,
+                    d.NhanXet,
+                    d.PhanHoi,
+                    d.NgayDanhGia,
+                    d.IDDonHang
+                })
+                .ToList();
+
+            return View(danhGias);
+        }
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

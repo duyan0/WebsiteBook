@@ -24,7 +24,7 @@ namespace BanSach.DesignPatterns.TemplateMethodPattern
         {
             return new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary
             {
-                { "action", "LoginAccountCus" },
+                { "action", "Login" },
                 { "controller", "LoginUser" }
             });
         }

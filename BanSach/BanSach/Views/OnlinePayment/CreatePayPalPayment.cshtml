@@ -1,0 +1,83 @@
+﻿@model BanSach.Models.Cart
+
+<h2>Giỏ hàng của bạn</h2>
+
+@if (Model != null && Model.Items.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Giá</th>
+                <th>Thành tiền</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item._product.TenSP</td>
+                    <td>@item._quantity</td>
+                    <td>@item._product.GiaBan</td>
+                    <td>@(item._product.GiaBan * item._quantity * (1 - (item.MucGiamGia / 100)))</td>
+                    <td>
+                        <a href="@Url.Action("RemoveCart", "ShoppingCart", new { id = item._product.IDsp })" class="btn btn-danger">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3>Tổng tiền: @Model.Total_money() VNĐ</h3>
+
+    <!-- Form thanh toán PayPal -->
+    <form action="@Url.Action("CreatePayPalPayment", "OnlinePayment")" method="post">
+        <input type="hidden" name="CodeCustomer" value="@Session["CodeCustomer"]" />
+        <div class="form-group">
+            <label>Họ tên</label>
+            <input type="text" name="NameCustomer" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label>Số điện thoại</label>
+            <input type="text" name="PhoneCustomer" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label>Địa chỉ giao hàng</label>
+            <input type="text" name="AddressDelivery" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-success">Thanh toán bằng PayPal</button>
+    </form>
+
+    <!-- Form thanh toán COD -->
+    <form action="@Url.Action("CheckOut", "ShoppingCart")" method="post" style="margin-top: 10px;">
+        <input type="hidden" name="CodeCustomer" value="@Session["CodeCustomer"]" />
+        <div class="form-group">
+            <label>Họ tên</label>
+            <input type="text" name="NameCustomer" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label>Số điện thoại</label>
+            <input type="text" name="PhoneCustomer" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label>Địa chỉ giao hàng</label>
+            <input type="text" name="AddressDelivery" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Thanh toán khi nhận hàng</button>
+    </form>
+}
+else
+{
+    <p>Giỏ hàng trống.</p>
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}

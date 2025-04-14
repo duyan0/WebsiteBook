@@ -1,0 +1,63 @@
+﻿@model System.Collections.Generic.List<dynamic>
+
+@{
+    ViewBag.Title = "Đánh Giá Của Tôi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+}
+
+<div class="container my-5">
+    <h2><i class="fas fa-star"></i> Đánh Giá Của Tôi</h2>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    @if (Model.Any())
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Sản Phẩm</th>
+                    <th>Điểm</th>
+                    <th>Nhận Xét</th>
+                    <th>Phản Hồi</th>
+                    <th>Ngày Đánh Giá</th>
+                    <th>Đơn Hàng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.TenSP</td>
+                        <td>@item.DiemDanhGia <i class="fas fa-star text-warning"></i></td>
+                        <td>@item.NhanXet</td>
+                        <td>@item.PhanHoi</td>
+                        <td>@item.NgayDanhGia.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            <a href="@Url.Action("DetailsKH", "KhachHangs", new { ID = item.IDDonHang })">
+                                #@item.IDDonHang
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Bạn chưa có đánh giá nào.</p>
+    }
+
+    <a href="@Url.Action("LichSuDonHang", "KhachHangs")" class="btn btn-primary mt-3">
+        Quay Lại Lịch Sử Đơn Hàng <i class="fas fa-history"></i>
+    </a>
+</div>

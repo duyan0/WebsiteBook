@@ -7,7 +7,6 @@
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="HoTen" ColumnName="HoTen" />
           <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
           <ScalarProperty Name="SoDT" ColumnName="SoDT" />
           <ScalarProperty Name="VaiTro" ColumnName="VaiTro" />
           <ScalarProperty Name="TKhoan" ColumnName="TKhoan" />
@@ -23,6 +22,21 @@
           <ScalarProperty Name="MoTa" ColumnName="MoTa" />
           <ScalarProperty Name="Link" ColumnName="Link" />
           <ScalarProperty Name="ThuTu" ColumnName="ThuTu" />
+          <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DanhGiaSanPham">
+      <EntityTypeMapping TypeName="SachModel.DanhGiaSanPham">
+        <MappingFragment StoreEntitySet="DanhGiaSanPham">
+          <ScalarProperty Name="IDdgsp" ColumnName="IDdgsp" />
+          <ScalarProperty Name="IDkh" ColumnName="IDkh" />
+          <ScalarProperty Name="IDsp" ColumnName="IDsp" />
+          <ScalarProperty Name="IDDonHang" ColumnName="IDDonHang" />
+          <ScalarProperty Name="DiemDanhGia" ColumnName="DiemDanhGia" />
+          <ScalarProperty Name="NhanXet" ColumnName="NhanXet" />
+          <ScalarProperty Name="NgayDanhGia" ColumnName="NgayDanhGia" />
+          <ScalarProperty Name="PhanHoi" ColumnName="PhanHoi" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -64,7 +78,6 @@
           <ScalarProperty Name="IDDonHang" ColumnName="IDDonHang" />
           <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
           <ScalarProperty Name="Gia" ColumnName="Gia" />
-          <ScalarProperty Name="DanhGia" ColumnName="DanhGia" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -77,10 +90,12 @@
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="TKhoan" ColumnName="TKhoan" />
           <ScalarProperty Name="MKhau" ColumnName="MKhau" />
+          <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
           <ScalarProperty Name="TrangThaiTaiKhoan" ColumnName="TrangThaiTaiKhoan" />
           <ScalarProperty Name="OTP" ColumnName="OTP" />
           <ScalarProperty Name="OTPExpiry" ColumnName="OTPExpiry" />
-          <ScalarProperty Name="create_date" ColumnName="create_date" />
+          <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+          <ScalarProperty Name="NgayCapNhat" ColumnName="NgayCapNhat" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -94,6 +109,7 @@
           <ScalarProperty Name="MucGiamGia" ColumnName="MucGiamGia" />
           <ScalarProperty Name="MoTa" ColumnName="MoTa" />
           <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+          <ScalarProperty Name="NgayCapNhat" ColumnName="NgayCapNhat" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -122,6 +138,16 @@
           <ScalarProperty Name="IDkm" ColumnName="IDkm" />
           <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
           <ScalarProperty Name="TrangThaiSach" ColumnName="TrangThaiSach" />
+          <ScalarProperty Name="NgayPhatHanh" ColumnName="NgayPhatHanh" />
+          <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+          <ScalarProperty Name="SoTrang" ColumnName="SoTrang" />
+          <ScalarProperty Name="NgonNgu" ColumnName="NgonNgu" />
+          <ScalarProperty Name="LuotXem" ColumnName="LuotXem" />
+          <ScalarProperty Name="KichThuoc" ColumnName="KichThuoc" />
+          <ScalarProperty Name="TrongLuong" ColumnName="TrongLuong" />
+          <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+          <ScalarProperty Name="NgayCapNhat" ColumnName="NgayCapNhat" />
+          <ScalarProperty Name="DiemDanhGiaTrungBinh" ColumnName="DiemDanhGiaTrungBinh" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -133,6 +159,7 @@
           <ScalarProperty Name="MoTa" ColumnName="MoTa" />
           <ScalarProperty Name="Link" ColumnName="Link" />
           <ScalarProperty Name="ThuTu" ColumnName="ThuTu" />
+          <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -144,6 +171,7 @@
           <ScalarProperty Name="NgaySinh" ColumnName="NgaySinh" />
           <ScalarProperty Name="QuocGia" ColumnName="QuocGia" />
           <ScalarProperty Name="TieuSu" ColumnName="TieuSu" />
+          <ScalarProperty Name="HinhAnh" ColumnName="HinhAnh" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
