@@ -1,31 +1,33 @@
 ﻿@model IEnumerable<BanSach.Models.ViewModel>
 @Styles.Render("~/Content/css/TopBanChay")
 <link href="~/Content/css/TopBanChay.css" rel="stylesheet" />
-<div class="container-fluid mt-2">
-    <h4 class="text-center text-dark fw-semibold pt-2">
+
+<div class="container-fluid bg-white rounded-2 ">
+    <h4 class="text-center text-dark  fw-semibold py-2 ">
         Top bán chạy
     </h4>
-    <div class="row justify-content-start">
+    <div class="row  mt-2 row-cols-4">
         @foreach (var item in Model)
         {
-            <div class="col-lg-2 col-md-4 col-sm-6 p-1">
-                <div class="card p-2 w-100 h-100">
+            <div class="col-lg-3 col-md-4 col-sm-6  p-1 ">
+                <div class="card p-2 w-100 h-100 bg-white">
                     <a href="@Url.Action("TrangSP", "SanPhams", new { id = item.IdPro })" class="d-flex justify-content-center">
-                        <img src="~/assets/images/products/@item.ImgPro" alt="@item.NamePro" class="img-fluid" style="object-fit:contain; height:190px;" />
+                        <img src="~/assets/images/products/@item.ImgPro" alt="@item.NamePro" style="object-fit:contain; height:190px;" />
                     </a>
 
                     <div class="card-body p-2">
-                        <p class="mb-2 text-truncate">@item.NamePro</p>
+                        <p class="mb-2 text-truncate text-dark">@item.NamePro</p>
                         <p class="mb-2 text-danger fw-semibold">@item.price.ToString("N0") VND</p>
-                        <p class="mb-0 text-bg-dark placeholder-wave rounded-1 text-center">Đã bán: @item.Sum_Quantity</p>
+                        <p class="mb-0 text-bg-danger rounded-1 text-center">Đã bán: @item.Sum_Quantity</p>
                     </div>
                 </div>
             </div>
         }
     </div>
     <div class="text-center">
-        <a href="@Url.Action("ProductList", "SanPhams")" class="text-decoration-none btn btn-outline-danger py-2 px-2 mt-2">Xem thêm </a>
+        <a href="@Url.Action("ProductList", "SanPhams")" class="text-decoration-none btn btn-outline-danger py-2 mb-2 mt-2">Xem thêm </a>
     </div>
 </div>
+
 
 

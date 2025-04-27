@@ -1,15 +1,16 @@
 ﻿@model IEnumerable<BanSach.Models.RecentOrderViewModel>
 
-<div class="container-fluid mt-2 ">
-    <p class="text-center text-dark fs-4 fw-semibold mb-3" style="font-size: 26px;">Bán gần đây nhất</p>
+<div class="container-fluid bg-white rounded-2  mt-2 ">
+
+    <h5 class="text-center text-dark fs-4 fw-semibold py-2">Bán gần đây nhất</h5>
 
     <div class="row p-1 justify-content-start">
         @foreach (var i in Model.Take(15))
         {
-        <div class="col-lg-2 col-md-4 col-sm-6  p-1 ">
+        <div class="col-lg-3 col-sm-6 col-6 col-sm-6  p-1 ">
             <div class="card product-item h-100 p-1 ">
                 <a href="@Url.Action("TrangSP", "SanPhams", new { id = i.Id })" class="text-decoration-none">
-                    <div class="card-body p-2">
+                    <div class="card-body  p-2">
                         <!-- Ảnh sản phẩm với kích thước cố định -->
                         <img src="~/assets/images/products/@i.HinhAnh" alt="Ảnh sản phẩm @i.TenSanPham" class="img-fluid" style="object-fit:contain; height:190px; width:100%;">
                         <!-- Tên sản phẩm -->
@@ -17,7 +18,7 @@
                         <!-- Giá sản phẩm -->
                         <p class="mb-2 text-danger fw-semibold">@i.Gia.ToString("#,#") VND</p>
                         <!-- Ngày đặt hàng -->
-                        <p class="mb-0 text-bg-dark placeholder-wave rounded-1 text-center" title="@i.NgayDatHang.ToString("dd/MM/yyyy HH:mm:ss")">
+                        <p class="mb-0 text-bg-dark placeholder-wave rounded-1 text-center " title="@i.NgayDatHang.ToString("dd/MM/yyyy HH:mm:ss")" style="font-size:15px;">
                             @i.NgayDatHang.ToString("dd/MM/yyyy HH:mm:ss")
                         </p>
                     </div>
@@ -28,13 +29,10 @@
     </div>
 
     <div class="text-center">
-        <a href="@Url.Action("ProductList", "SanPhams")" class="text-decoration-none btn btn-outline-danger py-2 px-2 mt-3">Xem thêm</a>
+        <a href="@Url.Action("ProductList", "SanPhams")" class="text-decoration-none btn btn-outline-danger mb-2 ">Xem thêm</a>
     </div>
 </div>
 
-<div class="bg-secondary">
-    <hr />
-</div>
 
 <style>
     .card-body {

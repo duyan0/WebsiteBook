@@ -6,9 +6,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link href="~/Content/PagedList.css" rel="stylesheet" />
-<div class="container mt-2 col-xl-12">
-    <h2 class="text-white text-center fw-semibold">Lịch sử Đơn Hàng</h2>
+<link href="@Url.Content("~/Content/PagedList.css")" rel="stylesheet" />
+<div class="container bg-white rounded-2 p-2 mt-2 col-xl-12">
+    <h4 class="text-dark text-center fw-semibold">Lịch sử Đơn Hàng</h4>
 
     <!-- Hiển thị thông báo lỗi từ TempData -->
     @if (TempData["ErrorMessage"] != null)
@@ -46,9 +46,9 @@
         </div>
 
         <div class="table-responsive mt-4">
-            <table class="table table-dark table-responsive-sm">
+            <table class="table table-responsive-sm">
                 <thead>
-                    <tr class="text-white text-left">
+                    <tr class="text-dark text-start ">
                         <th style="width:134px;">Mã DH</th>
                         <th>Ngày đặt hàng</th>
                         <th>Ngày nhận hàng</th>
@@ -60,35 +60,35 @@
                 <tbody>
                     @foreach (var order in Model)
                     {
-                        <tr class="text-white text-left">
-                            <td class="font-weight-bold text-white">@order.IDdh</td>
+                        <tr class="text-dark text-start ">
+                            <td class="font-weight-bold text-dark">@order.IDdh</td>
 
-                            <td class="text-white">
+                            <td class="text-dark">
                                 @(order.NgayDatHang.HasValue
                                     ? order.NgayDatHang.Value.ToString("dd/MM/yyyy HH:mm:ss")
                                     : "Chưa đặt hàng")
                             </td>
 
-                            <td class="text-white">
+                            <td class="text-dark ">
                                 @if (order.TrangThai == "Đã nhận hàng" && order.NgayNhanHang.HasValue)
                                 {
                                     @order.NgayNhanHang.Value.ToString("dd/MM/yyyy HH:mm:ss")
                                 }
                                 else if (order.TrangThai == "Đã xác nhận" && order.NgayDatHang.HasValue)
                                 {
-                                    <span style="color: orange;">Dự kiến: @order.NgayDatHang.Value.AddDays(2).ToString("dd/MM/yyyy")</span>
+                                    <span style="color: orange;" class="fw-semibold">Dự kiến: @order.NgayDatHang.Value.AddDays(2).ToString("dd/MM/yyyy")</span>
                                 }
                                 else
                                 {
-                                    <span class="d-inline-flex text-info">Dự kiến 2 ngày</span>
+                                    <span class="d-inline-flex fw-semibold text-info">Dự kiến 2 ngày</span>
                                 }
                             </td>
 
-                            <td class="text-danger font-weight-bold">
+                            <td class="text-danger fw-semibold">
                                 @order.GetTongSoTien().ToString("C0", new System.Globalization.CultureInfo("vi-VN"))
                             </td>
                             <td class="text-left">
-                                <button class="btn @(order.TrangThai == "Chờ xử lý" ? "btn-info rounded-sm"
+                                <button class="btn btn-sm @(order.TrangThai == "Chờ xử lý" ? "btn-info rounded-sm"
                                     : order.TrangThai == "Đã xác nhận" ? "btn-success rounded-sm"
                                     : order.TrangThai == "Đã hủy" ? "btn-danger rounded-sm"
                                     : order.TrangThai == "Đã nhận hàng" ? "btn-warning rounded-sm"

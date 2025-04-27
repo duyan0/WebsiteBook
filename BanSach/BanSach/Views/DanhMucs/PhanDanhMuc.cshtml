@@ -18,16 +18,17 @@
             {
                 if (Session[tenDanhMuc] == null)
                 {
-                    <div class="menu-item position-relative shadow-sm mb-2">
-                        <button class="menu-button bg-light w-100 text-start" type="button">
+                    <div class="menu-item position-relative mb-1">
+                        <button class="menu-button bg-white w-100 text-start" type="button">
                             <span class="menu-title">
-                                <i class="fa-solid fa-folder me-2"></i>
+                               
                                 <strong>@tenDanhMuc</strong>
                             </span>
                             <i class="fa-solid fa-chevron-right arrow-icon"></i>
                         </button>
+
                         <div class="submenu position-absolute start-100 top-0 ms-1">
-                            <ul class="list-group shadow-sm">
+                            <ul class="list-group ">
                                 @{
                                     var uniqueTheLoai = Model.Where(item => item.DanhMuc.TenDanhMuc == tenDanhMuc && item.TheLoai != null)
                                                             .GroupBy(item => item.TheLoai_ID)
@@ -49,10 +50,12 @@
                             </ul>
                         </div>
                     </div>
+                    
                 }
             }
         }
     </div>
+   
 </div>
 
 <style>
@@ -72,14 +75,16 @@
     }
 
     .menu-button {
-        color: #2c3e50;
-        padding: 12px 15px;
+        color: black;
+        padding:10px;
         border: none;
         border-radius: 8px;
         transition: all 0.3s ease;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        font-size:13px;
+
     }
 
     .menu-title {
@@ -94,9 +99,8 @@
     }
 
     .menu-item:hover .menu-button {
-        background-color: #f8f9fa;
+        background-color: white;
         color: #1a252f;
-        transform: translateX(5px);
     }
 
     .menu-item:hover .arrow-icon {
@@ -111,6 +115,7 @@
         border-radius: 8px;
         z-index: 1000;
         opacity: 0;
+        font-size: 13px;
         transform: translateX(-10px);
         transition: all 0.3s ease;
     }
@@ -126,7 +131,7 @@
     }
 
         .list-group-item:hover {
-            background-color: #f8f9fa;
+            background-color: white;
             padding-left: 10px;
         }
 
@@ -148,7 +153,7 @@
     }
 
         .submenu a:hover {
-            color: #1a252f;
+            color: black;
         }
 </style>
 

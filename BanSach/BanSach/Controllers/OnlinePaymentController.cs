@@ -37,6 +37,7 @@ namespace BanSach.Controllers
         [HttpPost]
         public ActionResult CreatePayPalPayment(string CodeCustomer, string NameCustomer, string PhoneCustomer, string AddressDelivery)
         {
+
             if (string.IsNullOrEmpty(CodeCustomer))
             {
                 TempData["ErrorMessage"] = "Vui lòng đăng nhập trước khi thanh toán.";

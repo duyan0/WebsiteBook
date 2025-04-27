@@ -10,11 +10,12 @@
     position: fixed;
     width: 250px;
     height: 100%;
-    background: linear-gradient(45deg, #1e3c72, #2a5298);
     transition: width 0.3s ease;
     overflow-y: auto;
     box-shadow: 2px 0 10px rgba(0,0,0,0.1);
     z-index: 1000;
+    background-color: #252525;
+    border-radius: 0 10px 10px 0px;
 }
 
     .sidebar.active {
@@ -46,10 +47,11 @@
 .sidebar {
     scrollbar-width: thin;
     scrollbar-color: #2a5298 rgba(255, 255, 255, 0.1);
+    padding:10px;
 }
 
     .sidebar ul {
-        padding: 20px 0;
+        padding:  0;
     }
 
         .sidebar ul li {
@@ -62,8 +64,8 @@
                 display: flex;
                 align-items: center;
                 text-decoration: none;
-                color: #fff;
-                border-radius: 0 30px 30px 0;
+                color: white;
+                border-radius: 25px;
                 transition: all 0.3s ease;
                 will-change: transform, background;
             }
@@ -73,16 +75,16 @@
                     height: 60px;
                     line-height: 60px;
                     text-align: center;
-                    font-size: 1em;
+                    font-size: 10px;
                 }
 
                 .sidebar ul li a .title {
-                    padding: 0 15px;
+                    padding: 0px;
                     height: 60px;
                     line-height: 60px;
                     white-space: nowrap;
                     font-weight: 500;
-                    letter-spacing: 0.5px;
+                    letter-spacing: 0px;
                     opacity: 1;
                     transition: opacity 0.3s ease;
                 }
@@ -107,8 +109,8 @@
     .sidebar ul li .submenu {
         max-height: 0;
         overflow: hidden;
-        background-color: #1e3c72;
-        border-radius: 0px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 30px;
         transition: max-height 0.3s ease-out;
     }
 
@@ -128,19 +130,21 @@
             margin-left: 20px;
         }
 
+
+
     /* Hover & Active effects */
     .sidebar ul li a:hover,
     .sidebar ul li.active > a {
-        background: rgba(255,255,255,0.2);
+        background-color: #444444;
     }
 
     .sidebar ul li .submenu a:hover {
-        background: rgba(255,255,255,0.1);
+         background-color: #444444;
     }
 
     /* Active state for submenu links */
     .sidebar ul li .submenu a.active {
-        background-color: #0b1539;
+        background-color: rgb(0, 0, 0);
         color: #fff;
         font-weight: 600;
         transition: ease 0.6s ease-in-out;
@@ -324,6 +328,7 @@
     height: 70px;
     background: rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
+    border-radius:10px;
 }
 
 .logo-img {
@@ -338,7 +343,7 @@
     color: #fff;
     font-size: 1.2em;
     font-weight: 600;
-    margin-left: 15px;
+    margin-left: -70px;
     white-space: nowrap;
     opacity: 1;
     transition: opacity 0.3s ease;

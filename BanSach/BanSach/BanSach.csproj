@@ -71,8 +71,8 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="EPPlus, Version=7.7.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
-      <HintPath>..\packages\EPPlus.7.7.0\lib\net462\EPPlus.dll</HintPath>
+    <Reference Include="EPPlus, Version=8.0.2.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.8.0.2\lib\net462\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus.Interfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.Interfaces.8.0.0\lib\net462\EPPlus.Interfaces.dll</HintPath>
@@ -296,6 +296,9 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Xml, Version=8.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Xml.8.0.2\lib\net462\System.Security.Cryptography.Xml.dll</HintPath>
+    </Reference>
     <Reference Include="System.Text.Encoding.CodePages, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encoding.CodePages.6.0.0\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
     </Reference>
@@ -399,7 +402,7 @@
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\SlideController.cs" />
     <Compile Include="Controllers\TacGiaController.cs" />
-    <Compile Include="Controllers\TheLoaiController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="DesignPatterns\CommandPattern\DeleteAdminCommand.cs" />
     <Compile Include="DesignPatterns\CommandPattern\ICommand.cs" />
     <Compile Include="DesignPatterns\FactoryMethodPattern\IVerifier.cs" />
@@ -551,44 +554,27 @@
     <Content Include="assets\images\slide\slide_26_3_1.jpg" />
     <Content Include="assets\images\slide\slide_26_3_2.jpg" />
     <Content Include="Content\bootstrap-grid.css" />
-    <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Content\bootstrap-grid.min.css" />
-    <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
-    <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.rtl.min.css" />
-    <Content Include="Content\bootstrap-grid.rtl.min.css.map" />
     <Content Include="Content\bootstrap-reboot.css" />
-    <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-reboot.min.css" />
-    <Content Include="Content\bootstrap-reboot.min.css.map" />
     <Content Include="Content\bootstrap-reboot.rtl.css" />
-    <Content Include="Content\bootstrap-reboot.rtl.css.map" />
     <Content Include="Content\bootstrap-reboot.rtl.min.css" />
-    <Content Include="Content\bootstrap-reboot.rtl.min.css.map" />
     <Content Include="Content\bootstrap-utilities.css" />
-    <Content Include="Content\bootstrap-utilities.css.map" />
     <Content Include="Content\bootstrap-utilities.min.css" />
-    <Content Include="Content\bootstrap-utilities.min.css.map" />
     <Content Include="Content\bootstrap-utilities.rtl.css" />
-    <Content Include="Content\bootstrap-utilities.rtl.css.map" />
     <Content Include="Content\bootstrap-utilities.rtl.min.css" />
-    <Content Include="Content\bootstrap-utilities.rtl.min.css.map" />
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.rtl.css" />
-    <Content Include="Content\bootstrap.rtl.css.map" />
     <Content Include="Content\bootstrap.rtl.min.css" />
-    <Content Include="Content\bootstrap.rtl.min.css.map" />
-    <Content Include="Content\css\duyan.css" />
+    <Content Include="Content\css\site.css" />
     <Content Include="Content\css\layout.css" />
     <Content Include="Content\css\Login_Regis.css" />
     <Content Include="Content\css\ProductList.css" />
     <Content Include="Content\css\Recent.css" />
     <Content Include="Content\css\Shoppingcart.css" />
-    <Content Include="Content\css\style.min.css" />
     <Content Include="Content\css\TopBanChay.css" />
     <Content Include="Content\css\trangsp.css" />
     <Content Include="Content\jss\bootstrap.bundle.js" />
@@ -725,18 +711,6 @@
     <Content Include="Rotativa\help-wkhtmltopdf.txt" />
     <Content Include="Rotativa\wkhtmltoimage.exe" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />
-    <Content Include="Scripts\bootstrap.bundle.js" />
-    <Content Include="Scripts\bootstrap.bundle.min.js" />
-    <Content Include="Scripts\bootstrap.esm.js" />
-    <Content Include="Scripts\bootstrap.esm.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\bootstrap.min.js.map" />
-    <Content Include="Scripts\bootstrap.js.map" />
-    <Content Include="Scripts\bootstrap.esm.min.js.map" />
-    <Content Include="Scripts\bootstrap.esm.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="App_Browsers\qt.browser" />
     <Content Include=".config\dotnet-tools.json" />
     <Content Include=".vs\BanSach.csproj.dtbcache.json" />
@@ -754,12 +728,40 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\bootstrap.rtl.min.css.map" />
+    <Content Include="Content\bootstrap.rtl.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-utilities.rtl.css.map" />
+    <Content Include="Content\bootstrap-utilities.min.css.map" />
+    <Content Include="Content\bootstrap-utilities.css.map" />
+    <Content Include="Content\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.rtl.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-grid.rtl.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
     <None Include="Properties\PublishProfiles\nbns - Web Deploy.pubxml" />
     <Content Include="Properties\serviceDependencies.json" />
     <Content Include="Properties\serviceDependencies.local.json" />
     <Content Include="Properties\serviceDependencies.nbns - Web Deploy.json" />
     <Content Include="Properties\ServiceDependencies\nbns - Web Deploy\mssql1.arm.json" />
     <Content Include="Properties\ServiceDependencies\nbns - Web Deploy\profile.arm.json" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.esm.js" />
+    <Content Include="Scripts\bootstrap.esm.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.esm.min.js.map" />
+    <Content Include="Scripts\bootstrap.esm.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\changeimg.js" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
@@ -774,6 +776,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Templates\Emails\OrderConfirmationTemplate.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -829,7 +832,6 @@
     <Content Include="Views\Admins\Index.cshtml" />
     <Content Include="Views\KhachHangs\UpdateSuccesss.cshtml" />
     <Content Include="Views\SanPhams\TrangChu.cshtml" />
-    <Content Include="Views\ShoppingCart\CheckOut_Success.cshtml" />
     <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.1.min.map" />
     <Content Include="Views\NhaXuatBan\Index.cshtml" />
@@ -863,7 +865,6 @@
     <Content Include="Views\DonHangCTs\RecentOrders.cshtml" />
     <Content Include="Views\Shared\Maintenance.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\ShoppingCart\CheckOut_Failed.cshtml" />
     <Content Include="Views\KhachHangs\ChangePassword.cshtml" />
     <Content Include="Views\DanhMucs\Banner.cshtml" />
     <Content Include="Views\Home\Forbidden.cshtml" />
@@ -876,10 +877,10 @@
     <Content Include="Views\Slide\Create.cshtml" />
     <Content Include="Views\Slide\Edit.cshtml" />
     <Content Include="Views\Slide\Delete.cshtml" />
-    <Content Include="Views\TheLoai\Index.cshtml" />
-    <Content Include="Views\TheLoai\Create.cshtml" />
-    <Content Include="Views\TheLoai\Edit.cshtml" />
-    <Content Include="Views\TheLoai\Delete.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Category\Create.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Category\Delete.cshtml" />
     <Content Include="Views\DanhMuc_TheLoai\Index.cshtml" />
     <Content Include="Views\DanhMuc_TheLoai\Create.cshtml" />
     <Content Include="Views\DanhMuc_TheLoai\Edit.cshtml" />
@@ -892,6 +893,8 @@
     <Content Include="Views\OnlinePayment\PayPalCancel.cshtml" />
     <Content Include="Views\KhachHangs\DanhGiaCuaToi.cshtml" />
     <Content Include="Views\Admins\QuanLyDanhGia.cshtml" />
+    <Content Include="Views\Category\GetCategory.cshtml" />
+    <Content Include="Views\KhuyenMai\GetPromotion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\images\icons\" />
@@ -935,6 +938,9 @@
   </ProjectExtensions>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
+ 
+    <LangVersion>10.0</LangVersion>
+
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />

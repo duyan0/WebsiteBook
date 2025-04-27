@@ -29,7 +29,7 @@ namespace BanSach
          "~/Content/css/trangsp.css"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/css/duyan.css"));
+                      "~/Content/css/site.css"));
 
             //Admin
             bundles.Add(new StyleBundle("~/Admin/css").Include(

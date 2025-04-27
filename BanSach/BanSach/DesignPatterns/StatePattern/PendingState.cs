@@ -2,7 +2,10 @@
 using BanSach.Models;
 using System;
 using System.Data.Entity;
+using System.IO;
 using System.Net.Mail;
+using System.Web;
+using System.Globalization;
 
 public class PendingState : IOrderState
 {
@@ -24,23 +27,20 @@ public class PendingState : IOrderState
     {
         string customerEmail = donHang.KhachHang.Email;
         string subject = $"Đơn hàng {donHang.IDdh} của bạn đã được xác nhận";
-        string body = $@"
-        <html>
-        <body>
-            <h2>Xin chào {donHang.KhachHang.TenKH},</h2>
-            <p>Đơn hàng của bạn đã được xác nhận.</p>
-            <p><strong>Thông tin đơn hàng:</strong></p>
-            <table border='1' cellpadding='5' cellspacing='0'>
-                <tr><td><strong>Mã đơn hàng:</strong></td><td>{donHang.IDdh}</td></tr>
-                <tr><td><strong>Ngày đặt hàng:</strong></td><td>{donHang.NgayDatHang?.ToString("dd/MM/yyyy HH:mm:ss")}</td></tr>
-                <tr><td><strong>Trạng thái:</strong></td><td>{donHang.TrangThai}</td></tr>
-                <tr><td><strong>Tổng tiền:</strong></td><td>{donHang.Total_DH.ToString("C")}</td></tr>
-                <tr><td><strong>Địa chỉ giao hàng:</strong></td><td>{donHang.DiaChi}</td></tr>
-            </table>
-            <p>Cảm ơn bạn đã mua hàng tại chúng tôi!</p>
-        </body>
-        </html>";
 
+        // Đọc nội dung template HTML
+        string templatePath = HttpContext.Current.Server.MapPath("~/Templates/Emails/OrderConfirmationTemplate.html");
+        string body = File.ReadAllText(templatePath);
+
+        // Thay thế các placeholder bằng dữ liệu thực tế
+        body = body.Replace("{TenKH}", donHang.KhachHang.TenKH)
+                   .Replace("{IDdh}", donHang.IDdh.ToString())
+                   .Replace("{NgayDatHang}", donHang.NgayDatHang?.ToString("dd/MM/yyyy HH:mm:ss"))
+                   .Replace("{TrangThai}", donHang.TrangThai)
+                   .Replace("{Total_DH}", donHang.Total_DH.ToString("N0", new CultureInfo("vi-VN")) + " ₫")
+                   .Replace("{DiaChi}", donHang.DiaChi);
+
+        // Cấu hình gửi email
         SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587)
         {
             EnableSsl = true,

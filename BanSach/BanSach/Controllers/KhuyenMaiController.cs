@@ -14,7 +14,12 @@ namespace BanSach.Controllers
 
         private readonly db_Book db = new db_Book();
 
-
+        [HttpGet]
+        public PartialViewResult GetPromotion()
+        {
+            var GetPromotion = db.KhuyenMai.ToList(); // Sắp xếp theo thứ tự
+            return PartialView(GetPromotion);
+        }
         public ActionResult Index(string searchString, int? page)
         {
             ViewBag.CurrentFilter = searchString;

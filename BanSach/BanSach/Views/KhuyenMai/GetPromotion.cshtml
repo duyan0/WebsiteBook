@@ -1,0 +1,63 @@
+﻿@model IEnumerable<BanSach.Models.KhuyenMai>
+@{
+    ViewBag.Title = "Danh sách khuyến mãi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="bg-light p-3 rounded position-relative">
+    <h5 class="fw-bold text-danger mb-3">
+        <i class="bi bi-journal-bookmark-fill me-2"></i> TỦ SÁCH NỔI BẬT
+    </h5>
+
+    <button class="btn btn-light shadow position-absolute top-50 start-0 translate-middle-y" style="z-index: 10;" onclick="scrollToLeft()">
+        <i class="bi bi-chevron-left"></i>
+    </button>
+
+    <button class="btn btn-light shadow position-absolute top-50 end-0 translate-middle-y" style="z-index: 10;" onclick="scrollToRight()">
+        <i class="bi bi-chevron-right"></i>
+    </button>
+
+    <div id="bookScroll" class="d-flex overflow-auto gap-3 pb-2 px-4" style="scroll-snap-type: x mandatory; white-space: nowrap;">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <div class="text-center flex-shrink-0 user-select-none w-auto" style="scroll-snap-align: start;">
+                    <img src="https://placehold.co/120x120" class="img-fluid rounded mb-2 user-select-none" alt="Sách 1">
+                    <p class="small ">@item.TenKhuyenMai</p>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Không có khuyến mãi nào tồn tại</p>
+        }
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const scrollContainer = document.getElementById("bookScroll");
+
+        window.scrollToLeft = function () {
+            (scrollContainer)
+            scrollContainer.scrollBy({ left: -300, behavior: 'smooth' });
+        };
+
+        window.scrollToRight = function () {
+            (scrollContainer)
+            scrollContainer.scrollBy({ left: 300, behavior: 'smooth' });
+        };
+    });
+</script>
+
+<style>
+    .overflow-auto::-webkit-scrollbar {
+        display: none;
+    }
+
+    #bookScroll {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+</style>

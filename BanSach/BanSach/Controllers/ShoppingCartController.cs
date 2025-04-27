@@ -71,7 +71,7 @@ namespace BanSach.Controllers
                         {
                             productId = item._product.IDsp,
                             productName = item._product.TenSP,
-                            quantity = item._quantity,
+                            quantity = item._product.SoLuong - 1,
                             price = item._product.GiaBan * (1 - (item.MucGiamGia / 100)),
                             image = item._product.HinhAnh
                         }).ToList()

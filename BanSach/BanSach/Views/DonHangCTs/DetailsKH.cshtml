@@ -8,8 +8,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
 
-<div class="container my-5 bg-dark text-light rounded p-4">
-    <h2 class="text-light"><i class="fas fa-shopping-bag"></i> Chi Tiết Đơn Hàng #@Model.IDdh</h2>
+<div class="container my-5 bg-white text-light rounded p-4">
+    <h4 class="text-dark fw-semibold "> Chi Tiết Đơn Hàng #@Model.IDdh</h4>
     @if (TempData["SuccessMessage"] != null)
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -26,7 +26,7 @@
     }
 
     <!-- Thông tin đơn hàng -->
-    <div class="card bg-secondary text-light mb-4 border-0">
+    <div class="card bg-white text-dark mb-4 border-1">
         <div class="card-body">
             <p><strong>Ngày đặt:</strong> @(Model.NgayDatHang?.ToString("dd/MM/yyyy") ?? "Chưa xác định")</p>
             <p>
@@ -37,14 +37,12 @@
                 @totalAmount.ToString("N0") VNĐ
             </p>
             <p><strong>Trạng thái:</strong> @(Model.TrangThai ?? "Chưa xác định")</p>
+            <p><strong>Địa chỉ:</strong> @(Model.DiaChi ?? "Chưa xác định")</p>
         </div>
     </div>
-
-    <!-- Danh sách sản phẩm -->
-    <h4 class="text-light">Sản Phẩm</h4>
-    <div class="table-responsive">
-        <table class="table table-dark table-bordered table-hover">
-            <thead class="table-light">
+    <div class="table-responsive ">
+        <table class="table ">
+            <thead class="table-success">
                 <tr>
                     <th>Sản Phẩm</th>
                     <th>Số Lượng</th>
@@ -60,33 +58,51 @@
                     <tr>
                         <td>@(item.SanPham?.TenSP ?? "Không xác định")</td>
                         <td>@item.SoLuong</td>
-                        <td>@item.Gia.ToString("N0") VNĐ</td>
-                        <td>@((item.SoLuong * item.Gia).ToString("N0")) VNĐ</td>
+                        <td class="text-danger">@item.Gia.ToString("N0") VNĐ</td>
+                        <td class="text-danger fw-semibold">@((item.SoLuong * item.Gia).ToString("N0")) VNĐ</td>
                         <td>
                             @if (danhGia == null)
                             {
-                                <form method="post" action="@Url.Action("AddDanhGia", "DonHangCTs")" class="p-3 bg-secondary rounded">
-                                    @Html.AntiForgeryToken()
-                                    <input type="hidden" name="idDonHang" value="@Model.IDdh" />
-                                    <input type="hidden" name="idSanPham" value="@item.IDSanPham" />
-                                    <div class="form-group mb-3">
-                                        <label class="text-light">Điểm đánh giá:</label>
-                                        <select name="diemDanhGia" class="form-control bg-dark text-light border-secondary" required>
-                                            <option value="" class="text-dark">Chọn điểm</option>
-                                            @for (int i = 1; i <= 5; i++)
-                                            {
-                                                <option value="@i">@i Sao</option>
-                                            }
-                                        </select>
+                                <!-- Nút kích hoạt modal -->
+                                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#danhGiaModal_@item.IDSanPham">
+                                    Đánh Giá <i class="fas fa-star"></i>
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="danhGiaModal_@item.IDSanPham" tabindex="-1" aria-labelledby="danhGiaModalLabel_@item.IDSanPham" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content bg-white text-dark">
+                                            <div class="modal-header border-secondary">
+                                                <h5 class="modal-title" id="danhGiaModalLabel_@item.IDSanPham">Đánh Giá Sản Phẩm</h5>
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form method="post" action="@Url.Action("AddDanhGia", "DonHangCTs")" class="p-3">
+                                                    @Html.AntiForgeryToken()
+                                                    <input type="hidden" name="idDonHang" value="@Model.IDdh" />
+                                                    <input type="hidden" name="idSanPham" value="@item.IDSanPham" />
+                                                    <div class="form-group mb-3">
+                                                        <label class="text-dark ">Điểm đánh giá:</label>
+                                                        <select name="diemDanhGia" class="form-control bg-white text-dark border-secondary" required>
+                                                            <option value="" class="text-dark">Chọn điểm</option>
+                                                            @for (int i = 1; i <= 5; i++)
+                                                            {
+                                                                <option value="@i">@i Sao</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                        <label class="text-dark">Nhận xét:</label>
+                                                        <textarea name="nhanXet" class="form-control bg-white text-dark border-secondary" rows="3" placeholder="Nhập nhận xét của bạn..."></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-success btn-sm w-100">
+                                                        Gửi Đánh Giá <i class="fas fa-star"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-group mb-3">
-                                        <label class="text-light">Nhận xét:</label>
-                                        <textarea name="nhanXet" class="form-control bg-dark text-light border-secondary" rows="3" placeholder="Nhập nhận xét của bạn..."></textarea>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary btn-sm w-100">
-                                        Gửi Đánh Giá <i class="fas fa-star"></i>
-                                    </button>
-                                </form>
+                                </div>
                             }
                             else
                             {

@@ -147,10 +147,10 @@
     <Property Name="ISBN" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
     <Property Name="SoTrang" Type="Int32" />
     <Property Name="NgonNgu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="LuotXem" Type="Int32" Nullable="false" />
+    <Property Name="LuotXem" Type="Int32" />
     <Property Name="KichThuoc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="TrongLuong" Type="Int32" />
-    <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="NgayTao" Type="DateTime" Precision="3" />
     <Property Name="NgayCapNhat" Type="DateTime" Precision="3" />
     <Property Name="DiemDanhGiaTrungBinh" Type="Decimal" Precision="3" Scale="1" />
     <NavigationProperty Name="DanhGiaSanPham" Relationship="Self.FK__DanhGiaSan__IDsp__6B24EA82" FromRole="SanPham" ToRole="DanhGiaSanPham" />

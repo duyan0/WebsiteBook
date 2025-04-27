@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -82,7 +83,6 @@ namespace BanSach.Controllers
             // Trả về kết quả phân trang
             return View(products.ToPagedList(pageNumber, pageSize));
         }
-
         public ActionResult TrangSP(int? id)
         {
             if (id == null)
@@ -382,6 +382,7 @@ namespace BanSach.Controllers
             System.Diagnostics.Debug.WriteLine("Số nhà xuất bản trong SetAvailablePublishers: " + publishers.Count);
             ViewBag.AvailablePublishers = publishers; // Đổi tên để khớp với FilterProducts
         }
+
         // GET: SanPhams/Import
         public ActionResult Import()
         {
@@ -393,50 +394,87 @@ namespace BanSach.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Import(HttpPostedFileBase file)
         {
-            if (file != null && file.ContentLength > 0)
+            if (file == null || file.ContentLength <= 0)
             {
-                // Check if the file is an Excel file
-                if (file.FileName.EndsWith(".xlsx"))
+                TempData["thatbai"] = "Vui lòng chọn file Excel hợp lệ.";
+                return View();
+            }
+
+            if (!file.FileName.EndsWith(".xlsx"))
+            {
+                TempData["thatbai"] = "Chỉ hỗ trợ file Excel (.xlsx).";
+                return View();
+            }
+
+            try
+            {
+                // Thiết lập license cho EPPlus
+                ExcelPackage.License.SetNonCommercialPersonal("Võ Duy Ân");
+
+                using (var package = new ExcelPackage(file.InputStream))
                 {
-                    using (var package = new ExcelPackage(file.InputStream))
+                    var worksheet = package.Workbook.Worksheets[0];
+                    if (worksheet == null || worksheet.Dimension == null)
                     {
-                        // Get the first worksheet in the Excel file
-                        var worksheet = package.Workbook.Worksheets[0];
-                        int rowCount = worksheet.Dimension.Rows;
-
-                        for (int row = 2; row <= rowCount; row++) // Start from row 2 (skip header)
-                        {
-                            // Read the Excel data (assuming columns are: IDsp, TenSP, MoTa, TheLoai, GiaBan, HinhAnh, IDtg, IDnxb, IDkm, SoLuong, TrangThaiSach)
-                            var sanPham = new SanPham
-                            {
-                                TenSP = worksheet.Cells[row, 1].Text,
-                                MoTa = worksheet.Cells[row, 2].Text,
-                                IDtl = int.TryParse(worksheet.Cells[row, 3].Text, out var category) ? category : 0,  // Updated line to properly parse the integer value
-                                GiaBan = decimal.TryParse(worksheet.Cells[row, 4].Text, out var price) ? price : 0,
-                                HinhAnh = worksheet.Cells[row, 5].Text,
-                                IDtg = int.TryParse(worksheet.Cells[row, 6].Text, out var tacGiaId) ? tacGiaId : 0,
-                                IDnxb = int.TryParse(worksheet.Cells[row, 7].Text, out var nxbId) ? nxbId : 0,
-                                IDkm = int.TryParse(worksheet.Cells[row, 8].Text, out var kmId) ? kmId : 0,
-                                SoLuong = int.TryParse(worksheet.Cells[row, 9].Text, out var soLuong) ? soLuong : 0,
-                                TrangThaiSach = worksheet.Cells[row, 10].Text
-                            };
-
-                            // Add the product to the database
-                            db.SanPham.Add(sanPham);
-                        }
-
-                        db.SaveChanges();
-                        TempData["thanhcong"] = "Nhập sách thành công";
-                        return RedirectToAction("Import");
+                        TempData["thatbai"] = "File Excel không hợp lệ hoặc không có dữ liệu.";
+                        return View();
                     }
-                }
-                else
-                {
-                    TempData["thatbai"] = "Nhập sách không thành công";
+
+                    int rowCount = worksheet.Dimension.Rows;
+                    if (rowCount < 2)
+                    {
+                        TempData["thatbai"] = "File Excel không chứa dữ liệu hợp lệ.";
+                        return View();
+                    }
+
+                    var sanPhams = new List<SanPham>();
+                    for (int row = 2; row <= rowCount; row++)
+                    {
+                        var sanPham = new SanPham
+                        {
+                            TenSP = worksheet.Cells[row, 1].Text,
+                            MoTa = worksheet.Cells[row, 2].Text,
+                            IDtl = int.TryParse(worksheet.Cells[row, 3].Text, out var category) ? category : 0,
+                            GiaBan = decimal.TryParse(worksheet.Cells[row, 4].Text, out var price) ? price : 0,
+                            HinhAnh = worksheet.Cells[row, 5].Text,
+                            IDtg = int.TryParse(worksheet.Cells[row, 6].Text, out var tacGiaId) ? tacGiaId : 0,
+                            IDnxb = int.TryParse(worksheet.Cells[row, 7].Text, out var nxbId) ? nxbId : 0,
+                            IDkm = int.TryParse(worksheet.Cells[row, 8].Text, out var kmId) ? kmId : 0,
+                            SoLuong = int.TryParse(worksheet.Cells[row, 9].Text, out var soLuong) ? soLuong : 0,
+                            TrangThaiSach = worksheet.Cells[row, 10].Text,
+                            ISBN = worksheet.Cells[row, 11].Text,
+                            SoTrang = int.TryParse(worksheet.Cells[row, 12].Text, out var soTrang) ? soTrang : 0,
+                            NgonNgu = worksheet.Cells[row, 13].Text,
+                            LuotXem = int.TryParse(worksheet.Cells[row, 14].Text, out var luotXem) ? luotXem : 0,
+                            KichThuoc = worksheet.Cells[row, 15].Text,
+                            TrongLuong = int.TryParse(worksheet.Cells[row, 16].Text, out var trongLuong) ? trongLuong : 0,
+                            NgayTao = DateTime.Now, // Gán giá trị mặc định
+                            
+                        };
+                        if (DateTime.TryParse(worksheet.Cells[row, 17].Text, out var ngayPhatHanh))
+                        {
+                            sanPham.NgayPhatHanh = ngayPhatHanh;
+                        }
+                        else
+                        {
+                            sanPham.NgayPhatHanh = null;
+                        }
+                        sanPhams.Add(sanPham);
+                    }
+
+                    db.SanPham.AddRange(sanPhams);
+                    db.SaveChanges();
+                    TempData["thanhcong"] = "Nhập sách thành công.";
+                    return RedirectToAction("Import");
                 }
             }
-            return View();
+            catch (Exception ex)
+            {
+                TempData["thatbai"] = $"Lỗi khi nhập sách: {ex.Message}";
+                return View();
+            }
         }
+
         public ActionResult ThongKeSanPham()
         {
             // Lấy danh sách tất cả sản phẩm từ cơ sở dữ liệu
@@ -483,15 +521,15 @@ namespace BanSach.Controllers
             try
             {
                 // Lấy danh sách tất cả các sản phẩm có trạng thái "Hết hàng"
-                var pdhethang = db.SanPham.Where(dh => dh.TrangThaiSach == "Hết hàng").ToList();
+                var sanPhamHetHang = db.SanPham.Where(dh => dh.TrangThaiSach == "Hết hàng").ToList();
 
-                if (pdhethang.Count == 0)
+                if (sanPhamHetHang.Count == 0)
                 {
                     TempData["ErrorMessage"] = "Không có sản phẩm nào có trạng thái 'Hết hàng'.";
                     return RedirectToAction("Index");
                 }
 
-                foreach (var donHang in pdhethang)
+                foreach (var donHang in sanPhamHetHang)
                 {
                     db.SanPham.Remove(donHang); // Xóa các sản phẩm hết hàng
                 }
@@ -558,9 +596,8 @@ namespace BanSach.Controllers
             SanPham originalProduct = db.SanPham.Find(id);
             if (originalProduct == null)
             {
-                return HttpNotFound();
+                TempData["ErrorMessage"] = "Không tại sản phẩm nào";
             }
-
             SanPham clonedProduct = originalProduct.Clone();
             clonedProduct.TenSP = clonedProduct.TenSP;
             clonedProduct.IDsp = 0; // Đặt lại ID

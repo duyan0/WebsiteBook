@@ -22,10 +22,9 @@
             line-height: 1.5;
             text-decoration: none;
             background-color: white; /* White background */
-            border: 1px solid #000; /* Black border */
+            border: none; /* Black border */
             color: black; /* Black text */
             transition: all 0.3s ease;
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
             border-radius: 4px;
         }
 

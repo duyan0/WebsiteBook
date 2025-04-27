@@ -132,10 +132,10 @@
     <Property Name="ISBN" Type="varchar" MaxLength="13" />
     <Property Name="SoTrang" Type="int" />
     <Property Name="NgonNgu" Type="nvarchar" MaxLength="50" />
-    <Property Name="LuotXem" Type="int" Nullable="false" />
+    <Property Name="LuotXem" Type="int" />
     <Property Name="KichThuoc" Type="nvarchar" MaxLength="50" />
     <Property Name="TrongLuong" Type="int" />
-    <Property Name="NgayTao" Type="datetime" Nullable="false" />
+    <Property Name="NgayTao" Type="datetime" />
     <Property Name="NgayCapNhat" Type="datetime" />
     <Property Name="DiemDanhGiaTrungBinh" Type="decimal" Precision="3" Scale="1" />
   </EntityType>

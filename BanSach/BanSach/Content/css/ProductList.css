@@ -1,8 +1,8 @@
 ﻿--root {
     --fs16: 16px;
     --fs14: 14px;
-
 }
+
 .card-pro {
     text-decoration: none;
     border-radius: 8px;
@@ -63,7 +63,7 @@
     height: auto;
     text-overflow: ellipsis;
     white-space: nowrap;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 /* Giá sản phẩm và khuyến mãi */
@@ -73,7 +73,7 @@
     width: 100%;
     margin-top: 0;
     margin-bottom: 5px;
-    position:page;
+    position: page;
 }
 
 .price {
@@ -124,6 +124,7 @@
         background-color: red;
         color: white;
     }
+
 .btn-add-to-cart-hethang {
     margin-top: auto;
     padding: 8px;
@@ -140,7 +141,7 @@
 }
 /* Bộ lọc giá */
 .price-filter {
-    width:210px;
+    width: 210px;
 }
 
 .filter-title {
@@ -167,7 +168,7 @@
     font-size: 0.9rem;
 }
 
-    
+
 
 /* Phân trang */
 .sotrang {
@@ -200,7 +201,6 @@ h3.page-title {
 .out-of-stock {
     color: red;
     font-weight: bold;
-    
 }
 
 .in-stock {

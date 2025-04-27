@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Đăng nhập";
+    
 }
 <script src="~/Content/js/User.js"></script>
 <link href="~/Content/css/Login_Regis.css" rel="stylesheet" />
@@ -70,50 +71,52 @@
         }
     }
 </script>
-<div class="login-page col-xl-12">
-    <div class="form">
-        <h3 style="color: #333; font-weight: bold;">Đăng nhập</h3>
-        <form action="/LoginUser/login" class="form-group" method="post" onsubmit="return validateForm(event)">
-            <p class="field-validation-error">@ViewBag.ErrorInfo</p>
+<div class="container bg-white rounded-2 py-5">
+    <div class="login-page col-xl-12 ">
+        <div class="form">
+            <h3 style="color: #333; font-weight: bold;">Đăng nhập</h3>
+            <form action="/LoginUser/login" class="form-group" method="post" onsubmit="return validateForm(event)">
+                <p class="field-validation-error">@ViewBag.ErrorInfo</p>
 
-            <div class="mb-1 mt-2">
-                <p class="text-secondary mb-0 text-start" style="font-size:14px;">Tài khoản<span class="text-danger">*</span></p>
-                <input type="text"
-                       class="form-control mb-0 text-left"
-                       id="TKhoan"
-                       placeholder="Nhập tài khoản"
-                       name="TKhoan"
-                       required
-                       minlength="6"
-                       maxlength="30"
-                       oninput="validateAccountInput(this)">
-                <p id="tkError" class="text-danger text-left mt-1 mb-0" style="font-size:13px; display:none;">Tài khoản phải chứa cả chữ, số, và ký tự in hoa.</p>
-            </div>
+                <div class="mb-1 mt-2">
+                    <p class="text-secondary mb-0 text-start" style="font-size:14px;">Tài khoản<span class="text-danger">*</span></p>
+                    <input type="text"
+                           class="form-control mb-0 text-left"
+                           id="TKhoan"
+                           placeholder="Nhập tài khoản"
+                           name="TKhoan"
+                           required
+                           minlength="6"
+                           maxlength="30"
+                           oninput="validateAccountInput(this)">
+                    <p id="tkError" class="text-danger text-left mt-1 mb-0" style="font-size:13px; display:none;">Tài khoản phải chứa cả chữ, số, và ký tự in hoa.</p>
+                </div>
 
-            <div class="mb-1 mt-2 password-field">
-                <p class="text-secondary mb-0 text-start" style="font-size:14px;">Mật khẩu<span class="text-danger">*</span></p>
-                <input type="password"
-                       class="form-control mb-0 text-left"
-                       id="MKhau"
-                       placeholder="Nhập mật khẩu"
-                       name="MKhau"
-                       required
-                       minlength="6"
-                       maxlength="30"
-                       oninput="validateAccountInput(this)">
-                <p id="mkError" class="text-danger text-left mt-1 mb-0" style="font-size:13px; display:none;">Mật khẩu phải chứa cả chữ, số, và ký tự in hoa.</p>
-                <span id="togglePassword" class="toggle-password mt-4" onclick="togglePasswordVisibility()">Hiện</span>
-            </div>
+                <div class="mb-1 mt-2 password-field">
+                    <p class="text-secondary mb-0 text-start" style="font-size:14px;">Mật khẩu<span class="text-danger">*</span></p>
+                    <input type="password"
+                           class="form-control mb-0 text-left"
+                           id="MKhau"
+                           placeholder="Nhập mật khẩu"
+                           name="MKhau"
+                           required
+                           minlength="6"
+                           maxlength="30"
+                           oninput="validateAccountInput(this)">
+                    <p id="mkError" class="text-danger text-left mt-1 mb-0" style="font-size:13px; display:none;">Mật khẩu phải chứa cả chữ, số, và ký tự in hoa.</p>
+                    <span id="togglePassword" class="toggle-password mt-4" onclick="togglePasswordVisibility()">Hiện</span>
+                </div>
 
-            <div class="forgot-password mb-0 mt-2 ">
-                <p><a class="text-decoration-none text-secondary fs-6" href="/LoginUser/ForgotPassword">Quên mật khẩu?</a></p>
-            </div>
+                <div class="forgot-password mb-0 mt-2 ">
+                    <p><a class="text-decoration-none text-secondary fs-6" href="/LoginUser/ForgotPassword">Quên mật khẩu?</a></p>
+                </div>
 
-            <button type="submit" class="btn btn-dark w-100">Đăng nhập</button>
+                <button type="submit" class="btn btn-dark w-100">Đăng nhập</button>
 
-            <p class="message">Chưa có tài khoản? <a href="~/LoginUser/RegisterCus">Đăng kí ngay</a></p>
-        </form>
+                <p class="message">Chưa có tài khoản? <a href="~/LoginUser/RegisterCus">Đăng kí ngay</a></p>
+            </form>
+        </div>
     </div>
-</div>
 
+</div>
 

@@ -32,4 +32,3 @@ namespace BanSach.Models
         }
     }
 }
-

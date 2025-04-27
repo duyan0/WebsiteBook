@@ -10,15 +10,17 @@ namespace BanSach
 {
     public class RouteConfig
     {
+
         public static void RegisterRoutes(RouteCollection routes)
         {
-
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.MapMvcAttributeRoutes();
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "SanPhams", action = "TrangChu", id = UrlParameter.Optional }
             );
-            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+           
             routes.MapRoute(
                 name: "DaNhanHang",
                 url: "DonHang/DaNhanHang/{id}",

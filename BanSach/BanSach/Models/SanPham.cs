@@ -21,9 +21,10 @@ namespace BanSach.Models
             this.DanhGiaSanPham = new HashSet<DanhGiaSanPham>();
             this.DonHangCT = new HashSet<DonHangCT>();
         }
-    
+
         public int IDsp { get; set; }
         public string TenSP { get; set; }
+        public string Slug { get; set; }
         [AllowHtml]
         public string MoTa { get; set; }
         public int IDtl { get; set; }
@@ -34,17 +35,17 @@ namespace BanSach.Models
         public int IDkm { get; set; }
         public int SoLuong { get; set; }
         public string TrangThaiSach { get; set; }
-        public Nullable<System.DateTime> NgayPhatHanh { get; set; }
+        public DateTime? NgayPhatHanh { get; set; }
         public string ISBN { get; set; }
-        public Nullable<int> SoTrang { get; set; }
+        public int SoTrang { get; set; }
         public string NgonNgu { get; set; }
         public int LuotXem { get; set; }
         public string KichThuoc { get; set; }
-        public Nullable<int> TrongLuong { get; set; }
+        public int TrongLuong { get; set; }
         public System.DateTime NgayTao { get; set; }
         public Nullable<System.DateTime> NgayCapNhat { get; set; }
         public Nullable<decimal> DiemDanhGiaTrungBinh { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DanhGiaSanPham> DanhGiaSanPham { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

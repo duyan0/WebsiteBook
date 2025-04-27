@@ -45,7 +45,7 @@
                 <!-- Bộ lọc nhà xuất bản - Chỉ hiển thị nếu có dữ liệu -->
                 @{
                     var availablePublishers = ViewBag.AvailablePublishers as List<string> ?? new List<string>();
-                    
+
                 }
                 @if (availablePublishers.Any()) // Chỉ hiển thị nếu có nhà xuất bản
                 {
@@ -154,7 +154,8 @@
                     LinkToIndividualPageFormat = "{0}"
                 })
             </div>
-        </div>    </div>
+        </div>
+    </div>
 </div>
 
 <div id="notification-container" style="position: fixed; bottom: 10px; left: 10px; display: flex; flex-direction: column; gap: 10px; z-index: 1000;"></div>

@@ -746,6 +746,7 @@ D:\WebsiteBook\BanSach\BanSach\bin\System.Memory.dll
 D:\WebsiteBook\BanSach\BanSach\bin\System.Net.Http.Formatting.dll
 D:\WebsiteBook\BanSach\BanSach\bin\System.Numerics.Vectors.dll
 D:\WebsiteBook\BanSach\BanSach\bin\System.Runtime.CompilerServices.Unsafe.dll
+D:\WebsiteBook\BanSach\BanSach\bin\System.Security.Cryptography.Xml.dll
 D:\WebsiteBook\BanSach\BanSach\bin\System.Text.Encoding.CodePages.dll
 D:\WebsiteBook\BanSach\BanSach\bin\System.Text.Encodings.Web.dll
 D:\WebsiteBook\BanSach\BanSach\bin\System.Threading.Tasks.Extensions.dll
@@ -838,6 +839,7 @@ D:\WebsiteBook\BanSach\BanSach\bin\System.Memory.xml
 D:\WebsiteBook\BanSach\BanSach\bin\System.Net.Http.Formatting.xml
 D:\WebsiteBook\BanSach\BanSach\bin\System.Numerics.Vectors.xml
 D:\WebsiteBook\BanSach\BanSach\bin\System.Runtime.CompilerServices.Unsafe.xml
+D:\WebsiteBook\BanSach\BanSach\bin\System.Security.Cryptography.Xml.xml
 D:\WebsiteBook\BanSach\BanSach\bin\System.Text.Encoding.CodePages.xml
 D:\WebsiteBook\BanSach\BanSach\bin\System.Text.Encodings.Web.xml
 D:\WebsiteBook\BanSach\BanSach\bin\System.Threading.Tasks.Extensions.xml

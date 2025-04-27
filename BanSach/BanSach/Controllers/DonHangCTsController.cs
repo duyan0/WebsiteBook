@@ -42,8 +42,7 @@ namespace BanSach.Controllers
                 .OrderBy(d => d.DonHang.TrangThai == null || d.DonHang.TrangThai == "Chờ xử lý" ? 0 :
                               d.DonHang.TrangThai == "Đã xác nhận" ? 1 :
                               d.DonHang.TrangThai == "Đã nhận hàng" ? 2 : 3) // Sắp xếp theo thứ tự ưu tiên của trạng thái đơn hàng
-                .ThenBy(d => d.DonHang.IDdh) // Sắp xếp tiếp theo theo ID đơn hàng
-                .ThenBy(d => d.IDDonHang); // Sắp xếp tiếp theo theo ID chi tiết đơn hàng
+                .ThenBy(d => d.DonHang.IDdh); // Sắp xếp tiếp theo theo ID chi tiết đơn hàng
 
             // Trả về danh sách đã phân trang và lọc đến view
             return View(donHangCTs.ToPagedList(pageNumber, pageSize));
@@ -274,12 +273,6 @@ namespace BanSach.Controllers
                 })
                 .ToList();
 
-            // Debug: In số lượng sản phẩm và chi tiết
-            Console.WriteLine($"Số sản phẩm trong recentOrders: {recentOrders.Count}");
-            foreach (var item in recentOrders)
-            {
-                Console.WriteLine($"ID: {item.Id}, Tên: {item.TenSanPham}, Ngày: {item.NgayDatHang}");
-            }
 
             return PartialView("RecentOrders", recentOrders);
         }

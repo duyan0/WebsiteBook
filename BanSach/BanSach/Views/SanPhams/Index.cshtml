@@ -123,7 +123,7 @@
     </table>
 </div>
 <!-- Nav Tabs -->
-<ul class="nav nav-tabs fw-bold bg-light p-2 rounded" id="bookTabs" role="tablist">
+<!--<ul class="nav nav-tabs fw-bold bg-light p-2 rounded" id="bookTabs" role="tablist">
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="tab-1" data-bs-toggle="tab" data-bs-target="#hot-sale" type="button" role="tab">
             Sách HOT - Giảm Sốc
@@ -134,15 +134,15 @@
             Bestseller Ngoại Văn
         </button>
     </li>
-</ul>
+</ul>-->
 
 <!-- Tab Content -->
-<div class="tab-content mt-4" id="bookTabsContent">
-    <div class="tab-pane fade show active" id="hot-sale" role="tabpanel" aria-labelledby="tab-1">
+<!--<div class="tab-content mt-4" id="bookTabsContent">
+    <div class="tab-pane fade show active" id="hot-sale" role="tabpanel" aria-labelledby="tab-1">-->
         <!-- Nội dung tab Sách HOT -->
-        <div class="row row-cols-2 row-cols-md-4 g-4">
+        <!--<div class="row row-cols-2 row-cols-md-4 g-4">-->
             <!-- 1 sản phẩm -->
-            <div class="col">
+            <!--<div class="col">
                 <div class="card h-100 text-center">
                     <img src="https://placehold.co/310x210" class="card-img-top" alt="Sách 1">
                     <div class="card-body">
@@ -150,16 +150,16 @@
                         <p class="text-danger fw-bold">36.000 đ <small class="text-muted text-decoration-line-through">56.000 đ</small></p>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <!-- Thêm các sách khác -->
-        </div>
+        <!--</div>
     </div>
 
-    <div class="tab-pane fade" id="bestseller" role="tabpanel" aria-labelledby="tab-2">
+    <div class="tab-pane fade" id="bestseller" role="tabpanel" aria-labelledby="tab-2">-->
         <!-- Nội dung tab Bestseller -->
-        <div class="row row-cols-2 row-cols-md-4 g-4">
+        <!--<div class="row row-cols-2 row-cols-md-4 g-4">-->
             <!-- 1 sản phẩm -->
-            <div class="col">
+            <!--<div class="col">
                 <div class="card h-100 text-center">
                     <img src="https://placehold.co/310x210" class="card-img-top" alt="Sách 2">
                     <div class="card-body">
@@ -167,30 +167,30 @@
                         <p class="text-danger fw-bold">100.000 đ <small class="text-muted text-decoration-line-through">155.000 đ</small></p>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <!-- Thêm các sách khác -->
-        </div>
+        <!--</div>
     </div>
 </div>
 <div class="bg-light p-3 rounded position-relative">
     <h5 class="fw-bold text-danger mb-3">
         <i class="bi bi-journal-bookmark-fill me-2"></i> TỦ SÁCH NỔI BẬT
-    </h5>
+    </h5>-->
 
     <!-- Nút Prev -->
-    <button class="btn btn-light shadow position-absolute top-50 start-0 translate-middle-y" onclick="scrollLeft()">
+    <!--<button class="btn btn-light shadow position-absolute top-50 start-0 translate-middle-y" onclick="scrollLeft()">
         <i class="bi bi-chevron-left"></i>
-    </button>
+    </button>-->
 
     <!-- Nút Next -->
-    <button class="btn btn-light shadow position-absolute top-50 end-0 translate-middle-y" onclick="scrollRight()">
+    <!--<button class="btn btn-light shadow position-absolute top-50 end-0 translate-middle-y" onclick="scrollRight()">
         <i class="bi bi-chevron-right"></i>
-    </button>
+    </button>-->
 
     <!-- Wrapper scroll ngang -->
-    <div id="bookScroll" class="d-flex overflow-auto gap-3 pb-2 px-5" style="scroll-snap-type: x mandatory;">
+    <!--<div id="bookScroll" class="d-flex overflow-auto gap-3 pb-2 px-5" style="scroll-snap-type: x mandatory;">-->
         <!-- Quyển sách mẫu -->
-        <div class="text-center flex-shrink-0" style="width: 120px; scroll-snap-align: start;">
+        <!--<div class="text-center flex-shrink-0" style="width: 120px; scroll-snap-align: start;">
             <img src="https://via.placeholder.com/120x180" class="img-fluid rounded mb-2" alt="Sách 1">
             <p class="small">Tên sách 1</p>
         </div>
@@ -239,10 +239,10 @@
             <p class="small">Tên sách 1</p>
         </div>
     </div>
-</div>
+</div>-->
 
 <!-- JS Scroll -->
-<script>
+<!--<script>
     const scrollContainer = document.getElementById("bookScroll");
 
     function scrollLeft() {
@@ -258,7 +258,7 @@
     .overflow-auto::-webkit-scrollbar {
         display: none;
     }
-</style>
+</style>-->
 
 
 @Scripts.Render("~/bundles/datatables")

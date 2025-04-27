@@ -51,9 +51,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-6">
-                            <div class="card bg-success text-white h-100">
-                                <div class="card-body text-center">
+                        <div class="col-md-4 col-sm-6 " >
+                            <div class="card border shadow  bg-success text-white h-100" >
+                                <div class="card-body  text-center"id="TongSanPhamKhuyenMai">
                                     <h6 class="card-title fw-bold">Sản phẩm có khuyến mãi</h6>
                                     <p class="fs-4 mb-0">@ViewBag.TongSanPhamKhuyenMai</p>
                                 </div>
@@ -63,7 +63,7 @@
                             <div class="card bg-warning text-dark h-100">
                                 <div class="card-body text-center">
                                     <h6 class="card-title fw-bold">Sản phẩm không khuyến mãi</h6>
-                                    <p class="fs-4 mb-0">@ViewBag.TongSanPhamKhongKhuyenMai</p>
+                                    <p class="fs-4  mb-0">@ViewBag.TongSanPhamKhongKhuyenMai</p>
                                 </div>
                             </div>
                         </div>
@@ -77,3 +77,5 @@
         @Html.ActionLink("Quay về", "Index", null, new { @class = "btn btn-outline-success" })
     </div>
 </div>
+
+

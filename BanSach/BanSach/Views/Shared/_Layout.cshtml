@@ -19,44 +19,45 @@
 
     <!-- Libraries Stylesheet -->
     <link href="~/Content/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    @Styles.Render("~/Content/css")
+
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="~/Content/css/duyan.css" rel="stylesheet">
+    <link href="@Url.Content("~/Content/css/site.css")" rel="stylesheet" />
     <script src="~/Scripts/changeimg.js"></script>
+
 </head>
 
 <body class="bg-secondary-subtle">
 
-    <div id="loadingOverlay" class="loading-overlay text-center">
-        <div class="spinner-grow">
-            <i class="fas fa-spinner fa-spin"></i>
-        </div>
-    </div>
+    @*<div id="loadingOverlay" class="loading-overlay text-center">
+            <div class="spinner-border">
+                <i class="fas fa-spinner fa-spin"></i>
+            </div>
+        </div>*@
 
 
-    
-    <nav class="container-fluid fixed-top mb-5 bg-white" id="topbar" style=" z-index: 10000; border-radius:0 0 3px 3px">
+
+    <nav class="container-fluid fixed-top shadow shadow-lg mb-5 bg-white" id="topbar" style=" z-index: 10000; border-radius:0 0 3px 3px">
         <div class="container">
             <div class="row align-items-center mt-1 position-relative d-flex">
                 <!-- Logo -->
                 <div class="col-4 col-sm-4 text-sm-start ">
                     <!-- Logo -->
                     <a href="~/SanPhams/TrangChu" class="text-decoration-none">
-                        <h3 class="fw-semibold mb-0 text-dark d-inline float-sm-start">
+                        <h5 class="fw-semibold mb-0 text-dark d-inline float-sm-start">
                             <img srcset="~/assets/images/logo/LOGO_XBOOK.png 2x" style="width:50px;height:50px;" alt="Logo sách">
-                        </h3>
+                        </h5>
 
                     </a>
                     <!-- Danh mục dropdown -->
-                    <div class="d-inline-flex align-items-center justify-content-betweentext-dark w-auto d-none d-sm-inline-flex" style="height: 65px; padding: 0 10px;">
+                    <div class="d-inline-flex py-0 align-items-center justify-content-between text-dark w-auto d-none d-sm-inline-flex" style="height: 60px; padding: 0;">
                         <a class="shadow-none d-inline-flex text-decoration-none" data-toggle="collapse" href="#navbar-vertical">
                             <h6 class="m-0 fs-13 text-dark mb-0 me-2">Danh mục</h6>
                             <i class="bi bi-caret-down fs-13 text-dark"></i>
                         </a>
                     </div>
-                    <div class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start bg-white p-0"
+                    <div class="collapse position-absolute rounded-2 navbar navbar-vertical navbar-light align-items-start bg-white p-0"
                          id="navbar-vertical"
-                         style="min-width: 220px; margin-left:4rem; margin-top:0;">
+                         style="min-width: 220px; margin-left:4rem; margin-top:-23px;">
                         @Html.Action("PhanDanhMuc", "DanhMucs")
                     </div>
 
@@ -87,7 +88,7 @@
                     @if (Session["IDkh"] != null)
                     {
                         <div class="dropdown">
-                            <a href="#" class="nav-link text-dark">@Session["TenKH"]</a>
+                            <a href="#" class="nav-link fs-13 text-dark">@Session["TenKH"]</a>
                             <div class="dropdown-content fw-bold">
                                 <a href="@Url.Action("InfoCustomer", "LoginUser")">Thông tin</a>
                                 <a href="~/KhachHangs/LichSuDonHang">Đơn hàng</a>
@@ -122,31 +123,24 @@
         </div>
     </nav>
 
-    <style>
-        
-        .fs-13 {
-            font-size: 13px;    
-        }
-    </style>
 
-    <!-- Navbar End -->
 
-    <div class="container p-0 mt-5 pt-5 " style="width: 100%;">
+
+    <div class="container-fluid mt-5 py-5 bg-secondary-subtle">
         @*@Html.Partial("_Breadcrumb")*@
-        <div class="container mt-0 bg-white" style=" border-radius: 5px; padding: 1rem; margin: 0; width: 100%; height: 100%;">
+        <div class="container  ">
             @RenderBody()
         </div>
     </div>
-    <div class="container p-0 mt-1 pt-1" style="width: 100%;">
-        <div class="container mt-0  bg-white" style=" border-radius: 5px; padding: 1rem; margin: 0; width: 100%; height: 100%;">
-            @Html.Action("TopBanChay", "DonHangCTs", new { categoryId = 1 })
-        </div>
+    
+    <div class="container  py-0 bg-secondary-subtle">
+        @Html.Action("TopBanChay", "DonHangCTs", new { categoryId = 1 })
     </div>
-    <div class="container p-0 mt-1 pt-1" style="width: 100%;">
-        <div class="container mt-0  bg-white" style=" border-radius: 5px; padding: 1rem; margin: 0; width: 100%; height: 100%;">
-            @Html.Action("RecentOrders", "DonHangCTs")
-        </div>
+    <div class="container  py-3  bg-secondary-subtle">
+        @Html.Action("RecentOrders", "DonHangCTs")
     </div>
+
+
     <div class="d-inline-flex">
         <a href="~/ShoppingCart/ShowCart" class="btn cart_bottom bg-white">
             <i class="bi bi-bag-check" style="color:black;"></i>
@@ -155,25 +149,79 @@
             </div>
         </a>
     </div>
-    <!-- JavaScript Libraries -->
+
+    <footer class="container mt-5">
+        <div class="bg-white rounded-2 p-4">
+            <div class="row">
+                <!-- Cột 1: Thông tin cửa hàng -->
+                <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                    <h5 class="text-break fw-bold">Nhà Sách Minh Tâm</h5>
+                    <p>Chuyên cung cấp sách văn học, kỹ năng sống, sách thiếu nhi, và sách học thuật. Cam kết chất lượng, giá cả hợp lý.</p>
+                    <p><strong>Địa chỉ:</strong> 123 Đường Sách, Quận 1, TP.HCM</p>
+                    <p><strong>Hotline:</strong> 0909 123 456</p>
+                </div>
+
+                <!-- Cột 2: Danh mục sách -->
+                <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                    <h5 class="text-break fw-bold">Danh Mục Sách</h5>
+                    <ul class="list-unstyled lh-lg">
+                        <li><a href="#" class="text-decoration-none text-dark">Văn học</a></li>
+                        <li><a href="#" class="text-decoration-none text-dark">Kỹ năng sống</a></li>
+                        <li><a href="#" class="text-decoration-none text-dark">Sách thiếu nhi</a></li>
+                        <li><a href="#" class="text-decoration-none text-dark">Sách giáo khoa</a></li>
+                        <li><a href="#" class="text-decoration-none text-dark">Tiểu thuyết</a></li>
+                    </ul>
+                </div>
+
+                <!-- Cột 3: Hỗ trợ khách hàng -->
+                <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                    <h5 class="text-break fw-bold">Hỗ Trợ Khách Hàng</h5>
+                    <ul class="list-unstyled lh-lg">
+                        <li><a href="#" class="text-decoration-none text-dark">Hướng dẫn mua hàng</a></li>
+                        <li><a href="#" class="text-decoration-none text-dark">Chính sách đổi trả</a></li>
+                        <li><a href="#" class="text-decoration-none text-dark">Câu hỏi thường gặp</a></li>
+                        <li><a href="#" class="text-decoration-none text-dark">Liên hệ hỗ trợ</a></li>
+                    </ul>
+                </div>
+
+                <!-- Cột 4: Kết nối và thanh toán -->
+                <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                    <h5 class="text-break fw-bold">Kết Nối Với Chúng Tôi</h5>
+                    <p>Email: <a href="mailto:support@minhtambook.vn" class="text-decoration-none">support@minhtambook.vn</a></p>
+                    <div class="d-flex gap-3 mb-3">
+                        <a href="#" class="text-dark"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-dark"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-dark"><i class="bi bi-youtube"></i></a>
+                        <a href="#" class="text-dark"><i class="bi bi-twitter"></i></a>
+                    </div>
+                    <h5 class="text-break fw-bold">Phương Thức Thanh Toán</h5>
+                    <div class="d-flex flex-wrap  align-items-center gap-2">
+                        <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png" alt="PayPal" class="payment-img">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2OgI3xJzLA95Bcn9ZnUhZchEkJ4BuwhiUMQ&s" alt="Cash on Delivery" class="payment-img">
+                    </div>
+                </div>
+            </div>
+            <!-- Copyright -->
+            <div class="text-center mt-4 border-top pt-3">
+                <p class="mb-0">© 2025 Nhà Sách Minh Tâm. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>    <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="~/Content/lib/easing/easing.min.js"></script>
     <script src="~/Content/lib/owlcarousel/owl.carousel.min.js"></script>
     <link href="~/Content/css/layout.css" rel="stylesheet" />
-    <script src="~/Scripts/main.js"></script>
     <script src="~/Scripts/bootstrap.bundle.js"></script>
-    @Scripts.Render("~/bundles/jquery") <!-- Render jQuery bundle -->
+
     @Scripts.Render("~/bundles/jqueryval")
     @RenderSection("Scripts", required: false)<!-- Render Bootstrap bundle -->
     <!-- Custom CSS -->
     <style>
-        
-        .bg-rophim {
-            background-color: #0f121b;
-        }
-        .bg-rophim-body {
-            background-color: #191b24;
+
+
+        .fs-13 {
+            font-size: 13px;
         }
 
         body {
@@ -183,7 +231,7 @@
             background-color: black; /* Màu nền để dễ nhìn */
         }
 
-        h1, h2, h3, h4, h5, h6 {
+        h1, h2, h5, h4, h5, h6 {
             font-family: 'Poppins', Arial, sans-serif;
         }
 
@@ -192,7 +240,7 @@
             position: relative;
             display: inline-block;
             border-radius: 1rem;
-            font-size: 16px;
+            font-size: 13px;
         }
 
         .dropdown-content {
@@ -202,7 +250,7 @@
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
             z-index: 2;
-            font-size: 16px;
+            font-size: 13px;
             border-radius: 5px;
         }
 
