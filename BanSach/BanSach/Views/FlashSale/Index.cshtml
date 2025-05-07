@@ -1,0 +1,155 @@
+﻿@model IEnumerable<BanSach.Models.SanPham>
+@{
+    ViewBag.Title = "Flash Sale";
+    var activeFlashSale = ViewBag.ActiveFlashSale as BanSach.Models.FlashSale;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Tiêu đề Flash Sale -->
+<section class="container my-5">
+    <h2 class="text-center mb-4 fw-bold">Flash Sale</h2>
+
+    <!-- Thông tin Flash Sale -->
+    @if (activeFlashSale != null)
+    {
+        <div class="alert alert-danger text-center rounded-3 shadow-sm" role="alert">
+            <h3 class="mb-2">@activeFlashSale.TenFlashSale</h3>
+            <p class="mb-1">Thời gian: @activeFlashSale.GioBatDau.ToString(@"hh\:mm") - @activeFlashSale.GioKetThuc.ToString(@"hh\:mm")</p>
+            <p class="mb-1">Giảm giá: <strong>@activeFlashSale.MucGiamGia%</strong></p>
+            <div id="countdown" class="fw-bold text-dark"></div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center rounded-3 shadow-sm" role="alert">
+            Không có Flash Sale nào đang diễn ra.
+        </div>
+    }
+
+    <!-- Danh sách sản phẩm -->
+    <div class="row row-cols-1 row-cols-md-3 col-12 g-4">
+        @if (!Model.Any())
+        {
+            <div class="col ">
+                <p class="text-muted text-center">Không có sản phẩm nào trong Flash Sale hiện tại.</p>
+            </div>
+        }
+        else
+        {
+            foreach (var product in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0 transition-hover">
+                        <!-- Hình ảnh sản phẩm -->
+                        <img src="~/assets/images/products/@product.HinhAnh" class="card-img-top img-fluid" alt="@product.TenSP" style="height: 200px; object-fit: cover;" />
+
+                        <!-- Nội dung sản phẩm -->
+                        <div class="card-body text-center">
+                            <h5 class="card-title fw-bold">@product.TenSP</h5>
+                            <p class="card-text text-muted mb-1">Tác giả: @product.TacGia.TenTG</p>
+                            <p class="card-text text-muted mb-1">Thể loại: @product.TheLoai.TenTheLoai</p>
+                            <p class="card-text text-muted mb-2">Nhà xuất bản: @product.NhaXuatBan.Tennxb</p>
+
+                            <!-- Giá sản phẩm -->
+                            <p class="card-text text-decoration-line-through text-muted mb-1">Giá gốc: @product.GiaBan.ToString("C")</p>
+                            @if (activeFlashSale != null && product.FlashSale_SanPham.Any(fss => fss.IDfs == activeFlashSale.IDfs))
+                            {
+                                var flashSale = product.FlashSale_SanPham.First(fss => fss.IDfs == activeFlashSale.IDfs).FlashSale;
+                                var discountedPrice = product.GiaBan * (1 - (decimal)flashSale.MucGiamGia / 100);
+                                <p class="card-text text-danger fw-bold">Giá Flash Sale: @discountedPrice.ToString("C")</p>
+                            }
+                            else if (product.KhuyenMai != null && product.KhuyenMai.NgayKetThuc >= DateTime.Today)
+                            {
+                                var discountedPrice = product.GiaBan * (1 - (decimal)product.KhuyenMai.MucGiamGia / 100);
+                                <p class="card-text text-success fw-bold">Giá Khuyến Mãi: @discountedPrice.ToString("C")</p>
+                            }
+                        </div>
+
+                        <!-- Nút hành động -->
+                        <div class="card-footer bg-transparent border-0 pb-3 text-center">
+                            <a href="@Url.Action("trangsp", "SanPhams", new { id = product.IDsp })" class="btn btn-primary btn-sm me-2">Xem chi tiết</a>
+                            <button type="button" class="btn btn-success btn-sm" onclick="addToCart(@product.IDsp)">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</section>
+
+<!-- CSS tùy chỉnh -->
+<style>
+    .transition-hover {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .transition-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+        }
+
+    .card-img-top {
+        border-top-left-radius: 0.3rem;
+        border-top-right-radius: 0.3rem;
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+        min-height: 2.2rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .alert {
+        max-width: 600px;
+        margin: 0 auto 2rem;
+    }
+</style>
+
+<!-- JavaScript cho bộ đếm thời gian và thêm vào giỏ hàng -->
+<script>
+    function startCountdown(endTime) {
+        var countDownDate = new Date(endTime).getTime();
+        var x = setInterval(function () {
+            var now = new Date().getTime();
+            var distance = countDownDate - now;
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById("countdown").innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "Flash Sale đã kết thúc!";
+            }
+        }, 1000);
+    }
+
+    @if (activeFlashSale != null)
+    {
+        var endTime = $"{activeFlashSale.NgayApDung:yyyy-MM-dd}T{activeFlashSale.GioKetThuc:hh\\:mm\\:ss}";
+        <text>
+            startCountdown('@endTime');
+        </text>
+    }
+
+    function addToCart(productId) {
+        alert('Đã thêm sản phẩm ID ' + productId + ' vào giỏ hàng!');
+        // Ví dụ AJAX:
+        /*
+        $.ajax({
+            url: '/Cart/AddToCart',
+            type: 'POST',
+            data: { id: productId },
+            success: function (response) {
+                alert('Đã thêm vào giỏ hàng!');
+            },
+            error: function () {
+                alert('Có lỗi xảy ra, vui lòng thử lại.');
+            }
+        });
+        */
+    }
+</script>

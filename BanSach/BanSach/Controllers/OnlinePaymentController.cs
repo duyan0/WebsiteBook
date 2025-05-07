@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using PayPal.Api;
 using System.Configuration;
+using System.Globalization;
 
 namespace BanSach.Controllers
 {
@@ -13,12 +14,11 @@ namespace BanSach.Controllers
     {
         private readonly db_Book db = new db_Book();
 
-        // Thông tin PayPal (thay bằng giá trị thật từ PayPal Developer)
-        private readonly string PayPalClientId = "Af7pzH3tSDJ90z8q3NCEp8S_-qz1XrG0ilbufIzntSnOWxIuBCvrjh9GeEyaprlaKD39FNqWCgHAit0Y"; // Thay bằng Client ID
-        private readonly string PayPalSecret = "EPaQU1JIsq2vB_0qQpEanff_WeJNwP8ZAg8AchvSxnN1wrope8LsVqyJH_lOOXWYPkpfxc-rDVbzjvaq"; // Thay bằng Secret
-        private readonly string PayPalMode = "sandbox"; // Hoặc "live" khi triển khai thật
-        private readonly string BaseUrl = "https://localhost:44307"; // Thay bằng domain của bạn
-
+        
+        private readonly string PayPalClientId = ""; // Thay bằng Client ID
+        private readonly string PayPalSecret = ""; // Thay bằng Secret
+        private readonly string PayPalMode = "sandbox"; 
+        private readonly string BaseUrl = "https://localhost:44307"; 
         private Payment payment;
 
         // Lấy API Context cho PayPal
@@ -37,7 +37,6 @@ namespace BanSach.Controllers
         [HttpPost]
         public ActionResult CreatePayPalPayment(string CodeCustomer, string NameCustomer, string PhoneCustomer, string AddressDelivery)
         {
-
             if (string.IsNullOrEmpty(CodeCustomer))
             {
                 TempData["ErrorMessage"] = "Vui lòng đăng nhập trước khi thanh toán.";
@@ -53,13 +52,6 @@ namespace BanSach.Controllers
 
             try
             {
-                // Kiểm tra nếu chưa có key PayPal
-                if (PayPalClientId == "YOUR_PAYPAL_CLIENT_ID" || PayPalSecret == "YOUR_PAYPAL_SECRET")
-                {
-                    TempData["ErrorMessage"] = "Chưa cấu hình PayPal Client ID hoặc Secret. Vui lòng đăng ký tại PayPal Developer.";
-                    return RedirectToAction("ShowCart", "ShoppingCart");
-                }
-
                 // Tạo đơn hàng
                 DonHang donHang = new DonHang
                 {
@@ -68,12 +60,12 @@ namespace BanSach.Controllers
                     TongTien = cart.Total_money(),
                     DiaChi = AddressDelivery,
                     TrangThai = "Chờ thanh toán",
+                    PhuongThucThanhToan = "Chuyển khoản Paypal",
                     State = new PendingState()
                 };
                 db.DonHang.Add(donHang);
                 db.SaveChanges();
 
-                // Tạo chi tiết đơn hàng
                 foreach (var item in cart.Items)
                 {
                     DonHangCT donHangCT = new DonHangCT
@@ -89,7 +81,7 @@ namespace BanSach.Controllers
 
                 // Tạo thanh toán PayPal
                 var apiContext = GetAPIContext();
-                var totalAmount = cart.Total_money().ToString("0.00"); // USD, định dạng 2 chữ số thập phân
+                var totalAmount = cart.Total_money().ToString("0.00", CultureInfo.InvariantCulture);
                 var orderId = donHang.IDdh.ToString();
 
                 var itemList = new ItemList
@@ -98,11 +90,13 @@ namespace BanSach.Controllers
                     {
                         name = item._product.TenSP,
                         currency = "USD",
-                        price = (item._product.GiaBan * (1 - (item.MucGiamGia / 100))).ToString("0.00"),
+                        price = (item._product.GiaBan * (1 - (item.MucGiamGia / 100))).ToString("0.00", CultureInfo.InvariantCulture),
                         quantity = item._quantity.ToString(),
                         sku = item._product.IDsp.ToString()
                     }).ToList()
                 };
+
+                var subtotal = cart.Items.Sum(item => item._product.GiaBan * (1 - (item.MucGiamGia / 100)) * item._quantity).ToString("0.00", CultureInfo.InvariantCulture);
 
                 var transaction = new Transaction
                 {
@@ -112,15 +106,15 @@ namespace BanSach.Controllers
                         total = totalAmount,
                         details = new Details
                         {
-                            subtotal = totalAmount
+                            subtotal = subtotal
                         }
                     },
                     description = $"Thanh toán đơn hàng #{orderId}",
                     item_list = itemList,
-                    invoice_number = orderId
+                    invoice_number = $"INV-{orderId}-{DateTime.Now.Ticks}"
                 };
 
-                payment = new Payment
+                var payment = new Payment
                 {
                     intent = "sale",
                     payer = new Payer { payment_method = "paypal" },
@@ -133,9 +127,8 @@ namespace BanSach.Controllers
                 };
 
                 var createdPayment = payment.Create(apiContext);
-
-                // Lấy URL thanh toán
                 var approvalUrl = createdPayment.links.FirstOrDefault(l => l.rel.Equals("approval_url", StringComparison.OrdinalIgnoreCase))?.href;
+
                 if (string.IsNullOrEmpty(approvalUrl))
                 {
                     throw new Exception("Không thể tạo URL thanh toán PayPal.");
@@ -143,13 +136,23 @@ namespace BanSach.Controllers
 
                 return Redirect(approvalUrl);
             }
+            catch (PayPal.PayPalException ex)
+            {
+                string errorMessage = ex.Message;
+                if (ex.InnerException is PayPal.HttpException httpEx)
+                {
+                    errorMessage += $"\nHTTP Status: {httpEx.StatusCode}\nResponse: {httpEx.Response}";
+                }
+                TempData["ErrorMessage"] = $"Lỗi PayPal: {errorMessage}";
+                System.IO.File.AppendAllText(Server.MapPath("~/PayPalErrorLog.txt"), $"{DateTime.Now}: {errorMessage}\n");
+                return RedirectToAction("ShowCart", "ShoppingCart");
+            }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "Lỗi khi tạo thanh toán PayPal: " + ex.Message;
+                TempData["ErrorMessage"] = $"Lỗi khi tạo thanh toán PayPal: {ex.Message}";
                 return RedirectToAction("ShowCart", "ShoppingCart");
             }
         }
-
         public ActionResult PayPalSuccess(string orderId, string paymentId, string token, string PayerID)
         {
             try

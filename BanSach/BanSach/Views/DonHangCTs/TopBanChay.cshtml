@@ -2,15 +2,15 @@
 @Styles.Render("~/Content/css/TopBanChay")
 <link href="~/Content/css/TopBanChay.css" rel="stylesheet" />
 
-<div class="container-fluid bg-white rounded-2 ">
+<div class="container bg-white rounded-2 mt-3 py-0 " >
     <h4 class="text-center text-dark  fw-semibold py-2 ">
         Top bán chạy
     </h4>
-    <div class="row  mt-2 row-cols-4">
+    <div class="row  mt-2 row-cols-lg-5 ">
         @foreach (var item in Model)
         {
-            <div class="col-lg-3 col-md-4 col-sm-6  p-1 ">
-                <div class="card p-2 w-100 h-100 bg-white">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-6  p-1 ">
+                <div class="card border-1 p-2 w-100 h-100 bg-white user-select-none">
                     <a href="@Url.Action("TrangSP", "SanPhams", new { id = item.IdPro })" class="d-flex justify-content-center">
                         <img src="~/assets/images/products/@item.ImgPro" alt="@item.NamePro" style="object-fit:contain; height:190px;" />
                     </a>

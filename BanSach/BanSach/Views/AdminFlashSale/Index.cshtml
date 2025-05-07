@@ -1,0 +1,64 @@
+﻿@model IEnumerable<BanSach.Models.FlashSale>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TenFlashSale)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GioBatDau)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GioKetThuc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NgayApDung)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MucGiamGia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TrangThai)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TenFlashSale)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GioBatDau)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GioKetThuc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgayApDung)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MucGiamGia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TrangThai)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IDfs }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IDfs }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IDfs })
+        </td>
+    </tr>
+}
+
+</table>

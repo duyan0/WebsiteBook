@@ -3,24 +3,26 @@
 @{
     var processedCategories = new HashSet<string>();
 }
-<div class="row">
-    <h5 class="text-dark fw-semibold mt-2 mb-2 ">Danh mục sản phẩm</h5>
-    @foreach (var item in Model)
-    {
-        if (!processedCategories.Contains(item.DanhMuc.TenDanhMuc) && Session[item.DanhMuc.TenDanhMuc] == null)
+<div class="container mt-2 mb-2">
+    <div class="row ">
+        <h5 class="text-dark fw-semibold mt-2 mb-2 user-select-none">Danh mục sản phẩm</h5>
+        @foreach (var item in Model)
         {
-            processedCategories.Add(item.DanhMuc.TenDanhMuc);
-            
-            <div class="col-2">
-                <div class="card border-0  h-100">
-                    <a href="~/SanPhams/Productlist?category=@item.ID" class="text-decoration-none">
-                        <img src="~/assets/images/banners/@item.HinhAnh" class="card-img-top rounded-3 img-fluid" alt="@item.DanhMuc.TenDanhMuc">
-                        <div class="card-body text-center p-2">
-                            <p class="text-dark mb-0" style="font-size: 14px;">@item.DanhMuc.TenDanhMuc</p>
-                        </div>
-                    </a>
+            if (!processedCategories.Contains(item.DanhMuc.TenDanhMuc) && Session[item.DanhMuc.TenDanhMuc] == null)
+            {
+                processedCategories.Add(item.DanhMuc.TenDanhMuc);
+
+                <div class="col-2">
+                    <div class="card border-0  h-100 user-select-none">
+                        <a href="~/SanPhams/Productlist?category=@item.ID" class="text-decoration-none">
+                            <img src="~/assets/images/banners/@item.HinhAnh" class="card-img-top rounded-3 img-fluid" alt="@item.DanhMuc.TenDanhMuc">
+                            <div class="card-body text-center p-2">
+                                <p class="text-dark mb-0" style="font-size: 14px;">@item.DanhMuc.TenDanhMuc</p>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-            </div>
+            }
         }
-    }
+    </div>
 </div>

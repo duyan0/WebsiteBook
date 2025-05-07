@@ -158,6 +158,7 @@ namespace BanSach.Controllers
                     TongTien = cart.Total_money(),
                     DiaChi = AddressDeliverry,
                     TrangThai = "Chờ xử lý",
+                    PhuongThucThanhToan = "Tiền mặt",
                     State = new PendingState()
                 };
                 db.DonHang.Add(donHang);

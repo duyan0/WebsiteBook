@@ -2,10 +2,10 @@
 
 @{
     ViewBag.Title = "Thông tin cá nhân";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutProfile.cshtml";
 }
 
-<div class="container mt-5 mb-5 rounded-sm">
+<div class="container mt-0 mb-5  py-3">
     <div class="card shadow-sm border-0 rounded-sm">
         <div class="card-header bg-success text-white text-center rounded-sm">
             <h4 class="mb-0 font-weight-bold text-white">Thông tin tài khoản</h4>
@@ -27,7 +27,7 @@
                     <i class="fas fa-phone-alt"></i> Số điện thoại:
                 </label>
                 <div class="col-md-8">
-                    <p class="form-control-plaintext">*******</p> <!-- Hidden Phone Number -->
+                    <p class="form-control-plaintext">@Model.SoDT</p> <!-- Hidden Phone Number -->
                 </div>
             </div>
 
@@ -59,7 +59,7 @@
                     <i class="fas fa-user-circle"></i> Tài khoản:
                 </label>
                 <div class="col-md-8">
-                    <p class="form-control-plaintext">**</p> <!-- Hidden Account -->
+                    <p class="form-control-plaintext">******</p> <!-- Hidden Account -->
                 </div>
             </div>
 
@@ -69,7 +69,7 @@
                     <i class="fas fa-key"></i> Mật khẩu:
                 </label>
                 <div class="col-md-8">
-                    <p class="form-control-plaintext">********</p> <!-- Hidden Password -->
+                    <p class="form-control-plaintext">******</p> <!-- Hidden Password -->
                 </div>
             </div>
 

@@ -1,6 +1,5 @@
 ﻿@{
     ViewBag.Title = "Đăng nhập";
-    
 }
 <script src="~/Content/js/User.js"></script>
 <link href="~/Content/css/Login_Regis.css" rel="stylesheet" />
@@ -13,7 +12,7 @@
 
     // Hàm kiểm tra và hiển thị lỗi khi nhập
     function validateAccountInput(input) {
-        const value = input.value.trim(); // Loại bỏ khoảng trắng ở đầu và cuối
+        const value = input.value.trim();
         const isValid = hasLetterNumberAndUppercase(value);
         const errorElement = input.id === "TKhoan" ? document.getElementById("tkError") : document.getElementById("mkError");
 
@@ -26,15 +25,13 @@
 
     // Hàm kiểm tra form trước khi submit
     function validateForm(event) {
-        event.preventDefault(); // Ngăn submit mặc định
-
+        event.preventDefault();
         const tkhoan = document.getElementById("TKhoan").value.trim();
         const mkhau = document.getElementById("MKhau").value.trim();
         const tkError = document.getElementById("tkError");
         const mkError = document.getElementById("mkError");
         let isValid = true;
 
-        // Kiểm tra Tài khoản
         if (!hasLetterNumberAndUppercase(tkhoan) || tkhoan.length < 6) {
             tkError.style.display = "block";
             isValid = false;
@@ -42,7 +39,6 @@
             tkError.style.display = "none";
         }
 
-        // Kiểm tra Mật khẩu
         if (!hasLetterNumberAndUppercase(mkhau) || mkhau.length < 6) {
             mkError.style.display = "block";
             isValid = false;
@@ -50,7 +46,6 @@
             mkError.style.display = "none";
         }
 
-        // Nếu hợp lệ, submit form
         if (isValid) {
             event.target.submit();
         }
@@ -58,7 +53,7 @@
         return isValid;
     }
 
-    // Hàm hiện/ẩn mật khẩu (giữ nguyên chức năng cũ)
+    // Hàm hiện/ẩn mật khẩu
     function togglePasswordVisibility() {
         const password = document.getElementById("MKhau");
         const toggle = document.getElementById("togglePassword");
@@ -71,11 +66,12 @@
         }
     }
 </script>
+
 <div class="container bg-white rounded-2 py-5">
-    <div class="login-page col-xl-12 ">
+    <div class="login-page col-xl-12">
         <div class="form">
             <h3 style="color: #333; font-weight: bold;">Đăng nhập</h3>
-            <form action="/LoginUser/login" class="form-group" method="post" onsubmit="return validateForm(event)">
+            <form action="~/loginuser/login" class="form-group" method="post" onsubmit="return validateForm(event)">
                 <p class="field-validation-error">@ViewBag.ErrorInfo</p>
 
                 <div class="mb-1 mt-2">
@@ -107,16 +103,28 @@
                     <span id="togglePassword" class="toggle-password mt-4" onclick="togglePasswordVisibility()">Hiện</span>
                 </div>
 
-                <div class="forgot-password mb-0 mt-2 ">
+                <div class="forgot-password mb-0 mt-2">
                     <p><a class="text-decoration-none text-secondary fs-6" href="/LoginUser/ForgotPassword">Quên mật khẩu?</a></p>
                 </div>
 
                 <button type="submit" class="btn btn-dark w-100">Đăng nhập</button>
 
-                <p class="message">Chưa có tài khoản? <a href="~/LoginUser/RegisterCus">Đăng kí ngay</a></p>
+
+
+
             </form>
+            <form action="/LoginUser/ExternalLogin" method="post" class="mt-2">
+                <input type="hidden" name="provider" value="Google" />
+                <input type="hidden" name="returnUrl" value="@Url.Action("dang-nhap", "LoginUser")" />
+                <button type="submit" class="w-100 p-2 py-3 text-bg-info fs-13 text-dark ">
+                    <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google Icon" />
+                    Đăng nhập bằng Google
+                </button>
+            </form>
+            <p class="message">Chưa có tài khoản? <a href="~/dang-ky">Đăng kí ngay</a></p>
+            <!-- Form đăng nhập bằng tài khoản/mật khẩu -->
+            <!-- Form đăng nhập bằng Google -->
+
         </div>
     </div>
-
 </div>
-

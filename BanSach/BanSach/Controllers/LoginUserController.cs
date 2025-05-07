@@ -1,4 +1,7 @@
 ﻿using BanSach.Models;
+using Microsoft.Owin.Security;
+using System.Security.Claims;
+using System.Web;
 using System;
 using System.Linq;
 using System.Web.Mvc;
@@ -7,6 +10,8 @@ using System.Net.Mail;
 using System.Data.Entity.Validation;
 using BanSach.DesignPatterns.FactoryMethodPattern;
 using BanSach.DesignPatterns.TemplateMethodPattern;
+using Microsoft.AspNet.Identity;
+
 namespace BanSach.Controllers
 {
     public class LoginUserController : Controller
@@ -38,6 +43,7 @@ namespace BanSach.Controllers
             return handler.Logout();
         }
         [HttpGet]
+        [Route("dang-ky")]
         public ActionResult RegisterCus()
         {
             return View();
@@ -164,6 +170,7 @@ namespace BanSach.Controllers
 
         //.../auth/userinfo.email,.../auth/userinfo.profile	
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
+        
         public ActionResult login(KhachHang _cus)
         {
 
@@ -341,5 +348,93 @@ namespace BanSach.Controllers
                 smtp.Send(message);
             }
         }
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult ExternalLogin(string provider, string returnUrl)
+        {
+            System.Diagnostics.Debug.WriteLine($"ExternalLogin called with provider: {provider}, returnUrl: {returnUrl}");
+            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "LoginUser", new { ReturnUrl = returnUrl }));
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult ExternalLoginCallback(string returnUrl)
+        {
+            var loginInfo = HttpContext.GetOwinContext().Authentication.GetExternalLoginInfo();
+            if (loginInfo == null)
+            {
+                ViewBag.ErrorInfo = "Đăng nhập bằng Google thất bại.";
+                return View("login");
+            }
+
+            // Lấy thông tin người dùng từ Google
+            var email = loginInfo.ExternalIdentity.FindFirstValue(ClaimTypes.Email);
+            var name = loginInfo.ExternalIdentity.FindFirstValue(ClaimTypes.Name);
+
+            if (string.IsNullOrEmpty(email))
+            {
+                ViewBag.ErrorInfo = "Không thể lấy email từ Google.";
+                return View("login");
+            }
+
+            // Kiểm tra xem người dùng đã tồn tại trong cơ sở dữ liệu chưa
+            var user = db.KhachHang.FirstOrDefault(u => u.Email == email);
+            if (user == null)
+            {
+                // Đăng ký người dùng mới
+                user = new KhachHang
+                {
+                    Email = email,
+                    TenKH = name,
+                    TKhoan = email, // Sử dụng email làm tên tài khoản hoặc tạo một tên duy nhất
+                    MKhau = GenerateRandomPassword(10), // Tạo mật khẩu ngẫu nhiên
+                    TrangThaiTaiKhoan = "Hoạt động",
+                    NgayTao = DateTime.Now
+                };
+                db.KhachHang.Add(user);
+                db.SaveChanges();
+            }
+
+            // Kiểm tra trạng thái tài khoản
+            if (user.TrangThaiTaiKhoan.Equals("Bị khoá", StringComparison.OrdinalIgnoreCase))
+            {
+                ViewBag.ErrorInfo = "Tài khoản của bạn đã bị khóa.";
+                return View("login");
+            }
+
+            // Đăng nhập người dùng bằng cách thiết lập session
+            Session["IDkh"] = user.IDkh;
+            Session["TenKH"] = user.TenKH;
+            Session["SoDT"] = user.SoDT;
+            Session["MKhau"] = user.MKhau;
+
+            return RedirectToAction("TrangChu", "SanPhams");
+        }
+
+        // Lớp hỗ trợ cho đăng nhập bên ngoài
+        private class ChallengeResult : HttpUnauthorizedResult
+        {
+            public ChallengeResult(string provider, string redirectUri)
+            {
+                LoginProvider = provider;
+                RedirectUri = redirectUri;
+            }
+
+            public string LoginProvider { get; set; }
+            public string RedirectUri { get; set; }
+
+            public override void ExecuteResult(ControllerContext context)
+            {
+                var owinContext = context.HttpContext.GetOwinContext();
+                if (owinContext == null)
+                {
+                    throw new InvalidOperationException("OWIN context is not available. Ensure OWIN middleware is properly configured.");
+                }
+
+                var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
+                owinContext.Authentication.Challenge(properties, LoginProvider);
+            }
+        }
+
     }
 }

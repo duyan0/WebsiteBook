@@ -1,6 +1,7 @@
 ﻿using BanSach.Models;
 using PagedList;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -193,12 +194,6 @@ namespace BanSach.Controllers
                 return RedirectToAction("Index");
             }
         }
-
-
-
-
-
-
         public ActionResult XoaKhuyenMaiHetHan()
         {
             // Lọc tất cả các chương trình khuyến mãi đã hết hạn trước ngày hiện tại
@@ -231,8 +226,7 @@ namespace BanSach.Controllers
 
             return RedirectToAction("Index");
         }
-
-
+            
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -29,13 +29,11 @@ namespace BanSach.Controllers
         }
 
 
-
+        
         public ActionResult TrangChu()
         {
             var danhMucList = db.DanhMuc.ToList();
             return View(danhMucList);
-
-
         }
 
         public ActionResult ProductList(int? category, int? page, string SearchString, string sortOrder)
@@ -91,25 +89,51 @@ namespace BanSach.Controllers
             }
 
             // Tìm sản phẩm
-            SanPham sanPham = db.SanPham.Find(id);
+            var sanPham = db.SanPham
+                .Include(sp => sp.TheLoai)
+                .Include(sp => sp.TacGia)
+                .Include(sp => sp.NhaXuatBan)
+                .Include(sp => sp.KhuyenMai)
+                .Include(sp => sp.FlashSale_SanPham)
+                .SingleOrDefault(sp => sp.IDsp == id);
+
             if (sanPham == null)
             {
                 return HttpNotFound();
             }
 
+            // Lấy FlashSale đang hoạt động cho sản phẩm
+            var now = DateTime.Now;
+            var currentTime = now.TimeOfDay;
+            var today = DateTime.Today;
+
+            var activeFlashSale = db.FlashSale
+                .Where(fs => fs.NgayApDung == today
+                          && fs.GioBatDau <= currentTime
+                          && fs.GioKetThuc >= currentTime
+                          && fs.TrangThai == "Hoạt động"
+                          && fs.FlashSale_SanPham.Any(fss => fss.IDsp == id))
+                .FirstOrDefault();
+
             // Lấy danh sách đánh giá của sản phẩm
             var danhGiaList = db.DanhGiaSanPham
                 .Where(d => d.IDsp == id)
-                .Include(d => d.KhachHang) // Bao gồm thông tin khách hàng nếu cần
-                .OrderByDescending(d => d.NgayDanhGia) // Sắp xếp theo ngày mới nhất
+                .Include(d => d.KhachHang)
+                .OrderByDescending(d => d.NgayDanhGia)
                 .ToList();
 
             // Mã hóa URL liên kết sản phẩm
             string encodedUrl = HttpUtility.UrlEncode(Url.Action("TrangSP", "SanPhams", new { id = sanPham.IDsp }, Request.Url.Scheme));
             ViewBag.EncodedUrl = encodedUrl;
 
-            // Truyền danh sách đánh giá vào ViewBag
+            // Truyền dữ liệu vào ViewBag
             ViewBag.DanhGiaList = danhGiaList;
+            ViewBag.ActiveFlashSale = activeFlashSale;
+
+            // Debug: Ghi log để kiểm tra
+            System.Diagnostics.Debug.WriteLine($"SanPham: {sanPham.TenSP}, IDsp: {sanPham.IDsp}");
+            System.Diagnostics.Debug.WriteLine($"ActiveFlashSale: {(activeFlashSale != null ? activeFlashSale.TenFlashSale : "None")}");
+            System.Diagnostics.Debug.WriteLine($"MucGiamGia: {(activeFlashSale != null ? activeFlashSale.MucGiamGia.ToString() : "None")}");
 
             return View(sanPham);
         }
@@ -409,7 +433,7 @@ namespace BanSach.Controllers
             try
             {
                 // Thiết lập license cho EPPlus
-                ExcelPackage.License.SetNonCommercialPersonal("Võ Duy Ân");
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
                 using (var package = new ExcelPackage(file.InputStream))
                 {
@@ -427,31 +451,46 @@ namespace BanSach.Controllers
                         return View();
                     }
 
+                    // Lấy danh sách ID hợp lệ từ các bảng liên quan
+                    var validTheLoaiIds = db.TheLoai.Select(tl => tl.ID).ToList();
+                    var validTacGiaIds = db.TacGia.Select(tg => tg.IDtg).ToList();
+                    var validNxbIds = db.NhaXuatBan.Select(nxb => nxb.IDnxb).ToList();
+                    var validKmIds = db.KhuyenMai.Select(km => km.IDkm).ToList();
+
                     var sanPhams = new List<SanPham>();
                     for (int row = 2; row <= rowCount; row++)
                     {
+                        // Kiểm tra dữ liệu bắt buộc
+                        string tenSP = worksheet.Cells[row, 1].Text?.Trim();
+                        if (string.IsNullOrEmpty(tenSP))
+                        {
+                            TempData["thatbai"] = $"Dòng {row}: Tên sách không được để trống.";
+                            return View();
+                        }
+
                         var sanPham = new SanPham
                         {
-                            TenSP = worksheet.Cells[row, 1].Text,
-                            MoTa = worksheet.Cells[row, 2].Text,
-                            IDtl = int.TryParse(worksheet.Cells[row, 3].Text, out var category) ? category : 0,
+                            TenSP = tenSP,
+                            MoTa = worksheet.Cells[row, 2].Text?.Trim(),
+                            IDtl = int.TryParse(worksheet.Cells[row, 3].Text, out var category) && validTheLoaiIds.Contains(category) ? category : 0,
                             GiaBan = decimal.TryParse(worksheet.Cells[row, 4].Text, out var price) ? price : 0,
-                            HinhAnh = worksheet.Cells[row, 5].Text,
-                            IDtg = int.TryParse(worksheet.Cells[row, 6].Text, out var tacGiaId) ? tacGiaId : 0,
-                            IDnxb = int.TryParse(worksheet.Cells[row, 7].Text, out var nxbId) ? nxbId : 0,
-                            IDkm = int.TryParse(worksheet.Cells[row, 8].Text, out var kmId) ? kmId : 0,
+                            HinhAnh = worksheet.Cells[row, 5].Text?.Trim(),
+                            IDtg = int.TryParse(worksheet.Cells[row, 6].Text, out var tacGiaId) && validTacGiaIds.Contains(tacGiaId) ? tacGiaId : 0,
+                            IDnxb = int.TryParse(worksheet.Cells[row, 7].Text, out var nxbId) && validNxbIds.Contains(nxbId) ? nxbId : 0,
+                            IDkm = int.TryParse(worksheet.Cells[row, 8].Text, out var kmId) && validKmIds.Contains(kmId) ? kmId : 0,
                             SoLuong = int.TryParse(worksheet.Cells[row, 9].Text, out var soLuong) ? soLuong : 0,
-                            TrangThaiSach = worksheet.Cells[row, 10].Text,
-                            ISBN = worksheet.Cells[row, 11].Text,
+                            TrangThaiSach = worksheet.Cells[row, 10].Text?.Trim(),
+                            ISBN = worksheet.Cells[row, 11].Text?.Trim(),
                             SoTrang = int.TryParse(worksheet.Cells[row, 12].Text, out var soTrang) ? soTrang : 0,
-                            NgonNgu = worksheet.Cells[row, 13].Text,
+                            NgonNgu = worksheet.Cells[row, 13].Text?.Trim(),
                             LuotXem = int.TryParse(worksheet.Cells[row, 14].Text, out var luotXem) ? luotXem : 0,
-                            KichThuoc = worksheet.Cells[row, 15].Text,
+                            KichThuoc = worksheet.Cells[row, 15].Text?.Trim(),
                             TrongLuong = int.TryParse(worksheet.Cells[row, 16].Text, out var trongLuong) ? trongLuong : 0,
-                            NgayTao = DateTime.Now, // Gán giá trị mặc định
-                            
+                            NgayTao = DateTime.Now
                         };
-                        if (DateTime.TryParse(worksheet.Cells[row, 17].Text, out var ngayPhatHanh))
+
+                        // Parse ngày phát hành với định dạng cụ thể
+                        if (DateTime.TryParseExact(worksheet.Cells[row, 17].Text, "MM/dd/yyyy", null, System.Globalization.DateTimeStyles.None, out var ngayPhatHanh))
                         {
                             sanPham.NgayPhatHanh = ngayPhatHanh;
                         }
@@ -459,6 +498,14 @@ namespace BanSach.Controllers
                         {
                             sanPham.NgayPhatHanh = null;
                         }
+
+                        // Kiểm tra các trường bắt buộc
+                        if (sanPham.GiaBan <= 0 || sanPham.SoLuong < 0 || sanPham.IDtl == 0)
+                        {
+                            TempData["thatbai"] = $"Dòng {row}: Giá bán, số lượng hoặc thể loại không hợp lệ.";
+                            return View();
+                        }
+
                         sanPhams.Add(sanPham);
                     }
 
@@ -470,7 +517,7 @@ namespace BanSach.Controllers
             }
             catch (Exception ex)
             {
-                TempData["thatbai"] = $"Lỗi khi nhập sách: {ex.Message}";
+                TempData["thatbai"] = $"Lỗi khi nhập sách: {ex.Message} - Inner Exception: {ex.InnerException?.Message}";
                 return View();
             }
         }
@@ -600,6 +647,7 @@ namespace BanSach.Controllers
             }
             SanPham clonedProduct = originalProduct.Clone();
             clonedProduct.TenSP = clonedProduct.TenSP;
+            clonedProduct.ISBN = clonedProduct.ISBN;
             clonedProduct.IDsp = 0; // Đặt lại ID
 
             db.SanPham.Add(clonedProduct);
@@ -607,6 +655,119 @@ namespace BanSach.Controllers
 
             return RedirectToAction("Index");
         }
+        public PartialViewResult TopRated()
+        {
+            var topRated = db.DanhGiaSanPham
+                .GroupBy(dg => dg.IDsp)
+                .Select(g => new
+                {
+                    IDsp = g.Key,
+                    DiemTB = g.Average(x => x.DiemDanhGia),
+                    SoLuot = g.Count()
+                })
+                .Where(x => x.SoLuot >= 1) // Đổi lại >= 5 nếu muốn lọc kỹ hơn
+                .OrderByDescending(x => x.DiemTB)
+                .Take(20)
+                .ToList();
+
+            var ids = topRated.Select(x => x.IDsp).ToList();
+
+            // Include thông tin KhuyenMai
+            var sanPhams = db.SanPham
+                .Where(sp => ids.Contains(sp.IDsp))
+                .Include(km => km.KhuyenMai) // hoặc .Include(sp => sp.KhuyenMai) nếu dùng EF mới
+                .ToList();
+
+            var ordered = topRated
+                .Join(sanPhams, tr => tr.IDsp, sp => sp.IDsp, (tr, sp) => new
+                {
+                    SanPham = sp,
+                    DiemTB = tr.DiemTB,
+                    MucGiamGia = sp.KhuyenMai != null ? sp.KhuyenMai.MucGiamGia : 0
+                })
+                .OrderByDescending(x => x.DiemTB)
+                .Select(x => x.SanPham)
+                .ToList();
+
+            return PartialView("_TopRated", ordered);
+        }
+
+
+        public ActionResult GoiYChoBan()
+        {
+            // Lấy ID người dùng đăng nhập
+            var idKhach = Session["IDkh"] != null ? (int)Session["IDkh"] : 0;
+            List<SanPham> sanPhams;
+
+            if (idKhach == 0)
+            {
+                // Nếu chưa đăng nhập, hiển thị sách bán chạy
+                var topSelling = db.DonHangCT
+                    .GroupBy(ct => ct.IDSanPham)
+                    .OrderByDescending(g => g.Sum(x => x.SoLuong))
+                    .Select(g => g.Key)
+                    .Take(20)
+                    .ToList();
+
+                sanPhams = db.SanPham
+                    .Where(sp => topSelling.Contains(sp.IDsp))
+                    .ToList();
+            }
+            else
+            {
+                // Lấy danh sách ID sản phẩm đã mua
+                var daMua = db.DonHang
+                    .Where(dh => dh.IDkh == idKhach)
+                    .SelectMany(dh => dh.DonHangCT)
+                    .Select(ct => ct.IDSanPham)
+                    .Distinct()
+                    .ToList();
+
+                // Tìm ID thể loại các sách đã mua
+                var idTheLoaisDaMua = db.SanPham
+                    .Where(sp => daMua.Contains(sp.IDsp) && sp.TheLoai != null)
+                    .Select(sp => sp.TheLoai.ID)
+                    .Distinct()
+                    .ToList();
+
+                // Gợi ý sách cùng thể loại nhưng chưa mua, dùng LINQ-to-Objects
+                sanPhams = db.SanPham
+                    .AsEnumerable() // Chuyển sang LINQ-to-Objects
+                    .Where(sp => sp.TheLoai != null && idTheLoaisDaMua.Contains(sp.TheLoai.ID) && !daMua.Contains(sp.IDsp))
+                    .Take(40)
+                    .ToList();
+            }
+
+            return PartialView("_GoiYChoBan", sanPhams);
+        }
+        public ActionResult BanChayTheoTheLoaiPartial()
+        {
+            // Lấy top 5 sách bán chạy cho mỗi thể loại
+            var topByCategory = db.SanPham
+                .Join(db.DonHangCT,
+                    sp => sp.IDsp,
+                    ct => ct.IDSanPham,
+                    (sp, ct) => new { sp, ct })
+                .GroupBy(x => new { x.sp.TheLoai, x.sp.IDsp, x.sp.TenSP, x.sp.HinhAnh, x.sp.GiaBan })
+                .Select(g => new
+                {
+                    TheLoai = g.Key.TheLoai,
+                    IDsp = g.Key.IDsp,
+                    TenSP = g.Key.TenSP,
+                    HinhAnh = g.Key.HinhAnh,
+                    GiaBan = g.Key.GiaBan,
+                    SoLuongBan = g.Sum(x => x.ct.SoLuong)
+                })
+                .ToList()
+                .GroupBy(x => x.TheLoai)
+                .ToDictionary(
+                    g => g.Key,
+                    g => g.OrderByDescending(x => x.SoLuongBan).Take(5).ToList()
+                );
+
+            return PartialView("_BanChayTheoTheLoaiPartial", topByCategory);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -1,0 +1,27 @@
+﻿@model BanSach.Controllers.FlashSaleProductViewModel
+@{
+    ViewBag.Title = "Quản lý sản phẩm cho Flash Sale";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Quản lý sản phẩm cho @Model.FlashSaleName</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.FlashSaleId)
+        <div class="form-group">
+            <label class="control-label col-md-2">Chọn sản phẩm</label>
+            <div class="col-md-10">
+                @Html.ListBoxFor(model => model.SelectedProductIds, new MultiSelectList(Model.AvailableProducts, "IDsp", "TenSP", Model.SelectedProductIds), new { @class = "form-control", size = 10 })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Lưu" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

@@ -6,149 +6,154 @@
 }
 <link href="~/Content/css/Shoppingcart.css" rel="stylesheet" />
 
-<div class="text-left">
-    <h5 class="text-white fw-semibold fs-2">Giỏ hàng</h5>
-</div>
+<div class="container pt-3 pb-0 mb-0 rounded ">
+    <h5 class="mb-2 mt-2 fw-semibold">Giỏ hàng</h5>
 
-@if (Model == null || Model.Total_quantity() == 0)
-{
-    <div class="text-center">
-        <h5 class="text-white">
-            Chưa có sản phẩm trong giỏ hàng của bạn.
-        </h5><br />
-        <div class="btn btn-danger">
-            @Html.ActionLink("Tiếp tục mua hàng", "ProductList", "SanPhams", null, new { @class = "text-decoration-none text-white fs-6" })
+    @if (Model == null || Model.Total_quantity() == 0)
+    {
+        <div class="text-center py-5">
+            <h5 class="mb-4">Chưa có sản phẩm trong giỏ hàng của bạn.</h5>
+            <a href="@Url.Action("ProductList", "SanPhams")" class="btn btn-danger">Tiếp tục mua hàng</a>
         </div>
-    </div>
-}
-else
-{
-    <table class="table table-dark w-100">
-        <thead>
-            <tr class="text-left font-weight-semi-bold display-0 text-white px-2">
-                <th></th>
-                <th>Thông tin</th>
-                <th>Số lượng</th>
-                <th>Thành tiền</th>
-                <th>Lựa chọn</th>
-            </tr>
-        </thead>
-        <tbody class="mt-2">
-            @foreach (var item in Model.Items)
-            {
-                decimal giaBan = item._product.GiaBan;
-                decimal mucGiamGia = item.MucGiamGia;
-                decimal giaSauKhuyenMai = giaBan * (1 - mucGiamGia / 100);
-                decimal total = item._quantity * giaSauKhuyenMai;
-                <tr>
-                    <td>
-                        <img src="~/assets/images/products/@item._product.HinhAnh" width="100" height="100" alt="@item._product.TenSP" style="float:left; border-radius: 15px; " />
-                    </td>
-                    <td width="20%" class="text-left text-white">
-                        <p>@Html.DisplayFor(model => item._product.TenSP)</p>
-                        <p><b style="color: #c92127">@giaSauKhuyenMai.ToString("#,##0").Replace(',', '.') VND</b></p>
-                        @if (mucGiamGia > 0)
+    }
+    else
+    {
+        
+        <div class="row">
+            <!-- Left Column: Cart Items (col-12 col-lg-7) -->
+            <div class="col-12 col-lg-8 mb-4 rounded-2 bg-white">
+                <div class="card  border-0">
+                    <div class="card-body p-0">
+                        <table class="table  mb-0">
+                            <thead class="table-striped">
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Thông tin</th>
+                                    <th scope="col">Số lượng</th>
+                                    <th scope="col">Thành tiền</th>
+                                    <th scope="col">Lựa chọn</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Items)
+                                {
+                                    decimal giaBan = item._product.GiaBan;
+                                    decimal mucGiamGia = item.MucGiamGia;
+                                    decimal giaSauKhuyenMai = giaBan * (1 - mucGiamGia / 100);
+                                    decimal total = item._quantity * giaSauKhuyenMai;
+                                    <tr>
+                                        <td>
+                                            <img src="~/assets/images/products/@item._product.HinhAnh" width="80" height="80" alt="@item._product.TenSP" class="rounded-2" />
+                                        </td>
+                                        <td style="max-width:400px;">
+                                            <p class="mb-1">@Html.DisplayFor(model => item._product.TenSP)</p>
+                                            <p class="mb-1 text-danger fw-bold">@giaSauKhuyenMai.ToString("#,##0").Replace(',', '.') VND</p>
+                                            @if (mucGiamGia > 0)
+                                            {
+                                                <p class="mb-0">
+                                                    <small class="text-muted text-decoration-line-through">@giaBan.ToString("#,##0").Replace(',', '.') VND</small>
+                                                    <small class="text-success"> -@mucGiamGia% Off</small>
+                                                </p>
+                                            }
+                                        </td>
+                                        <td>
+                                            @using (Html.BeginForm("Update_Cart_Quantity", "ShoppingCart", FormMethod.Post, new { @class = "d-flex align-items-center" }))
+                                            {
+                                                <input type="hidden" value="@item._product.IDsp" name="idPro" />
+                                                <input type="number"
+                                                       class="form-control form-control-sm text-center w-75 me-2"
+                                                       min="1"
+                                                       max="@item._product.SoLuong"
+                                                       value="@item._quantity"
+                                                       name="carQuantity"
+                                                       onchange="this.form.submit()" /> <!-- Đây nè -->
+
+                                                
+                                            }
+                                        </td>
+
+                                        <td class="text-danger  fw-bold fs-13">
+                                            @total.ToString("#,##0").Replace(',', '.') VND
+                                        </td>
+                                        <td>
+                                            <form action="/ShoppingCart/RemoveCart/@item._product.IDsp" method="get">
+                                                <button type="submit" class="btn btn-outline-danger btn-sm">Xoá</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5" class="text-end fw-bold">
+                                        Tổng tiền: <span class="text-danger">@Model.Total_money().ToString("#,##0").Replace(',', '.') VND</span>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Checkout Form (col-12 col-lg-5) -->
+            <div class="col-12 col-lg-4">
+                <div class="card sticky-top mb-4 top-10">
+                    <div class="card-body">
+                        <h5 class="card-title mb-2 fw-semibold">Thông tin thanh toán</h5>
+
+                        @if (TempData["ErrorMessage"] != null)
                         {
-                            <p>
-                                <del style="color: gray">@giaBan.ToString("#,##0").Replace(',', '.') VND</del>
-                                <span style="color:green;">-@mucGiamGia% Off</span>
-                            </p>
+                            <div class="alert alert-danger" role="alert">
+                                @TempData["ErrorMessage"]
+                            </div>
                         }
-                    </td>
-                    <td class="text-left">
-                        @using (Html.BeginForm("Update_Cart_Quantity", "ShoppingCart"))
-                        {
-                            <input type="hidden" value="@item._product.IDsp" name="idPro" />
-                            <input type="number" class="capnhat" min="1" max="@item._product.SoLuong" value="@item._quantity" name="carQuantity" />
-                            <input type="submit" value="Ok" class="capnhat bg-white" />
-                        }
-                    </td>
-                    <td style="color: #c92127;">
-                        <b>@total.ToString("#,##0").Replace(',', '.') VND</b>
-                    </td>
-                    <td class="xoa">
-                        <form action="/ShoppingCart/RemoveCart/@item._product.IDsp" method="get">
-                            <button type="submit" class="btn btn-outline-danger">Xoá</button>
+
+                        <form id="checkoutForm" method="post">
+                            <input type="hidden" name="CodeCustomer" value="@Session["IDkh"]" required />
+
+                            <div class="mb-3">
+                                <label for="NameCustomer" class="form-label">Họ và Tên</label>
+                                <input type="text" name="NameCustomer" id="NameCustomer" class="form-control" placeholder="Điền họ và tên" value="@Session["TenKH"]" required />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="PhoneCustomer" class="form-label">Số điện thoại</label>
+                                <input type="text" name="PhoneCustomer" id="PhoneCustomer" class="form-control" placeholder="Điền số điện thoại" value="@Session["SoDT"]" required minlength="10" maxlength="11" pattern="\d{10,11}" title="Bắt đầu từ 0 - Min 10 max 11" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="AddressDeliverry" class="form-label">Địa chỉ giao hàng</label>
+                                <input type="text" name="AddressDelivery" id="AddressDeliverry" class="form-control" placeholder="Điền địa chỉ giao hàng" required />
+                                <div id="suggestions" class="suggestions" style="display:none;"></div>
+                            </div>
+
+                            <div class="d-flex justify-content-end mt-4">
+                                @if (Session["IDkh"] != null || Session["IDQly"] != null)
+                                {
+                                    <button type="submit" formaction="@Url.Action("CheckOut", "ShoppingCart")" class="btn btn-danger me-2">
+                                        Đặt hàng <i class="fas fa-mobile-alt"></i>
+                                    </button>
+                                    <button type="submit" formaction="@Url.Action("CreatePayPalPayment", "OnlinePayment")" class="btn btn-danger">
+                                        Đặt hàng PayPal <i class="fas fa-mobile-alt"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <span class="text-danger fw-bold fs-13 me-3 align-self-center">Hãy đăng nhập trước</span>
+                                    <a href="~/dang-nhap" class="btn btn-danger">Đăng nhập</a>
+                                }
+                            </div>
                         </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="6" class="fs-6 fw-bold" style="text-align:right;">
-                    Tổng tiền: <b style="color: #c92127;font-size:16px;">@Model.Total_money().ToString("#,##0").Replace(',', '.') VND</b>
-                </td>
-            </tr>
-        </tfoot>
-    </table>
-
-    <div class="container-fluid">
-        <form class="col-12 py-4 px-0" id="checkoutForm" method="post">
-            <input type="hidden" name="CodeCustomer" value="@Session["IDkh"]" required />
-
-            <h2 class="text-center text-white">Thông tin</h2>
-
-            <!-- Hiển thị lỗi nếu thanh toán thất bại -->
-            @if (TempData["ErrorMessage"] != null)
-            {
-                <div class="alert alert-danger text-center">
-                    @TempData["ErrorMessage"]
-                </div>
-            }
-
-            <div class="text-white row d-flex mb-2">
-                <div class="col col-sm-12 text-lg-start">
-                    <label for="NameCustomer" class="form-label text-end">Tên</label>
-                </div>
-                <div class="col-lg-12 col-sm-12">
-                    <input style="width:100%" type="text" name="NameCustomer" id="Customer-Form" autocomplete="off" class="form-control" placeholder="Điền họ và tên" value="@Session["TenKH"]" required />
+                    </div>
                 </div>
             </div>
-
-            <div class="text-white row d-flex mb-2">
-                <div class="col col-sm-12 text-lg-start">
-                    <label for="PhoneCustomer" class="form-label">Số điện thoại</label>
-                </div>
-                <div class="col-lg-12 col-sm-12">
-                    <input style="width:100%" type="text" name="PhoneCustomer" id="Customer-Form" autocomplete="off" class="form-control" placeholder="Điền số điện thoại" value="@Session["SoDT"]" required minlength="10" maxlength="11" pattern="\d{10,11}" title="Bắt đầu từ 0 - Min 10 max 11" />
-                </div>
-            </div>
-
-            <div class="text-white row d-flex mb-2">
-                <div class="col col-sm-12 text-lg-start">
-                    <label for="AddressDeliverry" class="form-label">Địa chỉ giao hàng:</label>
-                </div>
-                <div class="col-lg-12 col-sm-12">
-                    <input style="width:100%" type="text" name="AddressDelivery" id="AddressDeliverry" autocomplete="off" class="form-control" placeholder="Điền địa chỉ giao hàng" required />
-                    <div id="suggestions" class="suggestions" style="display:none;"></div>
-                </div>
-            </div>
-
-            <div class="d-flex justify-content-end py-3">
-                @if (Session["IDkh"] != null || Session["IDQly"] != null)
-                {
-                    <button type="submit" formaction="@Url.Action("CheckOut", "ShoppingCart")" class="btn btn-danger me-2">
-                        Đặt hàng <i class="fas fa-mobile-alt"></i>
-                    </button>
-                    <button type="submit" formaction="@Url.Action("CreatePayPalPayment", "OnlinePayment")" class="btn btn-danger me-2">
-                        Đặt hàng PayPal <i class="fas fa-mobile-alt"></i>
-                    </button>
-
-                }
-                else
-                {
-                    <span class="text-danger font-weight-bold">Hãy đăng nhập trước</span>
-                    <a href="@Url.Action("LoginAccountCus", "LoginUser")" class="btn btn-danger ms-3">Đăng nhập</a>
-                }
-            </div>
-        </form>
-    </div>
-}
+        </div>
+    }
+</div>
 
 @section Scripts {
     <script>
-        const apiKey = 'cNNqPnwuPiecDAb0midTWtf8NJkrIXhh3qws63ns'; // Thay bằng API key mới từ Goong
+        const apiKey = 'cNNqPnwuPiecDAb0midTWtf8NJkrIXhh3qws63ns';
         const addressInput = document.getElementById('AddressDeliverry');
         const suggestionsContainer = document.getElementById('suggestions');
         let sessionToken = crypto.randomUUID() || 'default-session-token';
@@ -178,7 +183,7 @@ else
                         suggestionsContainer.style.display = 'block';
                         data.predictions.forEach(prediction => {
                             const div = document.createElement('div');
-                            div.className = 'suggestion-item';
+                            div.className = 'suggestion-item list-group-item list-group-item-action';
                             div.textContent = prediction.description;
                             div.addEventListener('click', () => {
                                 addressInput.value = prediction.description;
@@ -204,11 +209,21 @@ else
         });
     </script>
 }
+
 <style>
-    .capnhat {
-        border: none;
+    .suggestions {
+        position: absolute;
+        z-index: 1000;
+        width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+        background: white;
+        border: 1px solid #ddd;
         border-radius: 4px;
-        text-align: center;
-        width: 40px;
+    }
+
+    .suggestion-item:hover {
+        background-color: #f8f9fa;
+        cursor: pointer;
     }
 </style>

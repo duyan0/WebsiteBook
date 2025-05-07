@@ -9,20 +9,13 @@ toggle.onclick = function () {
 };
 
 // Toggle submenu (parent menu)
+// Toggle submenu (parent menu)
 const menuToggles = document.querySelectorAll('.menu-toggle');
 menuToggles.forEach(toggle => {
     toggle.onclick = function (e) {
         e.preventDefault(); // Prevent default anchor behavior
         const parent = this.parentElement;
         parent.classList.toggle('active');
-
-        // Optional: Close other open submenus
-        menuToggles.forEach(otherToggle => {
-            const otherParent = otherToggle.parentElement;
-            if (otherParent !== parent && otherParent.classList.contains('active')) {
-                otherParent.classList.remove('active');
-            }
-        });
     };
 });
 

@@ -28,10 +28,7 @@
 <body>
     <div class="sidebar ">
         <!-- Logo Section -->
-        <div class="logo">
-            <img src="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/fahasa-logo.png" alt="Logo" class="logo-img">
-            <span class="logo-text"></span>
-        </div>
+       
         <ul>
             <li>
                 <a href="#">
@@ -121,9 +118,22 @@
                         <span class="icon"><i class="fas fa-user"></i></span>
                         <span class="title">Banner</span>
                     </a>
-                    <a href="~/slide/index"class="submenu-link">
+                    <a href="~/slide/index" class="submenu-link">
                         <span class="icon"><i class="fas fa-user"></i></span>
                         <span class="title">Slide</span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <a href="#" class="menu-toggle">
+                    <span class="icon"><i class="fas fa-users"></i></span>
+                    <span class="title">Flash-Sale</span>
+                    <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                </a>
+                <div class="submenu">
+                    <a href="~/khuyenmai/FlashSaleManagement" class="submenu-link">
+                        <span class="icon"><i class="fas fa-user"></i></span>
+                        <span class="title">Trang chủ</span>
                     </a>
                 </div>
             </li>
@@ -148,8 +158,10 @@
                 }
             </div>
         </div>
-        <div class="content">
-            @RenderBody()
+        <div class="p-2">
+            <div class="content">
+                @RenderBody()
+            </div>
         </div>
     </div>
     <script src="~/Admin/js/LayOutAdmin.js"></script>

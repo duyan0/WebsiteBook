@@ -1,0 +1,75 @@
+﻿@model List<BanSach.Models.SanPham>
+
+@{
+    ViewBag.Title = "Sách được đánh giá cao";
+    ViewBag.Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container  bg-white rounded-2 mt-3 ">
+    <h5 class="mb-0 py-2 text-dark text-center fw-semibold">Sách được đánh giá cao</h5>
+    <div class="row row-cols-lg-5 px-0">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-6 col-sm-4 col-md-3 col-lg-3 mb-4 p-1">
+                <div class="card p-2">
+                    <a href="@Url.Action("TrangSP", "SanPhams", new { id = item.IDsp })">
+                        <img src="~/assets/images/products/@item.HinhAnh" class="card-img-top rounded-1 img-fluid" alt="@item.TenSP" />
+                    </a>
+                    <div class="card-body p-1">
+                        <div class="text-warning text-start">
+                            @{
+                                decimal? diem = item.DiemDanhGiaTrungBinh;
+                                int saoDay = (int)Math.Floor(diem.GetValueOrDefault()); // số sao đầy
+                                bool coNuaSao = diem.GetValueOrDefault() - saoDay >= 0.50m;
+                                int saoTrong = 5 - saoDay - (coNuaSao ? 1 : 0); // số sao rỗng
+                            }
+
+                            @for (int i = 0; i < saoDay; i++)
+                            {
+                                <span>&#9733;</span> <!-- sao đầy -->
+                            }
+                            @if (coNuaSao)
+                            {
+                                <span>&#189;</span> <!-- nửa sao -->
+                            }
+                            @for (int i = 0; i < saoTrong; i++)
+                            {
+                                <span>&#9734;</span> <!-- sao rỗng -->
+                            }
+
+
+                        </div>
+                        <h6 class="card-title mb-1 text-truncate">@item.TenSP</h6>
+
+                        <div class="card-text">
+                            @if (item.KhuyenMai != null && item.KhuyenMai.MucGiamGia > 0)
+                            {
+                                var giaBan = item.GiaBan;
+                                var mucGiamGia = item.KhuyenMai.MucGiamGia;
+                                var giaKm = giaBan - (giaBan * mucGiamGia / 100);
+
+                                <div>
+                                    <span class="text-muted fw-semibold text-decoration-line-through me-2" style="font-size:12px;">@string.Format("{0:N0}", giaBan)</span>
+                                    <span class="badge bg-danger">@($"{mucGiamGia:0.#}%")</span>
+
+                                    <div class="text-danger mt-1 fw-semibold">@string.Format("{0:N0} VND", giaKm)</div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="fw-semibold side">@string.Format("{0:N0} VND", item.GiaBan)</div>
+                            }
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+

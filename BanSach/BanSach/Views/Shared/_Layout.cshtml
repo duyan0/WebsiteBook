@@ -10,7 +10,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>  <!-- jQuery FIRST -->
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <!-- Or the path to your local copy --><!-- jQuery UI SECOND -->
-    <link href="~/assets/images/logo/logo_sach.png" rel="icon">
+    <link href="~/assets/images/logo/LOGO_XBOOK.png" rel="icon">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
     <!-- Google Web Fonts -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -38,7 +38,7 @@
 
     <nav class="container-fluid fixed-top shadow shadow-lg mb-5 bg-white" id="topbar" style=" z-index: 10000; border-radius:0 0 3px 3px">
         <div class="container">
-            <div class="row align-items-center mt-1 position-relative d-flex">
+            <div class="row align-items-center px-0 mt-1 position-relative d-flex">
                 <!-- Logo -->
                 <div class="col-4 col-sm-4 text-sm-start ">
                     <!-- Logo -->
@@ -88,7 +88,7 @@
                     @if (Session["IDkh"] != null)
                     {
                         <div class="dropdown">
-                            <a href="#" class="nav-link fs-13 text-dark">@Session["TenKH"]</a>
+                            <a href="#" class=" fs-13 btn btn-success">@Session["TenKH"]</a>
                             <div class="dropdown-content fw-bold">
                                 <a href="@Url.Action("InfoCustomer", "LoginUser")">Thông tin</a>
                                 <a href="~/KhachHangs/LichSuDonHang">Đơn hàng</a>
@@ -106,15 +106,12 @@
                     }
                     else
                     {
-                        <div class="d-inline-flex gap-3">
-                            <a href="~/LoginUser/login" id="id_dangNhap" class="page-link text-dark fs-13">
-                                <i class="bi bi-box-arrow-in-right"></i>
+                        <div class="d-inline-flex gap-2">
+                            <a href="~/loginuser/login" id="id_dangNhap" class="placeholder-wave fw-semibold btn btn-dark  fs-13" alt ="Tài khoản">
+                                <i class="bi bi-person-circle"></i>
                                 <span class="d-none d-sm-inline">Đăng nhập</span>
                             </a>
-                            <a href="~/LoginUser/RegisterCus" id="id_dangKy" class="nav-item nav-link text-dark fs-13">
-                                <i class="bi bi-person-plus"></i>
-                                <span class="d-none d-sm-inline">Đăng ký</span>
-                            </a>
+                            
                         </div>
 
                     }
@@ -126,19 +123,14 @@
 
 
 
-    <div class="container-fluid mt-5 py-5 bg-secondary-subtle">
+    <div class="container mt-5 pt-5 p-0 bg-secondary-subtle">
         @*@Html.Partial("_Breadcrumb")*@
-        <div class="container  ">
-            @RenderBody()
-        </div>
+
+        @RenderBody()
+
     </div>
-    
-    <div class="container  py-0 bg-secondary-subtle">
-        @Html.Action("TopBanChay", "DonHangCTs", new { categoryId = 1 })
-    </div>
-    <div class="container  py-3  bg-secondary-subtle">
-        @Html.Action("RecentOrders", "DonHangCTs")
-    </div>
+
+
 
 
     <div class="d-inline-flex">
@@ -319,16 +311,36 @@
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script>
-    $(document).ready(function() {
-    $("#searchInput").on("input", function() {
-        var searchTerm = $(this).val().trim();
+$(document).ready(function() {
+    // Hàm debounce để delay input
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
 
+    // Hàm hiển thị loading
+    function showLoading() {
+        $("#suggestionsBox").html("<div class='loading'>Đang tải...</div>").show();
+    }
+
+    // Hàm xử lý tìm kiếm
+    const handleSearch = debounce(function(searchTerm) {
         if (searchTerm.length >= 1) {
             $.ajax({
                 url: '@Url.Action("SearchSuggestions", "SanPhams")',
                 type: 'GET',
                 data: { query: searchTerm },
                 dataType: 'json',
+                beforeSend: function() {
+                    showLoading();
+                },
                 success: function(data) {
                     console.log("Dữ liệu trả về:", data);
 
@@ -340,11 +352,9 @@
                             var tenSP = item.TenSP || "Không có tên";
                             var giaBan = item.GiaBan ? item.GiaBan.toLocaleString('vi-VN') + " VND" : "Không có giá";
 
-
                             suggestionsHtml += `
                                 <li class='suggestion-item'>
                                     <div class='suggestion-content d-flex align-items-center'>
-
                                         <div>
                                             <div class='suggestion-name'>${tenSP}</div>
                                             <div class='suggestion-price'>${giaBan}</div>
@@ -360,26 +370,34 @@
                 },
                 error: function(xhr, status, error) {
                     console.error("Lỗi AJAX:", status, error);
+                    $("#suggestionsBox").empty().hide();
                 }
             });
         } else {
             $("#suggestionsBox").empty().hide();
         }
+    }, 300); // Delay 300ms
+
+    // Event input
+    $("#searchInput").on("input", function() {
+        var searchTerm = $(this).val().trim();
+        handleSearch(searchTerm);
     });
 
+    // Event click suggestion
     $(document).on("click", ".suggestion-item", function() {
         var selectedText = $(this).find(".suggestion-name").text();
         $("#searchInput").val(selectedText);
         $("#suggestionsBox").empty().hide();
     });
 
+    // Event click outside
     $(document).on("click", function(event) {
         if (!$(event.target).closest("#searchInput, #suggestionsBox").length) {
             $("#suggestionsBox").empty().hide();
         }
     });
 });
-
     </script>
     @*<script>
             // Hiển thị loading khi người dùng click vào liên kết

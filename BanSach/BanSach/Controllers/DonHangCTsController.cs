@@ -76,7 +76,7 @@ namespace BanSach.Controllers
             return View(donHangCTs);
         }
 
-        public ActionResult DetailsKH(int? id)
+        public ActionResult DonHangChiTiet(int? id)
         {
             // Kiểm tra id null hoặc không hợp lệ
             if (id == null)
@@ -141,7 +141,7 @@ namespace BanSach.Controllers
                                 price = d.SanPham.GiaBan
                             })
                             .OrderByDescending(gr => gr.Sum(d => d.SoLuong)) // Lấy tổng số lượng bán
-                            .Take(15) // Lấy 10 sản phẩm bán chạy nhất
+                            .Take(20) // Lấy 15 sản phẩm bán chạy nhất
                             .Select(gr => new ViewModel
                             {
                                 IdPro = gr.Key.idPro,
@@ -327,7 +327,7 @@ namespace BanSach.Controllers
             if (donHangCT == null)
             {
                 TempData["ErrorMessage"] = "Không tìm thấy sản phẩm trong đơn hàng.";
-                return RedirectToAction("DetailsKH", new { ID = idDonHang });
+                return RedirectToAction("DonHangChiTiet", new { ID = idDonHang });
             }
 
             // Kiểm tra xem đã đánh giá chưa
@@ -336,7 +336,7 @@ namespace BanSach.Controllers
             if (existingDanhGia != null)
             {
                 TempData["ErrorMessage"] = "Bạn đã đánh giá sản phẩm này trong đơn hàng.";
-                return RedirectToAction("DetailsKH", new { ID = idDonHang });
+                return RedirectToAction("DonHangChiTiet", new { ID = idDonHang });
             }
 
             // Thêm đánh giá mới
@@ -363,7 +363,7 @@ namespace BanSach.Controllers
             db.SaveChanges();
 
             TempData["SuccessMessage"] = "Đánh giá của bạn đã được gửi thành công.";
-            return RedirectToAction("DetailsKH", new { ID = idDonHang });
+            return RedirectToAction("DonHangChiTiet", new { ID = idDonHang });
         }
 
         protected override void Dispose(bool disposing)

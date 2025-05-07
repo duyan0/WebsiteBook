@@ -245,49 +245,50 @@ namespace BanSach.Controllers
         {
             // Lấy ID khách hàng từ session
             int? currentCustomerId = Session["IDkh"] as int?;
-
             if (!currentCustomerId.HasValue)
             {
-                return RedirectToAction("LoginAccountCus", "LoginUser");
+                return RedirectToAction("Login", "LoginUser");
             }
 
-            // Truy vấn các đơn hàng của khách hàng
-            var orders = db.DonHang
-                .Where(dh => dh.IDkh == currentCustomerId.Value)
-                .OrderByDescending(dh => dh.NgayDatHang) // Sắp xếp theo ngày đặt hàng giảm dần
-                .Include(dh => dh.DonHangCT) // Bao gồm các chi tiết đơn hàng
-                .ToList();
-
-            // Khởi tạo State cho từng đơn hàng
-            foreach (var order in orders)
-            {
-                order.InitializeState();
-            }
-
-            // Phân loại đơn hàng theo trạng thái
-            var confirmedOrders = orders.Where(dh => dh.TrangThai == "Đã xác nhận").ToList();
-            var pendingOrders = orders.Where(dh => dh.TrangThai == "Chờ xử lý").ToList();
-            var canceledOrders = orders.Where(dh => dh.TrangThai == "Đã huỷ").ToList();
-            var receivedOrders = orders.Where(dh => dh.TrangThai == "Đã nhận hàng").ToList();
-
-            // Gộp lại theo trạng thái đã phân loại
-            var allOrders = confirmedOrders
-                .Concat(pendingOrders)
-                .Concat(canceledOrders)
-                .Concat(receivedOrders)
-                .ToList();
-
-            // Sắp xếp theo ngày đặt hàng giảm dần
-            allOrders = allOrders.OrderByDescending(dh => dh.NgayDatHang).ToList();
-
-            // Phân trang
-            int pageSize = 10; // Số đơn hàng mỗi trang
+            // Số đơn hàng mỗi trang
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
 
-            // Chuyển đổi từ List sang IPagedList
-            var pagedOrders = allOrders.ToPagedList(pageNumber, pageSize);
+            // Truy vấn các đơn hàng theo trạng thái
+            var confirmedOrders = db.DonHang
+                .Where(dh => dh.IDkh == currentCustomerId.Value && dh.TrangThai == "Đã xác nhận")
+                .OrderByDescending(dh => dh.NgayDatHang)
+                .Include(dh => dh.DonHangCT)
+                .ToPagedList(pageNumber, pageSize);
 
-            return View(pagedOrders);
+            var pendingOrders = db.DonHang
+                .Where(dh => dh.IDkh == currentCustomerId.Value && dh.TrangThai == "Chờ xử lý")
+                .OrderByDescending(dh => dh.NgayDatHang)
+                .Include(dh => dh.DonHangCT)
+                .ToPagedList(pageNumber, pageSize);
+
+            var canceledOrders = db.DonHang
+                .Where(dh => dh.IDkh == currentCustomerId.Value && dh.TrangThai == "Đã huỷ")
+                .OrderByDescending(dh => dh.NgayDatHang)
+                .Include(dh => dh.DonHangCT)
+                .ToPagedList(pageNumber, pageSize);
+
+            var receivedOrders = db.DonHang
+                .Where(dh => dh.IDkh == currentCustomerId.Value && dh.TrangThai == "Đã nhận hàng")
+                .OrderByDescending(dh => dh.NgayDatHang)
+                .Include(dh => dh.DonHangCT)
+                .ToPagedList(pageNumber, pageSize);
+
+            // Tạo ViewModel để truyền dữ liệu
+            var viewModel = new OrderHistoryViewModel
+            {
+                ConfirmedOrders = confirmedOrders,
+                PendingOrders = pendingOrders,
+                CanceledOrders = canceledOrders,
+                ReceivedOrders = receivedOrders
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]

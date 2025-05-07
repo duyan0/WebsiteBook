@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<BanSach.Models.Slide>
-<div id="carouselExampleAutoplaying" class="carousel slide " data-bs-ride="carousel">
+<div id="carouselExampleAutoplaying" class="carousel container slide " data-bs-ride="carousel">
     <div class="carousel-inner">
         @foreach (var item in Model)
         {
             <div class="carousel-item @(item.Slide_ID == Model.FirstOrDefault().Slide_ID ? "active" : "")">
                 <a href="@item.Link">
                     <img src="~/assets/images/slide/@item.HinhAnh" 
-                         class="rounded-1  w-100" 
+                         class="rounded  w-100" 
                          alt="@item.MoTa" 
                          style="max-height:500px;">
                 </a>

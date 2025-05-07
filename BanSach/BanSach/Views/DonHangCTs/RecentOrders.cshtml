@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<BanSach.Models.RecentOrderViewModel>
 
-<div class="container-fluid bg-white rounded-2  mt-2 ">
+<div class="container bg-white rounded-2  mt-3 ">
 
     <h5 class="text-center text-dark fs-4 fw-semibold py-2">Bán gần đây nhất</h5>
 
-    <div class="row p-1 justify-content-start">
+    <div class="row p-1 justify-content-start row-cols-lg-5">
         @foreach (var i in Model.Take(15))
         {
         <div class="col-lg-3 col-sm-6 col-6 col-sm-6  p-1 ">
-            <div class="card product-item h-100 p-1 ">
+            <div class="card product-item h-100 p-1 user-select-none">
                 <a href="@Url.Action("TrangSP", "SanPhams", new { id = i.Id })" class="text-decoration-none">
                     <div class="card-body  p-2">
                         <!-- Ảnh sản phẩm với kích thước cố định -->
@@ -18,7 +18,7 @@
                         <!-- Giá sản phẩm -->
                         <p class="mb-2 text-danger fw-semibold">@i.Gia.ToString("#,#") VND</p>
                         <!-- Ngày đặt hàng -->
-                        <p class="mb-0 text-bg-dark placeholder-wave rounded-1 text-center " title="@i.NgayDatHang.ToString("dd/MM/yyyy HH:mm:ss")" style="font-size:15px;">
+                        <p class="mb-0 text-bg-danger placeholder-wave rounded-1 text-center " title="@i.NgayDatHang.ToString("dd/MM/yyyy HH:mm:ss")" style="font-size:15px;">
                             @i.NgayDatHang.ToString("dd/MM/yyyy HH:mm:ss")
                         </p>
                     </div>

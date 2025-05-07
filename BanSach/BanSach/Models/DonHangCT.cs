@@ -11,7 +11,7 @@ namespace BanSach.Models
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class DonHangCT
     {
         public int ID_ctdh { get; set; }
@@ -19,16 +19,8 @@ namespace BanSach.Models
         public int IDDonHang { get; set; }
         public int SoLuong { get; set; }
         public decimal Gia { get; set; }
-
+    
         public virtual DonHang DonHang { get; set; }
         public virtual SanPham SanPham { get; set; }
-
-        public decimal TongTien
-        {
-            get
-            {
-                return SoLuong * Gia;
-            }
-        }
     }
 }

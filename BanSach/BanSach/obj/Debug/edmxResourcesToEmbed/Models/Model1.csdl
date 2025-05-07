@@ -1,16 +1,90 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="SachModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="db_Book" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Admin" EntityType="SachModel.Admin" />
+    <EntitySet Name="Banner" EntityType="SachModel.Banner" />
+    <EntitySet Name="DanhGiaSanPham" EntityType="SachModel.DanhGiaSanPham" />
+    <EntitySet Name="DanhMuc" EntityType="SachModel.DanhMuc" />
+    <EntitySet Name="DanhMuc_TheLoai" EntityType="SachModel.DanhMuc_TheLoai" />
+    <EntitySet Name="DonHang" EntityType="SachModel.DonHang" />
+    <EntitySet Name="DonHangCT" EntityType="SachModel.DonHangCT" />
+    <EntitySet Name="FlashSale" EntityType="SachModel.FlashSale" />
+    <EntitySet Name="FlashSale_SanPham" EntityType="SachModel.FlashSale_SanPham" />
+    <EntitySet Name="KhachHang" EntityType="SachModel.KhachHang" />
+    <EntitySet Name="KhuyenMai" EntityType="SachModel.KhuyenMai" />
+    <EntitySet Name="NhaXuatBan" EntityType="SachModel.NhaXuatBan" />
+    <EntitySet Name="SanPham" EntityType="SachModel.SanPham" />
+    <EntitySet Name="Slide" EntityType="SachModel.Slide" />
+    <EntitySet Name="TacGia" EntityType="SachModel.TacGia" />
+    <EntitySet Name="TheLoai" EntityType="SachModel.TheLoai" />
+    <AssociationSet Name="FK__DanhGiaSa__IDDon__75A278F5" Association="SachModel.FK__DanhGiaSa__IDDon__75A278F5">
+      <End Role="DonHang" EntitySet="DonHang" />
+      <End Role="DanhGiaSanPham" EntitySet="DanhGiaSanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DanhGiaSan__IDkh__73BA3083" Association="SachModel.FK__DanhGiaSan__IDkh__73BA3083">
+      <End Role="KhachHang" EntitySet="KhachHang" />
+      <End Role="DanhGiaSanPham" EntitySet="DanhGiaSanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DanhGiaSan__IDsp__74AE54BC" Association="SachModel.FK__DanhGiaSan__IDsp__74AE54BC">
+      <End Role="SanPham" EntitySet="SanPham" />
+      <End Role="DanhGiaSanPham" EntitySet="DanhGiaSanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DanhMuc_T__DanhM__4E88ABD4" Association="SachModel.FK__DanhMuc_T__DanhM__4E88ABD4">
+      <End Role="DanhMuc" EntitySet="DanhMuc" />
+      <End Role="DanhMuc_TheLoai" EntitySet="DanhMuc_TheLoai" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DanhMuc_T__TheLo__4F7CD00D" Association="SachModel.FK__DanhMuc_T__TheLo__4F7CD00D">
+      <End Role="TheLoai" EntitySet="TheLoai" />
+      <End Role="DanhMuc_TheLoai" EntitySet="DanhMuc_TheLoai" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DonHang__IDkh__693CA210" Association="SachModel.FK__DonHang__IDkh__693CA210">
+      <End Role="KhachHang" EntitySet="KhachHang" />
+      <End Role="DonHang" EntitySet="DonHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DonHangCT__IDDon__6D0D32F4" Association="SachModel.FK__DonHangCT__IDDon__6D0D32F4">
+      <End Role="DonHang" EntitySet="DonHang" />
+      <End Role="DonHangCT" EntitySet="DonHangCT" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DonHangCT__IDSan__6C190EBB" Association="SachModel.FK__DonHangCT__IDSan__6C190EBB">
+      <End Role="SanPham" EntitySet="SanPham" />
+      <End Role="DonHangCT" EntitySet="DonHangCT" />
+    </AssociationSet>
+    <AssociationSet Name="FK__FlashSale___IDfs__656C112C" Association="SachModel.FK__FlashSale___IDfs__656C112C">
+      <End Role="FlashSale" EntitySet="FlashSale" />
+      <End Role="FlashSale_SanPham" EntitySet="FlashSale_SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__FlashSale___IDsp__66603565" Association="SachModel.FK__FlashSale___IDsp__66603565">
+      <End Role="SanPham" EntitySet="SanPham" />
+      <End Role="FlashSale_SanPham" EntitySet="FlashSale_SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SanPham_KhuyenMai" Association="SachModel.FK_SanPham_KhuyenMai">
+      <End Role="KhuyenMai" EntitySet="KhuyenMai" />
+      <End Role="SanPham" EntitySet="SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SanPham_NhaXuatBan" Association="SachModel.FK_SanPham_NhaXuatBan">
+      <End Role="NhaXuatBan" EntitySet="NhaXuatBan" />
+      <End Role="SanPham" EntitySet="SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SanPham_TacGia" Association="SachModel.FK_SanPham_TacGia">
+      <End Role="TacGia" EntitySet="TacGia" />
+      <End Role="SanPham" EntitySet="SanPham" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SanPham_TheLoai" Association="SachModel.FK_SanPham_TheLoai">
+      <End Role="TheLoai" EntitySet="TheLoai" />
+      <End Role="SanPham" EntitySet="SanPham" />
+    </AssociationSet>
+  </EntityContainer>
   <EntityType Name="Admin">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="HoTen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="HoTen" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="SoDT" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="VaiTro" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="TKhoan" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="MKhau" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SoDT" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="VaiTro" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TKhoan" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MKhau" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Banner">
     <Key>
@@ -34,18 +108,19 @@
     <Property Name="DiemDanhGia" Type="Int32" Nullable="false" />
     <Property Name="NhanXet" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="NgayDanhGia" Type="DateTime" Precision="3" />
+    <Property Name="TrangThai" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
     <Property Name="PhanHoi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="DonHang" Relationship="Self.FK__DanhGiaSa__IDDon__6C190EBB" FromRole="DanhGiaSanPham" ToRole="DonHang" />
-    <NavigationProperty Name="KhachHang" Relationship="Self.FK__DanhGiaSan__IDkh__6A30C649" FromRole="DanhGiaSanPham" ToRole="KhachHang" />
-    <NavigationProperty Name="SanPham" Relationship="Self.FK__DanhGiaSan__IDsp__6B24EA82" FromRole="DanhGiaSanPham" ToRole="SanPham" />
+    <NavigationProperty Name="DonHang" Relationship="SachModel.FK__DanhGiaSa__IDDon__75A278F5" FromRole="DanhGiaSanPham" ToRole="DonHang" />
+    <NavigationProperty Name="KhachHang" Relationship="SachModel.FK__DanhGiaSan__IDkh__73BA3083" FromRole="DanhGiaSanPham" ToRole="KhachHang" />
+    <NavigationProperty Name="SanPham" Relationship="SachModel.FK__DanhGiaSan__IDsp__74AE54BC" FromRole="DanhGiaSanPham" ToRole="SanPham" />
   </EntityType>
   <EntityType Name="DanhMuc">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TenDanhMuc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="DanhMuc_TheLoai" Relationship="Self.FK__DanhMuc_T__DanhM__4E88ABD4" FromRole="DanhMuc" ToRole="DanhMuc_TheLoai" />
+    <Property Name="TenDanhMuc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DanhMuc_TheLoai" Relationship="SachModel.FK__DanhMuc_T__DanhM__4E88ABD4" FromRole="DanhMuc" ToRole="DanhMuc_TheLoai" />
   </EntityType>
   <EntityType Name="DanhMuc_TheLoai">
     <Key>
@@ -54,9 +129,9 @@
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="DanhMuc_ID" Type="Int32" Nullable="false" />
     <Property Name="TheLoai_ID" Type="Int32" Nullable="false" />
-    <Property Name="HinhAnh" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="DanhMuc" Relationship="Self.FK__DanhMuc_T__DanhM__4E88ABD4" FromRole="DanhMuc_TheLoai" ToRole="DanhMuc" />
-    <NavigationProperty Name="TheLoai" Relationship="Self.FK__DanhMuc_T__TheLo__4F7CD00D" FromRole="DanhMuc_TheLoai" ToRole="TheLoai" />
+    <Property Name="HinhAnh" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DanhMuc" Relationship="SachModel.FK__DanhMuc_T__DanhM__4E88ABD4" FromRole="DanhMuc_TheLoai" ToRole="DanhMuc" />
+    <NavigationProperty Name="TheLoai" Relationship="SachModel.FK__DanhMuc_T__TheLo__4F7CD00D" FromRole="DanhMuc_TheLoai" ToRole="TheLoai" />
   </EntityType>
   <EntityType Name="DonHang">
     <Key>
@@ -68,9 +143,11 @@
     <Property Name="DiaChi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="NgayNhanHang" Type="DateTime" Precision="3" />
     <Property Name="TrangThai" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="DanhGiaSanPham" Relationship="Self.FK__DanhGiaSa__IDDon__6C190EBB" FromRole="DonHang" ToRole="DanhGiaSanPham" />
-    <NavigationProperty Name="KhachHang" Relationship="Self.FK__DonHang__IDkh__5FB337D6" FromRole="DonHang" ToRole="KhachHang" />
-    <NavigationProperty Name="DonHangCT" Relationship="Self.FK__DonHangCT__IDDon__6383C8BA" FromRole="DonHang" ToRole="DonHangCT" />
+    <Property Name="PhuongThucThanhToan" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="TongTien" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <NavigationProperty Name="DanhGiaSanPham" Relationship="SachModel.FK__DanhGiaSa__IDDon__75A278F5" FromRole="DonHang" ToRole="DanhGiaSanPham" />
+    <NavigationProperty Name="KhachHang" Relationship="SachModel.FK__DonHang__IDkh__693CA210" FromRole="DonHang" ToRole="KhachHang" />
+    <NavigationProperty Name="DonHangCT" Relationship="SachModel.FK__DonHangCT__IDDon__6D0D32F4" FromRole="DonHang" ToRole="DonHangCT" />
   </EntityType>
   <EntityType Name="DonHangCT">
     <Key>
@@ -80,9 +157,32 @@
     <Property Name="IDSanPham" Type="Int32" Nullable="false" />
     <Property Name="IDDonHang" Type="Int32" Nullable="false" />
     <Property Name="SoLuong" Type="Int32" Nullable="false" />
-    <Property Name="Gia" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-    <NavigationProperty Name="DonHang" Relationship="Self.FK__DonHangCT__IDDon__6383C8BA" FromRole="DonHangCT" ToRole="DonHang" />
-    <NavigationProperty Name="SanPham" Relationship="Self.FK__DonHangCT__IDSan__628FA481" FromRole="DonHangCT" ToRole="SanPham" />
+    <Property Name="Gia" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <NavigationProperty Name="DonHang" Relationship="SachModel.FK__DonHangCT__IDDon__6D0D32F4" FromRole="DonHangCT" ToRole="DonHang" />
+    <NavigationProperty Name="SanPham" Relationship="SachModel.FK__DonHangCT__IDSan__6C190EBB" FromRole="DonHangCT" ToRole="SanPham" />
+  </EntityType>
+  <EntityType Name="FlashSale">
+    <Key>
+      <PropertyRef Name="IDfs" />
+    </Key>
+    <Property Name="IDfs" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenFlashSale" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="GioBatDau" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="GioKetThuc" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="NgayApDung" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="MucGiamGia" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+    <Property Name="TrangThai" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="FlashSale_SanPham" Relationship="SachModel.FK__FlashSale___IDfs__656C112C" FromRole="FlashSale" ToRole="FlashSale_SanPham" />
+  </EntityType>
+  <EntityType Name="FlashSale_SanPham">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IDfs" Type="Int32" Nullable="false" />
+    <Property Name="IDsp" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="FlashSale" Relationship="SachModel.FK__FlashSale___IDfs__656C112C" FromRole="FlashSale_SanPham" ToRole="FlashSale" />
+    <NavigationProperty Name="SanPham" Relationship="SachModel.FK__FlashSale___IDsp__66603565" FromRole="FlashSale_SanPham" ToRole="SanPham" />
   </EntityType>
   <EntityType Name="KhachHang">
     <Key>
@@ -95,49 +195,49 @@
     <Property Name="TKhoan" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="MKhau" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="DiaChi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="TrangThaiTaiKhoan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TrangThaiTaiKhoan" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="OTP" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
     <Property Name="OTPExpiry" Type="DateTime" Precision="3" />
     <Property Name="NgayTao" Type="DateTime" Precision="3" />
     <Property Name="NgayCapNhat" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="DanhGiaSanPham" Relationship="Self.FK__DanhGiaSan__IDkh__6A30C649" FromRole="KhachHang" ToRole="DanhGiaSanPham" />
-    <NavigationProperty Name="DonHang" Relationship="Self.FK__DonHang__IDkh__5FB337D6" FromRole="KhachHang" ToRole="DonHang" />
+    <NavigationProperty Name="DanhGiaSanPham" Relationship="SachModel.FK__DanhGiaSan__IDkh__73BA3083" FromRole="KhachHang" ToRole="DanhGiaSanPham" />
+    <NavigationProperty Name="DonHang" Relationship="SachModel.FK__DonHang__IDkh__693CA210" FromRole="KhachHang" ToRole="DonHang" />
   </EntityType>
   <EntityType Name="KhuyenMai">
     <Key>
       <PropertyRef Name="IDkm" />
     </Key>
     <Property Name="IDkm" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TenKhuyenMai" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TenKhuyenMai" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="NgayBatDau" Type="DateTime" Precision="0" />
     <Property Name="NgayKetThuc" Type="DateTime" Precision="0" />
     <Property Name="MucGiamGia" Type="Decimal" Precision="5" Scale="2" />
     <Property Name="MoTa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="NgayTao" Type="DateTime" Precision="3" />
     <Property Name="NgayCapNhat" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="SanPham" Relationship="Self.FK_SanPham_KhuyenMai" FromRole="KhuyenMai" ToRole="SanPham" />
+    <NavigationProperty Name="SanPham" Relationship="SachModel.FK_SanPham_KhuyenMai" FromRole="KhuyenMai" ToRole="SanPham" />
   </EntityType>
   <EntityType Name="NhaXuatBan">
     <Key>
       <PropertyRef Name="IDnxb" />
     </Key>
     <Property Name="IDnxb" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Tennxb" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Tennxb" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="DiaChi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="SDT" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
     <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="SanPham" Relationship="Self.FK_SanPham_NhaXuatBan" FromRole="NhaXuatBan" ToRole="SanPham" />
+    <NavigationProperty Name="SanPham" Relationship="SachModel.FK_SanPham_NhaXuatBan" FromRole="NhaXuatBan" ToRole="SanPham" />
   </EntityType>
   <EntityType Name="SanPham">
     <Key>
       <PropertyRef Name="IDsp" />
     </Key>
     <Property Name="IDsp" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TenSP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TenSP" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="MoTa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="IDtl" Type="Int32" Nullable="false" />
-    <Property Name="GiaBan" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-    <Property Name="HinhAnh" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="GiaBan" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="HinhAnh" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="IDtg" Type="Int32" Nullable="false" />
     <Property Name="IDnxb" Type="Int32" Nullable="false" />
     <Property Name="IDkm" Type="Int32" Nullable="false" />
@@ -153,12 +253,13 @@
     <Property Name="NgayTao" Type="DateTime" Precision="3" />
     <Property Name="NgayCapNhat" Type="DateTime" Precision="3" />
     <Property Name="DiemDanhGiaTrungBinh" Type="Decimal" Precision="3" Scale="1" />
-    <NavigationProperty Name="DanhGiaSanPham" Relationship="Self.FK__DanhGiaSan__IDsp__6B24EA82" FromRole="SanPham" ToRole="DanhGiaSanPham" />
-    <NavigationProperty Name="DonHangCT" Relationship="Self.FK__DonHangCT__IDSan__628FA481" FromRole="SanPham" ToRole="DonHangCT" />
-    <NavigationProperty Name="KhuyenMai" Relationship="Self.FK_SanPham_KhuyenMai" FromRole="SanPham" ToRole="KhuyenMai" />
-    <NavigationProperty Name="NhaXuatBan" Relationship="Self.FK_SanPham_NhaXuatBan" FromRole="SanPham" ToRole="NhaXuatBan" />
-    <NavigationProperty Name="TacGia" Relationship="Self.FK_SanPham_TacGia" FromRole="SanPham" ToRole="TacGia" />
-    <NavigationProperty Name="TheLoai" Relationship="Self.FK_SanPham_TheLoai" FromRole="SanPham" ToRole="TheLoai" />
+    <NavigationProperty Name="DanhGiaSanPham" Relationship="SachModel.FK__DanhGiaSan__IDsp__74AE54BC" FromRole="SanPham" ToRole="DanhGiaSanPham" />
+    <NavigationProperty Name="DonHangCT" Relationship="SachModel.FK__DonHangCT__IDSan__6C190EBB" FromRole="SanPham" ToRole="DonHangCT" />
+    <NavigationProperty Name="FlashSale_SanPham" Relationship="SachModel.FK__FlashSale___IDsp__66603565" FromRole="SanPham" ToRole="FlashSale_SanPham" />
+    <NavigationProperty Name="KhuyenMai" Relationship="SachModel.FK_SanPham_KhuyenMai" FromRole="SanPham" ToRole="KhuyenMai" />
+    <NavigationProperty Name="NhaXuatBan" Relationship="SachModel.FK_SanPham_NhaXuatBan" FromRole="SanPham" ToRole="NhaXuatBan" />
+    <NavigationProperty Name="TacGia" Relationship="SachModel.FK_SanPham_TacGia" FromRole="SanPham" ToRole="TacGia" />
+    <NavigationProperty Name="TheLoai" Relationship="SachModel.FK_SanPham_TheLoai" FromRole="SanPham" ToRole="TheLoai" />
   </EntityType>
   <EntityType Name="Slide">
     <Key>
@@ -176,25 +277,25 @@
       <PropertyRef Name="IDtg" />
     </Key>
     <Property Name="IDtg" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TenTG" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TenTG" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="NgaySinh" Type="DateTime" Precision="0" />
     <Property Name="QuocGia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="TieuSu" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
     <Property Name="HinhAnh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="SanPham" Relationship="Self.FK_SanPham_TacGia" FromRole="TacGia" ToRole="SanPham" />
+    <NavigationProperty Name="SanPham" Relationship="SachModel.FK_SanPham_TacGia" FromRole="TacGia" ToRole="SanPham" />
   </EntityType>
   <EntityType Name="TheLoai">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TenTheLoai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="DanhMuc_TheLoai" Relationship="Self.FK__DanhMuc_T__TheLo__4F7CD00D" FromRole="TheLoai" ToRole="DanhMuc_TheLoai" />
-    <NavigationProperty Name="SanPham" Relationship="Self.FK_SanPham_TheLoai" FromRole="TheLoai" ToRole="SanPham" />
+    <Property Name="TenTheLoai" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DanhMuc_TheLoai" Relationship="SachModel.FK__DanhMuc_T__TheLo__4F7CD00D" FromRole="TheLoai" ToRole="DanhMuc_TheLoai" />
+    <NavigationProperty Name="SanPham" Relationship="SachModel.FK_SanPham_TheLoai" FromRole="TheLoai" ToRole="SanPham" />
   </EntityType>
-  <Association Name="FK__DanhGiaSa__IDDon__6C190EBB">
-    <End Role="DonHang" Type="Self.DonHang" Multiplicity="0..1" />
-    <End Role="DanhGiaSanPham" Type="Self.DanhGiaSanPham" Multiplicity="*" />
+  <Association Name="FK__DanhGiaSa__IDDon__75A278F5">
+    <End Type="SachModel.DonHang" Role="DonHang" Multiplicity="0..1" />
+    <End Type="SachModel.DanhGiaSanPham" Role="DanhGiaSanPham" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="DonHang">
         <PropertyRef Name="IDdh" />
@@ -204,9 +305,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DanhGiaSan__IDkh__6A30C649">
-    <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="1" />
-    <End Role="DanhGiaSanPham" Type="Self.DanhGiaSanPham" Multiplicity="*" />
+  <Association Name="FK__DanhGiaSan__IDkh__73BA3083">
+    <End Type="SachModel.KhachHang" Role="KhachHang" Multiplicity="1" />
+    <End Type="SachModel.DanhGiaSanPham" Role="DanhGiaSanPham" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="KhachHang">
         <PropertyRef Name="IDkh" />
@@ -216,9 +317,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DanhGiaSan__IDsp__6B24EA82">
-    <End Role="SanPham" Type="Self.SanPham" Multiplicity="1" />
-    <End Role="DanhGiaSanPham" Type="Self.DanhGiaSanPham" Multiplicity="*" />
+  <Association Name="FK__DanhGiaSan__IDsp__74AE54BC">
+    <End Type="SachModel.SanPham" Role="SanPham" Multiplicity="1" />
+    <End Type="SachModel.DanhGiaSanPham" Role="DanhGiaSanPham" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="SanPham">
         <PropertyRef Name="IDsp" />
@@ -229,8 +330,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__DanhMuc_T__DanhM__4E88ABD4">
-    <End Role="DanhMuc" Type="Self.DanhMuc" Multiplicity="1" />
-    <End Role="DanhMuc_TheLoai" Type="Self.DanhMuc_TheLoai" Multiplicity="*" />
+    <End Type="SachModel.DanhMuc" Role="DanhMuc" Multiplicity="1" />
+    <End Type="SachModel.DanhMuc_TheLoai" Role="DanhMuc_TheLoai" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="DanhMuc">
         <PropertyRef Name="ID" />
@@ -241,8 +342,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__DanhMuc_T__TheLo__4F7CD00D">
-    <End Role="TheLoai" Type="Self.TheLoai" Multiplicity="1" />
-    <End Role="DanhMuc_TheLoai" Type="Self.DanhMuc_TheLoai" Multiplicity="*" />
+    <End Type="SachModel.TheLoai" Role="TheLoai" Multiplicity="1" />
+    <End Type="SachModel.DanhMuc_TheLoai" Role="DanhMuc_TheLoai" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="TheLoai">
         <PropertyRef Name="ID" />
@@ -252,9 +353,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DonHang__IDkh__5FB337D6">
-    <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="0..1" />
-    <End Role="DonHang" Type="Self.DonHang" Multiplicity="*" />
+  <Association Name="FK__DonHang__IDkh__693CA210">
+    <End Type="SachModel.KhachHang" Role="KhachHang" Multiplicity="0..1" />
+    <End Type="SachModel.DonHang" Role="DonHang" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="KhachHang">
         <PropertyRef Name="IDkh" />
@@ -264,9 +365,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DonHangCT__IDDon__6383C8BA">
-    <End Role="DonHang" Type="Self.DonHang" Multiplicity="1" />
-    <End Role="DonHangCT" Type="Self.DonHangCT" Multiplicity="*" />
+  <Association Name="FK__DonHangCT__IDDon__6D0D32F4">
+    <End Type="SachModel.DonHang" Role="DonHang" Multiplicity="1" />
+    <End Type="SachModel.DonHangCT" Role="DonHangCT" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="DonHang">
         <PropertyRef Name="IDdh" />
@@ -276,9 +377,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DonHangCT__IDSan__628FA481">
-    <End Role="SanPham" Type="Self.SanPham" Multiplicity="1" />
-    <End Role="DonHangCT" Type="Self.DonHangCT" Multiplicity="*" />
+  <Association Name="FK__DonHangCT__IDSan__6C190EBB">
+    <End Type="SachModel.SanPham" Role="SanPham" Multiplicity="1" />
+    <End Type="SachModel.DonHangCT" Role="DonHangCT" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="SanPham">
         <PropertyRef Name="IDsp" />
@@ -288,9 +389,33 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__FlashSale___IDfs__656C112C">
+    <End Type="SachModel.FlashSale" Role="FlashSale" Multiplicity="1" />
+    <End Type="SachModel.FlashSale_SanPham" Role="FlashSale_SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FlashSale">
+        <PropertyRef Name="IDfs" />
+      </Principal>
+      <Dependent Role="FlashSale_SanPham">
+        <PropertyRef Name="IDfs" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__FlashSale___IDsp__66603565">
+    <End Type="SachModel.SanPham" Role="SanPham" Multiplicity="1" />
+    <End Type="SachModel.FlashSale_SanPham" Role="FlashSale_SanPham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SanPham">
+        <PropertyRef Name="IDsp" />
+      </Principal>
+      <Dependent Role="FlashSale_SanPham">
+        <PropertyRef Name="IDsp" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_SanPham_KhuyenMai">
-    <End Role="KhuyenMai" Type="Self.KhuyenMai" Multiplicity="1" />
-    <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
+    <End Type="SachModel.KhuyenMai" Role="KhuyenMai" Multiplicity="1" />
+    <End Type="SachModel.SanPham" Role="SanPham" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="KhuyenMai">
         <PropertyRef Name="IDkm" />
@@ -301,8 +426,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_SanPham_NhaXuatBan">
-    <End Role="NhaXuatBan" Type="Self.NhaXuatBan" Multiplicity="1" />
-    <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
+    <End Type="SachModel.NhaXuatBan" Role="NhaXuatBan" Multiplicity="1" />
+    <End Type="SachModel.SanPham" Role="SanPham" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="NhaXuatBan">
         <PropertyRef Name="IDnxb" />
@@ -313,8 +438,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_SanPham_TacGia">
-    <End Role="TacGia" Type="Self.TacGia" Multiplicity="1" />
-    <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
+    <End Type="SachModel.TacGia" Role="TacGia" Multiplicity="1" />
+    <End Type="SachModel.SanPham" Role="SanPham" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="TacGia">
         <PropertyRef Name="IDtg" />
@@ -325,8 +450,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_SanPham_TheLoai">
-    <End Role="TheLoai" Type="Self.TheLoai" Multiplicity="1" />
-    <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
+    <End Type="SachModel.TheLoai" Role="TheLoai" Multiplicity="1" />
+    <End Type="SachModel.SanPham" Role="SanPham" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="TheLoai">
         <PropertyRef Name="ID" />
@@ -336,68 +461,4 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="db_Book" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Admin" EntityType="Self.Admin" />
-    <EntitySet Name="Banner" EntityType="Self.Banner" />
-    <EntitySet Name="DanhGiaSanPham" EntityType="Self.DanhGiaSanPham" />
-    <EntitySet Name="DanhMuc" EntityType="Self.DanhMuc" />
-    <EntitySet Name="DanhMuc_TheLoai" EntityType="Self.DanhMuc_TheLoai" />
-    <EntitySet Name="DonHang" EntityType="Self.DonHang" />
-    <EntitySet Name="DonHangCT" EntityType="Self.DonHangCT" />
-    <EntitySet Name="KhachHang" EntityType="Self.KhachHang" />
-    <EntitySet Name="KhuyenMai" EntityType="Self.KhuyenMai" />
-    <EntitySet Name="NhaXuatBan" EntityType="Self.NhaXuatBan" />
-    <EntitySet Name="SanPham" EntityType="Self.SanPham" />
-    <EntitySet Name="Slide" EntityType="Self.Slide" />
-    <EntitySet Name="TacGia" EntityType="Self.TacGia" />
-    <EntitySet Name="TheLoai" EntityType="Self.TheLoai" />
-    <AssociationSet Name="FK__DanhGiaSa__IDDon__6C190EBB" Association="Self.FK__DanhGiaSa__IDDon__6C190EBB">
-      <End Role="DonHang" EntitySet="DonHang" />
-      <End Role="DanhGiaSanPham" EntitySet="DanhGiaSanPham" />
-    </AssociationSet>
-    <AssociationSet Name="FK__DanhGiaSan__IDkh__6A30C649" Association="Self.FK__DanhGiaSan__IDkh__6A30C649">
-      <End Role="KhachHang" EntitySet="KhachHang" />
-      <End Role="DanhGiaSanPham" EntitySet="DanhGiaSanPham" />
-    </AssociationSet>
-    <AssociationSet Name="FK__DanhGiaSan__IDsp__6B24EA82" Association="Self.FK__DanhGiaSan__IDsp__6B24EA82">
-      <End Role="SanPham" EntitySet="SanPham" />
-      <End Role="DanhGiaSanPham" EntitySet="DanhGiaSanPham" />
-    </AssociationSet>
-    <AssociationSet Name="FK__DanhMuc_T__DanhM__4E88ABD4" Association="Self.FK__DanhMuc_T__DanhM__4E88ABD4">
-      <End Role="DanhMuc" EntitySet="DanhMuc" />
-      <End Role="DanhMuc_TheLoai" EntitySet="DanhMuc_TheLoai" />
-    </AssociationSet>
-    <AssociationSet Name="FK__DanhMuc_T__TheLo__4F7CD00D" Association="Self.FK__DanhMuc_T__TheLo__4F7CD00D">
-      <End Role="TheLoai" EntitySet="TheLoai" />
-      <End Role="DanhMuc_TheLoai" EntitySet="DanhMuc_TheLoai" />
-    </AssociationSet>
-    <AssociationSet Name="FK__DonHang__IDkh__5FB337D6" Association="Self.FK__DonHang__IDkh__5FB337D6">
-      <End Role="KhachHang" EntitySet="KhachHang" />
-      <End Role="DonHang" EntitySet="DonHang" />
-    </AssociationSet>
-    <AssociationSet Name="FK__DonHangCT__IDDon__6383C8BA" Association="Self.FK__DonHangCT__IDDon__6383C8BA">
-      <End Role="DonHang" EntitySet="DonHang" />
-      <End Role="DonHangCT" EntitySet="DonHangCT" />
-    </AssociationSet>
-    <AssociationSet Name="FK__DonHangCT__IDSan__628FA481" Association="Self.FK__DonHangCT__IDSan__628FA481">
-      <End Role="SanPham" EntitySet="SanPham" />
-      <End Role="DonHangCT" EntitySet="DonHangCT" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SanPham_KhuyenMai" Association="Self.FK_SanPham_KhuyenMai">
-      <End Role="KhuyenMai" EntitySet="KhuyenMai" />
-      <End Role="SanPham" EntitySet="SanPham" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SanPham_NhaXuatBan" Association="Self.FK_SanPham_NhaXuatBan">
-      <End Role="NhaXuatBan" EntitySet="NhaXuatBan" />
-      <End Role="SanPham" EntitySet="SanPham" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SanPham_TacGia" Association="Self.FK_SanPham_TacGia">
-      <End Role="TacGia" EntitySet="TacGia" />
-      <End Role="SanPham" EntitySet="SanPham" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SanPham_TheLoai" Association="Self.FK_SanPham_TheLoai">
-      <End Role="TheLoai" EntitySet="TheLoai" />
-      <End Role="SanPham" EntitySet="SanPham" />
-    </AssociationSet>
-  </EntityContainer>
 </Schema>

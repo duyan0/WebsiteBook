@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "_GoiYChoBan";
+}
+
+@model List<BanSach.Models.SanPham>
+
+@Styles.Render("~/Content/css/TopBanChay")
+<link href="~/Content/css/TopBanChay.css" rel="stylesheet" />
+
+<div class="container bg-white rounded-2 mt-3">
+    <h4 class="text-center text-dark fw-semibold py-2 ">
+        Gợi ý cho bạn
+    </h4>
+    <div class="row  mt-2 row-cols-lg-5 ">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 col-6  p-1 ">
+                <div class="card border-1 p-2 w-100 h-100 bg-white user-select-none">
+                    <a href="@Url.Action("TrangSP", "SanPhams", new { id = item.IDsp })" class="d-flex justify-content-center">
+                        <img src="~/assets/images/products/@item.HinhAnh" alt="@item.TenSP" style="object-fit:contain; height:190px;" />
+                    </a>
+
+                    <div class="card-body p-2">
+                        <p class="mb-2 text-truncate text-dark">@item.TenSP</p>
+                        <p class="mb-2 text-danger fw-semibold">@item.GiaBan.ToString("N0") VND</p>
+                        <p class="mb-0 text-bg-danger rounded-1 text-center">Đã bán: @item.SoLuong</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="text-center">
+        <a href="@Url.Action("ProductList", "SanPhams")" class="text-decoration-none btn btn-outline-danger py-2 mb-2 mt-2">Xem thêm </a>
+    </div>
+</div>
+

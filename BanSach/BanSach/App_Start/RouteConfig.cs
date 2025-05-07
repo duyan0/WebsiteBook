@@ -15,12 +15,14 @@ namespace BanSach
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.MapMvcAttributeRoutes();
+
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "SanPhams", action = "TrangChu", id = UrlParameter.Optional }
+                defaults: new { controller = "SanPhams", action = "trangchu", id = UrlParameter.Optional }
             );
-           
+
             routes.MapRoute(
                 name: "DaNhanHang",
                 url: "DonHang/DaNhanHang/{id}",
@@ -33,6 +35,12 @@ namespace BanSach
                 url: "Home/Maintenance",
                 defaults: new { controller = "Home", action = "Maintenance" }
             );
+            routes.MapRoute(
+               name: "DangNhap",
+               url: "dang-nhap",
+               defaults: new { controller = "LoginUser", action = "Login" }
+            );
+
         }
 
     }

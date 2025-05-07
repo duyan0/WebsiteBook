@@ -1,9 +1,8 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Quản lý Nhà Sách";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
 }
+
 <style>
     .carousel-inner, .carousel-inner a, .col-lg-3 .d-flex {
         border-radius: 8px;
@@ -17,18 +16,11 @@
         z-index: 2; /* Ensure captions are above the images */
     }
 
-
-
     #nxt, #prv {
         border-radius: 50%;
         border: none;
     }
-</style>
 
-
-@Html.Action("Silde", "Slide")
-<!-- Thêm một chút CSS để đảm bảo carousel là responsive -->
-<style>
     #header-carousel {
         max-width: auto;
         margin: 0 auto;
@@ -39,28 +31,140 @@
         height: 100%; /* Đảm bảo ảnh chiếm hết chiều cao của phần tử */
         object-fit: cover; /* Đảm bảo hình ảnh không bị méo, mà cắt bớt nếu cần */
     }
+
+    /* Banner Popup Styles */
+    .banner-modal {
+        display: none; /* Hidden by default */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .banner-content {
+        background-color: #fff;
+        width: 400px;
+        padding: 20px;
+        border-radius: 10px;
+        position: relative;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #333;
+    }
+
+    .banner-header h1 {
+        color: #d32f2f; /* Red color */
+        font-size: 24px;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    .banner-header p {
+        font-size: 14px;
+        color: #666;
+        margin: 5px 0;
+    }
+
+    .banner-body h2 {
+        color: #d32f2f;
+        font-size: 18px;
+        margin: 10px 0;
+    }
+
+    .banner-image {
+        width: 150px;
+        margin: 10px 0;
+    }
+
+    .banner-body p {
+        font-size: 14px;
+        color: #333;
+        margin: 5px 0;
+    }
+
+    .banner-footer p {
+        font-size: 12px;
+        color: #333;
+        margin: 5px 0;
+    }
+
+        .banner-footer p strong {
+            color: #d32f2f;
+        }
+
+    /* Responsive design for banner */
+
 </style>
+
+<!-- Banner Popup -->
+<div id="promoBanner" class="banner-modal">
+    <div class="banner-content">
+        <button class="close-btn" onclick="closeBanner()">×</button>
+        <div class="banner-header">
+            <h1>VUI MỪNG ĐÓN LỄ <br /> NHẬN QUÀ CỰC CHẤT</h1>
+            <p>Thời gian: Từ 11.04 - 04.05.2025</p>
+        </div>
+        <div class="banner-body">
+            <h2>QUÀ TẶNG ĐẶC BIỆT</h2>
+            <img src="~/assets/images/banners/banner_1.jpg" alt="Lucky Bag" class="banner-image" />
+            <p>1 Lucky Bag <br /> có cơ hội nhận ngẫu nhiên <br /> trị giá từ 200K - 500K</p>
+        </div>
+        <div class="banner-footer">
+            <p><strong>Áp dụng đơn hàng từ 20.000đ</strong></p>
+            <p>Nhập mã: <strong>SPPFH50525</strong></p>
+            <p>Khuyến mãi độc quyền bởi Ví ShopeePay trên trang fahasa.com</p>
+        </div>
+    </div>
+</div>
+
+<!-- Existing Carousel -->
+@Html.Action("Silde", "Slide")
+
+<!-- Existing Banners -->
+
+@Html.Action("Banners", "Banner")
+
+<div class="bg-white px-0">
+    @Html.Action("Banner", "DanhMucs")
+</div>
+@Html.Action("TopRated", "SanPhams")
+@Html.Action("GoiYChoBan", "SanPhams")
+@Html.Action("TopBanChay", "DonHangCTs", new { categoryId = 1 })
+@Html.Action("RecentOrders", "DonHangCTs")
 
 
 <!-- Optional Bootstrap JS for functionality (if not included in the page already) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-<div class="container-fluid d-flex mt-2">
-    @Html.Action("Banners", "Banner")
-</div>
+<!-- JavaScript to Show the Banner -->
+<script>
+    // Show the banner when the page loads
+    window.onload = function () {
+        // Check if the banner has already been shown in this session
+        if (!sessionStorage.getItem('bannerShown')) {
+            document.getElementById('promoBanner').style.display = 'flex';
+            // Mark the banner as shown in this session
+            sessionStorage.setItem('bannerShown', 'true');
+        }
+    };
 
-@*----------------------------------------*@
-
-<div class="bg-white mt-3 rounded-2 px-2 py-2">
-    @Html.Action("Banner", "DanhMucs")
-</div>
-
-@Html.Action("GetPromotion", "KhuyenMai")
-
-
-
-
-
-
-
-
+    // Function to close the banner
+    function closeBanner() {
+        document.getElementById('promoBanner').style.display = 'none';
+    }
+</script>

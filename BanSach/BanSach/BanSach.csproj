@@ -71,8 +71,8 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="EPPlus, Version=8.0.2.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
-      <HintPath>..\packages\EPPlus.8.0.2\lib\net462\EPPlus.dll</HintPath>
+    <Reference Include="EPPlus, Version=6.2.10.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.6.2.10\lib\net462\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus.Interfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.Interfaces.8.0.0\lib\net462\EPPlus.Interfaces.dll</HintPath>
@@ -198,8 +198,8 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=9.0.0.3, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.9.0.3\lib\net462\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.3.0.1\lib\netstandard2.0\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=2.3.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.2.3.2\lib\net462\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Net.Http.Headers, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Net.Http.Headers.2.3.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
@@ -305,6 +305,7 @@
     <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
+    <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.6.2\lib\net462\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
@@ -385,13 +386,20 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DemoController.cs" />
+    <Compile Include="Models\DonHangModel.Extension.cs" />
+    <Compile Include="Models\OrderHistoryViewModel.cs" />
+    <Compile Include="Models\SanPhamModel.cs" />
+    <Compile Include="Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AdminFlashSaleController.cs" />
     <Compile Include="Controllers\AdminsController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\DanhMucsController.cs" />
     <Compile Include="Controllers\DanhMuc_TheLoaiController.cs" />
     <Compile Include="Controllers\DonHangCTsController.cs" />
     <Compile Include="Controllers\DonHangsController.cs" />
+    <Compile Include="Controllers\FlashSaleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KhachHangsController.cs" />
     <Compile Include="Controllers\KhuyenMaiController.cs" />
@@ -457,6 +465,12 @@
     <Compile Include="Models\DonHangCT.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FlashSale.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FlashSale_SanPham.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GroupedDonHangViewModel.cs" />
     <Compile Include="Models\KhachHang.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -518,12 +532,33 @@
     <Content Include="assets\images\logo\logo_success.png" />
     <Content Include="assets\images\logo\LOGO_XBOOK.png" />
     <Content Include="assets\images\logo\logo_zalo.png" />
+    <Content Include="assets\images\logo\LOGO__BOOK_WHITE.jpg" />
+    <Content Include="assets\images\products\2023_05_26_09_26_03_1-390x51020250415180358.jpeg" />
     <Content Include="assets\images\products\2030xuhuonglon.jpg" />
+    <Content Include="assets\images\products\893497417967220250417140922.jpeg" />
+    <Content Include="assets\images\products\8934974180098_1.jpeg" />
+    <Content Include="assets\images\products\8934974182375.jpeg" />
+    <Content Include="assets\images\products\8935235217508_1120250417140043.jpeg" />
+    <Content Include="assets\images\products\8935235234338.jpeg" />
+    <Content Include="assets\images\products\893523523691220250417140817.jpeg" />
+    <Content Include="assets\images\products\893523523691220250417140824.jpeg" />
+    <Content Include="assets\images\products\893523523754420250414120600.jpeg" />
+    <Content Include="assets\images\products\AvatarAnNhu20250428141359.jpg" />
+    <Content Include="assets\images\products\bia-1-tang-su20250417140719.jpeg" />
+    <Content Include="assets\images\products\bia-2d_ho-diep-va-kinh-ngu_17307.jpeg" />
+    <Content Include="assets\images\products\b_a-_o-h_-thanh-h_i-y_n_b_a-tr_c.jpeg" />
     <Content Include="assets\images\products\dambighet.jpg" />
     <Content Include="assets\images\products\dinhluatmurphy.jpg" />
+    <Content Include="assets\images\products\hh_bia_cau-nhoc-gat-gio_-b120250414112748.jpeg" />
+    <Content Include="assets\images\products\hh_bia_cau-nhoc-gat-gio_-b120250414112905.jpeg" />
+    <Content Include="assets\images\products\hh_bia_cau-nhoc-gat-gio_-b120250414113043.jpeg" />
     <Content Include="assets\images\products\how.jpg" />
+    <Content Include="assets\images\products\image_195509_1_36793.jpeg" />
+    <Content Include="assets\images\products\image_195509_1_41170.jpeg" />
+    <Content Include="assets\images\products\image_217480.jpeg" />
     <Content Include="assets\images\products\khimoidieukhongnhuy.jpg" />
     <Content Include="assets\images\products\khimoidieukhongnhuy_biacung.jpg" />
+    <Content Include="assets\images\products\mockup-m_u-th_i-b_ch-kim-tinh-_ang-phi_n-mu_n20250416175942.jpeg" />
     <Content Include="assets\images\products\products_dac_nhan_tam.jpg" />
     <Content Include="assets\images\products\products_lam_di.jpg" />
     <Content Include="assets\images\products\products_lanh_dao_tam.jpg" />
@@ -550,6 +585,10 @@
     <Content Include="assets\images\products\product_3.jpeg" />
     <Content Include="assets\images\products\product_4.jpeg" />
     <Content Include="assets\images\products\product_5.jpeg" />
+    <Content Include="assets\images\products\tamlyhocthanhcong.jpg" />
+    <Content Include="assets\images\products\tamlyhocvetien.jpg" />
+    <Content Include="assets\images\products\z6514462256728_006_495260337b4b5da38eea2eac3921fc6920250428143617.jpg" />
+    <Content Include="assets\images\products\z6514462256728_006_495260337b4b5da38eea2eac3921fc6920250428143626.jpg" />
     <Content Include="assets\images\slide\slide_26_3.jpg" />
     <Content Include="assets\images\slide\slide_26_3_1.jpg" />
     <Content Include="assets\images\slide\slide_26_3_2.jpg" />
@@ -721,13 +760,6 @@
     <Content Include="Content\jss\bootstrap.esm.min.js.map" />
     <Content Include="Content\jss\bootstrap.js.map" />
     <Content Include="Content\jss\bootstrap.min.js.map" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
     <Content Include="Content\bootstrap.rtl.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
@@ -744,6 +776,13 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\nbns - Web Deploy.pubxml" />
     <Content Include="Properties\serviceDependencies.json" />
     <Content Include="Properties\serviceDependencies.local.json" />
@@ -851,7 +890,7 @@
     <Content Include="Views\KhuyenMai\Create.cshtml" />
     <Content Include="Views\KhuyenMai\Delete.cshtml" />
     <Content Include="Views\KhachHangs\LichSuDonHang.cshtml" />
-    <Content Include="Views\DonHangCTs\DetailsKH.cshtml" />
+    <Content Include="Views\DonHangCTs\DonHangChiTiet.cshtml" />
     <Content Include="Views\KhachHangs\EditAD.cshtml" />
     <Content Include="Views\KhachHangs\DetailsAD.cshtml" />
     <Content Include="Views\KhuyenMai\Edit.cshtml" />
@@ -895,9 +934,18 @@
     <Content Include="Views\Admins\QuanLyDanhGia.cshtml" />
     <Content Include="Views\Category\GetCategory.cshtml" />
     <Content Include="Views\KhuyenMai\GetPromotion.cshtml" />
+    <Content Include="Views\FlashSale\Index.cshtml" />
+    <Content Include="Views\AdminFlashSale\Create.cshtml" />
+    <Content Include="Views\AdminFlashSale\ManageProducts.cshtml" />
+    <Content Include="Views\AdminFlashSale\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutProfile.cshtml" />
+    <Content Include="Views\Demo\Index.cshtml" />
+    <Content Include="Views\SanPhams\_TopRated.cshtml" />
+    <Content Include="Views\SanPhams\_GoiYChoBan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\images\icons\" />
+    <Folder Include="Views\Demp\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -938,9 +986,7 @@
   </ProjectExtensions>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
- 
-    <LangVersion>10.0</LangVersion>
-
+      <LangVersion>10.0</LangVersion>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />

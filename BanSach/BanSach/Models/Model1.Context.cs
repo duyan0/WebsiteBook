@@ -32,6 +32,8 @@ namespace BanSach.Models
         public virtual DbSet<DanhMuc_TheLoai> DanhMuc_TheLoai { get; set; }
         public virtual DbSet<DonHang> DonHang { get; set; }
         public virtual DbSet<DonHangCT> DonHangCT { get; set; }
+        public virtual DbSet<FlashSale> FlashSale { get; set; }
+        public virtual DbSet<FlashSale_SanPham> FlashSale_SanPham { get; set; }
         public virtual DbSet<KhachHang> KhachHang { get; set; }
         public virtual DbSet<KhuyenMai> KhuyenMai { get; set; }
         public virtual DbSet<NhaXuatBan> NhaXuatBan { get; set; }

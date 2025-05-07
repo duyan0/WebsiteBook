@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<BanSach.Models.Banner>
 
-<div >
+<div class="container">
     
     <div class="row">
         @foreach (var banner in Model)
         {
-            <div class="col-3 mt-1 d-block pe-1 ps-0 ">
+            <div class="col-3 mt-1 d-block   ">
                 <div class=" border-0 " id="banner">
                     <!-- Kiểm tra nếu có link trong banner -->
                     <a href="@banner.Link">

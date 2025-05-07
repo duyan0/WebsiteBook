@@ -1,148 +1,223 @@
-﻿@model PagedList.IPagedList<BanSach.Models.DonHang>
-@using PagedList.Mvc;
-@using PagedList;
+﻿@model BanSach.Models.OrderHistoryViewModel
+@using PagedList.Mvc
 @{
-    ViewBag.Title = "Lịch sử Đơn Hàng";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Lịch Sử Đơn Hàng";
+    Layout = "~/Views/Shared/_LayoutProfile.cshtml";
 }
 
-<link href="@Url.Content("~/Content/PagedList.css")" rel="stylesheet" />
-<div class="container bg-white rounded-2 p-2 mt-2 col-xl-12">
-    <h4 class="text-dark text-center fw-semibold">Lịch sử Đơn Hàng</h4>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
-    <!-- Hiển thị thông báo lỗi từ TempData -->
-    @if (TempData["ErrorMessage"] != null)
-    {
-        <div class="alert alert-danger text-center mt-3 rounded-sm alert-dismissible fade show" role="alert">
-            @TempData["ErrorMessage"]
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+<div class="container mt-0 rounded-2 shadow-sm bg-white">
+    <h4 class="fw-semibold text-center py-3">Lịch Sử Đơn Hàng</h4>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs nav-justified" id="orderTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link fw-semibold text-warning active" id="confirmed-tab" data-toggle="tab" href="#confirmed" role="tab" aria-controls="confirmed" aria-selected="true">Đã Xác Nhận</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link fw-semibold text-info" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="false">Chờ Xử Lý</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link fw-semibold text-danger" id="canceled-tab" data-toggle="tab" href="#canceled" role="tab" aria-controls="canceled" aria-selected="false">Đã Hủy</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link fw-semibold text-success" id="received-tab" data-toggle="tab" href="#received" role="tab" aria-controls="received" aria-selected="false">Đã Nhận Hàng</a>
+        </li>
+    </ul>
+
+    <!-- Tab content -->
+    <div class="tab-content" id="orderTabContent">
+        <!-- Đã Xác Nhận -->
+        <div class="tab-pane fade show active" id="confirmed" role="tabpanel" aria-labelledby="confirmed-tab">
+            @if (Model.ConfirmedOrders.Any())
+            {
+                <div class="table-responsive mt-3">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">Mã Đơn Hàng</th>
+                                <th scope="col" class="text-center">Ngày Đặt</th>
+                                <th scope="col" class="text-center">Ngày nhận hàng</th>
+                                <th scope="col" class="text-center">Tổng tiền</th>
+                                <th scope="col" class="text-center">Trạng Thái</th>
+                                <th scope="col" class="text-center">Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in Model.ConfirmedOrders)
+                            {
+                                <tr>
+                                    <td>#@order.IDdh</td>
+                                    <td>@(order.NgayDatHang?.ToString("dd/MM/yyyy"))</td>
+                                    <td>@(order.NgayNhanHang?.ToString("dd/MM/yyyy"))</td>
+                                    <td class="text-danger fw-semibold">
+                                        @order.GetTongSoTien().ToString("C0", new System.Globalization.CultureInfo("vi-VN"))
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-warning">@order.TrangThai</span>
+                                    </td>
+                                    <td>
+                                        <div class=" d-print-flex">
+                                            <a href="@Url.Action("DonHangChiTiet", "DonHangCts", new { id = order.IDdh })" class="btn btn-warning  btn-sm ">Chi Tiết</a>
+                                            <a href="@Url.Action("DaNhanHang", "DonHangs", new { id = order.IDdh })" class="btn btn-success mx-1 btn-sm ">Đã nhận</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-3 d-flex justify-content-center">
+                    @Html.PagedListPager(Model.ConfirmedOrders, page => Url.Action("LichSuDonHang", new { page }))
+                </div>
+            }
+            else
+            {
+                <p class="mt-3 text-center alert alert-warning">Không có đơn hàng đã xác nhận.</p>
+            }
         </div>
-    }
 
-    <!-- Hiển thị thông báo thành công từ TempData -->
-    @if (TempData["SuccessMessage"] != null)
-    {
-        <div class="alert alert-success text-center mt-3 rounded-sm alert-dismissible fade show" role="alert">
-            @TempData["SuccessMessage"]
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    }
-
-    @if (!Model.Any())
-    {
-        <div class="alert alert-info text-center mt-5 rounded-sm" role="alert">
-            <i class="fa fa-info-circle" style="font-size: 24px;"></i>
-            <p class="mt-3 mb-0">Chưa có đơn hàng nào. Bạn có thể khám phá và đặt mua sản phẩm ngay hôm nay!</p>
-        </div>
-    }
-    else
-    {
-        <div class="mb-3 d-flex justify-content-end">
-            <a href="@Url.Action("ExportToExcel", "KhachHangs")" class="btn btn-success rounded-sm">Xuất Excel</a>
-        </div>
-
-        <div class="table-responsive mt-4">
-            <table class="table table-responsive-sm">
-                <thead>
-                    <tr class="text-dark text-start ">
-                        <th style="width:134px;">Mã DH</th>
-                        <th>Ngày đặt hàng</th>
-                        <th>Ngày nhận hàng</th>
-                        <th>Tổng số tiền</th>
-                        <th>Trạng thái</th>
-                        <th style="width: 158px;">Chi tiết</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var order in Model)
-                    {
-                        <tr class="text-dark text-start ">
-                            <td class="font-weight-bold text-dark">@order.IDdh</td>
-
-                            <td class="text-dark">
-                                @(order.NgayDatHang.HasValue
-                                    ? order.NgayDatHang.Value.ToString("dd/MM/yyyy HH:mm:ss")
-                                    : "Chưa đặt hàng")
-                            </td>
-
-                            <td class="text-dark ">
-                                @if (order.TrangThai == "Đã nhận hàng" && order.NgayNhanHang.HasValue)
-                                {
-                                    @order.NgayNhanHang.Value.ToString("dd/MM/yyyy HH:mm:ss")
-                                }
-                                else if (order.TrangThai == "Đã xác nhận" && order.NgayDatHang.HasValue)
-                                {
-                                    <span style="color: orange;" class="fw-semibold">Dự kiến: @order.NgayDatHang.Value.AddDays(2).ToString("dd/MM/yyyy")</span>
-                                }
-                                else
-                                {
-                                    <span class="d-inline-flex fw-semibold text-info">Dự kiến 2 ngày</span>
-                                }
-                            </td>
-
-                            <td class="text-danger fw-semibold">
-                                @order.GetTongSoTien().ToString("C0", new System.Globalization.CultureInfo("vi-VN"))
-                            </td>
-                            <td class="text-left">
-                                <button class="btn btn-sm @(order.TrangThai == "Chờ xử lý" ? "btn-info rounded-sm"
-                                    : order.TrangThai == "Đã xác nhận" ? "btn-success rounded-sm"
-                                    : order.TrangThai == "Đã hủy" ? "btn-danger rounded-sm"
-                                    : order.TrangThai == "Đã nhận hàng" ? "btn-warning rounded-sm"
-                                    : "btn-secondary") btn-fixed-size rounded-sm text-dark" disabled>
-                                    @order.TrangThai
-                                </button>
-                            </td>
-                            <td>
-                                <div class="d-flex justify-content-start">
-                                    <!-- Sử dụng Flexbox để đặt các nút trên cùng một hàng -->
-                                    @* Kiểm tra xem tổng số tiền của đơn hàng có lớn hơn 0 *@
-                                    @if (order.GetTongSoTien() > 0)
-                                    {
-                                        <a href="@Url.Action("DetailsKH", "DonHangCTs", new { id = order.IDdh })" class="btn btn-success mx-1 btn-sm rounded-sm btn-fixed-sizee">Xem</a>
-                                    }
-
-                                    @* Kiểm tra trạng thái đơn hàng "Đã xác nhận" *@
-                                    @if (order.TrangThai == "Đã xác nhận")
-                                    {
-                                        <a href="@Url.Action("DaNhanHang", "DonHangs", new { id = order.IDdh })" class="btn btn-warning mx-1 btn-sm rounded-sm ml-2 btn-fixed-sizee">Đã nhận</a>
-                                    }
-
-                                    @* Kiểm tra trạng thái đơn hàng "Chờ xử lý" để hiển thị nút hủy *@
-                                    @if (order.TrangThai == "Chờ xử lý")
-                                    {
-                                        @* Sử dụng Html.BeginForm để tạo form hủy đơn hàng *@
-                                        using (Html.BeginForm("Cancel", "KhachHangs", new { id = order.IDdh }, FormMethod.Post))
+        <!-- Chờ Xử Lý -->
+        <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+            @if (Model.PendingOrders.Any())
+            {
+                <div class="table-responsive mt-3">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">Mã Đơn Hàng</th>
+                                <th scope="col" class="text-center">Ngày Đặt</th>
+                                <th scope="col" class="text-center">Trạng Thái</th>
+                                <th scope="col" class="text-center">Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in Model.PendingOrders)
+                            {
+                                <tr>
+                                    <td>#@order.IDdh</td>
+                                    <td>@(order.NgayDatHang?.ToString("dd/MM/yyyy"))</td>
+                                    <td>
+                                        <span class="badge bg-info">@order.TrangThai</span>
+                                    </td>
+                                    <td class="d-flex justify-content-center gap-2">
+                                        <a href="@Url.Action("DonHangChiTiet", "DonHangCts", new { id = order.IDdh })" class="btn btn-info btn-sm">Chi Tiết</a>
+                                        @using (Html.BeginForm("Cancel", "KhachHangs", new { id = order.IDdh }, FormMethod.Post))
                                         {
                                             @Html.AntiForgeryToken()
-                                            <input type="submit" value="Hủy" class="btn btn-danger btn-sm rounded-sm mx-1 ml-2" />
+                                            <input type="submit" value="Hủy" class="btn btn-danger btn-sm" />
                                         }
-                                    }
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-3 d-flex justify-content-center">
+                    @Html.PagedListPager(Model.PendingOrders, page => Url.Action("LichSuDonHang", new { page }))
+                </div>
+            }
+            else
+            {
+                <div class="py-2">
+                    <p class="mt-3 text-center fw-semibold alert py-2 alert-info">Không có đơn hàng chờ xử lý.</p>
+                </div>
+            }
         </div>
 
-        <div class="pagination-container text-center mx-2">
-            @Html.PagedListPager(Model, page => Url.Action("LichSuDonHang", new { page }), new PagedListRenderOptions
+        <!-- Đã Hủy -->
+        <div class="tab-pane fade" id="canceled" role="tabpanel" aria-labelledby="canceled-tab">
+            @if (Model.CanceledOrders.Any())
             {
-                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
-                DisplayLinkToLastPage = PagedListDisplayMode.Always,
-                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                DisplayLinkToNextPage = PagedListDisplayMode.Always,
-                DisplayLinkToIndividualPages = true,
-                LinkToFirstPageFormat = "Đầu tiên",
-                LinkToLastPageFormat = "Cuối cùng",
-                LinkToPreviousPageFormat = "Trước",
-                LinkToNextPageFormat = "Tiếp",
-                UlElementClasses = new[] { "pagination" }
-            })
+                <div class="table-responsive mt-3">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">Mã Đơn Hàng</th>
+                                <th scope="col" class="text-center">Ngày Đặt</th>
+                                <th scope="col" class="text-center">Trạng Thái</th>
+                                <th scope="col" class="text-center">Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in Model.CanceledOrders)
+                            {
+                                <tr>
+                                    <td>#@order.IDdh</td>
+                                    <td>@(order.NgayDatHang?.ToString("dd/MM/yyyy"))</td>
+                                    <td>
+                                        <span class="badge bg-danger">@order.TrangThai</span>
+                                    </td>
+                                    <td>
+                                        <a href="#" class="btn disabled btn-danger btn-sm d-block mx-auto">Đơn hàng đã huỷ</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-3 d-flex  justify-content-center">
+                    @Html.PagedListPager(Model.CanceledOrders, page => Url.Action("LichSuDonHang", new { page }))
+                </div>
+            }
+            else
+            {
+                <p class="mt-3 text-center">Không có đơn hàng đã hủy.</p>
+            }
         </div>
-    }
+
+        <!-- Đã Nhận Hàng -->
+        <div class="tab-pane fade" id="received" role="tabpanel" aria-labelledby="received-tab">
+            @if (Model.ReceivedOrders.Any())
+            {
+                <div class="table-responsive mt-3">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">Mã Đơn Hàng</th>
+                                <th scope="col" class="text-center">Ngày Đặt</th>
+                                <th scope="col" class="text-center">Trạng Thái</th>
+                                <th scope="col" class="text-center">Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in Model.ReceivedOrders)
+                            {
+                                <tr>
+                                    <td>#@order.IDdh</td>
+                                    <td>@(order.NgayDatHang?.ToString("dd/MM/yyyy"))</td>
+                                    <td>
+                                        <span class="badge bg-success">@order.TrangThai</span>
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("DonHangChiTiet", "DonHangCts", new { id = order.IDdh })" class="btn btn-success btn-sm d-block mx-auto">Chi Tiết</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-3 d-flex justify-content-center">
+                    @Html.PagedListPager(Model.ReceivedOrders, page => Url.Action("LichSuDonHang", new { page }))
+                </div>
+            }
+            else
+            {
+                <p class="mt-3 text-center">Không có đơn hàng đã nhận hàng.</p>
+            }
+        </div>
+    </div>
 </div>
+
+@section scripts {
+    <script>
+        // Ensure Bootstrap tabs work correctly
+        $(document).ready(function () {
+            $('#orderTab a').on('click', function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+        });
+    </script>
+}

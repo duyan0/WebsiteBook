@@ -9,154 +9,8 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" />
 <link href="~/Content/css/ProductList.css" rel="stylesheet" />
 
-<h3 class="text-center fw-semibold text-white" style="margin-left: 300px;">Danh sách sản phẩm</h3>
 
-<div class="container">
-    <div class="row">
-        <!-- Cột trái: Bộ lọc giá và nhà xuất bản -->
-        <div class="col-12 col-md-3 mt-0">
-            <!-- Form chung cho cả giá và nhà xuất bản -->
-            <form id="filterForm" method="get" action="/SanPhams/FilterProducts">
-                <!-- Bộ lọc giá -->
-                <div class="price-filter p-2 shadow-lg rounded bg-white mb-3 mt-3">
-                    <h4 class="filter-title mb-3 text-primary text-dark">GIÁ</h4>
-                    <div class="form-check mb-2">
-                        <input type="checkbox" class="form-check-input" id="price1" name="priceRange" value="0-150000" @(Request["priceRange"] != null && Request["priceRange"].Contains("0-150000") ? "checked" : "")>
-                        <label class="form-check-label text-dark" for="price1">0 - 150,000 VND</label>
-                    </div>
-                    <div class="form-check mb-2">
-                        <input type="checkbox" class="form-check-input" id="price2" name="priceRange" value="150000-300000" @(Request["priceRange"] != null && Request["priceRange"].Contains("150000-300000") ? "checked" : "")>
-                        <label class="form-check-label text-dark" for="price2">150,000 - 300,000 VND</label>
-                    </div>
-                    <div class="form-check mb-2">
-                        <input type="checkbox" class="form-check-input" id="price3" name="priceRange" value="300000-499999" @(Request["priceRange"] != null && Request["priceRange"].Contains("300000-499999") ? "checked" : "")>
-                        <label class="form-check-label text-dark" for="price3">300,000 - 499,999 VND</label>
-                    </div>
-                    <div class="form-check mb-2">
-                        <input type="checkbox" class="form-check-input" id="price4" name="priceRange" value="500000-700000" @(Request["priceRange"] != null && Request["priceRange"].Contains("500000-700000") ? "checked" : "")>
-                        <label class="form-check-label text-dark" for="price4">500,000 - 700,000 VND</label>
-                    </div>
-                    <div class="form-check mb-3">
-                        <input type="checkbox" class="form-check-input" id="price5" name="priceRange" value="700000-up" @(Request["priceRange"] != null && Request["priceRange"].Contains("700000-up") ? "checked" : "")>
-                        <label class="form-check-label text-dark" for="price5">700,000 - Trở Lên</label>
-                    </div>
-                </div>
 
-                <!-- Bộ lọc nhà xuất bản - Chỉ hiển thị nếu có dữ liệu -->
-                @{
-                    var availablePublishers = ViewBag.AvailablePublishers as List<string> ?? new List<string>();
-
-                }
-                @if (availablePublishers.Any()) // Chỉ hiển thị nếu có nhà xuất bản
-                {
-                    <div class="price-filter p-2 shadow-sm rounded bg-white mb-3">
-                        <h4 class="filter-title mb-3 text-primary text-dark">Nhà Xuất Bản</h4>
-                        @foreach (var publisher in availablePublishers)
-                        {
-                            bool isChecked = Request["publisherFilters"] != null && Request["publisherFilters"].Contains(publisher);
-                            <div class="form-check mb-2">
-                                <input type="checkbox" class="form-check-input" name="publisherFilters" value="@publisher" @(isChecked ? "checked" : "") @(publisher == "Không có Nhà Xuất Bản khả dụng" ? "disabled" : "") />
-                                <label class="form-check-label">@publisher</label>
-                            </div>
-                        }
-                    </div>
-                }
-
-                <!-- Bộ lọc sắp xếp giá -->
-                <div class="price-filter p-2 shadow-sm rounded bg-white mb-3">
-                    <h4 class="filter-title mb-3 text-primary text-dark">Lọc giá</h4>
-                    <div class="d-flex justify-content-start mb-3">
-                        <div class="d-flex align-items-center gap-2">
-                            <select id="sortOrder" name="sortOrder" class="form-select" onchange="this.form.submit()" style="font-size:13px;">
-                                <option value="price_asc" @(Request["sortOrder"] == "price_asc" ? "selected" : "")>Giá từ thấp đến cao</option>
-                                <option value="price_desc" @(Request["sortOrder"] == "price_desc" ? "selected" : "")>Giá từ cao đến thấp</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <!-- Cột phải: Danh sách sản phẩm -->
-        <div class="col-12 col-md-9">
-            <div class="row row-cols-2">
-                @if (Model != null && Model.Any())
-                {
-                    foreach (var item in Model)
-                    {
-                        <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 d-flex align-items-stretch gap-1 p-1 mb-lg-0 justify-content-start">
-                            <div class="card-pro @(item.TrangThaiSach == "Hết hàng" ? "out-of-stock" : "")">
-                                <a href="@Url.Action("TrangSP", "SanPhams", new { id = item.IDsp })">
-                                    <img src="~/assets/images/products/@item.HinhAnh" class="img-fluid" alt="@item.TenSP" />
-                                    @if (item.KhuyenMai != null && item.KhuyenMai.MucGiamGia > 0)
-                                    {
-                                        <span class="sale-badge bg-danger">Giảm giá</span>
-                                    }
-                                    <p class="availability @(item.TrangThaiSach == "Hết hàng" ? "out-of-stock" : "in-stock")">
-                                        @item.TrangThaiSach
-                                    </p>
-                                    <p class="product-name">@item.TenSP</p>
-                                </a>
-
-                                @if (item.KhuyenMai != null && item.KhuyenMai.MucGiamGia > 0)
-                                {
-                                    var giaBan = item.GiaBan;
-                                    var mucGiamGia = item.KhuyenMai?.MucGiamGia ?? 0;
-                                    var giaSauGiam = giaBan * (1 - (decimal)mucGiamGia / 100.00m);
-
-                                    <p class="price-wrapper">
-                                        <span class="old-price me-2">
-                                            @string.Format("{0:N0} VND", giaBan)
-                                        </span>
-                                        <span class="discount-badge" disabled>@((item.KhuyenMai?.MucGiamGia ?? 0).ToString("N0"))%</span>
-                                    </p>
-                                    <p class="price">
-                                        @string.Format("{0:N0} VND", giaSauGiam)
-                                    </p>
-                                }
-                                else
-                                {
-                                    <p class="price">
-                                        @string.Format("{0:N0} VND", item.GiaBan)
-                                    </p>
-                                }
-
-                                @if (item.TrangThaiSach != "Hết hàng")
-                                {
-                                    <button class="btn-add-to-cart" onclick="themthanhcong(event, '@item.IDsp', '@item.TenSP')">
-                                        <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
-                                    </button>
-                                }
-                                else
-                                {
-                                    <button class="btn-add-to-cart-hethang" disabled>
-                                        <i class=""></i> Hết hàng
-                                    </button>
-                                }
-                            </div>
-                        </div>
-                    }
-                }
-                else
-                {
-                    <p class="text-secondary">Không có sản phẩm nào hiển thị.</p>
-                }
-            </div>
-
-            <!-- Phân trang -->
-            <div class="sotrang d-flex justify-content-center mt-3">
-                @Html.PagedListPager(Model, page => Url.Action("FilterProducts", new { page, priceRange = Request["priceRange"], publisherFilters = Request["publisherFilters"], sortOrder = Request["sortOrder"] }), new PagedListRenderOptions()
-                {
-                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
-                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
-                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
-                    LinkToIndividualPageFormat = "{0}"
-                })
-            </div>
-        </div>
-    </div>
-</div>
 
 <div id="notification-container" style="position: fixed; bottom: 10px; left: 10px; display: flex; flex-direction: column; gap: 10px; z-index: 1000;"></div>
 
@@ -264,8 +118,174 @@
         text-transform: uppercase;
     }
 
+    .sale-new {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: #00ff21;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px; /* Hình chữ nhật bo góc */
+        font-size: 12px;
+        font-weight: bold;
+        z-index: 10;
+        text-transform: uppercase;
+    }
+
     /* Để ảnh chứa badge đúng cách */
     .card-pro {
         position: relative; /* Để sale-badge định vị tuyệt đối bên trong */
     }
 </style>
+
+
+<div class="container">
+    <div class="row gx-4">
+        <!-- Thêm gx-4 để tạo khoảng cách khoảng 24px giữa các cột -->
+        <div class="col-12 col-lg-2 mt-0  me-lg-0 bg-white rounded-2 text-md-center text-lg-start" >
+            <!-- Form bộ lọc -->
+            <form id="filterForm" method="get" action="/SanPhams/FilterProducts" class="px-0">
+                <!-- Bộ lọc giá -->
+                <div class="p-2 rounded bg-white mb-3 mt-3 justify-content-center" style="font-size:13px;">
+                    <h4 class="mb-3 fs-6 fw-semibold text-primary text-dark">GIÁ</h4>
+                    <div class="form-check mb-2">
+                        <input type="checkbox" class="form-check-input" id="price1" name="priceRange" value="0-150000" @(Request["priceRange"] != null && Request["priceRange"].Contains("0-150000") ? "checked" : "")>
+                        <label class="form-check-label text-dark" for="price1">0 - 150,000 VND</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input type="checkbox" class="form-check-input" id="price2" name="priceRange" value="150000-300000" @(Request["priceRange"] != null && Request["priceRange"].Contains("150000-300000") ? "checked" : "")>
+                        <label class="form-check-label text-dark" for="price2">150,000 - 300,000 VND</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input type="checkbox" class="form-check-input" id="price3" name="priceRange" value="300000-499999" @(Request["priceRange"] != null && Request["priceRange"].Contains("300000-499999") ? "checked" : "")>
+                        <label class="form-check-label text-dark" for="price3">300,000 - 499,999 VND</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input type="checkbox" class="form-check-input" id="price4" name="priceRange" value="500000-700000" @(Request["priceRange"] != null && Request["priceRange"].Contains("500000-700000") ? "checked" : "")>
+                        <label class="form-check-label text-dark" for="price4">500,000 - 700,000 VND</label>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input" id="price5" name="priceRange" value="700000-up" @(Request["priceRange"] != null && Request["priceRange"].Contains("700000-up") ? "checked" : "")>
+                        <label class="form-check-label text-dark" for="price5">700,000 - Trở Lên</label>
+                    </div>
+                </div>
+
+                <!-- Bộ lọc nhà xuất bản -->
+                @{
+                    var availablePublishers = ViewBag.AvailablePublishers as List<string> ?? new List<string>();
+                }
+                @if (availablePublishers.Any())
+                {
+                    <div class="p-2 rounded bg-white mb-3">
+                        <h4 class="mb-3 text-primary text-dark fs-6 fw-semibold">Nhà Xuất Bản</h4>
+                        @foreach (var publisher in availablePublishers)
+                        {
+                            bool isChecked = Request["publisherFilters"] != null && Request["publisherFilters"].Contains(publisher);
+                            <div class="form-check mb-2">
+                                <input type="checkbox" class="form-check-input" name="publisherFilters" value="@publisher" @(isChecked ? "checked" : "") @(publisher == "Không có Nhà Xuất Bản khả dụng" ? "disabled" : "") />
+                                <label class="form-check-label">@publisher</label>
+                            </div>
+                        }
+                    </div>
+                }
+
+                <!-- Bộ lọc sắp xếp giá -->
+                <div class="p-2 rounded bg-white mb-3">
+                    <h4 class="mb-3 text-primary text-dark fs-6 fw-semibold">Lọc giá</h4>
+                    <div class="d-flex justify-content-start mb-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <select id="sortOrder" name="sortOrder" class="form-select" onchange="this.form.submit()" style="font-size:13px;">
+                                <option value="price_asc" @(Request["sortOrder"] == "price_asc" ? "selected" : "")>Giá từ thấp đến cao</option>
+                                <option value="price_desc" @(Request["sortOrder"] == "price_desc" ? "selected" : "")>Giá từ cao đến thấp</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-12 col-lg-10 bg-white rounded-2">
+            <div class="row" >
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <div class="col-6 col-sm-6 col-md-4 col-lg-3 user-select-none col-xl-3 d-flex align-items-stretch gap-1 p-1  mb-lg-0 justify-content-start">
+                            <div class="card-pro mt-0 @(item.TrangThaiSach == "Hết hàng" ? "out-of-stock" : "")">
+                                <a href="@Url.Action("TrangSP", "SanPhams", new { id = item.IDsp })">
+                                    <img src="~/assets/images/products/@item.HinhAnh" class="img-fluid" alt="@item.TenSP" />
+                                    @if (item.KhuyenMai != null && item.KhuyenMai.MucGiamGia < 0)
+                                    {
+                                        <span class="sale-badge bg-danger">Giảm giá</span>
+                                    }
+                                    else
+                                    {
+                                        var ngayTao = DateTime.Now;
+                                        var cuMoi = item.NgayTao < ngayTao ? "Mới" : "Cũ";
+                                        <span class="sale-new bg-info">@cuMoi</span>
+                                    }
+                                    <p class="availability @(item.TrangThaiSach == "Hết hàng" ? "out-of-stock" : "in-stock")">
+                                        @item.TrangThaiSach
+                                    </p>
+                                    <p class="product-name">@item.TenSP</p>
+                                </a>
+
+                                @if (item.KhuyenMai != null && item.KhuyenMai.MucGiamGia > 0)
+                                {
+                                    var giaBan = item.GiaBan;
+                                    var mucGiamGia = item.KhuyenMai?.MucGiamGia ?? 0;
+                                    var giaSauGiam = giaBan * (1 - (decimal)mucGiamGia / 100.00m);
+
+                                    <p class="price-wrapper">
+                                        <span class="old-price me-2">
+                                            @string.Format("{0:N0} VND", giaBan)
+                                        </span>
+                                        <span class="discount-badge" disabled>@((item.KhuyenMai?.MucGiamGia ?? 0).ToString("N0"))%</span>
+                                    </p>
+                                    <p class="price">
+                                        @string.Format("{0:N0} VND", giaSauGiam)
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p class="price">
+                                        @string.Format("{0:N0} VND", item.GiaBan)
+                                    </p>
+                                }
+
+                                @if (item.TrangThaiSach != "Hết hàng")
+                                {
+                                    <button class="btn-add-to-cart" onclick="themthanhcong(event, '@item.IDsp', '@item.TenSP')">
+                                        <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button class="btn-add-to-cart-hethang" disabled>
+                                        <i class=""></i> Hết hàng
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="text-secondary">Không có sản phẩm nào hiển thị.</p>
+                }
+            </div>
+
+            <!-- Phân trang -->
+            <div class="sotrang d-flex justify-content-center mt-3">
+                @Html.PagedListPager(Model, page => Url.Action("FilterProducts", new { page, priceRange = Request["priceRange"], publisherFilters = Request["publisherFilters"], sortOrder = Request["sortOrder"] }), new PagedListRenderOptions()
+                {
+                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                    LinkToIndividualPageFormat = "{0}"
+                })
+            </div>
+        </div>
+    </div>
+</div>

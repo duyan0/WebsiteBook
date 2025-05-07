@@ -21,6 +21,7 @@ namespace BanSach.Models
         public int DiemDanhGia { get; set; }
         public string NhanXet { get; set; }
         public Nullable<System.DateTime> NgayDanhGia { get; set; }
+        public string TrangThai { get; set; }
         public string PhanHoi { get; set; }
     
         public virtual DonHang DonHang { get; set; }

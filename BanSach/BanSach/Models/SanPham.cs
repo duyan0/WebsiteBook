@@ -11,8 +11,7 @@ namespace BanSach.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Web.Mvc;
-
+    
     public partial class SanPham
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,12 +19,11 @@ namespace BanSach.Models
         {
             this.DanhGiaSanPham = new HashSet<DanhGiaSanPham>();
             this.DonHangCT = new HashSet<DonHangCT>();
+            this.FlashSale_SanPham = new HashSet<FlashSale_SanPham>();
         }
-
+    
         public int IDsp { get; set; }
         public string TenSP { get; set; }
-        public string Slug { get; set; }
-        [AllowHtml]
         public string MoTa { get; set; }
         public int IDtl { get; set; }
         public decimal GiaBan { get; set; }
@@ -35,52 +33,26 @@ namespace BanSach.Models
         public int IDkm { get; set; }
         public int SoLuong { get; set; }
         public string TrangThaiSach { get; set; }
-        public DateTime? NgayPhatHanh { get; set; }
+        public Nullable<System.DateTime> NgayPhatHanh { get; set; }
         public string ISBN { get; set; }
-        public int SoTrang { get; set; }
+        public Nullable<int> SoTrang { get; set; }
         public string NgonNgu { get; set; }
-        public int LuotXem { get; set; }
+        public Nullable<int> LuotXem { get; set; }
         public string KichThuoc { get; set; }
-        public int TrongLuong { get; set; }
-        public System.DateTime NgayTao { get; set; }
+        public Nullable<int> TrongLuong { get; set; }
+        public Nullable<System.DateTime> NgayTao { get; set; }
         public Nullable<System.DateTime> NgayCapNhat { get; set; }
         public Nullable<decimal> DiemDanhGiaTrungBinh { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DanhGiaSanPham> DanhGiaSanPham { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DonHangCT> DonHangCT { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FlashSale_SanPham> FlashSale_SanPham { get; set; }
         public virtual KhuyenMai KhuyenMai { get; set; }
         public virtual NhaXuatBan NhaXuatBan { get; set; }
         public virtual TacGia TacGia { get; set; }
         public virtual TheLoai TheLoai { get; set; }
-
-        public SanPham Clone()
-        {
-            return new SanPham()
-            {
-                IDsp = this.IDsp,
-                TenSP = this.TenSP,
-                MoTa = this.MoTa,
-                IDtl = this.IDtl,
-                GiaBan = this.GiaBan,
-                HinhAnh = this.HinhAnh,
-                IDtg = this.IDtg,
-                IDnxb = this.IDnxb,
-                IDkm = this.IDkm,
-                SoLuong = this.SoLuong,
-                TrangThaiSach = this.TrangThaiSach,
-                NgayPhatHanh = this.NgayPhatHanh,
-                ISBN = this.ISBN,
-                SoTrang = this.SoTrang,
-                NgonNgu = this.NgonNgu,
-                LuotXem = this.LuotXem,
-                KichThuoc = this.KichThuoc,
-                TrongLuong = this.TrongLuong,
-                NgayTao = this.NgayTao,
-                NgayCapNhat = this.NgayCapNhat,
-                DiemDanhGiaTrungBinh = this.DiemDanhGiaTrungBinh
-            };
-        }
     }
 }
